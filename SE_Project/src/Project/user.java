@@ -1,10 +1,16 @@
 package Project;
 
+import java.util.Date;
+
 public class user {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	
+	private String name;
+	private Date birthdate;
+	private String city;
+	private String state;
+	private String id;
+	private String password;
+	private Date registeredDate;
+	
 
 }
