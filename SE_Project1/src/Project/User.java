@@ -26,5 +26,25 @@ public class User {
 		return password;
 	}
 	
+	public String name() {
+		return name;
+	}
+	
+	public Date birthday(){
+		return birthdate;
+	}
+	
+	public String city() {
+		return city;
+	}
+	
+	public String state() {
+		return state;
+	}
+	
+	public Date registeredDate() {
+		return registeredDate;
+	}
+	
 
 }
