@@ -10,14 +10,21 @@ public class SystemManager {
 	static ArrayList<User> users = new ArrayList<User>();
 	static ArrayList<Admin> admins = new ArrayList<Admin>();
 	
+	static ArrayList<category> categories = new ArrayList<category>();
 	
-	public static boolean addUser(User u) {	//This should check to unsure that a new user doesn't have the same username as an existing user
+	
+	public static boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
 		users.add(u);
 		return true;
 	}
 	
-	public static boolean addAdmin(Admin a) {	//This should check to unsure that a new user doesn't have the same username as an existing user
+	public static boolean addAdmin(Admin a) {	//This should check to ensure that a new user doesn't have the same username as an existing user
 		admins.add(a);
+		return true;
+	}
+	
+	public static boolean addCategory(category c) {	//This should check to ensure that a new category doesn't already exist
+		categories.add(c);
 		return true;
 	}
 	
@@ -54,6 +61,32 @@ public class SystemManager {
 			}
 			return signIn;	//Will return true/false depending on the password
 		}
+	}
+	
+	
+	
+	
+	public static ArrayList<category> getCategories_Alphabetically() {
+		
+		for (int i = 0; i < categories.size(); i++) {
+			
+			for (int j = 0; j < categories.size() - i - 1; j++) {
+				
+				String name1 = categories.get(j).getName();
+				String name2 = categories.get(j+1).getName();
+				
+				if (name1.compareTo(name2) > 0) {
+					category temp = categories.get(j);
+					categories.set(j, categories.get(j+1));
+					categories.set(j+1, temp);
+					
+				}
+				
+			}
+			
+		}
+		
+		return categories;
 	}
 	
 	

@@ -2,6 +2,8 @@ package Project;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 class SystemManagerTest {
@@ -101,6 +103,37 @@ class SystemManagerTest {
 		boolean tf = SystemManager.login("jackster3", "Failure");
 		
 		assertEquals(false, tf);
+	}
+	
+	
+	
+	
+	@Test
+	void testGetCategoiesSortedAlphabetically() {
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		SystemManager.addCategory(c1);
+		SystemManager.addCategory(c2);
+		SystemManager.addCategory(c3);
+		SystemManager.addCategory(c4);
+		SystemManager.addCategory(c5);
+		
+		ArrayList<category> actual = SystemManager.getCategories_Alphabetically();
+		
+		ArrayList<category> expected = new ArrayList<category>();
+		
+		expected.add(c5);
+		expected.add(c4);
+		expected.add(c2);
+		expected.add(c1);
+		expected.add(c3);
+		
+		assertEquals(expected, actual);
+		
 	}
 
 }
