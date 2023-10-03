@@ -5,32 +5,44 @@ import java.util.ArrayList;
 public class SystemManager {
 	
 	
-	static boolean userSignedIn = false;	//User sign in status, true if any User is signed in
-	static boolean adminSignedIn = false;	//Admin sign in status, true if an Admin is signed in
-	static ArrayList<User> users = new ArrayList<User>();
-	static ArrayList<Admin> admins = new ArrayList<Admin>();
+	private boolean userSignedIn;	//User sign in status, true if any User is signed in
+	private boolean adminSignedIn;	//Admin sign in status, true if an Admin is signed in
+	private ArrayList<User> users;
+	private ArrayList<Admin> admins;
 	
-	static ArrayList<category> categories = new ArrayList<category>();
+	static ArrayList<category> categories;
 	
 	
-	public static boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
+	
+	public SystemManager() {
+		userSignedIn = false;
+		adminSignedIn = false;
+		users = new ArrayList<User>();
+		admins = new ArrayList<Admin>();
+		categories = new ArrayList<category>();
+		
+	}
+	
+	
+	
+	public boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
 		users.add(u);
 		return true;
 	}
 	
-	public static boolean addAdmin(Admin a) {	//This should check to ensure that a new user doesn't have the same username as an existing user
+	public boolean addAdmin(Admin a) {	//This should check to ensure that a new user doesn't have the same username as an existing user
 		admins.add(a);
 		return true;
 	}
 	
-	public static boolean addCategory(category c) {	//This should check to ensure that a new category doesn't already exist
+	public boolean addCategory(category c) {	//This should check to ensure that a new category doesn't already exist
 		categories.add(c);
 		return true;
 	}
 	
 	
 	
-	public static boolean login(String username, String password) {
+	public boolean login(String username, String password) {
 		boolean signIn = false;
 		
 		User u = Validator.validUserName_Users(users, username);	//Checks under Users
@@ -66,7 +78,7 @@ public class SystemManager {
 	
 	
 	
-	public static ArrayList<category> getCategories_Alphabetically() {
+	public ArrayList<category> getCategories_Alphabetically() {
 		
 		for (int i = 0; i < categories.size(); i++) {
 			
