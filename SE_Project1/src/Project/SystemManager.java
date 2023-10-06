@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SystemManager {
 	
@@ -80,23 +81,7 @@ public class SystemManager {
 	
 	public ArrayList<category> getCategories_Alphabetically() {
 		
-		for (int i = 0; i < categories.size(); i++) {
-			
-			for (int j = 0; j < categories.size() - i - 1; j++) {
-				
-				String name1 = categories.get(j).getName();
-				String name2 = categories.get(j+1).getName();
-				
-				if (name1.compareTo(name2) > 0) {
-					category temp = categories.get(j);
-					categories.set(j, categories.get(j+1));
-					categories.set(j+1, temp);
-					
-				}
-				
-			}
-			
-		}
+		Collections.sort(categories, new SortCategoriesByName());
 		
 		return categories;
 	}

@@ -25,9 +25,9 @@ class SystemManagerTest {
 		sm.addUser(u4);
 		sm.addUser(u5);
 		
-		boolean tf = sm.login("LegalTrouble", "D@uble&Tr@uble");
+		boolean actual = sm.login("LegalTrouble", "D@uble&Tr@uble");
 		
-		assertEquals(true, tf);
+		assertEquals(true, actual);
 	}
 	
 	@Test
@@ -47,9 +47,9 @@ class SystemManagerTest {
 		sm.addUser(u4);
 		sm.addUser(u5);
 		
-		boolean tf = sm.login("Failure", "D@uble&Tr@uble");
+		boolean actual = sm.login("Failure", "D@uble&Tr@uble");
 		
-		assertEquals(false, tf);
+		assertEquals(false, actual);
 	}
 	
 	
@@ -70,9 +70,9 @@ class SystemManagerTest {
 		sm.addUser(u4);
 		sm.addUser(u5);
 		
-		boolean tf = sm.login("LegalTrouble", "Failure");
+		boolean actual = sm.login("LegalTrouble", "Failure");
 		
-		assertEquals(false, tf);
+		assertEquals(false, actual);
 	}
 	
 	@Test
@@ -86,9 +86,9 @@ class SystemManagerTest {
 		sm.addAdmin(a1);
 		sm.addAdmin(a2);
 		
-		boolean tf = sm.login("jackster3", "HKb@wser!");
+		boolean actual = sm.login("jackster3", "HKb@wser!");
 		
-		assertEquals(true, tf);
+		assertEquals(true, actual);
 	}
 	
 	@Test
@@ -102,9 +102,9 @@ class SystemManagerTest {
 		sm.addAdmin(a1);
 		sm.addAdmin(a2);
 		
-		boolean tf = sm.login("jackster7", "HKb@wser!");
+		boolean actual = sm.login("jackster7", "HKb@wser!");
 		
-		assertEquals(false, tf);
+		assertEquals(false, actual);
 	}
 	
 	@Test
@@ -118,9 +118,9 @@ class SystemManagerTest {
 		sm.addAdmin(a1);
 		sm.addAdmin(a2);
 		
-		boolean tf = sm.login("jackster3", "Failure");
+		boolean actual = sm.login("jackster3", "Failure");
 		
-		assertEquals(false, tf);
+		assertEquals(false, actual);
 	}
 	
 	
