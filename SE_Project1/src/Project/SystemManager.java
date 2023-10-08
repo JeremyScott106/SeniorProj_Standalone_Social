@@ -40,38 +40,53 @@ public class SystemManager {
 		return true;
 	}
 	
+	public Boolean createCategory(String name) {
+		if (Validator.validateCategoryNameExists(categories, name)) {
+			return false;
+		}
+		else {
+			category c = new category(name);
+			categories.add(c);
+			return true;
+		}
+	}
+	
 	
 	
 	public boolean login(String username, String password) {
-		boolean signIn = false;
 		
 		User u = Validator.validUserName_Users(users, username);	//Checks under Users
 		
-		if (u == null) {	//If the username is not of a user
+		if (u == null) {	//If the username is not of a User
 			
 			u = Validator.validUserName_Admins(admins, username);	//Checks under Admins
 			
 			if (u == null) {	//If the username is not of a Admin
-				return signIn;	//Will return false
+				return false;	//Will return false
 			}
 			else {	//If the username is of an Admin
-				signIn = Validator.validPassword(u, password);	//Check Password
 				
-				if (signIn == true) {	//If the password was correct
+				if (Validator.validPassword(u, password)) {	//If the password was correct
 					userSignedIn = true;	//Set User sign in status to true
 					adminSignedIn = true;	//Set Admin sign in status to true
+					return true;	//Return true
 				}
-				return signIn;	//Will return true/false depending on the password
+				else {	//If the password was incorrect
+					return false;	//Return false 
+				}
+				
 			}
 		}
 		else {	//If the username is of a User
-			signIn = Validator.validPassword(u, password);	//Check Password
 			
-			
-			if (signIn == true) {	//If the password was correct
+			if (Validator.validPassword(u, password)) {	//If the password was correct
 				userSignedIn = true;	//Set User sign in status to true
+				return true;	//Return true
 			}
-			return signIn;	//Will return true/false depending on the password
+			else {	//If the password was incorrect
+				return false;	//Return false 
+			}
+				
 		}
 	}
 	

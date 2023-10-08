@@ -41,6 +41,18 @@ public class Validator {
 		}
 	}
 	
+	//returns true if there exists a category name from the given list that matches the given name, returns false otherwise 
+	public static Boolean validateCategoryNameExists(ArrayList<category> categories, String name) {
+		
+		for (int i = 0; i < categories.size(); i++) {	//Loop through categories
+			if (categories.get(i).getName().equals(name)) {	//Compare names
+				return true;	//return true if names match
+			}
+		}
+		
+		return false;	//return false otherwise
+	}
+	
 	
 
 }
