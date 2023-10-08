@@ -79,5 +79,49 @@ class ValidatorTest {
 		
 		assertEquals(expected, actual);
 	}
+	
+	
+	@Test
+	void testValidateCategoryNameExists_True() {
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		categories.add(c1);
+		categories.add(c2);
+		categories.add(c3);
+		categories.add(c4);
+		categories.add(c5);
+		
+		Boolean actual = Validator.validateCategoryNameExists(categories, "Foods");
+		
+		assertEquals(true, actual);
+	}
+	
+	
+	@Test
+	void testValidateCategoryNameExists_False() {
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		categories.add(c1);
+		categories.add(c2);
+		categories.add(c3);
+		categories.add(c4);
+		categories.add(c5);
+		
+		Boolean actual = Validator.validateCategoryNameExists(categories, "Computers");
+		
+		assertEquals(false, actual);
+	}
 
 }

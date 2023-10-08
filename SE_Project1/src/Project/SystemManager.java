@@ -11,7 +11,7 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	
-	static ArrayList<category> categories;
+	private ArrayList<category> categories;
 	
 	
 	
