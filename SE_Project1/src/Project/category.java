@@ -18,15 +18,26 @@ public class category {
 		return name;
 	}
 	
-	public boolean addGroup(group g) {	//Should check through list of groups and make sure this one has a unique name
-		groups.add(g);
-		return true;
+	public boolean addGroup(group g) {	
+		if (Validator.validateGroupNameExists(groups, g.getName())) {	//If the name of group g already exists within the list of Groups
+			return false;	//do not add the group and return false
+		}
+		else {
+			groups.add(g);	//else, add the group
+			return true;	//and return true
+		}
 	}
 	
 	public ArrayList<group> getGroupsAlphabetically() {
 		Collections.sort(groups, new SortGroupsByName());
 		
 		return groups;
+	}
+
+
+	@Override
+	public String toString() {
+		return "category [name=" + name + ", groups=" + groups + "]";
 	}
 
 }

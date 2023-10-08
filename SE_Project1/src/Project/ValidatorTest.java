@@ -123,5 +123,49 @@ class ValidatorTest {
 		
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testValideatGroupNameExists_True() {
+		ArrayList<group> groups = new ArrayList<group>();
+		
+		group g1 = new group("Hockey");
+		group g2 = new group("Soccer");
+		group g3 = new group("Football");
+		group g4 = new group("Basketball");
+		group g5 = new group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Boolean actual = Validator.validateGroupNameExists(groups, "Basketball");
+		
+		assertEquals(true, actual);
+	}
+	
+	
+	@Test
+	void testValideatGroupNameExists_False() {
+		ArrayList<group> groups = new ArrayList<group>();
+		
+		group g1 = new group("Hockey");
+		group g2 = new group("Soccer");
+		group g3 = new group("Football");
+		group g4 = new group("Basketball");
+		group g5 = new group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Boolean actual = Validator.validateGroupNameExists(groups, "Golf");
+		
+		assertEquals(false, actual);
+	}
 
 }
