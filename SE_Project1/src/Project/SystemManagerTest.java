@@ -200,5 +200,65 @@ class SystemManagerTest {
 		
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testCreateGroup_Success() {
+		SystemManager sm = new SystemManager();
+		
+		category c = new category("Sports");
+		
+		group g1 = new group("Football");
+		group g2 = new group("Soccer");
+		
+		c.addGroup(g1);
+		c.addGroup(g2);
+		
+		sm.addCategory(c);
+		
+		Boolean actual = sm.createGroup("Tennis", "Sports");
+		
+		assertEquals(true, actual);
+	}
+	
+	
+	@Test
+	void testCreateGroup_Failure_InvalidCategory() {
+		SystemManager sm = new SystemManager();
+		
+		category c = new category("Sports");
+		
+		group g1 = new group("Football");
+		group g2 = new group("Soccer");
+		
+		c.addGroup(g1);
+		c.addGroup(g2);
+		
+		sm.addCategory(c);
+		
+		Boolean actual = sm.createGroup("Tennis", "Foods");
+		
+		assertEquals(false, actual);
+	}
+	
+	
+	@Test
+	void testCreateGroup_Failure_DuplicateGroup() {
+		SystemManager sm = new SystemManager();
+		
+		category c = new category("Sports");
+		
+		group g1 = new group("Football");
+		group g2 = new group("Soccer");
+		
+		c.addGroup(g1);
+		c.addGroup(g2);
+		
+		sm.addCategory(c);
+		
+		Boolean actual = sm.createGroup("Soccer", "Sports");
+		
+		assertEquals(false, actual);
+	}
 
 }

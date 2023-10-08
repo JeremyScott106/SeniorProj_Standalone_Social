@@ -79,5 +79,39 @@ class ValidatorTest {
 		
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	void testGetCategoryFromName_Success() {
+		category c1 = new category("Foods");
+		category c2 = new category("Sports");
+		category c3 = new category("Games");
+		
+		ArrayList<category> cats = new ArrayList<category>();
+		
+		cats.add(c1);
+		cats.add(c2);
+		cats.add(c3);
+		
+		category actual = Validator.getCategoryFromName(cats, "Sports");
+		
+		assertEquals(c2, actual);
+	}
+	
+	@Test
+	void testGetCategoryFromName_Failure() {
+		category c1 = new category("Foods");
+		category c2 = new category("Sports");
+		category c3 = new category("Games");
+		
+		ArrayList<category> cats = new ArrayList<category>();
+		
+		cats.add(c1);
+		cats.add(c2);
+		cats.add(c3);
+		
+		category actual = Validator.getCategoryFromName(cats, "Video Games");
+		
+		assertEquals(null, actual);
+	}
 
 }

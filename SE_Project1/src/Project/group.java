@@ -2,9 +2,14 @@ package Project;
 
 public class group {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+String name;
+	
+	public group(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

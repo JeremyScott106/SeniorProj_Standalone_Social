@@ -41,13 +41,25 @@ public class SystemManager {
 	}
 	
 	public Boolean createCategory(String name) {
-		if (Validator.validateCategoryNameExists(categories, name)) {
-			return false;
+		if (Validator.validateCategoryNameExists(categories, name)) {	//If there exists a category with given name
+			return false;	//return false
 		}
 		else {
-			category c = new category(name);
-			categories.add(c);
-			return true;
+			category c = new category(name);	//else, create new category
+			categories.add(c);		//add category
+			return true;			//return true
+		}
+	}
+	
+	//Assumes GUI will send over just category name, not category object
+	public Boolean createGroup(String groupName, String categoryName) {
+		category c = Validator.getCategoryFromName(categories, categoryName);	//Get category with given name if there exists one, null otherwise
+		
+		if (c == null) {	//If validator returned null
+			return false;	//return false
+		}
+		else {		//If validator returned a category
+			return c.createGroup(groupName);	//create group within category, retu9rns true/false depending on if group was created
 		}
 	}
 	
