@@ -7,6 +7,16 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 class ValidatorTest {
+	
+	
+	/*
+	 * NOTICE:
+	 * 
+	 * Tests will have to be updated as classes are updated to where
+	 * constructors take more arguments
+	 * 
+	 */
+	
 
 	@Test
 	void testValidUsername_Users_Success() {

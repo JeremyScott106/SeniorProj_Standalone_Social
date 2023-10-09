@@ -5,6 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class categoryTest {
+	
+	
+	/*
+	 * NOTICE:
+	 * 
+	 * Tests will have to be updated as classes are updated to where
+	 * constructors take more arguments
+	 * 
+	 */
+	
 
 	@Test
 	void testCreateGroup_Success() {
@@ -18,7 +28,7 @@ class categoryTest {
 		c.addGroup(g2);
 		c.addGroup(g3);
 		
-		Boolean actual = c.createGroup("Basketball");
+		boolean actual = c.createGroup("Basketball");
 		
 		assertEquals(true, actual);
 	}
@@ -36,7 +46,7 @@ class categoryTest {
 		c.addGroup(g2);
 		c.addGroup(g3);
 		
-		Boolean actual = c.createGroup("Tennis");
+		boolean actual = c.createGroup("Tennis");
 		
 		assertEquals(false, actual);
 	}
