@@ -1,7 +1,9 @@
 package Project;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
+
 
 public class category {
 	
@@ -38,6 +40,7 @@ public class category {
 			return true;		//and return true
 		}
 	}
+
 	
 	public ArrayList<group> getGroupsAlphabetically() {
 		Collections.sort(groups, new SortGroupsByName());
@@ -50,5 +53,6 @@ public class category {
 	public String toString() {
 		return "category [name=" + name + ", groups=" + groups + "]";
 	}
+
 
 }

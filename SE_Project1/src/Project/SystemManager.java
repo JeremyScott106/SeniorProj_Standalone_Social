@@ -29,17 +29,19 @@ public class SystemManager {
 	
 	
 	public boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
-		users.add(u);  					//NOTICE: This will require more variables as the User class is updated
+		users.add(u);	//NOTICE: This will require more variables as the User class is updated
+
 		return true;
 	}
 	
 	public boolean addAdmin(Admin a) {	//This should check to ensure that a new user doesn't have the same username as an existing user
-		admins.add(a);					//NOTICE: This will require more variables as the User/Admin class is updated
+		admins.add(a);	//NOTICE: This will require more variables as the User/Admin class is updated
+
 		return true;
 	}
 	
 	public boolean registerUser(String name, String bday, String city, 
-								String state, String username, String password) {
+					String state, String username, String password) {
 		
 		User u = Validator.validUserName_Users(users, username);	//Check to see if there exists a User with the given username
 		
@@ -62,63 +64,72 @@ public class SystemManager {
 
 	public boolean addCategory(category c) {	//This should check to ensure that a new category doesn't already exist
 		categories.add(c);				//NOTICE: This may require more variables as the Category class is updated
+
 		return true;
 	}
+
 	
 	public boolean createCategory(String name) {
 		if (Validator.validateCategoryNameExists(categories, name)) {	//If there exists a category with given name
-			return false;				//return false
+			return false;	//return false
 		}
 		else {
 			category c = new category(name);	//else, create new category	NOTICE: This may require more variables as the Category class is updated
-			categories.add(c);			//add category
-			return true;				//return true
+			categories.add(c);		//add category
+			return true;			//return true
 		}
 	}
-
-										//Assumes GUI will send over just category name, not category object
+	
+	//Assumes GUI will send over just category name, not category object
 	public boolean createGroup(String groupName, String categoryName) {
 		category c = Validator.getCategoryFromName(categories, categoryName);	//Get category with given name if there exists one, null otherwise
-
-		if (c == null) {				//If validator returned null
-			return false;				//return false
+		
+		if (c == null) {	//If validator returned null
+			return false;	//return false
 		}
-		else {							//If validator returned a category
+		else {		//If validator returned a category
 			return c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
 		}
 	}
 	
+	
+
 	public boolean login(String username, String password) {
-		boolean signIn = false;
 		
 		User u = Validator.validUserName_Users(users, username);	//Checks under Users
 		
-		if (u == null) {				//If the username is not of a User
+
+		if (u == null) {	//If the username is not of a User
 			
 			u = Validator.validUserName_Admins(admins, username);	//Checks under Admins
 			
-			if (u == null) {			//If the username is not of a Admin
-				return false;			//Will return false
+			if (u == null) {	//If the username is not of a Admin
+				return false;	//Will return false
 			}
-			else {						//If the username is of an Admin
+			else {	//If the username is of an Admin
+				
 				if (Validator.validPassword(u, password)) {	//If the password was correct
 					userSignedIn = true;	//Set User sign in status to true
 					adminSignedIn = true;	//Set Admin sign in status to true
-					return true;
+					return true;	//Return true
 				}
-				else { 					//If the password was incorrect
-					return false;		//return false
+				else {	//If the password was incorrect
+					return false;	//Return false 
 				}
+				
 			}
 		}
-		else {							//If the username is of a User
+		else {	//If the username is of a User
+			
 			if (Validator.validPassword(u, password)) {	//If the password was correct
 				userSignedIn = true;	//Set User sign in status to true
-				return true;			//Return true
+				return true;	//Return true
 			}
-			else {						//If the password was incorrect
-				return false;			//Return false
+			else {	//If the password was incorrect
+				return false;	//Return false 
 			}
+				
+
 		}
 	}
 	

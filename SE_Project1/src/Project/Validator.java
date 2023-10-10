@@ -33,7 +33,9 @@ public class Validator {
 		return u;	//Return Null/Admin
 	}
 	
+
 	//returns true if the password of the given User matches the inputed password, returns false otherwise
+
 	public static boolean validPassword(User u, String password) {
 		if (u.getPassword().equals(password)) {		//Compare Passwords
 			return true;
@@ -44,16 +46,46 @@ public class Validator {
 	}
 	
 	//returns true if there exists a category name from the given list that matches the given name, returns false otherwise 
-	public static boolean validateCategoryNameExists(ArrayList<category> categories, String name) {
-
+	public static boolean validateCategoryNameExists(ArrayList<category> categories, String name) {		
 		for (int i = 0; i < categories.size(); i++) {	//Loop through categories
 			if (categories.get(i).getName().equals(name)) {	//Compare names
 				return true;	//return true if names match
 			}
 		}
-
+		
 		return false;	//return false otherwise
 	}
+	
+	//returns a category that has a matching name as given if it exists, returns null otherwise
+	public static category getCategoryFromName(ArrayList<category> categories, String name) {
+		for (int i = 0; i < categories.size(); i++) {	//Loop through categories
+			if (categories.get(i).getName().equals(name)) {	//Compare names
+				return categories.get(i);	//return category if names match
+			}
+		}
+		
+		return null;	//return null otherwise
+	}
+	
+	
+	
+	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise 
+	public static boolean validateGroupNameExists(ArrayList<group> groups, String name) {
+		
+		for (int i = 0; i < groups.size(); i++) {	//Loop through groups
+			if (groups.get(i).getName().equals(name)) {	//Compare names
+				return true;	//return true if names match
+			}
+		}
+		
+		return false;	//return false otherwise
+	}
+	
+	
+	
+	
+	
+
 	
 	//returns a category that has a matching name as given if it exists, returns null otherwise
 	public static category getCategoryFromName(ArrayList<category> categories, String name) {

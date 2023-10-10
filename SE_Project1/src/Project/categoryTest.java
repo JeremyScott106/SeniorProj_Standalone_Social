@@ -2,12 +2,15 @@ package Project;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import java.util.ArrayList;
+
 
 import org.junit.jupiter.api.Test;
 
 class categoryTest {
 	
+
 	/*
 	 * NOTICE:
 	 * 
@@ -15,6 +18,7 @@ class categoryTest {
 	 * constructors take more arguments
 	 * 
 	 */
+
 
 	@Test
 	void testGetGroupsAlphabetically() {
@@ -44,6 +48,7 @@ class categoryTest {
 		
 		assertEquals(expected, actual);
 	}
+
 	
 
 	@Test
@@ -121,6 +126,7 @@ class categoryTest {
 		
 		group test = new group("Soccer");
 		Boolean actual = c.addGroup(test);
+
 		
 		assertEquals(false, actual);
 	}
