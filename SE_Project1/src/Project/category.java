@@ -23,8 +23,19 @@ public class category {
 			return false;	//do not add the group and return false
 		}
 		else {
-			groups.add(g);	//else, add the group
+			groups.add(g);	//else, add the group	NOTICE: This may require more variables as the Group class is updated
 			return true;	//and return true
+		}
+	}
+	
+	public boolean createGroup(String name) {
+		if(Validator.validateGroupNameExists(groups, name)) {	//If there exists a group with the given name
+			return false;	//Return false
+		}
+		else {	
+			group g = new group(name);	//else, create the group	NOTICE: This may require more variables as the Group class is updated
+			groups.add(g);		//add group
+			return true;		//and return true
 		}
 	}
 	
