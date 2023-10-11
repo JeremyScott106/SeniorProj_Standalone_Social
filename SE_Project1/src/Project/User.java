@@ -6,14 +6,15 @@ import java.util.Map;
 
 public class User {
 
+	private String id;
 	private String name;
 	private Date birthdate;
 	private String city;
 	private String state;
-	private String id;
 	private String password;
 	private Date registeredDate;
 	private Map<String, Integer> groupMemberships;
+
 
 	public User(String name, String id, String password) {
 		this.name = name;
@@ -21,6 +22,12 @@ public class User {
 		this.password = password;
         groupMemberships = new HashMap<>();
 	}
+
+	
+	public User(String id) {
+		this.id = id;
+	}
+	
 
 	public String getId() {
 		return id;
