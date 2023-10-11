@@ -10,11 +10,11 @@ public class category {
 
 	String name;
 
-	ArrayList<group> groups;
+	ArrayList<Group> groups;
 
 	public category(String name) {
 		this.name = name;
-		this.groups = new ArrayList<group>();
+		this.groups = new ArrayList<Group>();
 
 	}
 
@@ -23,7 +23,7 @@ public class category {
 		return name;
 	}
 	
-	public boolean addGroup(group g) {	
+	public boolean addGroup(Group g) {	
 		if (Validator.validateGroupNameExists(groups, g.getName())) {	//If the name of group g already exists within the list of Groups
 			return false;	//do not add the group and return false
 		}
@@ -38,14 +38,14 @@ public class category {
 			return false;	//Return false
 		}
 		else {	
-			group g = new group(name);	//else, create the group	NOTICE: This may require more variables as the Group class is updated
+			Group g = new Group(name);	//else, create the group	NOTICE: This may require more variables as the Group class is updated
 			groups.add(g);		//add group
 			return true;		//and return true
 		}
 	}
 
 	
-	public ArrayList<group> getGroupsAlphabetically() {
+	public ArrayList<Group> getGroupsAlphabetically() {
 		Collections.sort(groups, new SortGroupsByName());
 		
 		return groups;
@@ -59,7 +59,7 @@ public class category {
 
 
 
-	public ArrayList<group> getGroups() {
+	public ArrayList<Group> getGroups() {
 		return groups;
 	}
 
