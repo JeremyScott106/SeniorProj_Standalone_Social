@@ -138,13 +138,13 @@ class ValidatorTest {
 	
 	@Test
 	void testValideatGroupNameExists_True() {
-		ArrayList<group> groups = new ArrayList<group>();
+		ArrayList<Group> groups = new ArrayList<Group>();
 		
-		group g1 = new group("Hockey");
-		group g2 = new group("Soccer");
-		group g3 = new group("Football");
-		group g4 = new group("Basketball");
-		group g5 = new group("Tennis");
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
 		
 		groups.add(g1);
 		groups.add(g2);
@@ -160,13 +160,13 @@ class ValidatorTest {
 	
 	@Test
 	void testValideatGroupNameExists_False() {
-		ArrayList<group> groups = new ArrayList<group>();
+		ArrayList<Group> groups = new ArrayList<Group>();
 		
-		group g1 = new group("Hockey");
-		group g2 = new group("Soccer");
-		group g3 = new group("Football");
-		group g4 = new group("Basketball");
-		group g5 = new group("Tennis");
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
 		
 		groups.add(g1);
 		groups.add(g2);
