@@ -70,7 +70,7 @@ public class Validator {
 	
 	
 	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise 
-	public static boolean validateGroupNameExists(ArrayList<group> groups, String name) {
+	public static boolean validateGroupNameExists(ArrayList<Group> groups, String name) {
 		
 		for (int i = 0; i < groups.size(); i++) {	//Loop through groups
 			if (groups.get(i).getName().equals(name)) {	//Compare names
@@ -99,7 +99,7 @@ public class Validator {
 	}
 	
 	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise 
-	public static boolean validateGroupNameExists(ArrayList<group> groups, String name) {
+	public static boolean validateGroupNameExists(ArrayList<Group> groups, String name) {
 
 		for (int i = 0; i < groups.size(); i++) {	//Loop through groups
 			if (groups.get(i).getName().equals(name)) {	//Compare names
