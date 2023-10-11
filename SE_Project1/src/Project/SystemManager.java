@@ -14,7 +14,7 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 
-	private ArrayList<group> groups;
+	private ArrayList<Group> groups;
 	private ArrayList<category> categories;
 
 
@@ -30,7 +30,7 @@ public class SystemManager {
 		adminSignedIn = false;
 		users = new ArrayList<User>();
 		admins = new ArrayList<Admin>();
-		groups = new ArrayList<group>();
+		groups = new ArrayList<Group>();
 		categories = new ArrayList<category>();
 	}
 
@@ -48,7 +48,7 @@ public class SystemManager {
 	}
 
 
-	public boolean addGroup(group g) {	//This should check to ensure that a new group doesn't already exist
+	public boolean addGroup(Group g) {	//This should check to ensure that a new Group doesn't already exist
 		groups.add(g);
 		return true;
 	}
@@ -155,7 +155,7 @@ public class SystemManager {
 	}
 
 
-	public ArrayList<group> getGroups_Alphabetically() {
+	public ArrayList<Group> getGroups_Alphabetically() {
 
 		for (int i = 0; i < groups.size(); i++) {
 
@@ -165,7 +165,7 @@ public class SystemManager {
 				String name2 = groups.get(j+1).getName();
 
 				if (name1.compareTo(name2) > 0) {
-					group temp = groups.get(j);
+					Group temp = groups.get(j);
 					groups.set(j, groups.get(j+1));
 					groups.set(j+1, temp);
 
@@ -187,9 +187,9 @@ public class SystemManager {
 		return categories;
 	}
 
-	public ArrayList<group> getGroupsInCategories_Alphabetically() {
+	public ArrayList<Group> getGroupsInCategories_Alphabetically() {
         for (category category : categories) {
-            ArrayList<group> groups = category.getGroups();
+            ArrayList<Group> groups = category.getGroups();
 
             for (int i = 0; i < groups.size(); i++) {
 
@@ -199,7 +199,7 @@ public class SystemManager {
             		String name2 = groups.get(j+1).getName();
 
             		if (name1.compareTo(name2) > 0) {
-            			group temp = groups.get(j);
+            			Group temp = groups.get(j);
             			groups.set(j, groups.get(j+1));
             			groups.set(j+1, temp);
 
