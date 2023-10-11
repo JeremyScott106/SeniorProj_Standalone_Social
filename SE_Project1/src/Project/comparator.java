@@ -14,7 +14,7 @@ class SortCategoriesByName implements Comparator<category> {
 
 class SortGroupsByName implements Comparator<group> {
 
-	public int compare(group g1, group g2) {
+	public int compare(Group g1, Group g2) {
 		
 		return g1.getName().compareTo(g2.getName());
 	}	
