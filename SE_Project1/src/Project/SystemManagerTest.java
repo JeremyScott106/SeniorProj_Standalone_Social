@@ -146,11 +146,11 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		group g1 = new group("Sports");
-		group g2 = new group("Games");
-		group g3 = new group("Video Games");
-		group g4 = new group("Foods");
-		group g5 = new group("Apples");
+		Group g1 = new Group("Sports");
+		Group g2 = new Group("Games");
+		Group g3 = new Group("Video Games");
+		Group g4 = new Group("Foods");
+		Group g5 = new Group("Apples");
 
 		sm.addGroup(g1);
 		sm.addGroup(g2);
@@ -158,9 +158,9 @@ class SystemManagerTest {
 		sm.addGroup(g4);
 		sm.addGroup(g5);
 
-		ArrayList<group> actual = sm.getGroups_Alphabetically();
+		ArrayList<Group> actual = sm.getGroups_Alphabetically();
 
-		ArrayList<group> expected = new ArrayList<group>();
+		ArrayList<Group> expected = new ArrayList<Group>();
 
 		expected.add(g5);
 		expected.add(g4);
@@ -256,8 +256,8 @@ class SystemManagerTest {
 		
 		category c = new category("Sports");
 		
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
 		
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -276,8 +276,8 @@ class SystemManagerTest {
 		
 		category c = new category("Sports");
 		
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
 		
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -296,8 +296,8 @@ class SystemManagerTest {
 		
 		category c = new category("Sports");
 		
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
 		
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -404,8 +404,8 @@ class SystemManagerTest {
 
 		category c = new category("Sports");
 
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
 
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -424,8 +424,8 @@ class SystemManagerTest {
 
 		category c = new category("Sports");
 
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
 
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -444,8 +444,8 @@ class SystemManagerTest {
 
 		category c = new category("Sports");
 
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
 
 		c.addGroup(g1);
 		c.addGroup(g2);
