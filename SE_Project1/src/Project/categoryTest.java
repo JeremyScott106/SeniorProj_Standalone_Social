@@ -25,11 +25,11 @@ class categoryTest {
 	void testGetGroupsAlphabetically() {
 		category c = new category("test");
 		
-		group g1 = new group("Hockey");
-		group g2 = new group("Soccer");
-		group g3 = new group("Football");
-		group g4 = new group("Basketball");
-		group g5 = new group("Tennis");
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
 		
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -37,9 +37,9 @@ class categoryTest {
 		c.addGroup(g4);
 		c.addGroup(g5);
 		
-		ArrayList<group> actual = c.getGroupsAlphabetically();
+		ArrayList<Group> actual = c.getGroupsAlphabetically();
 		
-		ArrayList<group> expected = new ArrayList<group>();
+		ArrayList<Group> expected = new ArrayList<Group>();
 		
 		expected.add(g4);
 		expected.add(g3);
@@ -56,9 +56,9 @@ class categoryTest {
 	void testCreateGroup_Success() {
 		category c = new category("Sports");
 
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
-		group g3 = new group("Tennis");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Tennis");
 
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -74,9 +74,9 @@ class categoryTest {
 	void testCreateGroup_Failure() {
 		category c = new category("Sports");
 
-		group g1 = new group("Football");
-		group g2 = new group("Soccer");
-		group g3 = new group("Tennis");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Tennis");
 
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -91,11 +91,11 @@ class categoryTest {
 	void testAddGroup_Success() {
 		category c = new category("test");
 		
-		group g1 = new group("Hockey");
-		group g2 = new group("Soccer");
-		group g3 = new group("Football");
-		group g4 = new group("Basketball");
-		group g5 = new group("Tennis");
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
 		
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -103,7 +103,7 @@ class categoryTest {
 		c.addGroup(g4);
 		c.addGroup(g5);
 		
-		group test = new group("Golf");
+		Group test = new Group("Golf");
 		Boolean actual = c.addGroup(test);
 		
 		assertEquals(true, actual);
@@ -113,11 +113,11 @@ class categoryTest {
 	void testAddGroup_Failure() {
 		category c = new category("test");
 		
-		group g1 = new group("Hockey");
-		group g2 = new group("Soccer");
-		group g3 = new group("Football");
-		group g4 = new group("Basketball");
-		group g5 = new group("Tennis");
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
 		
 		c.addGroup(g1);
 		c.addGroup(g2);
@@ -125,7 +125,7 @@ class categoryTest {
 		c.addGroup(g4);
 		c.addGroup(g5);
 		
-		group test = new group("Soccer");
+		Group test = new Group("Soccer");
 		Boolean actual = c.addGroup(test);
 
 		
