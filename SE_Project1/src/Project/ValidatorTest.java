@@ -7,6 +7,16 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 class ValidatorTest {
+	
+
+	/*
+	 * NOTICE:
+	 * 
+	 * Tests will have to be updated as classes are updated to where
+	 * constructors take more arguments
+	 * 
+	 */
+
 
 	@Test
 	void testValidUsername_Users_Success() {
@@ -78,6 +88,134 @@ class ValidatorTest {
 		Admin expected = null;
 		
 		assertEquals(expected, actual);
+	}
+	
+
+	
+	@Test
+	void testValidateCategoryNameExists_True() {
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		categories.add(c1);
+		categories.add(c2);
+		categories.add(c3);
+		categories.add(c4);
+		categories.add(c5);
+		
+		Boolean actual = Validator.validateCategoryNameExists(categories, "Foods");
+		
+		assertEquals(true, actual);
+	}
+	
+	
+	@Test
+	void testValidateCategoryNameExists_False() {
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		categories.add(c1);
+		categories.add(c2);
+		categories.add(c3);
+		categories.add(c4);
+		categories.add(c5);
+		
+		Boolean actual = Validator.validateCategoryNameExists(categories, "Computers");
+		
+		assertEquals(false, actual);
+	}
+	
+	
+	@Test
+	void testValideatGroupNameExists_True() {
+		ArrayList<group> groups = new ArrayList<group>();
+		
+		group g1 = new group("Hockey");
+		group g2 = new group("Soccer");
+		group g3 = new group("Football");
+		group g4 = new group("Basketball");
+		group g5 = new group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Boolean actual = Validator.validateGroupNameExists(groups, "Basketball");
+		
+		assertEquals(true, actual);
+	}
+	
+	
+	@Test
+	void testValideatGroupNameExists_False() {
+		ArrayList<group> groups = new ArrayList<group>();
+		
+		group g1 = new group("Hockey");
+		group g2 = new group("Soccer");
+		group g3 = new group("Football");
+		group g4 = new group("Basketball");
+		group g5 = new group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Boolean actual = Validator.validateGroupNameExists(groups, "Golf");
+		
+		assertEquals(false, actual);
+	}
+	
+
+	@Test
+	void testGetCategoryFromName_Success() {
+		category c1 = new category("Foods");
+		category c2 = new category("Sports");
+		category c3 = new category("Games");
+
+		
+		ArrayList<category> cats = new ArrayList<category>();
+		
+		cats.add(c1);
+		cats.add(c2);
+		cats.add(c3);
+		
+		category actual = Validator.getCategoryFromName(cats, "Sports");
+		
+		assertEquals(c2, actual);
+	}
+	
+
+	@Test
+	void testGetCategoryFromName_Failure() {
+		category c1 = new category("Foods");
+		category c2 = new category("Sports");
+		category c3 = new category("Games");
+
+		
+		ArrayList<category> cats = new ArrayList<category>();
+		
+		cats.add(c1);
+		cats.add(c2);
+		cats.add(c3);
+		
+		category actual = Validator.getCategoryFromName(cats, "Video Games");
+		
+
+		assertEquals(null, actual);
 	}
 
 }
