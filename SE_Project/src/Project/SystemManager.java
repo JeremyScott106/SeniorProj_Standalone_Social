@@ -45,8 +45,7 @@ public class SystemManager {
 
 			if (u == null) {			//There does not exist a Admin with the given username
 
-				Date registeredDate = new Date();	//Get current date
-				u = new User(name, username, password);	//create new User	NOTICE: this will have to be updated once User class is updated
+				u = new User(name, username, password, bday, city, state);	//create new User	NOTICE: this will have to be updated once User class is updated
 				users.add(u);			//add new user
 
 			return true;				//return true
