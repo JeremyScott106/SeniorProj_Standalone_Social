@@ -147,6 +147,20 @@ public class SystemManager {
 
 		return users;
 	}
+	
+	public boolean isLoggedIn() {
+		if (userSignedIn)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean isAdmin() {
+		if (adminSignedIn)
+			return true;
+		else
+			return false;
+	}
 
 	/* IN WORK
 	 public ArrayList<String> getGroups(User user) {

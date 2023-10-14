@@ -1,21 +1,27 @@
 package application;
+import Project.SystemManager;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Login extends JDialog {
-	JTextArea txaMessage;
-	JTextField txfName;
-	JTextField txfPass;
+	private JTextArea txaMessage;
+	private JTextField txfName;
+	private JTextField txfPass;
+	private SystemManager manager;
+	private JFrame Login;
 
-	public Login() {
+	public Login(SystemManager manager) {
 		initialize();
+		this.manager = manager;
 	}
 	
 	public void initialize() {
 		try {
-			JFrame Login = new JFrame();
+			Login = new JFrame();
 		
 			Login.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			Login.setSize(250,150);
@@ -27,6 +33,8 @@ public class Login extends JDialog {
 
 			Login.setVisible(true);
 			
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -35,7 +43,7 @@ public class Login extends JDialog {
 	private JPanel makeUser() {
 		JPanel username = new JPanel();
 		JLabel lblName = new JLabel("Username:");
-		txfName = new JTextField();
+		txfName = new JTextField(10);
 		username.add(lblName);
 		username.add(txfName);
 		return username;
@@ -44,7 +52,7 @@ public class Login extends JDialog {
 	private JPanel makePass() {
 		JPanel password = new JPanel();
 		JLabel lblPass = new JLabel(" Password:");
-		txfPass = new JTextField();
+		txfPass = new JTextField(10);
 		password.add(lblPass);
 		password.add(txfPass);
 
@@ -57,7 +65,43 @@ public class Login extends JDialog {
 		JButton btnGuest = new JButton("Continue as Guest");
 		btnPanel.add(btnSignIn);
 		btnPanel.add(btnGuest);
+		
+		btnGuest.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				closeWindow();
+			}
+			
+		});
+		
+		btnSignIn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				boolean status = manager.login(txfName.getText(), txfPass.getText());
+				loginMsg(status);
+			}
+			
+		});
 		return btnPanel;
+	}
+	
+	private void loginMsg(boolean status) {
+		if (status) {
+			System.out.printf("User is signed in: %b\n", manager.isLoggedIn());
+			System.out.printf("User is admin: %b\n", manager.isAdmin());
+			closeWindow();
+		}
+		else {
+			System.out.println("Failure!");
+		}
+	}
+	
+	private void closeWindow() {
+		Login.dispose();
 	}
 	
 }
