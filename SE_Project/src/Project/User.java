@@ -1,5 +1,8 @@
 package Project;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,11 +18,45 @@ public class User {
 	private Date registeredDate;
 	private Map<String, Integer> groupMemberships;
 
-
-	public User(String name, String id, String password) {
+	
+	//Constructor is intended to be used for adding new Users
+	public User(String name, String id, String password, String birthdate, String city, String state) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
+		this.birthdate = new Date();
+		try {
+			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			this.birthdate = df.parse(birthdate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.city = city;
+		this.state = state;
+		registeredDate = new Date();
+        groupMemberships = new HashMap<>();
+	}
+	
+	//Constructor is intended to be used for adding an Existing User read from the disk
+	public User(String name, String id, String password, String birthdate, String city, String state, String registeredDate) {
+		this.name = name;
+		this.id = id;
+		this.password = password;
+		this.birthdate = new Date();
+		try {
+			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			this.birthdate = df.parse(birthdate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.city = city;
+		this.state = state;
+		try {
+			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			this.registeredDate = df.parse(registeredDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
         groupMemberships = new HashMap<>();
 	}
 
