@@ -11,7 +11,7 @@ public class category {
 
 	public category(String name) {
 		this.name = name;
-		this.groups = new ArrayList<>();
+		this.groups = new ArrayList<Group>();
 
 	}
 
@@ -58,6 +58,34 @@ public class category {
 
 	public ArrayList<Group> getGroups() {
 		return groups;
+	}
+	
+	
+	/*
+	 * Formats Category data to be written
+	 * Format:
+	 * 
+	 * @START
+	 * @CATEGORY
+	 * @NAME="name_of_category"
+	 * @GROUP="name_of_group_under_category"
+	 * ...
+	 * @GROUP="name_of_group_under_category"
+	 * @END
+	 * 
+	 */
+	public String getCategoryWriteData() {
+		String categoryData = "@START\n" + 
+								"@CATEGORY\n" + 
+								"@NAME=" + name + "\n";
+		
+		for (Group g : groups) {
+			categoryData = categoryData.concat("@GROUP=" + g.getGroupName() + "\n");
+		}
+		
+		categoryData = categoryData.concat("@END\n\n");
+		
+		return categoryData;
 	}
 
 }
