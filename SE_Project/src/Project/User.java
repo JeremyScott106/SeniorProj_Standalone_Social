@@ -105,5 +105,41 @@ public class User {
     public void leaveGroup(String groupName) {
         groupMemberships.put(groupName, 0);
     }
+    
+    
+    /*
+     * Formats User data to be written
+     * Format:
+     * 
+     * @START
+	 * @USER
+	 * @NAME="name_of_user"
+	 * @BIRTHDATE=MM/DD/YYYY
+	 * @CITY="city_of_user"
+	 * @STATE="state_of_user"
+	 * @USERNAME="username_of_user"
+	 * @PASSWORD="password_of_user"
+	 * @REGISTERED_DATE=MM/DD/YYYY
+	 * @END
+     *  
+     */
+    public String getUserWriteData() {
+    	DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+    	String bday = df.format(birthdate);
+    	String regDate = df.format(registeredDate);
+    	
+    	String userData = "@START\n" + 
+    						"@USER\n" + 
+    						"@NAME=" + name + "\n" + 
+    						"@BIRTHDATE=" + bday + "\n" + 
+    						"@CITY=" + city + "\n" + 
+    						"@STATE=" + state + "\n" + 
+    						"@USERNAME=" + id + "\n" + 
+    						"@PASSWORD=" + password + "\n" + 
+    						"@REGISTERED_DATE=" + regDate + "\n" + 
+    						"@END\n\n";
+    	
+    	return userData;
+    }
 
 }
