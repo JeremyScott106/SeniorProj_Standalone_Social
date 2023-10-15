@@ -2,15 +2,15 @@ package Project;
 
 public class Response extends Post{
 
-	private int paternalPostID;
+	private Post paternalPost;
 	
-	public Response(String userName, String groupName, int id, String postBody, int paternalPostID) {
-		super(userName, groupName, id, postBody);
-		this.paternalPostID=paternalPostID;
+	public Response(User user, Group group, int id, String postBody, Post paternalPost) {
+		super(user, group, id, postBody);
+		this.paternalPost = paternalPost;
 	}
 
 	public int getPaternalPostID() {
-		return paternalPostID;
+		return paternalPost.getId();
 	}
 	
 
