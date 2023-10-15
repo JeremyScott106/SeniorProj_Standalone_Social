@@ -9,14 +9,14 @@ import java.util.Map;
 
 public class User {
 
-	private String id;
-	private String name;
-	private Date birthdate;
-	private String city;
-	private String state;
-	private String password;
-	private Date registeredDate;
-	private Map<String, Integer> groupMemberships;
+	protected String id;
+	protected String name;
+	protected Date birthdate;
+	protected String city;
+	protected String state;
+	protected String password;
+	protected Date registeredDate;
+	protected Map<String, Integer> groupMemberships;
 
 	
 	//Constructor is intended to be used for adding new Users
