@@ -9,7 +9,7 @@ public class ReadFile {
 	static boolean currentlyReadingData;
 	
 	
-	public static void readFile(SystemManager manager, String fileName) {
+	public static void readFile(SystemManager manager, String fileName) throws FileNotFoundException, incorrectFileFormatException {
 		
 		
 		
@@ -35,7 +35,7 @@ public class ReadFile {
 				else if (line.equals("@ADMIN")) {
 					readAdmin(manager, reader);
 				}
-				else if (line.equals("\n")) {
+				else if (line.equals("")) {
 					continue;
 				}
 				else if (line.equals("@ENDFILE")) {
@@ -50,10 +50,10 @@ public class ReadFile {
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new FileNotFoundException();
 		} catch (incorrectFileFormatException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new incorrectFileFormatException();
 		}
 		
 	}
@@ -75,9 +75,11 @@ public class ReadFile {
 		String regDate = "";
 		boolean gotRegDate = false;
 		
-		String line = reader.nextLine();
+		
 		
 		while(currentlyReadingData) {
+			
+			String line = reader.nextLine();
 			
 			if (line.equals("@END")) {
 				break;
