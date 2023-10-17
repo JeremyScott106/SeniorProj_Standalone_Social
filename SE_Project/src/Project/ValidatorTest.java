@@ -217,5 +217,42 @@ class ValidatorTest {
 
 		assertEquals(null, actual);
 	}
+	
+	@Test
+	void testValidateUserInGroup_Success() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("funny");
+		
+		g1.addMember(u1);
+		
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.add(g1);
+
+
+		Boolean actual = Validator.validateUserInGroup(groups, u1);
+
+
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testValidateUserInGroup_Failure() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Jack2", "jackster5", "HKb@wser!!", "11/10/1997", "Valdosta", "Georgia");
+
+		Group g1 = new Group("funny");
+		
+		g1.addMember(u1);
+		
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.add(g1);
+
+
+		Boolean actual = Validator.validateUserInGroup(groups, u2);
+
+
+		assertEquals(false, actual);
+	}
 
 }
