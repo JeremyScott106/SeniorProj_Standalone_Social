@@ -19,7 +19,8 @@ public class SystemManager {
 		adminSignedIn = false;
 		users = new ArrayList<>();
 		admins = new ArrayList<>();
-		groups = new ArrayList<>();
+		category categoryInstance = new category("billy"); // Create an instance of Category class.
+		groups = categoryInstance.getGroups();		
 		categories = new ArrayList<>();
 
 	}
@@ -131,7 +132,7 @@ public class SystemManager {
 		return categories;
 	}
 	
-	public ArrayList<Group> getGroups_Alphabetically() {
+	public ArrayList<Group> getGroups_Alphabetically() { // If we want to groups to be stored in categories.
 
 		Collections.sort(groups, new SortGroupsByName());
 
