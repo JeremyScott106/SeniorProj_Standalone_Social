@@ -3,6 +3,7 @@ package Project;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -98,12 +99,23 @@ public class User {
         return groupMemberships.get(groupName);
     }
 
-    public void joinGroup(String groupName) {
-        groupMemberships.put(groupName, 1);
+    public boolean joinGroup(String groupName, ArrayList<Group> groups, User u) {
+    	Boolean v = Validator.validateUserInGroup(groups, u);
+    	if(v == false) {
+            groupMemberships.put(groupName, 1);
+            return true;
+    	}
+    	return false;
     }
 
-    public void leaveGroup(String groupName) {
-        groupMemberships.put(groupName, 0);
+    public boolean leaveGroup(String groupName, ArrayList<Group> groups, User u) {
+    	Boolean v = Validator.validateUserInGroup(groups, u);
+    	if(v == false) {
+            groupMemberships.put(groupName, 0);
+            return true;
+    	}
+    	return false;
     }
+    
 
 }
