@@ -147,15 +147,35 @@ public class SystemManager {
 		return users;
 	}
 
-	/* IN WORK
-	 public ArrayList<String> getGroups(User user) {
-		 ArrayList<String> group = new ArrayList<>();
-		 for (int i = 0; i<groups.size(); i++) {
-			 if (groups[i].isMemberInGroup(user.getId()) == true){
-				 group.add(groups.getGroupName());
+	 public ArrayList<Group> getGroups(User user) {
+	 ArrayList<Group> group = new ArrayList<>();
+	 for (Group g: groups) {
+		 if (g.isMemberInGroup(user.getId()) == true){
+			 group.add(g);
+		 }
+	 }
+	 return group;
+}
+	 
+	 public ArrayList<User> getUsersInGroup(Group group) {
+		 ArrayList<User> userInGroup = new ArrayList<>();
+		 for (User u: users) {
+			 if (group.isMemberInGroup(u.getId()) == true){
+				 userInGroup.add(u);
 			 }
 		 }
-		 return group;
+		 return userInGroup;
 	 }
-	 */
+	
+	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
+		 ArrayList<Group> groupInCategory = new ArrayList<>();
+		 ArrayList<Group> group = new ArrayList<>();
+		 group.addAll(getGroups_Alphabetically());
+		 for (Group g: group) {
+			 if (c.isGroupInCategory(g.getGroupName()) == true){
+				 groupInCategory.add(g);
+			 }
+		 }
+		 return groupInCategory;
+	 }
 }
