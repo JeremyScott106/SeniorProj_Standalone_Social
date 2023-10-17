@@ -321,7 +321,7 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testGetGroups_success() {
+	void testGetGroupsUser_success() {
 		SystemManager sm = new SystemManager();
 		Group g1 = new Group("Funny");
 		Group g2 = new Group("Happy");
