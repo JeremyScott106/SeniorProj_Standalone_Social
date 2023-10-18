@@ -3,6 +3,7 @@ package Project;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,16 +33,16 @@ class ReadFileTest {
 
 	@Test
 	void testReadFile_Admin_Success() {
-		SystemManager actual = new SystemManager();
+		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated
 		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
 		
 		try {
 		
-			ReadFile.readFile(actual, fileName);
+			ReadFile.readFile(manager, fileName);
 			
-			SystemManager expected = new SystemManager();
+			ArrayList<Admin> expected = new ArrayList<Admin>();
 			
 			Admin a1 = new Admin("Jeremy", "unth!nk@b1e", "password#3", "04/27/1992", 
 									"New York City", "New York", "11/11/2011");
@@ -54,15 +55,30 @@ class ReadFileTest {
 			Admin a5 = new Admin("Himanshu", "the01dM@n", "L3t5D0Th!s", "07/23/1836", 
 					"Climax", "Michigan", "12/09/2007");
 			
-			expected.addAdmin(a1);
-			expected.addAdmin(a2);
-			expected.addAdmin(a3);
-			expected.addAdmin(a4);
-			expected.addAdmin(a5);
+			expected.add(a2);
+			expected.add(a5);
+			expected.add(a1);
+			expected.add(a4);
+			expected.add(a3);
 			
-			//Need to add getAddmins to SystemManager to check that admins in actual are correct
+			ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
 			
-			assertEquals(true, true);
+			boolean usernamesMatch = true;
+			
+			for (int i = 0; i < expected.size(); i++) {
+				if ( !(actual.get(i).getId().equals(expected.get(i).getId())) ) {
+					usernamesMatch = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, usernamesMatch);
+			
+			/*
+			 * When comparing objects, 
+			 * assertEquals will only check to see the references point to the same place in memory,
+			 * as such, we must personally check through each username
+			 */
 			
 		}
 		catch (FileNotFoundException e) {
