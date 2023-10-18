@@ -35,6 +35,9 @@ public class ReadFile {
 				else if (line.equals("@ADMIN")) {
 					readAdmin(manager, reader);
 				}
+				else if (line.equals("@USER")) {
+					readUser(manager, reader);
+				}
 				else if (line.equals("")) {
 					continue;
 				}
@@ -80,58 +83,48 @@ public class ReadFile {
 		while(currentlyReadingData) {
 			
 			String line = reader.nextLine();
+			String sub = line.substring(0, 5);
 			
 			if (line.equals("@END")) {
 				break;
 			}
-			
-			String sub = line.substring(0, 5);
-			if (sub.equals("@NAME")) {
+			else if (sub.equals("@NAME")) {
 				name = line.substring(6);
 				gotName = true;
 				continue;
 			}
-			
-			sub = line.substring(0, 10);
-			if (sub.equals("@BIRTHDATE")) {
+			else if (sub.equals("@BIRT")) {
 				birthdate = line.substring(11);
 				gotBday = true;
 				continue;
 			}
-			
-			sub = line.substring(0, 5);
-			if (sub.equals("@CITY")) {
+			else if (sub.equals("@CITY")) {
 				city = line.substring(6);
 				gotCity = true;
 				continue;
 			}
-			
-			sub = line.substring(0, 6);
-			if (sub.equals("@STATE")) {
+			else if (sub.equals("@STAT")) {
 				state = line.substring(7);
 				gotState = true;
 				continue;
 			}
-			
-			sub = line.substring(0, 9);
-			if (sub.equals("@USERNAME")) {
+			else if (sub.equals("@USER")) {
 				username = line.substring(10);
 				gotUsername = true;
 				continue;
 			}
-			
-			sub = line.substring(0, 9);
-			if (sub.equals("@PASSWORD")) {
+			else if (sub.equals("@PASS")) {
 				password = line.substring(10);
 				gotPassword = true;
 				continue;
 			}
-			
-			sub = line.substring(0, 16);
-			if (sub.equals("@REGISTERED_DATE")) {
+			else if (sub.equals("@REGI")) {
 				regDate = line.substring(17);
 				gotRegDate = true;
 				continue;
+			}
+			else {
+				throw new incorrectFileFormatException();
 			}
 			
 		}
@@ -147,6 +140,81 @@ public class ReadFile {
 		
 	}
 	
+	
+	private static void readUser(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+		String name = "";
+		boolean gotName = false;
+		String bday = "";
+		boolean gotBday = false;
+		String city = "";
+		boolean gotCity = false;
+		String state = "";
+		boolean gotState = false;
+		String username = "";
+		boolean gotUsername = false;
+		String password = "";
+		boolean gotPassword = false;
+		String regDate = "";
+		boolean gotRegDate = false;
+		
+		while(reader.hasNext()) {
+			
+			String line = reader.nextLine();
+			String sub = line.substring(0, 5);
+			
+			if (line.equals("@END")) {
+				break;
+			}
+			else if (sub.equals("@NAME")) {
+				name = line.substring(6);
+				gotName = true;
+				continue;
+			}
+			else if (sub.equals("@BIRT")) {
+				bday = line.substring(11);
+				gotBday = true;
+				continue;
+			}
+			else if (sub.equals("@CITY")) {
+				city = line.substring(6);
+				gotCity = true;
+				continue;
+			}
+			else if (sub.equals("@STAT")) {
+				state = line.substring(7);
+				gotState = true;
+				continue;
+			}
+			else if (sub.equals("USER")) {
+				username = line.substring(10);
+				gotUsername = true;
+				continue;
+			}
+			else if (sub.equals("PASS")) {
+				password = line.substring(10);
+				gotPassword = true;
+				continue;
+			}
+			else if (sub.equals("@REGI")) {
+				regDate = line.substring(17);
+				gotRegDate = true;
+				continue;
+			}
+			else {
+				throw new incorrectFileFormatException();
+			}
+		}
+		
+		
+		if (gotName && gotBday && gotCity && gotState && gotUsername && gotPassword && gotRegDate) {
+			User a = new User(name, username, password, bday, city, state, regDate);
+			currentlyReadingData = false;
+			manager.addUser(a);
+		}
+		else {
+			throw new incorrectFileFormatException();
+		}
+	}
 
 }
 
