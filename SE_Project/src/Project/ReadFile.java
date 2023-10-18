@@ -83,12 +83,13 @@ public class ReadFile {
 		while(currentlyReadingData) {
 			
 			String line = reader.nextLine();
-			String sub = line.substring(0, 5);
+			
 			
 			if (line.equals("@END")) {
 				break;
 			}
-			else if (sub.equals("@NAME")) {
+			String sub = line.substring(0, 5);
+			if (sub.equals("@NAME")) {
 				name = line.substring(6);
 				gotName = true;
 				continue;
@@ -157,15 +158,16 @@ public class ReadFile {
 		String regDate = "";
 		boolean gotRegDate = false;
 		
-		while(reader.hasNext()) {
+		while(currentlyReadingData) {
 			
 			String line = reader.nextLine();
-			String sub = line.substring(0, 5);
+			
 			
 			if (line.equals("@END")) {
 				break;
 			}
-			else if (sub.equals("@NAME")) {
+			String sub = line.substring(0, 5);
+			if (sub.equals("@NAME")) {
 				name = line.substring(6);
 				gotName = true;
 				continue;
@@ -185,12 +187,12 @@ public class ReadFile {
 				gotState = true;
 				continue;
 			}
-			else if (sub.equals("USER")) {
+			else if (sub.equals("@USER")) {
 				username = line.substring(10);
 				gotUsername = true;
 				continue;
 			}
-			else if (sub.equals("PASS")) {
+			else if (sub.equals("@PASS")) {
 				password = line.substring(10);
 				gotPassword = true;
 				continue;

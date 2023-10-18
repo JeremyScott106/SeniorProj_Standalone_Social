@@ -35,7 +35,7 @@ class ReadFileTest {
 	void testReadFile_Admin_Success() {
 		SystemManager manager = new SystemManager();
 		
-		//NOTICE: File path will have to be updated
+		//NOTICE: File path will have to be updated for each user/branch/etc
 		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
 		
 		try {
@@ -96,6 +96,7 @@ class ReadFileTest {
 	void testReadFile_Admin_Failure_IncorrectFormat1() {
 		SystemManager manager = new SystemManager();
 		
+		//NOTICE: File path will have to be updated for each user/branch/etc
 		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
 		boolean incorrectFileFormat = false;
 		
@@ -118,6 +119,7 @@ class ReadFileTest {
 	void testReadFile_Admin_Failure_IncorrectFormat2() {
 		SystemManager manager = new SystemManager();
 		
+		//NOTICE: File path will have to be updated for each user/branch/etc
 		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
 		boolean incorrectFileFormat = false;
 		
@@ -133,5 +135,52 @@ class ReadFileTest {
 		}
 		
 		assertEquals(true, incorrectFileFormat);
+	}
+	
+	
+	@Test
+	void testReadFile_User_Success() {
+		
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be changed for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User.txt";
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<User> actual = manager.getUsers_Alphabetically();
+			
+			ArrayList<String> expectedUsernames = new ArrayList<String>();
+			
+			expectedUsernames.add("IDK");
+			expectedUsernames.add("jackster3");
+			expectedUsernames.add("LegalTrouble");
+			expectedUsernames.add("theWiz");
+			expectedUsernames.add("WestCarolina");
+			
+			
+			boolean usernamesMatch = true;
+			
+			for (int i = 0; i < expectedUsernames.size(); i++) {
+				if (!(expectedUsernames.get(i).equals(actual.get(i).getName())) ) {
+					usernamesMatch = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, usernamesMatch);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+			
+		}
 	}
 }
