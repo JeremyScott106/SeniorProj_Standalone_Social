@@ -132,7 +132,7 @@ public class SystemManager {
 		return categories;
 	}
 	
-	public ArrayList<Group> getGroups_Alphabetically() { // If we want to groups to be stored in categories.
+	public ArrayList<Group> getGroups_Alphabetically() {
 
 		Collections.sort(groups, new SortGroupsByName());
 
