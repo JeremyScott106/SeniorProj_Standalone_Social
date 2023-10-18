@@ -110,7 +110,7 @@ public class User {
 
     public boolean leaveGroup(String groupName, ArrayList<Group> groups, User u) {
     	Boolean v = Validator.validateUserInGroup(groups, u);
-    	if(v == false) {
+    	if(v == true) {
             groupMemberships.put(groupName, 0);
             return true;
     	}
