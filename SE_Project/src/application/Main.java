@@ -40,9 +40,11 @@ public class Main extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				System.out.printf("User is signed in: %b\n", manager.isLoggedIn());
 				System.out.printf("User is admin: %b\n", manager.isAdmin());
+				if (manager.isLoggedIn()) {
+					System.out.printf("Current User: %s\n", manager.getCurrentUser().getId());
+				}
 			}
 			
 		});
@@ -57,7 +59,7 @@ public class Main extends JFrame {
 	
 	private void makeFakeUser() {
 		String name = "Testey One";
-		String bday = "Date Should Be Here"; // FIXME:: NEEDS TO BE A DATE IN SYSTEM MANAGER, Not String //
+		String bday = "01/01/1999";
 		String city = "Home";
 		String state = "Georgia";
 		String username = "DespisesJava123";

@@ -33,8 +33,6 @@ public class Login extends JDialog {
 
 			Login.setVisible(true);
 			
-			
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -70,7 +68,6 @@ public class Login extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				closeWindow();
 			}
 			
@@ -80,23 +77,24 @@ public class Login extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				boolean status = manager.login(txfName.getText(), txfPass.getText());
-				loginMsg(status);
+				if(txfName.getText().isBlank() || txfPass.getText().isBlank()) {
+					System.out.println("Username or Pass blank");
+				}
+				else {
+					boolean status = manager.login(txfName.getText(), txfPass.getText());
+					loginMsg(status);
+				}
 			}
-			
 		});
 		return btnPanel;
 	}
 	
 	private void loginMsg(boolean status) {
 		if (status) {
-			System.out.printf("User is signed in: %b\n", manager.isLoggedIn());
-			System.out.printf("User is admin: %b\n", manager.isAdmin());
 			closeWindow();
 		}
 		else {
-			System.out.println("Failure!");
+			System.out.println("Incorrect username or pass");
 		}
 	}
 	
