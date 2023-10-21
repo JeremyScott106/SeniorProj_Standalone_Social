@@ -94,16 +94,18 @@ public class User {
 		return registeredDate;
 	}
 
-    public Integer getGroupStatus(String groupName) {
+    public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
         return groupMemberships.get(groupName);
     }
 
-    public void joinGroup(String groupName) {
+    public boolean joinGroup(String groupName) {	//This needs to check that the given Group is not already in the Map
         groupMemberships.put(groupName, 1);
+        return true;
     }
 
-    public void leaveGroup(String groupName) {
+    public boolean leaveGroup(String groupName) {	//This needs to check that the given Group is in the Map
         groupMemberships.put(groupName, 0);
+        return true;
     }
 
 }
