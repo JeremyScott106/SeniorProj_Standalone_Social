@@ -32,11 +32,11 @@ public class GroupTest {
 	void addMemberTest() {
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass");
-		User u2 = new User("name", "1", "pass");
-		User u3 = new User("name", "2", "pass");
-		User u4 = new User("name", "3", "pass");
-		User u5 = new User("name", "4", "pass");
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
 		testGroup1.addMember(u1);
 		testGroup1.addMember(u2);
