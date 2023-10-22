@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +36,16 @@ class ReadFileTest {
 	void testReadFile_Admin_Success() {
 		SystemManager manager = new SystemManager();
 		
+		/*
+		 * NOTICE:
+		 * For this test I tried to create a comparator to sort a list of Users alphabetically by username
+		 * though the comparator never returned a properly sorted list
+		 * sorted off of name instead, though username was preferred
+		 */
+		
+		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
 		
 		try {
 		
@@ -66,6 +75,10 @@ class ReadFileTest {
 			boolean usernamesMatch = true;
 			
 			for (int i = 0; i < expected.size(); i++) {
+				
+				//For testing purposes
+				//System.out.println(expected.get(i).getId() + ", " + actual.get(i).getId());
+				
 				if ( !(actual.get(i).getId().equals(expected.get(i).getId())) ) {
 					usernamesMatch = false;
 					break;
@@ -97,7 +110,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -120,7 +133,29 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team13\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
+		boolean incorrectFileFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFileFormat = true;
+		}
+		
+		assertEquals(true, incorrectFileFormat);
+	}
+	
+	@Test
+	void testReadFile_Admin_Failure_IncorrectFormat3() {
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be updated for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -138,8 +173,18 @@ class ReadFileTest {
 	}
 	
 	
+	
+	
+	
 	@Test
 	void testReadFile_User_Success() {
+		
+		/*
+		 * NOTICE:
+		 * For this test I tried to create a comparator to sort a list of Users alphabetically by username
+		 * though the comparator never returned a properly sorted list
+		 * sorted off of name instead, though username was preferred
+		 */
 		
 		SystemManager manager = new SystemManager();
 		
@@ -154,19 +199,24 @@ class ReadFileTest {
 			
 			ArrayList<String> expectedUsernames = new ArrayList<String>();
 			
+			//In order of name from file
+			expectedUsernames.add("WestCarolina");
+			expectedUsernames.add("theWiz");
+			expectedUsernames.add("LegalTrouble");
 			expectedUsernames.add("IDK");
 			expectedUsernames.add("jackster3");
-			expectedUsernames.add("LegalTrouble");
-			expectedUsernames.add("theWiz");
-			expectedUsernames.add("WestCarolina");
 			
 			
 			boolean usernamesMatch = true;
 			
 			for (int i = 0; i < expectedUsernames.size(); i++) {
-				if (!(expectedUsernames.get(i).equals(actual.get(i).getName())) ) {
+				
+				//For testing purposes
+				//System.out.println(expectedUsernames.get(i) + ", " + actual.get(i).getId());
+				
+				if (!(expectedUsernames.get(i).equals(actual.get(i).getId())) ) {
 					usernamesMatch = false;
-					break;
+					
 				}
 			}
 			
@@ -182,5 +232,77 @@ class ReadFileTest {
 			fail();
 			
 		}
+	}
+	
+	@Test
+	void testReadFile_User_Failure_IncorrectFormat1() {
+		
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be changed for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
+		boolean incorrectFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+			
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+	
+	@Test
+	void testReadFile_User_Failure_IncorrectFormat2() {
+		
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be changed for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User_Failure_IncorrectFormat2.txt";
+		boolean incorrectFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+			
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+	
+	@Test
+	void testReadFile_User_Failure_IncorrectFormat3() {
+		
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be changed for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
+		boolean incorrectFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+			
+		}
+		
+		assertEquals(true, incorrectFormat);
 	}
 }

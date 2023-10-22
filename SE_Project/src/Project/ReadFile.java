@@ -90,39 +90,81 @@ public class ReadFile {
 			}
 			String sub = line.substring(0, 5);
 			if (sub.equals("@NAME")) {
-				name = line.substring(6);
-				gotName = true;
-				continue;
+				if(gotName) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					name = line.substring(6);
+					gotName = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@BIRT")) {
-				birthdate = line.substring(11);
-				gotBday = true;
-				continue;
+				if(gotBday) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					birthdate = line.substring(11);
+					gotBday = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@CITY")) {
-				city = line.substring(6);
-				gotCity = true;
-				continue;
+				if(gotCity) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					city = line.substring(6);
+					gotCity = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@STAT")) {
-				state = line.substring(7);
-				gotState = true;
-				continue;
+				if(gotState) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					state = line.substring(7);
+					gotState = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@USER")) {
-				username = line.substring(10);
-				gotUsername = true;
-				continue;
+				if(gotUsername) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					username = line.substring(10);
+					gotUsername = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@PASS")) {
-				password = line.substring(10);
-				gotPassword = true;
-				continue;
+				if(gotPassword) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					password = line.substring(10);
+					gotPassword = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@REGI")) {
-				regDate = line.substring(17);
-				gotRegDate = true;
-				continue;
+				if(gotRegDate) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					regDate = line.substring(17);
+					gotRegDate = true;
+					continue;
+				}
+				
 			}
 			else {
 				throw new incorrectFileFormatException();
@@ -168,39 +210,81 @@ public class ReadFile {
 			}
 			String sub = line.substring(0, 5);
 			if (sub.equals("@NAME")) {
-				name = line.substring(6);
-				gotName = true;
-				continue;
+				if(gotName) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					name = line.substring(6);
+					gotName = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@BIRT")) {
-				bday = line.substring(11);
-				gotBday = true;
-				continue;
+				if(gotBday) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					bday = line.substring(11);
+					gotBday = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@CITY")) {
-				city = line.substring(6);
-				gotCity = true;
-				continue;
+				if(gotCity) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					city = line.substring(6);
+					gotCity = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@STAT")) {
-				state = line.substring(7);
-				gotState = true;
-				continue;
+				if(gotState) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					state = line.substring(7);
+					gotState = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@USER")) {
-				username = line.substring(10);
-				gotUsername = true;
-				continue;
+				if(gotUsername) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					username = line.substring(10);
+					gotUsername = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@PASS")) {
-				password = line.substring(10);
-				gotPassword = true;
-				continue;
+				if(gotPassword) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					password = line.substring(10);
+					gotPassword = true;
+					continue;
+				}
+				
 			}
 			else if (sub.equals("@REGI")) {
-				regDate = line.substring(17);
-				gotRegDate = true;
-				continue;
+				if(gotRegDate) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					regDate = line.substring(17);
+					gotRegDate = true;
+					continue;
+				}
+				
 			}
 			else {
 				throw new incorrectFileFormatException();
