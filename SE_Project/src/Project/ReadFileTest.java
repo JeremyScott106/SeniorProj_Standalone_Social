@@ -45,7 +45,7 @@ class ReadFileTest {
 		
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_Admin.txt";
 		
 		try {
 		
@@ -104,13 +104,12 @@ class ReadFileTest {
 		}
 	}
 	
-	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat1() {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -127,13 +126,12 @@ class ReadFileTest {
 		assertEquals(true, incorrectFileFormat);
 	}
 	
-	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat2() {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -155,7 +153,29 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
+		boolean incorrectFileFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFileFormat = true;
+		}
+		
+		assertEquals(true, incorrectFileFormat);
+	}
+	
+	@Test
+	void testReadFile_Admin_Failure_IncorrectFormat4() {
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be updated for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -189,7 +209,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_User.txt";
 		
 		try {
 			
@@ -240,7 +260,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -264,7 +284,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User_Failure_IncorrectFormat2.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_User_Failure_IncorrectFormat2.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -288,7 +308,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = "C:\\Users\\rks11\\git\\Ryan'sBranch4.0\\23fa_team15\\SE_Project\\src\\Project\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -305,4 +325,113 @@ class ReadFileTest {
 		
 		assertEquals(true, incorrectFormat);
 	}
+	
+	@Test
+	void testReadFile_User_Failure_IncorrectFormat4() {
+		
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be changed for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_User_Failure_IncorrectFormat4.txt";
+		boolean incorrectFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+			
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+
+	
+	
+	
+	
+	@Test
+	void testReadFile_Admin_User_Success() {
+		
+		/*
+		 * NOTICE:
+		 * For this test I tried to create a comparator to sort a list of Users alphabetically by username
+		 * though the comparator never returned a properly sorted list
+		 * sorted off of name instead, though username was preferred
+		 */
+		
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be changed for each user/branch/etc
+		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\bin\\Project\\ReadFile_Test_Admin_User.txt";
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<Admin> actualAdmins = manager.getAdmins_Alphabetically();
+			ArrayList<User> actualUsers = manager.getUsers_Alphabetically();
+			
+			ArrayList<String> expectedAdminUsernames = new ArrayList<String>();
+			ArrayList<String> expectedUserUsernames = new ArrayList<String>();
+			
+			//In order of name from file
+			expectedAdminUsernames.add("theGr@yS0n");
+			expectedAdminUsernames.add("the01dM@n");
+			expectedAdminUsernames.add("unth!nk@b1e");
+			expectedAdminUsernames.add("J0hnW!ck");
+			expectedAdminUsernames.add("RKScandrol");
+			
+			//In order of name from file
+			expectedUserUsernames.add("WestCarolina");
+			expectedUserUsernames.add("theWiz");
+			expectedUserUsernames.add("LegalTrouble");
+			expectedUserUsernames.add("IDK");
+			expectedUserUsernames.add("jackster3");
+			
+			
+			boolean usernamesMatch = true;
+			
+			for (int i = 0; i < expectedAdminUsernames.size(); i++) {
+				
+				//For testing purposes
+				//System.out.println(expectedAdminUsernames.get(i) + ", " + actualAdmins.get(i).getId());
+				
+				if (!(expectedAdminUsernames.get(i).equals(actualAdmins.get(i).getId())) ) {
+					usernamesMatch = false;
+					break;
+				}
+			}
+			
+			if (usernamesMatch) {
+				for (int i = 0; i < expectedUserUsernames.size(); i++) {
+					
+					//For testing purposes
+					//System.out.println(expectedUserUsernames.get(i) + ", " + actualUsers.get(i).getId());
+					
+					if (!(expectedUserUsernames.get(i).equals(actualUsers.get(i).getId())) ) {
+						usernamesMatch = false;
+						break;
+					}
+				}
+			}
+			
+			assertEquals(true, usernamesMatch);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+			
+		}
+	}
+	
 }
