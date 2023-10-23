@@ -41,7 +41,7 @@ public class Admin extends User{
     	String regDate = df.format(registeredDate);
     	
     	String adminData = "@START\n" + 
-    						"@USER\n" + 
+    						"@ADMIN\n" + 
     						"@NAME=" + name + "\n" + 
     						"@BIRTHDATE=" + bday + "\n" + 
     						"@CITY=" + city + "\n" + 
