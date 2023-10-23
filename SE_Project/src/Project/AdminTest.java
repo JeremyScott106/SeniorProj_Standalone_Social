@@ -19,7 +19,7 @@ public class AdminTest {
 		String actual = a.getAdminWriteData();
 		
 		String expected = "@START\n" + 
-							"@USER\n" + 
+							"@ADMIN\n" + 
 							"@NAME=Billy\n" + 
 							"@BIRTHDATE=10/10/1997\n" + 
 							"@CITY=Valdosta\n" + 
