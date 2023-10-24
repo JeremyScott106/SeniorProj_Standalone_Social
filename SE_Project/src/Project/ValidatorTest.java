@@ -230,7 +230,7 @@ class ValidatorTest {
 		groups.add(g1);
 
 
-		Boolean actual = Validator.validateUserInGroup(groups, u1);
+		Boolean actual = Validator.validateUserInGroup(g1, u1);
 
 
 		assertEquals(true, actual);
@@ -249,7 +249,7 @@ class ValidatorTest {
 		groups.add(g1);
 
 
-		Boolean actual = Validator.validateUserInGroup(groups, u2);
+		Boolean actual = Validator.validateUserInGroup(g1, u2);
 
 
 		assertEquals(false, actual);
