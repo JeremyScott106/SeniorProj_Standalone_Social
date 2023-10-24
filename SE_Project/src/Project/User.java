@@ -99,8 +99,8 @@ public class User {
         return groupMemberships.get(groupName);
     }
 
-    public boolean joinGroup(String groupName, ArrayList<Group> groups, User u) {
-    	Boolean v = Validator.validateUserInGroup(groups, u);
+    public boolean joinGroup(String groupName, Group g, User u) {
+    	Boolean v = Validator.validateUserInGroup(g, u);
     	if(v == false) {
             groupMemberships.put(groupName, 1);
             return true;
@@ -108,8 +108,8 @@ public class User {
     	return false;
     }
 
-    public boolean leaveGroup(String groupName, ArrayList<Group> groups, User u) {
-    	Boolean v = Validator.validateUserInGroup(groups, u);
+    public boolean leaveGroup(String groupName, Group g, User u) {
+    	Boolean v = Validator.validateUserInGroup(g, u);
     	if(v == true) {
             groupMemberships.put(groupName, 0);
             return true;
@@ -117,5 +117,4 @@ public class User {
     	return false;
     }
     
-
 }
