@@ -11,18 +11,24 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 
-	private ArrayList<Group> groups;
 	private ArrayList<category> categories;
 
 	public SystemManager() {
 		userSignedIn = false;
 		adminSignedIn = false;
 		users = new ArrayList<>();
-		admins = new ArrayList<>();
-		category categoryInstance = new category("billy"); // Create an instance of Category class.
-		groups = categoryInstance.getGroups();		
+		admins = new ArrayList<>();		
 		categories = new ArrayList<>();
 
+	}
+	
+	//helper method, returns a list of all groups.
+	public ArrayList<Group> getGroups(){
+		ArrayList<Group> groups = new ArrayList<>();
+		for(category c : categories) {
+			groups.addAll(c.getGroupsAlphabetically());
+		}
+		return groups;
 	}
 
 	public boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
@@ -75,7 +81,8 @@ public class SystemManager {
 	}
 
 	public boolean addGroup(Group g) {	//This should check to ensure that a new Group doesn't already exist
-		groups.add(g);
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.addAll(getGroups());
 		return true;
 	}
 
@@ -133,7 +140,8 @@ public class SystemManager {
 	}
 	
 	public ArrayList<Group> getGroups_Alphabetically() {
-
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.addAll(getGroups());
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
@@ -148,8 +156,10 @@ public class SystemManager {
 		return users;
 	}
 
-	 public ArrayList<Group> getGroups(User user) {
+	 public ArrayList<Group> getGroupsByUser(User user) {
 	 ArrayList<Group> group = new ArrayList<>();
+	 ArrayList<Group> groups = new ArrayList<>();
+	 groups.addAll(getGroups());
 	 for (Group g: groups) {
 		 if (g.isMemberInGroup(user.getId()) == true){
 			 group.add(g);
@@ -170,9 +180,9 @@ public class SystemManager {
 	
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
 		 ArrayList<Group> groupInCategory = new ArrayList<>();
-		 ArrayList<Group> group = new ArrayList<>();
-		 group.addAll(getGroups_Alphabetically());
-		 for (Group g: group) {
+		 ArrayList<Group> groups = new ArrayList<>();
+		 groups.addAll(getGroups_Alphabetically());
+		 for (Group g: groups) {
 			 if (c.isGroupInCategory(g.getGroupName()) == true){
 				 groupInCategory.add(g);
 			 }
