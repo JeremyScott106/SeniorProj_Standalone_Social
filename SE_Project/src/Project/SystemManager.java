@@ -21,15 +21,6 @@ public class SystemManager {
 		categories = new ArrayList<>();
 
 	}
-	
-	//helper method, returns a list of all groups.
-	public ArrayList<Group> getGroups(){
-		ArrayList<Group> groups = new ArrayList<>();
-		for(category c : categories) {
-			groups.addAll(c.getGroupsAlphabetically());
-		}
-		return groups;
-	}
 
 	public boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
 		users.add(u);  					//NOTICE: This will require more variables as the User class is updated
@@ -137,6 +128,15 @@ public class SystemManager {
 		Collections.sort(categories, new SortCategoriesByName());
 
 		return categories;
+	}
+	
+	//helper method, returns a list of all groups.
+	public ArrayList<Group> getGroups(){
+		ArrayList<Group> groups = new ArrayList<>();
+		for(category c : categories) {
+			groups.addAll(c.getGroupsAlphabetically());
+		}
+		return groups;
 	}
 	
 	public ArrayList<Group> getGroups_Alphabetically() {
