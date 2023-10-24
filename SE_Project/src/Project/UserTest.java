@@ -39,7 +39,7 @@ public class UserTest {
 		ArrayList<Group> group = new ArrayList<>();
 		group.add(g);
 
-		Boolean actual = u.joinGroup("Jack", group, u);
+		Boolean actual = u.joinGroup("Jack", g, u);
 		
 		assertEquals(true, actual);
 	}
@@ -52,7 +52,7 @@ public class UserTest {
 		ArrayList<Group> group = new ArrayList<>();
 		group.add(g);
 
-		Boolean actual = u.joinGroup("Jack", group, u);
+		Boolean actual = u.joinGroup("Jack", g, u);
 		
 		assertEquals(false, actual);
 	}
