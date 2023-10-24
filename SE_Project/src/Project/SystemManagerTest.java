@@ -137,6 +137,8 @@ class SystemManagerTest {
 	void testGetGroupsSortedAlphabetically() {
 
 		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
 
 		Group g1 = new Group("Sports");
 		Group g2 = new Group("Games");
@@ -149,6 +151,12 @@ class SystemManagerTest {
 		sm.addGroup(g3);
 		sm.addGroup(g4);
 		sm.addGroup(g5);
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
 
 		ArrayList<Group> actual = sm.getGroups_Alphabetically();
 
@@ -321,10 +329,14 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testGetGroupsUser_success() {
+	void testgetGroupsByUser_success() {
 		SystemManager sm = new SystemManager();
 		Group g1 = new Group("Funny");
 		Group g2 = new Group("Happy");
+		category c1 = new category("happy");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
 
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
@@ -339,9 +351,8 @@ class SystemManagerTest {
 		sm.addUser(u1);
 		sm.addUser(u2);
 
-
 		ArrayList<Group> actual = new ArrayList<>();
-		actual.addAll(sm.getGroups(u1));
+		actual.addAll(sm.getGroupsByUser(u1));
 		
 		ArrayList<Group> expected = new ArrayList<>();
 		expected.add(g1);
@@ -365,7 +376,6 @@ class SystemManagerTest {
 
 		sm.addUser(u1);
 		sm.addUser(u2);
-
 
 		ArrayList<User> actual = new ArrayList<>();
 		actual.addAll(sm.getUsersInGroup(g));
