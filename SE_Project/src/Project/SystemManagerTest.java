@@ -139,18 +139,14 @@ class SystemManagerTest {
 		SystemManager sm = new SystemManager();
 		
 		category c1 = new category("fun");
+		
+		sm.addCategory(c1);
 
 		Group g1 = new Group("Sports");
 		Group g2 = new Group("Games");
 		Group g3 = new Group("Video Games");
 		Group g4 = new Group("Foods");
 		Group g5 = new Group("Apples");
-
-		sm.addGroup(g1);
-		sm.addGroup(g2);
-		sm.addGroup(g3);
-		sm.addGroup(g4);
-		sm.addGroup(g5);
 		
 		c1.addGroup(g1);
 		c1.addGroup(g2);
@@ -337,6 +333,8 @@ class SystemManagerTest {
 		
 		c1.addGroup(g1);
 		c1.addGroup(g2);
+		
+		sm.addCategory(c1);
 
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
