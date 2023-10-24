@@ -82,13 +82,11 @@ public class Validator {
 	}
 	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise
 
-	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise
-	public static boolean validateUserInGroup(ArrayList<Group> groups, User user) {
+	//returns true if there exists a group that matches the given user, returns false otherwise
+	public static boolean validateUserInGroup(Group g, User user) {
 
-		for (Group group : groups) {	//Loop through groups
-			if (group.isMemberInGroup(user.getId())) {	//Check if user is in group
-				return true;	//return true if user is in group
-			}
+		if (g.isMemberInGroup(user.getId())) {	//Check if user is in group
+			return true;	//return true if user is in group
 		}
 
 		return false;	//return false otherwise
