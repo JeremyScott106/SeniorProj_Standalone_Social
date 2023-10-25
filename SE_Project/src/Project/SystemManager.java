@@ -73,7 +73,7 @@ public class SystemManager {
 
 	public boolean addGroup(Group g) {	//This should check to ensure that a new Group doesn't already exist
 		ArrayList<Group> groups = new ArrayList<>();
-		groups.addAll(getGroups());
+		groups.addAll(getAllGroups());
 		return true;
 	}
 
@@ -131,7 +131,7 @@ public class SystemManager {
 	}
 	
 	//helper method, returns a list of all groups.
-	public ArrayList<Group> getGroups(){
+	private ArrayList<Group> getAllGroups(){
 		ArrayList<Group> groups = new ArrayList<>();
 		for(category c : categories) {
 			groups.addAll(c.getGroupsAlphabetically());
@@ -139,9 +139,9 @@ public class SystemManager {
 		return groups;
 	}
 	
-	public ArrayList<Group> getGroups_Alphabetically() {
+	public ArrayList<Group> getAllGroups_Alphabetically() {
 		ArrayList<Group> groups = new ArrayList<>();
-		groups.addAll(getGroups());
+		groups.addAll(getAllGroups());
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
@@ -159,7 +159,7 @@ public class SystemManager {
 	 public ArrayList<Group> getGroupsByUser(User user) {
 	 ArrayList<Group> group = new ArrayList<>();
 	 ArrayList<Group> groups = new ArrayList<>();
-	 groups.addAll(getGroups());
+	 groups.addAll(getAllGroups());
 	 for (Group g: groups) {
 		 if (g.isMemberInGroup(user.getId()) == true){
 			 group.add(g);
@@ -181,7 +181,7 @@ public class SystemManager {
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
 		 ArrayList<Group> groupInCategory = new ArrayList<>();
 		 ArrayList<Group> groups = new ArrayList<>();
-		 groups.addAll(getGroups_Alphabetically());
+		 groups.addAll(getAllGroups_Alphabetically());
 		 for (Group g: groups) {
 			 if (c.isGroupInCategory(g.getGroupName()) == true){
 				 groupInCategory.add(g);
