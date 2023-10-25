@@ -9,68 +9,84 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Main extends JFrame {
-	private JFrame Main;
-	private JMenuBar menubar;
-	private JMenu Menu;
-	private JMenuItem Login;
-	public SystemManager manager = new SystemManager();
+	//private JFrame Main; -> will need, may move
+	private SystemManager manager = new SystemManager();
 	
-	public Main() {
-		setLayout(new FlowLayout());
+	
+	// Creates the menu bar //
+	private JMenuBar createMenus() {
+				//Bar that holds Menus//
+		JMenuBar menus = new JMenuBar();
+				//Menus//
+		JMenu file = new JMenu("File");
+		JMenu test = new JMenu("Test");
+				//Sub-menus//
+		JMenuItem login = new JMenuItem("Login");
+		JMenuItem myInfo = new JMenuItem("My Info");
+		JMenuItem fakeUser1 = new JMenuItem("Make Fake User1");
+				//Add menus to bar//
+		menus.add(file);
+		menus.add(test);
+				//Add sub-menus to menus//
+		file.add(login);
+		test.add(myInfo);
+		test.add(fakeUser1);
 		
-		menubar = new JMenuBar();
-		add(menubar);
+				//Events for menu clicks//
+		LoginEvent e1 = new LoginEvent();
+		login.addActionListener(e1);
+		MakeFakeUser e2 = new MakeFakeUser();	//when files can be read, this can disappear//
+		fakeUser1.addActionListener(e2);
+		MyInformation e3 = new MyInformation();
+		myInfo.addActionListener(e3);
 		
-		Menu = new JMenu("Menu");
-		JMenu Status = new JMenu("Status");
-		menubar.add(Menu);
-		menubar.add(Status);
 		
-		Login = new JMenuItem("Login");
-		JMenuItem amLoggedIn = new JMenuItem("Login Status");
-		Menu.add(Login);
-		Status.add(amLoggedIn);
-		
-		setJMenuBar(menubar);
-		
-		LoginEvent e = new LoginEvent();
-		Login.addActionListener(e);
-		
-		amLoggedIn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.printf("User is signed in: %b\n", manager.isLoggedIn());
-				System.out.printf("User is admin: %b\n", manager.isAdmin());
-				if (manager.isLoggedIn()) {
-					System.out.printf("Current User: %s\n", manager.getCurrentUser().getId());
-				}
-			}
-			
-		});
+		return menus;
 	}
 	
-	public class LoginEvent implements ActionListener {
+				//Only a menu so far//
+	private Main() {
+		setLayout(new FlowLayout());
+		JMenuBar topBar = createMenus();
+		add(topBar);
+		setJMenuBar(topBar);
+
+	}
+
+				// This will create a new window that allows a user to login //
+	private class LoginEvent implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			makeFakeUser();
 			new Login(manager);
 		}
 	}
-	
-	private void makeFakeUser() {
-		String name = "Testey One";
-		String bday = "01/01/1999";
-		String city = "Home";
-		String state = "Georgia";
-		String username = "DespisesJava123";
-		String password = "abc123";
-		
-		manager.registerUser(name, bday, city, state, username, password);
-		
+				// This will create a fake user that can be used for testing, System will show login information //
+	private class MakeFakeUser implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String name = "Testey One";
+			String bday = "01/01/1999";
+			String city = "Home";
+			String state = "Georgia";
+			String username = "DespisesJava123";
+			String password = "abc123";
+			
+			manager.registerUser(name, bday, city, state, username, password);
+			
+			System.out.printf("   /----/\nNew User Created\n   /----/\nUsername: %s\nPassword: %s\n", username, password);
+		}
 	}
-	
+				// This will show the current user login information //
+	private class MyInformation implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.out.printf("\nUser is signed in: %b\n", manager.isLoggedIn());
+			System.out.printf("User is admin: %b\n", manager.isAdmin());
+			if (manager.isLoggedIn()) {
+				System.out.printf("Current User: %s\n", manager.getCurrentUser().getId());
+			}
+		}
+	}
+				// Main //
 	public static void main(String args[]) {
-		Main gui = new Main();
+		Main gui = new Main();					// Needs to not be static //
 		
 		gui.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		gui.setSize(500,500);
