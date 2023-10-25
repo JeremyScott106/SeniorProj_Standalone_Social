@@ -154,7 +154,7 @@ class SystemManagerTest {
 		c1.addGroup(g4);
 		c1.addGroup(g5);
 
-		ArrayList<Group> actual = sm.getGroups_Alphabetically();
+		ArrayList<Group> actual = sm.getAllGroups_Alphabetically();
 
 		ArrayList<Group> expected = new ArrayList<>();
 
