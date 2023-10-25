@@ -95,7 +95,7 @@ public class User {
 		return registeredDate;
 	}
 
-    public Integer getGroupStatus(String groupName) {
+    public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
         return groupMemberships.get(groupName);
     }
 
