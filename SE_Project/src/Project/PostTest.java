@@ -17,7 +17,7 @@ public class PostTest {
 	}
 	
 	
-	//Testing getUser
+	//Testing getUser//
 	@Test
 	void getUserTest() {
 		Group testGroup = new Group("Standard Name");
