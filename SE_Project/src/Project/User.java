@@ -3,6 +3,7 @@ package Project;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,17 +98,6 @@ public class User {
     public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
         return groupMemberships.get(groupName);
     }
-
-    public boolean joinGroup(String groupName) {	//This needs to check that the given Group is not already in the Map
-        groupMemberships.put(groupName, 1);
-        return true;
-    }
-
-    public boolean leaveGroup(String groupName) {	//This needs to check that the given Group is in the Map
-        groupMemberships.put(groupName, 0);
-        return true;
-    }
-    
     
     /*
      * Formats User data to be written
@@ -143,5 +133,5 @@ public class User {
     	
     	return userData;
     }
-
+  
 }

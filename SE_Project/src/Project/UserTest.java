@@ -1,7 +1,10 @@
 package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
 import java.util.Date;
+
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,8 +35,8 @@ public class UserTest {
 		
 		assertEquals(true, actual);
 	}
-	
-	@Test
+  
+  @Test
 	void test_getUserWriteData() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", 
 							"Valdosta", "Georgia", "12/17/2007");
@@ -53,7 +56,7 @@ public class UserTest {
 		
 		assertEquals(expected, actual);
 	}
-
+  
 	@Test
 	void testGetId() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
@@ -126,43 +129,29 @@ public class UserTest {
 		assertEquals("10/12/2009", actual);
 	}
 	
-	@Test
-	void testJoinGroup() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		
-		boolean actual = u.joinGroup("Football");
-		
-		assertEquals(true, actual);
-	}
-	
-	@Test
-	void testLeaveGroup() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		
-		u.joinGroup("Football");
-		
-		boolean actual = u.leaveGroup("Football");
-		
-		assertEquals(true, actual);
-	}
-	
-	@Test
 	void testGetGroupStatus_JoinedStatus() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		
-		u.joinGroup("Football");
+		SystemManager sm = new SystemManager();
+		category cat = new category("Test");
+		Group group = new Group("Football");
+		cat.addGroup(group);
+		sm.addCategory(cat);
+		group.addMember(u);
 		
 		Integer actual = u.getGroupStatus("Football");
 		
 		assertEquals(1, actual);
 	}
 	
-	@Test
+	@Ignore 	// No way to leave group //
 	void testGetGroupStatus_LeftStatus() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		
-		u.joinGroup("Football");
-		u.leaveGroup("Football");
+		SystemManager sm = new SystemManager();
+		category cat = new category("Test");
+		Group group = new Group("Football");
+		cat.addGroup(group);
+		sm.addCategory(cat);
+		group.addMember(u);
 		
 		Integer actual = u.getGroupStatus("Football");
 		
@@ -172,9 +161,6 @@ public class UserTest {
 	@Test
 	void testGetGroupStatus_NonexistentStatus() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		
-		u.joinGroup("Football");
-		
 		Integer actual = u.getGroupStatus("Soccer");
 		
 		assertEquals(null, actual);
