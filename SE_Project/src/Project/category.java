@@ -47,7 +47,17 @@ public class category {
 
 		return groups;
 	}
-
+	
+    //Checks to see if a Group is already a part of a category
+    public boolean isGroupInCategory (String groupName) {
+        for(Group g : groups) {
+            if(g.getGroupName().equals(groupName)) {
+                return true;
+            }
+        }
+        return false;
+        
+    }
 
 	@Override
 	public String toString() {

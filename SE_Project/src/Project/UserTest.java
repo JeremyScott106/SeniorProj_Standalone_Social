@@ -1,6 +1,7 @@
 package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
 import java.text.DateFormat;
@@ -34,6 +35,17 @@ public class UserTest {
 	}
 	
 	@Test
+
+	void testjoinGroup_Success() {
+		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group g = new Group("fun");
+		ArrayList<Group> group = new ArrayList<>();
+		group.add(g);
+
+		Boolean actual = u.joinGroup("Jack", g, u);
+  }
+  
+  @Test
 	void test_getUserWriteData() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", 
 							"Valdosta", "Georgia", "12/17/2007");
@@ -52,7 +64,8 @@ public class UserTest {
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
-
+  }
+  
 	void testGetId() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
 		
@@ -145,6 +158,18 @@ public class UserTest {
 	}
 	
 	@Test
+	void testjoinGroup_Fail() {
+		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group g = new Group("fun");
+		g.addMember(u);
+		ArrayList<Group> group = new ArrayList<>();
+		group.add(g);
+
+		Boolean actual = u.joinGroup("Jack", g, u);
+		
+		assertEquals(false, actual);
+	}
+	
 	void testGetGroupStatus_JoinedStatus() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
 		
