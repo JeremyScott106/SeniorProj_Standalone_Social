@@ -55,8 +55,9 @@ public class UserTest {
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
-  }
+	}
   
+	@Test
 	void testGetId() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
 		
