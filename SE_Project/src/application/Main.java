@@ -9,7 +9,14 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Main extends JFrame {
-	//private JFrame Main; -> will need, may move
+	
+	private JMenuBar topBar;
+	private JPanel homeView;
+	private JPanel categoryView;
+	private JPanel groupView;
+	private JPanel postView;
+	private JPanel profileView;
+	
 	private SystemManager manager = new SystemManager();
 	
 	
@@ -43,15 +50,6 @@ public class Main extends JFrame {
 		
 		return menus;
 	}
-	
-				//Only a menu so far//
-	private Main() {
-		setLayout(new FlowLayout());
-		JMenuBar topBar = createMenus();
-		add(topBar);
-		setJMenuBar(topBar);
-
-	}
 
 				// This will create a new window that allows a user to login //
 	private class LoginEvent implements ActionListener {
@@ -84,14 +82,64 @@ public class Main extends JFrame {
 			}
 		}
 	}
+				// ************ Home View ************ //
+	private class homePanel extends JPanel {
+
+		private JPanel mainPane;
+		private JButton jb;
+		
+		public homePanel(JPanel p, Main info) {
+			mainPane = p;
+			setOpaque(true);
+			setBackground(Color.black);		
+		}
+		
+	    @Override
+	    public Dimension getPreferredSize()
+	    {
+	        return (new Dimension(500, 500));
+	    }
+	}
+	
+				//Only a menu so far//
+	private void displayGUI() {
+		this.setSize(500,500);
+		JFrame frame = new JFrame("The Computer Sees Everything You Are Doing");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		JPanel mainPane = new JPanel();
+		mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		mainPane.setLayout(new CardLayout());
+		
+		homeView = new homePanel(mainPane, this);
+		
+		/*
+		categoryView;
+		groupView;
+		postView;
+		profileView;
+		*/
+		mainPane.add(homeView);
+		frame.getContentPane().add(mainPane, BorderLayout.CENTER);   
+		
+		topBar = createMenus();
+		
+		setJMenuBar(topBar);
+		frame.add(topBar, BorderLayout.NORTH);
+		
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
 				// Main //
 	public static void main(String args[]) {
-		Main gui = new Main();					// Needs to not be static //
-		
-		gui.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		gui.setSize(500,500);
-		gui.setVisible(true);
-		gui.setTitle("The End of the Internet");
-		
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                new Main().displayGUI();
+            }
+        });
 	}
 }
