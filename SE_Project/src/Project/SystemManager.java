@@ -8,6 +8,7 @@ public class SystemManager {
 
 	private boolean userSignedIn;		//User sign in status, true if any User is signed in
 	private boolean adminSignedIn;		//Admin sign in status, true if an Admin is signed in
+	private User currentUser;
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 
@@ -105,6 +106,7 @@ public class SystemManager {
 				if (Validator.validPassword(u, password)) {	//If the password was correct
 					userSignedIn = true;	//Set User sign in status to true
 					adminSignedIn = true;	//Set Admin sign in status to true
+					this.currentUser = u;
 					return true;
 				}
 				else { 					//If the password was incorrect
@@ -115,6 +117,7 @@ public class SystemManager {
 		else {							//If the username is of a User
 			if (Validator.validPassword(u, password)) {	//If the password was correct
 				userSignedIn = true;	//Set User sign in status to true
+				this.currentUser = u;
 				return true;			//Return true
 			}
 			else {						//If the password was incorrect
@@ -156,11 +159,23 @@ public class SystemManager {
 		return users;
 	}
 	
+
+	public boolean isLoggedIn() {
+		return userSignedIn;
+	}
+	
+	public boolean isAdmin() {
+		return adminSignedIn;
+	}
+	
+	public User getCurrentUser() {
+		return currentUser;
+  }
+
 	public ArrayList<Admin> getAdmins_Alphabetically() {
-		
 		Collections.sort(admins, new SortUsersByName());
-		
 		return admins;
+
 	}
 
 	 public ArrayList<Group> getGroupsByUser(User user) {
