@@ -86,7 +86,7 @@ public class PostTest {
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		testPost1.subScore();
 		
-		assertEquals(-1, testPost1.getPostBody());
+		assertEquals(-1, testPost1.getScore());
 		}
 	
 }
