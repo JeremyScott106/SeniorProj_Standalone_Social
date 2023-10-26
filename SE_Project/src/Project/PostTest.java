@@ -17,7 +17,7 @@ public class PostTest {
 	}
 	
 	
-	//Testing getUser//(String name, String id, String password, String birthdate, String city, String state)
+	//Testing getUser
 	@Test
 	void getUserTest() {
 		Group testGroup = new Group("Standard Name");
