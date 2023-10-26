@@ -1,25 +1,63 @@
 package Project;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class User {
 
-	private String id;
-	private String name;
-	private Date birthdate;
-	private String city;
-	private String state;
-	private String password;
-	private Date registeredDate;
-	private Map<String, Integer> groupMemberships;
+	protected String id;
+	protected String name;
+	protected Date birthdate;
+	protected String city;
+	protected String state;
+	protected String password;
+	protected Date registeredDate;
+	protected Map<String, Integer> groupMemberships;
 
-
-	public User(String name, String id, String password) {
+	
+	//Constructor is intended to be used for adding new Users
+	public User(String name, String id, String password, String birthdate, String city, String state) {
 		this.name = name;
 		this.id = id;
 		this.password = password;
+		this.birthdate = new Date();
+		try {
+			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			this.birthdate = df.parse(birthdate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.city = city;
+		this.state = state;
+		registeredDate = new Date();
+        groupMemberships = new HashMap<>();
+	}
+	
+	//Constructor is intended to be used for adding an Existing User read from the disk
+	public User(String name, String id, String password, String birthdate, String city, String state, String registeredDate) {
+		this.name = name;
+		this.id = id;
+		this.password = password;
+		this.birthdate = new Date();
+		try {
+			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			this.birthdate = df.parse(birthdate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.city = city;
+		this.state = state;
+		try {
+			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			this.registeredDate = df.parse(registeredDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
         groupMemberships = new HashMap<>();
 	}
 
@@ -57,16 +95,61 @@ public class User {
 		return registeredDate;
 	}
 
-    public Integer getGroupStatus(String groupName) {
+    public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
         return groupMemberships.get(groupName);
     }
 
-    public void joinGroup(String groupName) {
-        groupMemberships.put(groupName, 1);
+    public boolean joinGroup(String groupName, Group g, User u) {
+    	Boolean v = Validator.validateUserInGroup(g, u);
+    	if(v == false) {
+            groupMemberships.put(groupName, 1);
+            return true;
+    	}
+    	return false;
     }
 
-    public void leaveGroup(String groupName) {
-        groupMemberships.put(groupName, 0);
+    public boolean leaveGroup(String groupName, Group g, User u) {
+    	Boolean v = Validator.validateUserInGroup(g, u);
+    	if(v == true) {
+            groupMemberships.put(groupName, 0);
+            return true;
+    	}
+    	return false;
     }
-
+    
+    /*
+     * Formats User data to be written
+     * Format:
+     * 
+     * @START
+	 * @USER
+	 * @NAME="name_of_user"
+	 * @BIRTHDATE=MM/DD/YYYY
+	 * @CITY="city_of_user"
+	 * @STATE="state_of_user"
+	 * @USERNAME="username_of_user"
+	 * @PASSWORD="password_of_user"
+	 * @REGISTERED_DATE=MM/DD/YYYY
+	 * @END
+     *  
+     */
+    public String getUserWriteData() {
+    	DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+    	String bday = df.format(birthdate);
+    	String regDate = df.format(registeredDate);
+    	
+    	String userData = "@START\n" + 
+    						"@USER\n" + 
+    						"@NAME=" + name + "\n" + 
+    						"@BIRTHDATE=" + bday + "\n" + 
+    						"@CITY=" + city + "\n" + 
+    						"@STATE=" + state + "\n" + 
+    						"@USERNAME=" + id + "\n" + 
+    						"@PASSWORD=" + password + "\n" + 
+    						"@REGISTERED_DATE=" + regDate + "\n" + 
+    						"@END\n\n";
+    	
+    	return userData;
+    }
+  
 }

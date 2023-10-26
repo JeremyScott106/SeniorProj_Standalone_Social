@@ -20,11 +20,11 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addUser(u1);
 		sm.addUser(u2);
@@ -42,11 +42,11 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addUser(u1);
 		sm.addUser(u2);
@@ -65,11 +65,11 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addUser(u1);
 		sm.addUser(u2);
@@ -87,8 +87,8 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!");
-		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77");
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addAdmin(a1);
 		sm.addAdmin(a2);
@@ -103,8 +103,8 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!");
-		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77");
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addAdmin(a1);
 		sm.addAdmin(a2);
@@ -119,8 +119,8 @@ class SystemManagerTest {
 
 		SystemManager sm = new SystemManager();
 
-		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!");
-		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77");
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addAdmin(a1);
 		sm.addAdmin(a2);
@@ -137,20 +137,24 @@ class SystemManagerTest {
 	void testGetGroupsSortedAlphabetically() {
 
 		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+		
+		sm.addCategory(c1);
 
 		Group g1 = new Group("Sports");
 		Group g2 = new Group("Games");
 		Group g3 = new Group("Video Games");
 		Group g4 = new Group("Foods");
 		Group g5 = new Group("Apples");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
 
-		sm.addGroup(g1);
-		sm.addGroup(g2);
-		sm.addGroup(g3);
-		sm.addGroup(g4);
-		sm.addGroup(g5);
-
-		ArrayList<Group> actual = sm.getGroups_Alphabetically();
+		ArrayList<Group> actual = sm.getAllGroups_Alphabetically();
 
 		ArrayList<Group> expected = new ArrayList<>();
 
@@ -281,11 +285,11 @@ class SystemManagerTest {
 	void testRegisterUser_Success() {
 		SystemManager sm = new SystemManager();
 
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addUser(u1);
 		sm.addUser(u2);
@@ -302,11 +306,11 @@ class SystemManagerTest {
 	void testRegisterUser_Failure() {
 		SystemManager sm = new SystemManager();
 
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		sm.addUser(u1);
 		sm.addUser(u2);
@@ -317,6 +321,140 @@ class SystemManagerTest {
 		boolean actual = sm.registerUser("Jack", "11/3/99", "Valdosta", "GA", "jackster3", "W@ck0#5");
 
 		assertEquals(false, actual);
+
+	}
+	
+
+	
+	@Test
+	void testGetAdmins_Alphabetically() {
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
+		
+		ArrayList<Admin> expected = new ArrayList<Admin>();
+		
+		expected.add(a3);
+		expected.add(a2);
+		expected.add(a4);
+		expected.add(a5);
+		expected.add(a1);
+		
+		assertEquals(expected, actual);
+  }
+		
+
+	@Test
+	void testgetGroupsByUser_success() {
+		SystemManager sm = new SystemManager();
+		Group g1 = new Group("Funny");
+		Group g2 = new Group("Happy");
+		category c1 = new category("happy");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		
+		sm.addCategory(c1);
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
+		
+		g1.addMember(u1);
+		g1.addMember(u2);
+		g2.addMember(u1);
+				
+		sm.addGroup(g1);
+		sm.addGroup(g2);
+
+		sm.addUser(u1);
+		sm.addUser(u2);
+
+		ArrayList<Group> actual = new ArrayList<>();
+		actual.addAll(sm.getGroupsByUser(u1));
+		
+		ArrayList<Group> expected = new ArrayList<>();
+		expected.add(g1);
+		expected.add(g2);
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testgetUsersInGroup_Success() {
+		SystemManager sm = new SystemManager();
+		Group g = new Group("Funny");
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
+		
+		g.addMember(u1);
+		g.addMember(u2);
+		
+		sm.addGroup(g);
+
+		sm.addUser(u1);
+		sm.addUser(u2);
+
+		ArrayList<User> actual = new ArrayList<>();
+		actual.addAll(sm.getUsersInGroup(g));
+		
+		ArrayList<User> expected = new ArrayList<>();
+		expected.add(u1);
+		expected.add(u2);
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testGetGroupsInCategory_Alphabetically() {
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("test");
+		
+		sm.addCategory(c1);
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		sm.addGroup(g1);
+		sm.addGroup(g2);
+		sm.addGroup(g3);
+		sm.addGroup(g4);
+		sm.addGroup(g5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
+
+
+		ArrayList<Group> expected = new ArrayList<>();
+		expected.add(g4);
+		expected.add(g3);
+		expected.add(g1);
+		expected.add(g2);
+		expected.add(g5);
+		
+		 
+		ArrayList<Group> actual = new ArrayList<>();
+		actual.addAll(sm.getGroupsInCategory_Alphabetically(c1));
+		assertEquals(expected, actual);
 
 	}
 }

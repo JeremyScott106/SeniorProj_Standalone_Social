@@ -20,11 +20,11 @@ class ValidatorTest {
 
 	@Test
 	void testValidUsername_Users_Success() {
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		ArrayList<User> users = new ArrayList<>();
 		users.add(u1);
@@ -41,11 +41,11 @@ class ValidatorTest {
 
 	@Test
 	void testValidUsername_Users_Failure() {
-		User u1 = new User("Jack", "jackster3", "HKb@wser!");
-		User u2 = new User("Dan", "theWiz", "WartH@g77");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t");
-		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble");
-		User u5 = new User("Ethan", "IDK", "WHY#5");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 
 		ArrayList<User> users = new ArrayList<>();
 		users.add(u1);
@@ -62,8 +62,8 @@ class ValidatorTest {
 
 	@Test
 	void testValidUsername_Admins_Success() {
-		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!");
-		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77");
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
 
 		ArrayList<Admin> admins = new ArrayList<>();
 		admins.add(a1);
@@ -77,8 +77,8 @@ class ValidatorTest {
 
 	@Test
 	void testValidUsername_Admins_Failure() {
-		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!");
-		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77");
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
 
 		ArrayList<Admin> admins = new ArrayList<>();
 		admins.add(a1);
@@ -216,6 +216,43 @@ class ValidatorTest {
 
 
 		assertEquals(null, actual);
+	}
+	
+	@Test
+	void testValidateUserInGroup_Success() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("funny");
+		
+		g1.addMember(u1);
+		
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.add(g1);
+
+
+		Boolean actual = Validator.validateUserInGroup(g1, u1);
+
+
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testValidateUserInGroup_Failure() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Jack2", "jackster5", "HKb@wser!!", "11/10/1997", "Valdosta", "Georgia");
+
+		Group g1 = new Group("funny");
+		
+		g1.addMember(u1);
+		
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.add(g1);
+
+
+		Boolean actual = Validator.validateUserInGroup(g1, u2);
+
+
+		assertEquals(false, actual);
 	}
 
 }
