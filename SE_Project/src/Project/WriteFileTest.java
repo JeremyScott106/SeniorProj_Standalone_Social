@@ -25,7 +25,7 @@ class WriteFileTest {
 		manager.addUser(u4);
 		manager.addUser(u5);
 		
-		String fileName = "C:\\Users\\rks11\\git\\23fa_team2\\SE_Project\\src\\Project\\WriteFile_Test_Users.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\WriteFile_Test_Users.txt";
 		
 		try {
 			
