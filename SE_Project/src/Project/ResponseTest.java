@@ -9,8 +9,8 @@ public class ResponseTest {
 	@Test
 	void getPaternalIDTest() {
 		Group testGroup1 = new Group("Standard Name");
-		User testUser1 = new User("Bob", "ID", "pw");
-		User testUser2 = new User("Bob", "ID", "pw");
+		User testUser1 = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		User testUser2 = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser1, testGroup1, 1, "I'm posting.");
 		Response testResponse1 = new Response(testUser2, testGroup1, 2, "I disagree.", testPost1);
 		

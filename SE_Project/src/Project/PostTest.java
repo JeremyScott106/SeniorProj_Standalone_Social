@@ -10,7 +10,7 @@ public class PostTest {
 	@Test
 	void getGroupTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 
 		assertEquals(testGroup, testPost1.getGroup());
@@ -21,7 +21,7 @@ public class PostTest {
 	@Test
 	void getUserTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(testUser, testPost1.getUser());
@@ -30,7 +30,7 @@ public class PostTest {
 	@Test
 	void getIDTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(1, testPost1.getId());
@@ -40,7 +40,7 @@ public class PostTest {
 	@Test
 	void getPostBodyTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals("I'm posting.", testPost1.getPostBody());
@@ -50,7 +50,7 @@ public class PostTest {
 	@Test
 	void getScoreTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(0, testPost1.getScore());
@@ -60,7 +60,7 @@ public class PostTest {
 	@Test
 	void getTimeTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		java.util.Date timeTest = new java.util.Date();;
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
@@ -71,7 +71,7 @@ public class PostTest {
 	@Test
 	void addScoreTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		testPost1.addScore();
 		
@@ -82,11 +82,11 @@ public class PostTest {
 	@Test
 	void subScoreTest() {
 		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		testPost1.subScore();
 		
-		assertEquals(-1, testPost1.getPostBody());
+		assertEquals(-1, testPost1.getScore());
 		}
 	
 }

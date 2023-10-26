@@ -98,24 +98,6 @@ public class User {
     public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
         return groupMemberships.get(groupName);
     }
-
-    public boolean joinGroup(String groupName, Group g, User u) {
-    	Boolean v = Validator.validateUserInGroup(g, u);
-    	if(v == false) {
-            groupMemberships.put(groupName, 1);
-            return true;
-    	}
-    	return false;
-    }
-
-    public boolean leaveGroup(String groupName, Group g, User u) {
-    	Boolean v = Validator.validateUserInGroup(g, u);
-    	if(v == true) {
-            groupMemberships.put(groupName, 0);
-            return true;
-    	}
-    	return false;
-    }
     
     /*
      * Formats User data to be written
