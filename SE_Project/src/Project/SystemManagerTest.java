@@ -137,20 +137,24 @@ class SystemManagerTest {
 	void testGetGroupsSortedAlphabetically() {
 
 		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+		
+		sm.addCategory(c1);
 
 		Group g1 = new Group("Sports");
 		Group g2 = new Group("Games");
 		Group g3 = new Group("Video Games");
 		Group g4 = new Group("Foods");
 		Group g5 = new Group("Apples");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
 
-		sm.addGroup(g1);
-		sm.addGroup(g2);
-		sm.addGroup(g3);
-		sm.addGroup(g4);
-		sm.addGroup(g5);
-
-		ArrayList<Group> actual = sm.getGroups_Alphabetically();
+		ArrayList<Group> actual = sm.getAllGroups_Alphabetically();
 
 		ArrayList<Group> expected = new ArrayList<>();
 
@@ -320,6 +324,7 @@ class SystemManagerTest {
 
 	}
 	
+
 	
 	@Test
 	void testGetAdmins_Alphabetically() {
@@ -348,6 +353,108 @@ class SystemManagerTest {
 		expected.add(a1);
 		
 		assertEquals(expected, actual);
+  }
 		
+
+	@Test
+	void testgetGroupsByUser_success() {
+		SystemManager sm = new SystemManager();
+		Group g1 = new Group("Funny");
+		Group g2 = new Group("Happy");
+		category c1 = new category("happy");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		
+		sm.addCategory(c1);
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
+		
+		g1.addMember(u1);
+		g1.addMember(u2);
+		g2.addMember(u1);
+				
+		sm.addGroup(g1);
+		sm.addGroup(g2);
+
+		sm.addUser(u1);
+		sm.addUser(u2);
+
+		ArrayList<Group> actual = new ArrayList<>();
+		actual.addAll(sm.getGroupsByUser(u1));
+		
+		ArrayList<Group> expected = new ArrayList<>();
+		expected.add(g1);
+		expected.add(g2);
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testgetUsersInGroup_Success() {
+		SystemManager sm = new SystemManager();
+		Group g = new Group("Funny");
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
+		
+		g.addMember(u1);
+		g.addMember(u2);
+		
+		sm.addGroup(g);
+
+		sm.addUser(u1);
+		sm.addUser(u2);
+
+		ArrayList<User> actual = new ArrayList<>();
+		actual.addAll(sm.getUsersInGroup(g));
+		
+		ArrayList<User> expected = new ArrayList<>();
+		expected.add(u1);
+		expected.add(u2);
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testGetGroupsInCategory_Alphabetically() {
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("test");
+		
+		sm.addCategory(c1);
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		sm.addGroup(g1);
+		sm.addGroup(g2);
+		sm.addGroup(g3);
+		sm.addGroup(g4);
+		sm.addGroup(g5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
+
+
+		ArrayList<Group> expected = new ArrayList<>();
+		expected.add(g4);
+		expected.add(g3);
+		expected.add(g1);
+		expected.add(g2);
+		expected.add(g5);
+		
+		 
+		ArrayList<Group> actual = new ArrayList<>();
+		actual.addAll(sm.getGroupsInCategory_Alphabetically(c1));
+		assertEquals(expected, actual);
+
 	}
 }

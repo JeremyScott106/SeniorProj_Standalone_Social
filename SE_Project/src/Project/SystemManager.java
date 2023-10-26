@@ -11,15 +11,13 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 
-	private ArrayList<Group> groups;
 	private ArrayList<category> categories;
 
 	public SystemManager() {
 		userSignedIn = false;
 		adminSignedIn = false;
 		users = new ArrayList<>();
-		admins = new ArrayList<>();
-		groups = new ArrayList<>();
+		admins = new ArrayList<>();		
 		categories = new ArrayList<>();
 
 	}
@@ -74,7 +72,8 @@ public class SystemManager {
 	}
 
 	public boolean addGroup(Group g) {	//This should check to ensure that a new Group doesn't already exist
-		groups.add(g);
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.addAll(getAllGroups());
 		return true;
 	}
 
@@ -131,8 +130,18 @@ public class SystemManager {
 		return categories;
 	}
 	
-	public ArrayList<Group> getGroups_Alphabetically() {
-
+	//helper method, returns a list of all groups.
+	private ArrayList<Group> getAllGroups(){
+		ArrayList<Group> groups = new ArrayList<>();
+		for(category c : categories) {
+			groups.addAll(c.getGroupsAlphabetically());
+		}
+		return groups;
+	}
+	
+	public ArrayList<Group> getAllGroups_Alphabetically() {
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.addAll(getAllGroups());
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
@@ -154,15 +163,37 @@ public class SystemManager {
 		return admins;
 	}
 
-	/* IN WORK
-	 public ArrayList<String> getGroups(User user) {
-		 ArrayList<String> group = new ArrayList<>();
-		 for (int i = 0; i<groups.size(); i++) {
-			 if (groups[i].isMemberInGroup(user.getId()) == true){
-				 group.add(groups.getGroupName());
+	 public ArrayList<Group> getGroupsByUser(User user) {
+	 ArrayList<Group> group = new ArrayList<>();
+	 ArrayList<Group> groups = new ArrayList<>();
+	 groups.addAll(getAllGroups());
+	 for (Group g: groups) {
+		 if (g.isMemberInGroup(user.getId()) == true){
+			 group.add(g);
+		 }
+	 }
+	 return group;
+}
+	 
+	 public ArrayList<User> getUsersInGroup(Group group) {
+		 ArrayList<User> userInGroup = new ArrayList<>();
+		 for (User u: users) {
+			 if (group.isMemberInGroup(u.getId()) == true){
+				 userInGroup.add(u);
 			 }
 		 }
-		 return group;
+		 return userInGroup;
 	 }
-	 */
+	
+	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
+		 ArrayList<Group> groupInCategory = new ArrayList<>();
+		 ArrayList<Group> groups = new ArrayList<>();
+		 groups.addAll(getAllGroups_Alphabetically());
+		 for (Group g: groups) {
+			 if (c.isGroupInCategory(g.getGroupName()) == true){
+				 groupInCategory.add(g);
+			 }
+		 }
+		 return groupInCategory;
+	 }
 }
