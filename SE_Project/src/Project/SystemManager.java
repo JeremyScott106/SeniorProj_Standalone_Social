@@ -155,6 +155,13 @@ public class SystemManager {
 
 		return users;
 	}
+	
+	public ArrayList<Admin> getAdmins_Alphabetically() {
+		
+		Collections.sort(admins, new SortUsersByName());
+		
+		return admins;
+	}
 
 	 public ArrayList<Group> getGroupsByUser(User user) {
 	 ArrayList<Group> group = new ArrayList<>();

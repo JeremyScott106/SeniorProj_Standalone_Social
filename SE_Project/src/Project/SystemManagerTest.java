@@ -324,6 +324,38 @@ class SystemManagerTest {
 
 	}
 	
+
+	
+	@Test
+	void testGetAdmins_Alphabetically() {
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
+		
+		ArrayList<Admin> expected = new ArrayList<Admin>();
+		
+		expected.add(a3);
+		expected.add(a2);
+		expected.add(a4);
+		expected.add(a5);
+		expected.add(a1);
+		
+		assertEquals(expected, actual);
+  }
+		
+
 	@Test
 	void testgetGroupsByUser_success() {
 		SystemManager sm = new SystemManager();
