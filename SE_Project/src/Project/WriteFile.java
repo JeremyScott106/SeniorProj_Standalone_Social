@@ -31,6 +31,18 @@ public class WriteFile {
 	}
 	
 	
+	private static void writeAdmins(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Admin> admins = manager.getAdmins_Alphabetically();
+		
+		for (Admin a : admins) {
+			String adminData = a.getAdminWriteData();
+			
+			writer.write(adminData);
+		}
+		
+	}
+	
 	
 	private static void writeUsers(SystemManager manager, FileWriter writer) throws IOException {
 		
