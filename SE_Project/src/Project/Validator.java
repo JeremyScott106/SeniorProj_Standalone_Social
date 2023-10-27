@@ -92,5 +92,17 @@ public class Validator {
 		return false;	//return false otherwise
 	}
 	//returns true if there exists a user is in a group, returns false otherwise
+	
+	
+	public static boolean validateAdminExists(Admin a, ArrayList<Admin> admins) {
+		
+		for (Admin ad : admins) {
+			if (a.getId().equals(ad.getId())) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
 
 }

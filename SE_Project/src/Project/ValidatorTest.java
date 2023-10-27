@@ -254,5 +254,38 @@ class ValidatorTest {
 
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testValidateAdminExist_Success() {
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<Admin> admins = new ArrayList<Admin>();
+		
+		admins.add(a1);
+		admins.add(a2);
+		
+		boolean actual = Validator.validateAdminExists(a2, admins);
+		
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testValidateAdminExist_Failure() {
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<Admin> admins = new ArrayList<Admin>();
+		
+		admins.add(a1);
+		admins.add(a2);
+		
+		Admin a3 = new Admin("Jack2", "jackster5", "HKb@wser!!", "11/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = Validator.validateAdminExists(a3, admins);
+		
+		assertEquals(false, actual);
+	}
 
 }

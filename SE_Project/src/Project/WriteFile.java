@@ -20,7 +20,11 @@ public class WriteFile {
 			
 			FileWriter writer = new FileWriter(fileName);
 			
+			writeAdmins(manager, writer);
+			
 			writeUsers(manager, writer);
+			
+			writer.write("@ENDFILE");
 			
 			writer.close();
 			

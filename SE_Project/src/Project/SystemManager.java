@@ -28,9 +28,14 @@ public class SystemManager {
 		return true;
 	}
 
-	public boolean addAdmin(Admin a) {	//This should check to ensure that a new user doesn't have the same username as an existing user
-		admins.add(a);					//NOTICE: This will require more variables as the User/Admin class is updated
-		return true;
+	public boolean addAdmin(Admin a) {	
+		if (Validator.validateAdminExists(a, admins)) {
+			return false;
+		}
+		else {
+			admins.add(a);	
+			return true;
+		}
 	}
 
 	public boolean registerUser(String name, String bday, String city,
