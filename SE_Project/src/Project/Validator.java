@@ -104,5 +104,16 @@ public class Validator {
 		return false;
 		
 	}
+	
+	
+	public static boolean validateCategoryExists(category c, ArrayList<category> categories) {
+		
+		for (category cat : categories) {
+			if (c.getName().equals(cat.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

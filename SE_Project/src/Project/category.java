@@ -87,13 +87,8 @@ public class category {
 	public String getCategoryWriteData() {
 		String categoryData = "@START\n" + 
 								"@CATEGORY\n" + 
-								"@NAME=" + name + "\n";
-		
-		for (Group g : groups) {
-			categoryData = categoryData.concat("@GROUP=" + g.getGroupName() + "\n");
-		}
-		
-		categoryData = categoryData.concat("@END\n\n");
+								"@NAME=" + name + "\n" + 
+								"@END\n\n";
 		
 		return categoryData;
 	}

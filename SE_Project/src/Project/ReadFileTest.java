@@ -434,4 +434,51 @@ class ReadFileTest {
 		}
 	}
 	
+
+
+	
+	
+	@Test
+	void testReadFile_Category_Success() {
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Category.txt";
+		
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<category> actualCats = manager.getCategories_Alphabetically();
+			
+			ArrayList<String> expectedNames = new ArrayList<String>();
+			
+			expectedNames.add("Foods");
+			expectedNames.add("Games");
+			expectedNames.add("Memes");
+			expectedNames.add("Sports");
+			
+			boolean namesMatch = true;
+			
+			for (int i = 0; i < actualCats.size(); i++) {
+				
+				if (!actualCats.get(i).getName().equals(expectedNames.get(i))) {
+					namesMatch = false;
+					break;
+				}
+				
+			}
+			
+			assertEquals(true, namesMatch);
+			
+		} catch (FileNotFoundException | incorrectFileFormatException e) {
+			
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+	}
+	
 }

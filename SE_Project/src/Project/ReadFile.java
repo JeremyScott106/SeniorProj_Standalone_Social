@@ -38,6 +38,9 @@ public class ReadFile {
 				else if (line.equals("@USER")) {
 					readUser(manager, reader);
 				}
+				else if(line.equals("@CATEGORY")) {
+					readCategory(manager, reader);
+				}
 				else if (line.equals("")) {
 					continue;
 				}
@@ -302,6 +305,47 @@ public class ReadFile {
 		}
 	}
 
+	
+	private static void readCategory(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+		
+		String name = "";
+		boolean gotName = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = line.substring(0, 5);
+			
+			if (sub.equals("@NAME")) {
+				if (gotName) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					name = line.substring(6);
+					gotName = true;
+					continue;
+				}
+			}
+			else {
+				throw new incorrectFileFormatException();
+			}
+			
+		}
+		
+		if (gotName) {
+			category c = new category(name);
+			manager.addCategory(c);
+		}
+		
+	}
+	
+	
 }
 
 

@@ -287,5 +287,38 @@ class ValidatorTest {
 		
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testValidateCategoryExists_Success() {
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		categories.add(c1);
+		categories.add(c2);
+		
+		boolean actual = Validator.validateCategoryExists(c2, categories);
+		
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testValidateCategoryExists_Failure() {
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		categories.add(c1);
+		categories.add(c2);
+		
+		category c3 = new category("Games");
+		
+		boolean actual = Validator.validateCategoryExists(c3, categories);
+		
+		assertEquals(false, actual);
+	}
 
 }

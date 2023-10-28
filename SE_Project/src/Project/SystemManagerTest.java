@@ -501,4 +501,49 @@ class SystemManagerTest {
 		
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testAddCategory_Success() {
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		manager.addCategory(c4);
+		
+		category c5 = new category("Apples");
+		
+		boolean actual = manager.addCategory(c5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testAddCategory_Failure() {
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		manager.addCategory(c4);
+		manager.addCategory(c5);
+		
+		boolean actual = manager.addCategory(c5);
+		
+		assertEquals(false, actual);
+		
+	}
 }

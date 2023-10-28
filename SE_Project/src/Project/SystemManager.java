@@ -58,10 +58,16 @@ public class SystemManager {
 		return false;					//If there exists a User or Admin with the given username, return false
 	}
 
-	public boolean addCategory(category c) {	//This should check to ensure that a new category doesn't already exist
-		categories.add(c);				//NOTICE: This may require more variables as the Category class is updated
-
-		return true;
+	public boolean addCategory(category c) {
+		
+		if (Validator.validateCategoryExists(c, categories)) {
+			return false;
+		}
+		else {
+			categories.add(c);
+			return true;
+		}
+		
 	}
 
 
