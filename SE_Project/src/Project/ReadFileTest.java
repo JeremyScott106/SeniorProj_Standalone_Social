@@ -481,4 +481,49 @@ class ReadFileTest {
 		
 	}
 	
+	
+	
+	@Test
+	void testReadFile_Group_Success() {
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Group.txt";
+		
+		
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<Group> actualGroups = manager.getAllGroups_Alphabetically();
+			
+			ArrayList<String> expectedNames = new ArrayList<String>();
+			
+			expectedNames.add("Football");
+			expectedNames.add("Hockey");
+			expectedNames.add("Soccer");
+			
+			boolean namesMatch = true;
+			
+			for (int i = 0; i < actualGroups.size(); i++) {
+				
+				if (!actualGroups.get(i).getGroupName().equals(expectedNames.get(i))) {
+					namesMatch = false;
+					break;
+				}
+				
+			}
+			
+			assertEquals(true, namesMatch);
+			
+			
+			
+		} catch (FileNotFoundException | incorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
 }

@@ -41,6 +41,9 @@ public class ReadFile {
 				else if(line.equals("@CATEGORY")) {
 					readCategory(manager, reader);
 				}
+				else if(line.equals("@GROUP")) {
+					readGroup(manager, reader);
+				}
 				else if (line.equals("")) {
 					continue;
 				}
@@ -341,6 +344,67 @@ public class ReadFile {
 		if (gotName) {
 			category c = new category(name);
 			manager.addCategory(c);
+		}
+		
+	}
+	
+	
+	private static void readGroup(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+		
+		String name = "";
+		boolean gotName = false;
+		String catName = "";
+		boolean gotCatName = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = line.substring(0, 5);
+			
+			if (sub.equals("@NAME")) {
+				if (gotName) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					name = line.substring(6);
+					gotName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@CATE")) {
+				if (gotCatName) {
+					throw new incorrectFileFormatException();
+				}
+				else {
+					catName = line.substring(10);
+					gotCatName = true;
+					continue;
+				}
+			}
+			else {
+				throw new incorrectFileFormatException();
+			}
+			
+		}
+		
+		if (gotName && gotCatName) {
+			
+			category c = manager.getCategoryByName(catName);
+			
+			if (!(c==null)) {
+				
+				Group g = new Group(name);
+				
+				c.addGroup(g);
+				
+			}
+			
 		}
 		
 	}

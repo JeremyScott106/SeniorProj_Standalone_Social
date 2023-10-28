@@ -24,6 +24,8 @@ public class WriteFile {
 			
 			writeUsers(manager, writer);
 			
+			writeCategories(manager, writer);
+			
 			writer.write("@ENDFILE");
 			
 			writer.close();
@@ -56,6 +58,19 @@ public class WriteFile {
 			String userData = u.getUserWriteData();
 			
 			writer.write(userData);
+		}
+		
+	}
+	
+	
+	private static void writeCategories(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<category> categories = manager.getCategories_Alphabetically();
+		
+		for (category c : categories) {
+			String catData = c.getCategoryWriteData();
+			
+			writer.write(catData);
 		}
 		
 	}

@@ -75,5 +75,34 @@ class WriteFileTest {
 		}
 		
 	}
+	
+	
+	@Test
+	void testWriteFile_Categories() {
+		
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		category c3 = new category("Games");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test_Categories.txt";
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
 
 }

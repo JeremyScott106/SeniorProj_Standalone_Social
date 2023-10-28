@@ -222,4 +222,8 @@ public class SystemManager {
 		 }
 		 return groupInCategory;
 	 }
+	 
+	 public category getCategoryByName(String catName) {
+		 return Validator.getCategoryFromName(categories, catName);
+	 }
 }
