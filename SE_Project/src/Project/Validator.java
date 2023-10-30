@@ -115,5 +115,15 @@ public class Validator {
 		}
 		return false;
 	}
+	
+	public static boolean validateUserExists(User u, ArrayList<User> users) {
+		
+		for (User user : users) {
+			if (u.getId().equals(user.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

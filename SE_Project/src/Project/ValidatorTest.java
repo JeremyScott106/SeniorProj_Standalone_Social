@@ -320,5 +320,50 @@ class ValidatorTest {
 		
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testValidateUserExists_Success() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<User> users = new ArrayList<User>();
+		
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		users.add(u5);
+		
+		boolean actual = Validator.validateUserExists(u4, users);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testValidateUserExists_Failure() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<User>  users = new ArrayList<User>();
+		
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = Validator.validateUserExists(u5, users);
+		
+		assertEquals(false, actual);
+		
+	}
 
 }
