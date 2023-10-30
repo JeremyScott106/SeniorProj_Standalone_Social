@@ -59,6 +59,27 @@ public class GroupTest {
 	void getPostsTest() {
 													// FIXME :: Post Class Needs Added First //
 	}
+	
+	
+	
+	@Test
+	void testGetGroupWriteData() {
+		
+		Group g = new Group("Football");
+		
+		String catName = "Sports";
+		
+		String actual = g.getGroupWriteData(catName);
+		
+		String expected = "@START\n" + 
+							"@GROUP\n" + 
+							"@NAME=Football\n" + 
+							"@CATEGORY=Sports\n" + 
+							"@END\n\n";
+		
+		assertEquals(expected, actual);
+		
+	}
 
 
 }

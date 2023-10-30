@@ -26,6 +26,8 @@ public class WriteFile {
 			
 			writeCategories(manager, writer);
 			
+			writeGroups(manager, writer);
+			
 			writer.write("@ENDFILE");
 			
 			writer.close();
@@ -71,6 +73,28 @@ public class WriteFile {
 			String catData = c.getCategoryWriteData();
 			
 			writer.write(catData);
+		}
+		
+	}
+	
+	private static void writeGroups(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<category> categories = manager.getCategories_Alphabetically();
+		
+		for (category c : categories) {
+			
+			ArrayList<Group> groups = c.getGroupsAlphabetically();
+			
+			String catName = c.getName();
+			
+			for (Group g : groups) {
+				
+				String groupData = g.getGroupWriteData(catName);
+				
+				writer.write(groupData);
+				
+			}
+			
 		}
 		
 	}

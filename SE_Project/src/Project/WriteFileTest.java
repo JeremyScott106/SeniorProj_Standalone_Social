@@ -104,5 +104,45 @@ class WriteFileTest {
 		}
 		
 	}
+	
+	
+	@Test
+	void testWriteFile_Groups() {
+		
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		
+		category c2 = new category("Foods");
+		Group g3 = new Group("Pizza");
+		Group g4 = new Group("Tacos");
+		Group g5 = new Group("Steak");
+		c2.addGroup(g3);
+		c2.addGroup(g4);
+		c2.addGroup(g5);
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test_Groups.txt";
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+	}
 
 }
