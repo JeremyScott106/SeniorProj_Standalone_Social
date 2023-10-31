@@ -1,6 +1,7 @@
 package Project;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -37,6 +38,19 @@ public class SystemManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+	}
+	
+	
+	public boolean writeManager(String fileName) {
+		
+		try {
+			WriteFile.writeFile(this, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 	
 
