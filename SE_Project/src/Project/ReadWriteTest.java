@@ -11,7 +11,7 @@ class ReadWriteTest {
 
 	@Test
 	void testReadWrite_Admins() {
-		String fileName = ".\\SE_Project\\src\\project\\TextFiles\\ReadWriteFile_Test_Admins.txt";
+		String fileName = ".\\SE_Project\\src\\project\\TextFiles\\ReadWriteFile_Test\\ReadWriteFile_Test_Admins.txt";
 		
 		SystemManager manager = new SystemManager();
 		

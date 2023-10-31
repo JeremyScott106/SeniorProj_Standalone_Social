@@ -27,7 +27,7 @@ class WriteFileTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFiles_Test_Admins.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFiles_Test_Admins.txt";
 		
 		try {
 			WriteFile.writeFile(manager, fileName);
@@ -58,7 +58,7 @@ class WriteFileTest {
 		manager.addUser(u4);
 		manager.addUser(u5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test_Users.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Users.txt";
 		
 		try {
 			
@@ -90,7 +90,7 @@ class WriteFileTest {
 		manager.addCategory(c2);
 		manager.addCategory(c3);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test_Categories.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Categories.txt";
 		
 		try {
 			
@@ -128,7 +128,7 @@ class WriteFileTest {
 		manager.addCategory(c1);
 		manager.addCategory(c2);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test_Groups.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Groups.txt";
 		
 		
 		try {

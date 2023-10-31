@@ -45,7 +45,7 @@ class ReadFileTest {
 		
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Admin.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
 		
 		try {
 		
@@ -109,7 +109,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -131,7 +131,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -153,7 +153,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -175,7 +175,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -209,7 +209,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_User.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User.txt";
 		
 		try {
 			
@@ -260,7 +260,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -284,7 +284,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_User_Failure_IncorrectFormat2.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat2.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -308,7 +308,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -332,7 +332,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_User_Failure_IncorrectFormat4.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat4.txt";
 		boolean incorrectFormat = false;
 		
 		try {
@@ -367,7 +367,7 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Admin_User.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_User.txt";
 		
 		try {
 			
@@ -443,7 +443,7 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Category.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category.txt";
 		
 		
 		try {
@@ -488,7 +488,7 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test_Group.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Group.txt";
 		
 		
 		
