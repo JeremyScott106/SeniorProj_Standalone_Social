@@ -589,4 +589,30 @@ class SystemManagerTest {
 		assertEquals(false, actual);
 		
 	}
+	
+	
+	@Test
+	void testSystemManager_ReadFileConstructor_Admins() {
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
+		
+		SystemManager manager = new SystemManager(fileName);
+		
+		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
+		
+		String[] expected = {"Grayson", "Himanshu", "Jeremy", "John", "Ryan"};
+		
+		boolean namesMatch = true;
+		
+		for (int i = 0; i < actual.size(); i++) {
+			
+			if (!actual.get(i).getName().equals(expected[i])) {
+				namesMatch = false;
+				break;
+			}
+		}
+		
+		assertEquals(true, namesMatch);
+		
+	}
 }

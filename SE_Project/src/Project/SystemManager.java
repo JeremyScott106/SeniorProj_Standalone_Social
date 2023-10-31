@@ -1,5 +1,6 @@
 package Project;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -11,17 +12,33 @@ public class SystemManager {
 	private User currentUser;
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
-
 	private ArrayList<category> categories;
 
 	public SystemManager() {
 		userSignedIn = false;
 		adminSignedIn = false;
-		users = new ArrayList<>();
-		admins = new ArrayList<>();		
-		categories = new ArrayList<>();
+		users = new ArrayList<User>();
+		admins = new ArrayList<Admin>();		
+		categories = new ArrayList<category>();
 
 	}
+	
+	//Constructor that will read given file
+	public SystemManager(String filename) {
+		userSignedIn = false;
+		adminSignedIn = false;
+		users = new ArrayList<User>();
+		admins = new ArrayList<Admin>();
+		categories = new ArrayList<category>();
+		
+		try {
+			ReadFile.readFile(this, filename);
+		} catch (FileNotFoundException | incorrectFileFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
 
 	public boolean addUser(User u) {
 		if (Validator.validateUserExists(u, users)) {
