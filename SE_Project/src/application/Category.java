@@ -12,14 +12,14 @@ public class Category extends JFrame {
 
 	private static JMenuBar topBar;
 	private static SystemManager manager;
-	private JFrame categoryFrame;
+	private JFrame currentFrame;
 	private JPanel categoryView;
 	
 	
-	
-	public Category(SystemManager sm, @SuppressWarnings("exports") JMenuBar jmb) {
+	public Category(SystemManager sm, @SuppressWarnings("exports") JMenuBar jmb, JFrame frame) {
 		topBar = jmb;
 		manager = sm;
+		currentFrame = frame;
 		displayGUI();
 	}
 	
@@ -45,8 +45,8 @@ public class Category extends JFrame {
 				//Only a menu so far//
 	private void displayGUI() {
 		this.setSize(500,500);
-		categoryFrame = new JFrame("This is the category view");
-		categoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		currentFrame.setTitle("This is the category view");
+		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		JPanel mainPane = new JPanel();
@@ -56,13 +56,13 @@ public class Category extends JFrame {
 		categoryView = new categoryPanel(mainPane, this);
 		
 		mainPane.add(categoryView);
-		categoryFrame.getContentPane().add(mainPane, BorderLayout.CENTER);   
+		currentFrame.getContentPane().add(mainPane, BorderLayout.CENTER);   
 
 		
 		setJMenuBar(topBar);
-		categoryFrame.getContentPane().add(topBar, BorderLayout.NORTH);
+		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
 		
-		categoryFrame.pack();
-		categoryFrame.setVisible(true);
+		currentFrame.pack();
+		currentFrame.setVisible(true);
 	}
 }

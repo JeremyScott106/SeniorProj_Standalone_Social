@@ -11,16 +11,17 @@ public class Main extends JFrame {
 	
 	private static JMenuBar topBar;
 	private static SystemManager manager;
-	private JFrame homeFrame;
+	private JFrame currentFrame;
 	private JPanel homeView;
 	
 	public Main() {
 		//load file//
 	}
 	
-	public Main(SystemManager sm, JMenuBar tb) {
+	public Main(SystemManager sm, JMenuBar tb, JFrame frame) {
 		manager = sm;
 		topBar = tb;
+		currentFrame = frame;
 		displayGUI();
 	}
 		
@@ -49,7 +50,6 @@ public class Main extends JFrame {
 		test.add(fakeUser1);
 		view.add(switchHome);
 		view.add(switchCats);
-		
 				//Events for menu clicks//
 		LoginEvent e1 = new LoginEvent();
 		login.addActionListener(e1);
@@ -57,12 +57,27 @@ public class Main extends JFrame {
 		fakeUser1.addActionListener(e2);
 		MyInformation e3 = new MyInformation();
 		myInfo.addActionListener(e3);
-		HomeView e4 = new HomeView();
-		switchHome.addActionListener(e4);
-		CategoryView e5 = new CategoryView();
-		switchCats.addActionListener(e5);
+
+		switchHome.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onMenuClick();
+            	new Main(manager, topBar, currentFrame);
+            }
+        });
+		
+		switchCats.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onMenuClick();
+            	new Category(manager, topBar, currentFrame);
+            }
+        });
 				
 		return menus;
+	}
+	
+	private void onMenuClick() {
+		currentFrame.getContentPane().removeAll();
+		currentFrame.repaint();
 	}
 	
 				// This will create a new window that allows a user to login //
@@ -96,20 +111,7 @@ public class Main extends JFrame {
 			}
 		}
 	}
-	
-	private class CategoryView implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			homeFrame.setVisible(false);
-			new Category(manager, topBar);
-		}
-	}
-	
-	private class HomeView implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			homeFrame.setVisible(false);
-			new Main(manager, topBar);
-		}
-	}
+
 				// ************ Home View ************ //
 	private class homePanel extends JPanel {
 
@@ -136,9 +138,11 @@ public class Main extends JFrame {
 			startMemory();
 		}
 		
+		
+		setVisible(false);
 		this.setSize(500,500);
-		homeFrame = new JFrame("The Computer Sees Everything You Are Doing");
-		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		currentFrame.setTitle("The Computer Sees Everything You Are Doing");
+		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
 		JPanel homePane = new JPanel();
@@ -148,18 +152,20 @@ public class Main extends JFrame {
 		homeView = new homePanel(homePane, this);
 		
 		homePane.add(homeView);
-		homeFrame.getContentPane().add(homePane, BorderLayout.CENTER);   
+		currentFrame.getContentPane().add(homePane, BorderLayout.CENTER);   
 		
 		setJMenuBar(topBar);
-		homeFrame.getContentPane().add(topBar, BorderLayout.NORTH);
+		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
 		
-		homeFrame.pack();
-		homeFrame.setVisible(true);
+		currentFrame.pack();
+		currentFrame.setVisible(true);
+		repaint();
 	}
 	
 	private void startMemory() {
 		manager = new SystemManager();
 		topBar = createMenus();
+		currentFrame = new JFrame();
 	}
 	
 	
