@@ -12,7 +12,6 @@ public class category {
 	public category(String name) {
 		this.name = name;
 		this.groups = new ArrayList<Group>();
-
 	}
 
 
