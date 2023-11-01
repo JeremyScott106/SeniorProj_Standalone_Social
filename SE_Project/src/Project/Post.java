@@ -1,5 +1,6 @@
-package Project;  
+package Project;
 
+import java.util.ArrayList;
 
 public class Post {
 	
@@ -7,6 +8,7 @@ public class Post {
 	private Group group;
 	private int id;
 	private String postBody;
+	private ArrayList<Response> response;
     private int score;
     java.util.Date dateTime;
     
@@ -15,6 +17,7 @@ public class Post {
     	this.group = group;
     	this.id = id;
     	this.postBody = postBody;
+    	this.response = new ArrayList<>();
     	this.dateTime = new java.util.Date(); //should save the current date and time.
     	this.score = 0;
     }
@@ -35,6 +38,16 @@ public class Post {
 		return postBody;
 	}
 	
+	public ArrayList<Response> getResponse() {
+		return response;
+	}
+	
+    //Adds responses into responses
+    public void addResponse(User user, Group group, String postBody) {
+    	Response r1 = new Response(user, group, postBody);
+    	response.add(r1);
+    }
+	
 	public int getScore() {
 		return score;
 	}
@@ -53,7 +66,4 @@ public class Post {
 	public void subScore() {
 		score--;
 	}
-	
-	
-	
 }
