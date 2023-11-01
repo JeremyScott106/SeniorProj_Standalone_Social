@@ -2,8 +2,11 @@ package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +32,7 @@ public class GroupTest {
 
 	//Testing addMember and getMember//
 	@Test
-	void addMemberTest() {
+	void addMemberTest() throws ParseException {
 		Group testGroup1 = new Group("MembersTest");
 		
 		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
@@ -38,19 +41,27 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		testGroup1.addMember(u1);
-		testGroup1.addMember(u2);
-		testGroup1.addMember(u3);
-		testGroup1.addMember(u4);
-		testGroup1.addMember(u5);
 
-		ArrayList<User> memList = new ArrayList<User>();
+		testGroup1.addMember(u1, testGroup1);
+		testGroup1.addMember(u2, testGroup1);
+		testGroup1.addMember(u3, testGroup1);
+		testGroup1.addMember(u4, testGroup1);
+		testGroup1.addMember(u5, testGroup1);
+
+		ArrayList<membership> memList = new ArrayList<membership>();
 		
-		memList.add(u1);
-		memList.add(u2);
-		memList.add(u3);
-		memList.add(u4);
-		memList.add(u5);
+		membership m1 = new membership(u1,testGroup1);
+		membership m2 = new membership(u2,testGroup1);
+		membership m3 = new membership(u3,testGroup1);
+		membership m4 = new membership(u4,testGroup1);
+		membership m5 = new membership(u5,testGroup1);
+
+		
+		memList.add(m1);
+		memList.add(m2);
+		memList.add(m3);
+		memList.add(m4);
+		memList.add(m5);
 
 		assertEquals(memList, testGroup1.getMembers());
 	}
