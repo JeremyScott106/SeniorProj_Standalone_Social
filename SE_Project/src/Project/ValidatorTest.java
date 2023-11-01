@@ -224,7 +224,7 @@ class ValidatorTest {
 		
 		Group g1 = new Group("funny");
 		
-		g1.addMember(u1);
+		g1.addMember(u1, g1);
 		
 		ArrayList<Group> groups = new ArrayList<>();
 		groups.add(g1);
@@ -243,7 +243,7 @@ class ValidatorTest {
 
 		Group g1 = new Group("funny");
 		
-		g1.addMember(u1);
+		g1.addMember(u1, g1);
 		
 		ArrayList<Group> groups = new ArrayList<>();
 		groups.add(g1);
