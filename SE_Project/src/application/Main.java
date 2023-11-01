@@ -12,7 +12,6 @@ public class Main extends JFrame {
 	private JFrame currentFrame;
 	
 	public Main() {
-		//load file//
 	}
 	
 	// Creates the menu bar //
@@ -28,7 +27,7 @@ public class Main extends JFrame {
 		
 		JMenuItem myInfo = new JMenuItem("My Info");
 		JMenuItem fakeUser1 = new JMenuItem("Make Fake User1");
-		JMenuItem loadData = new JMenuItem("Load data into manager");
+		JMenuItem loadData = new JMenuItem("Load \"ReadFile_Test_Admin.txt\"");
 		
 		JMenuItem switchHome = new JMenuItem("Home");
 		JMenuItem switchCategory = new JMenuItem("Category View");
@@ -126,6 +125,7 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
             	new Profile(manager, topBar, currentFrame);
+            	
             }
         });
 				
