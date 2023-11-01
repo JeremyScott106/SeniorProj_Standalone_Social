@@ -33,3 +33,16 @@ class SortUsersByName implements Comparator<User> {
 	}
 
 }
+
+
+class SortUsersByUsername implements Comparator<User> {
+	
+	@Override
+	public int compare(User u1, User u2) {
+		
+		return u1.getId().toUpperCase().compareTo(u2.getId().toUpperCase());
+		
+//		return u1.getId().compareTo(u2.getId());
+	}
+	
+}
