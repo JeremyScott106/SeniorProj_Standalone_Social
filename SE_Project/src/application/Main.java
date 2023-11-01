@@ -3,7 +3,6 @@ import Project.SystemManager;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Date;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -17,14 +16,6 @@ public class Main extends JFrame {
 	public Main() {
 		//load file//
 	}
-	
-	public Main(SystemManager sm, JMenuBar tb, JFrame frame) {
-		manager = sm;
-		topBar = tb;
-		currentFrame = frame;
-		displayGUI();
-	}
-		
 	
 	// Creates the menu bar //
 	private JMenuBar createMenus() {
@@ -61,7 +52,7 @@ public class Main extends JFrame {
 		switchHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onMenuClick();
-            	new Main(manager, topBar, currentFrame);
+            	new Home(manager, topBar, currentFrame);
             }
         });
 		
@@ -111,55 +102,14 @@ public class Main extends JFrame {
 			}
 		}
 	}
-
-				// ************ Home View ************ //
-	private class homePanel extends JPanel {
-
-		private JPanel homePane;
-		private JButton jb;
-		
-		public homePanel(JPanel p, Main info) {
-			homePane = p;
-			setOpaque(true);
-			setBackground(Color.black);		
-		}
-		
-	    @Override
-	    public Dimension getPreferredSize()
-	    {
-	        return (new Dimension(500, 500));
-	    }
-	}
 	
-				//Only a menu so far//
-	private void displayGUI() {
+	private void init() {
 		
 		if (manager == null) {
 			startMemory();
 		}
 		
-		
-		setVisible(false);
-		this.setSize(500,500);
-		currentFrame.setTitle("The Computer Sees Everything You Are Doing");
-		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
-		JPanel homePane = new JPanel();
-		homePane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-		homePane.setLayout(new CardLayout());
-		
-		homeView = new homePanel(homePane, this);
-		
-		homePane.add(homeView);
-		currentFrame.getContentPane().add(homePane, BorderLayout.CENTER);   
-		
-		setJMenuBar(topBar);
-		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
-		
-		currentFrame.pack();
-		currentFrame.setVisible(true);
-		repaint();
+		new Home(manager, topBar, currentFrame);
 	}
 	
 	private void startMemory() {
@@ -175,7 +125,7 @@ public class Main extends JFrame {
         {
             public void run()
             {
-                new Main().displayGUI();
+                new Main().init();
             }
         });
 	}

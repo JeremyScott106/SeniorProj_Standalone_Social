@@ -17,6 +17,9 @@ public class Category extends JFrame {
 	
 	
 	public Category(SystemManager sm, @SuppressWarnings("exports") JMenuBar jmb, JFrame frame) {
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		getContentPane().add(lblNewLabel, BorderLayout.CENTER);
 		topBar = jmb;
 		manager = sm;
 		currentFrame = frame;
@@ -27,7 +30,6 @@ public class Category extends JFrame {
 	private class categoryPanel extends JPanel {
 
 		private JPanel categoryPane;
-		private JButton jb;
 		
 		public categoryPanel(JPanel p, Category info) {
 			categoryPane = p;
@@ -36,19 +38,17 @@ public class Category extends JFrame {
 		}
 		
 	    @Override
-	    public Dimension getPreferredSize()
-	    {
+	    public Dimension getPreferredSize() {
 	        return (new Dimension(500, 500));
 	    }
 	}
 	
 				//Only a menu so far//
 	private void displayGUI() {
-		this.setSize(500,500);
+		//this.setSize(500,500);
 		currentFrame.setTitle("This is the category view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		
+																		
 		JPanel mainPane = new JPanel();
 		mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		mainPane.setLayout(new CardLayout());

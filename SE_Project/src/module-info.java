@@ -1,4 +1,4 @@
-module SE_Project {
+module SE_Project1 {
 	exports Project;
 	exports application;
 
