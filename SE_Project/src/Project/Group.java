@@ -1,18 +1,20 @@
 package Project;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Group {
 
     private String groupName;
-    private List<User> members;
+    private ArrayList<membership> memberships;
     private List<String> posts;
 
 
     public Group (String groupName) {
         this.groupName = groupName;
-        this.members = new ArrayList<>();
+        this.memberships = new ArrayList<>();
     }
 
     //Gets the name of the groups that are created
@@ -21,22 +23,32 @@ public class Group {
     }
 
     //Adds members into groups
-    public void addMember(User user) {
-        if(!members.contains(user)) {
-            members.add(user);
+    public void addMember(User user, Group group) {
+        membership m1 = new membership(user, group);
+        boolean isMember = false;
+        for (membership m : memberships) {
+            if (m.getUser() == user) {
+                isMember = true;
+                break;
+            }
+        }
+        if (!isMember) {
+            memberships.add(m1);
         }
     }
 
+
     //Gets the list of member in the group
-    public List<User> getMembers() {
-        return members;
+    public ArrayList<membership> getMembers() {
+        return memberships;
     }
 
     //Find members using their memberID
     public User getMember (String memberId) {
-        for(User user : members) {
-            if(user.getId().equals(memberId)) {
-                return user;
+        for(membership m : memberships) {
+        	User u = m.getUser();
+            if(u.getId().equals(memberId)) {
+                return u;
             }
         }
         return null;
@@ -44,15 +56,15 @@ public class Group {
 
     //Checks to see if a member is already a part of a group
     public boolean isMemberInGroup (String memberId) {
-        for(User user : members) {
-            if(user.getId().equals(memberId)) {
+        for(membership m : memberships) {
+        	User u = m.getUser();
+            if(u.getId().equals(memberId)) {
                 return true;
             }
         }
         return false;
 
     }
-
 
     //Adds a new post to the group
     public void addPost(String author, String post) {
