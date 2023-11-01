@@ -136,7 +136,7 @@ public class UserTest {
 		Group group = new Group("Football");
 		cat.addGroup(group);
 		sm.addCategory(cat);
-		group.addMember(u);
+		group.addMember(u, group);
 		
 		Integer actual = u.getGroupStatus("Football");
 		
@@ -151,7 +151,7 @@ public class UserTest {
 		Group group = new Group("Football");
 		cat.addGroup(group);
 		sm.addCategory(cat);
-		group.addMember(u);
+		group.addMember(u, group);
 		
 		Integer actual = u.getGroupStatus("Football");
 		
