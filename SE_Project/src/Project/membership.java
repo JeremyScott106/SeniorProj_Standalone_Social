@@ -7,12 +7,6 @@ public class membership {
 	private User user;
 	private Group group;
 	private Date registeredDate;
-
-    public membership(User user, Group group, Date registeredDate) {
-        this.user = user;
-        this.group = group;
-		this.registeredDate = registeredDate;
-	}
 	
 	public membership(User user, Group group) {
         this.user = user;
