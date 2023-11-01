@@ -1,17 +1,26 @@
 package Project;
 
-public class Response extends Post{
-
-	private Post paternalPost;
+public class Response{
+	private User user;
+	private Group group;
+	private String responceBody;
 	
-	public Response(User user, Group group, int id, String postBody, Post paternalPost) {
-		super(user, group, id, postBody);
-		this.paternalPost = paternalPost;
-	}
-
-	public int getPaternalPostID() {
-		return paternalPost.getId();
+	public Response(User user, Group group, String responceBody) {
+		this.user = user;
+		this.group = group;
+		this.responceBody = responceBody;
 	}
 	
+	public User getUser() {
+		return user;
+	}
 
+	public Group getGroup() {
+		return group;
+	}
+	
+	public String getResponceBody() {
+		return responceBody;
+	}
+	
 }
