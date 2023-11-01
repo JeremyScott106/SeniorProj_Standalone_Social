@@ -3,6 +3,7 @@ package Project;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -176,6 +177,28 @@ class ReadFileTest {
 		
 		//NOTICE: File path will have to be updated for each user/branch/etc
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt";
+		boolean incorrectFileFormat = false;
+		
+		try {
+			ReadFile.readFile(manager, fileName);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFileFormat = true;
+		}
+		
+		assertEquals(true, incorrectFileFormat);
+	}
+	
+	@Test
+	void testReadFile_Admin_Failure_IncorrectFormat5() {
+		SystemManager manager = new SystemManager();
+		
+		//NOTICE: File path will have to be updated for each user/branch/etc
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat5.txt";
 		boolean incorrectFileFormat = false;
 		
 		try {
@@ -480,6 +503,103 @@ class ReadFileTest {
 		
 		
 	}
+	
+	@Test
+	void testReadFile_Category_Failure_IncorrectFormat1() {
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat1.txt";
+		
+		boolean incorrectFormat = false;
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+	
+	@Test
+	void testReadFile_Category_Failure_IncorrectFormat2() {
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat2.txt";
+		
+		boolean incorrectFormat = false;
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+	
+	@Test
+	void testReadFile_Category_Failure_IncorrectFormat3() {
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat3.txt";
+		
+		boolean incorrectFormat = false;
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+	
+	@Test
+	void testReadFile_Category_Failure_IncorrectFormat4() {
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat4.txt";
+		
+		boolean incorrectFormat = false;
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (incorrectFileFormatException e) {
+			incorrectFormat = true;
+		}
+		
+		assertEquals(true, incorrectFormat);
+	}
+	
 	
 	
 	
