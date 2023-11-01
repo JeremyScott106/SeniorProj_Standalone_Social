@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Home extends JFrame {
+public class Profile extends JFrame {
 
 	private JMenuBar topBar;
 	private SystemManager manager;
@@ -15,7 +15,7 @@ public class Home extends JFrame {
 	
 	
 	@SuppressWarnings("exports")
-	public Home(SystemManager sm,  JMenuBar jmb,  JFrame frame) {
+	public Profile(SystemManager sm,  JMenuBar jmb,  JFrame frame) {
 		
 		topBar = jmb;
 		manager = sm;
@@ -28,10 +28,10 @@ public class Home extends JFrame {
 
 		private JPanel homePane;
 		
-		public categoryPanel(JPanel p, Home info) {
+		public categoryPanel(JPanel p, Profile info) {
 			homePane = p;
 			setOpaque(true);
-			setBackground(Color.black);		
+			setBackground(Color.orange.darker());		
 		}
 		
 	    @Override
@@ -43,7 +43,7 @@ public class Home extends JFrame {
 				//Only a menu so far//
 	private void displayGUI() {
 		//this.setSize(500,500);
-		currentFrame.setTitle("This is the Home view");
+		currentFrame.setTitle("This is the Profile view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 																		
 		JPanel mainPane = new JPanel();

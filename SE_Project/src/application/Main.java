@@ -1,7 +1,6 @@
 package application;
+import Project.ReadFile;
 import Project.SystemManager;
-
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -11,7 +10,6 @@ public class Main extends JFrame {
 	private static JMenuBar topBar;
 	private static SystemManager manager;
 	private JFrame currentFrame;
-	private JPanel homeView;
 	
 	public Main() {
 		//load file//
@@ -27,10 +25,16 @@ public class Main extends JFrame {
 		JMenu view = new JMenu("View");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
+		
 		JMenuItem myInfo = new JMenuItem("My Info");
 		JMenuItem fakeUser1 = new JMenuItem("Make Fake User1");
-		JMenuItem switchCats = new JMenuItem("Category View");
+		JMenuItem loadData = new JMenuItem("Load data into manager");
+		
 		JMenuItem switchHome = new JMenuItem("Home");
+		JMenuItem switchCategory = new JMenuItem("Category View");
+		JMenuItem switchGroup = new JMenuItem("Group View");
+		JMenuItem switchPost = new JMenuItem("Post View");
+		JMenuItem switchProfile = new JMenuItem("Profile View");
 				//Add menus to bar//
 		menus.add(file);
 		menus.add(view);
@@ -39,68 +43,98 @@ public class Main extends JFrame {
 		file.add(login);
 		test.add(myInfo);
 		test.add(fakeUser1);
+		test.add(loadData);
 		view.add(switchHome);
-		view.add(switchCats);
-				//Events for menu clicks//
-		LoginEvent e1 = new LoginEvent();
-		login.addActionListener(e1);
-		MakeFakeUser e2 = new MakeFakeUser();	//when files can be read, this can disappear//
-		fakeUser1.addActionListener(e2);
-		MyInformation e3 = new MyInformation();
-		myInfo.addActionListener(e3);
+		view.add(switchCategory);
+		view.add(switchGroup);
+		view.add(switchPost);
+		view.add(switchProfile);
+		
+		login.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	new Login(manager);
+            }
+        });
+		
+		fakeUser1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+    			String name = "Testey One";
+    			String bday = "01/01/1999";
+    			String city = "Home";
+    			String state = "Georgia";
+    			String username = "DespisesJava123";
+    			String password = "abc123";
+    			
+    			manager.registerUser(name, bday, city, state, username, password);
+    			
+    			System.out.printf("   /----/\nNew User Created\n   /----/\nUsername: %s\nPassword: %s\n", username, password);
+            }
+        });
+		
+		myInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+    			System.out.printf("\nUser is signed in: %b\n", manager.isLoggedIn());
+    			System.out.printf("User is admin: %b\n", manager.isAdmin());
+    			if (manager.isLoggedIn()) {
+    				System.out.printf("Current User: %s\n", manager.getCurrentUser().getId());
+    			}
+            }
+        });
+		
+		loadData.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	String fileName = ".\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
+            	try {
+					ReadFile.readFile(manager, fileName);
+				} catch (Exception ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+
+            }
+        });
 
 		switchHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	onMenuClick();
+            	onViewChangeClick();
             	new Home(manager, topBar, currentFrame);
             }
         });
 		
-		switchCats.addActionListener(new ActionListener() {
+		switchCategory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	onMenuClick();
+            	onViewChangeClick();
             	new Category(manager, topBar, currentFrame);
+            }
+        });
+		
+		switchGroup.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+            	new Group(manager, topBar, currentFrame);
+            }
+        });
+		
+		switchPost.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+            	new Post(manager, topBar, currentFrame);
+            }
+        });
+		
+		switchProfile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+            	new Profile(manager, topBar, currentFrame);
             }
         });
 				
 		return menus;
 	}
 	
-	private void onMenuClick() {
+	private void onViewChangeClick() {
 		currentFrame.getContentPane().removeAll();
 		currentFrame.repaint();
-	}
-	
-				// This will create a new window that allows a user to login //
-	private class LoginEvent implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			new Login(manager);
-		}
-	}
-				// This will create a fake user that can be used for testing, System will show login information //
-	private class MakeFakeUser implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			String name = "Testey One";
-			String bday = "01/01/1999";
-			String city = "Home";
-			String state = "Georgia";
-			String username = "DespisesJava123";
-			String password = "abc123";
-			
-			manager.registerUser(name, bday, city, state, username, password);
-			
-			System.out.printf("   /----/\nNew User Created\n   /----/\nUsername: %s\nPassword: %s\n", username, password);
-		}
-	}
-				// This will show the current user login information //
-	private class MyInformation implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.out.printf("\nUser is signed in: %b\n", manager.isLoggedIn());
-			System.out.printf("User is admin: %b\n", manager.isAdmin());
-			if (manager.isLoggedIn()) {
-				System.out.printf("Current User: %s\n", manager.getCurrentUser().getId());
-			}
-		}
 	}
 	
 	private void init() {

@@ -8,7 +8,6 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Login extends JDialog {
-	private JTextArea txaMessage;
 	private JTextField txfName;
 	private JTextField txfPass;
 	private SystemManager manager;
