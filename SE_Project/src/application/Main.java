@@ -4,21 +4,26 @@ import Project.SystemManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
-
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Main extends JFrame {
 	
-	private JMenuBar topBar;
+	private static JMenuBar topBar;
+	private static SystemManager manager;
+	private JFrame homeFrame;
 	private JPanel homeView;
-	private JPanel categoryView;
-	private JPanel groupView;
-	private JPanel postView;
-	private JPanel profileView;
 	
-	private SystemManager manager = new SystemManager();
+	public Main() {
+		//load file//
+	}
 	
+	public Main(SystemManager sm, JMenuBar tb) {
+		manager = sm;
+		topBar = tb;
+		displayGUI();
+	}
+		
 	
 	// Creates the menu bar //
 	private JMenuBar createMenus() {
@@ -27,17 +32,23 @@ public class Main extends JFrame {
 				//Menus//
 		JMenu file = new JMenu("File");
 		JMenu test = new JMenu("Test");
+		JMenu view = new JMenu("View");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
 		JMenuItem myInfo = new JMenuItem("My Info");
 		JMenuItem fakeUser1 = new JMenuItem("Make Fake User1");
+		JMenuItem switchCats = new JMenuItem("Category View");
+		JMenuItem switchHome = new JMenuItem("Home");
 				//Add menus to bar//
 		menus.add(file);
+		menus.add(view);
 		menus.add(test);
 				//Add sub-menus to menus//
 		file.add(login);
 		test.add(myInfo);
 		test.add(fakeUser1);
+		view.add(switchHome);
+		view.add(switchCats);
 		
 				//Events for menu clicks//
 		LoginEvent e1 = new LoginEvent();
@@ -46,11 +57,14 @@ public class Main extends JFrame {
 		fakeUser1.addActionListener(e2);
 		MyInformation e3 = new MyInformation();
 		myInfo.addActionListener(e3);
-		
-		
+		HomeView e4 = new HomeView();
+		switchHome.addActionListener(e4);
+		CategoryView e5 = new CategoryView();
+		switchCats.addActionListener(e5);
+				
 		return menus;
 	}
-
+	
 				// This will create a new window that allows a user to login //
 	private class LoginEvent implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -82,14 +96,28 @@ public class Main extends JFrame {
 			}
 		}
 	}
+	
+	private class CategoryView implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			homeFrame.setVisible(false);
+			new Category(manager, topBar);
+		}
+	}
+	
+	private class HomeView implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			homeFrame.setVisible(false);
+			new Main(manager, topBar);
+		}
+	}
 				// ************ Home View ************ //
 	private class homePanel extends JPanel {
 
-		private JPanel mainPane;
+		private JPanel homePane;
 		private JButton jb;
 		
 		public homePanel(JPanel p, Main info) {
-			mainPane = p;
+			homePane = p;
 			setOpaque(true);
 			setBackground(Color.black);		
 		}
@@ -103,34 +131,37 @@ public class Main extends JFrame {
 	
 				//Only a menu so far//
 	private void displayGUI() {
+		
+		if (manager == null) {
+			startMemory();
+		}
+		
 		this.setSize(500,500);
-		JFrame frame = new JFrame("The Computer Sees Everything You Are Doing");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		homeFrame = new JFrame("The Computer Sees Everything You Are Doing");
+		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-		JPanel mainPane = new JPanel();
-		mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-		mainPane.setLayout(new CardLayout());
+		JPanel homePane = new JPanel();
+		homePane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		homePane.setLayout(new CardLayout());
 		
-		homeView = new homePanel(mainPane, this);
+		homeView = new homePanel(homePane, this);
 		
-		/*
-		categoryView;
-		groupView;
-		postView;
-		profileView;
-		*/
-		mainPane.add(homeView);
-		frame.getContentPane().add(mainPane, BorderLayout.CENTER);   
-		
-		topBar = createMenus();
+		homePane.add(homeView);
+		homeFrame.getContentPane().add(homePane, BorderLayout.CENTER);   
 		
 		setJMenuBar(topBar);
-		frame.add(topBar, BorderLayout.NORTH);
+		homeFrame.getContentPane().add(topBar, BorderLayout.NORTH);
 		
-		frame.pack();
-		frame.setVisible(true);
+		homeFrame.pack();
+		homeFrame.setVisible(true);
 	}
+	
+	private void startMemory() {
+		manager = new SystemManager();
+		topBar = createMenus();
+	}
+	
 	
 				// Main //
 	public static void main(String args[]) {
