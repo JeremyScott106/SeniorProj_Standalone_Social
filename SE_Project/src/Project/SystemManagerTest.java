@@ -371,9 +371,9 @@ class SystemManagerTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
 		
-		g1.addMember(u1);
-		g1.addMember(u2);
-		g2.addMember(u1);
+		g1.addMember(u1, g1);
+		g1.addMember(u2, g1);
+		g2.addMember(u1, g2);
 				
 		sm.addGroup(g1);
 		sm.addGroup(g2);
@@ -399,8 +399,8 @@ class SystemManagerTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
 		
-		g.addMember(u1);
-		g.addMember(u2);
+		g.addMember(u1, g);
+		g.addMember(u2, g);
 		
 		sm.addGroup(g);
 
@@ -457,4 +457,84 @@ class SystemManagerTest {
 		assertEquals(expected, actual);
 
 	}
+	
+	@Test
+	void viewUsersPostsResponses() {
+		SystemManager sm = new SystemManager();
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "n");
+		Response r2 = new Response(testUser, testGroup, "n");
+		r.add(r1);
+		r.add(r2);
+		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		sm.addPost(testPost1);
+		
+		String expected = "Post: I" + "\n" + "Response: n" + "\n" + "Response: n" + "\n";
+		assertEquals(expected, sm.viewUsersPostsResponses(testUser));
+	}
+	
+	@Test
+	void viewUsersPostsResponsesInGroup() {
+		SystemManager sm = new SystemManager();
+		Group testGroup = new Group("Standard Name");
+		Group testGroup1 = new Group("Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "n");
+		Response r2 = new Response(testUser, testGroup, "n");
+		Response r3 = new Response(testUser, testGroup1, "n");
+		r.add(r1);
+		r.add(r2);
+		r.add(r3);
+		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		sm.addPost(testPost1);
+		
+		String expected = "Post: I" + "\n" + "Response: n" + "\n" + "Response: n";
+		assertEquals(expected, sm.viewUsersPostsResponsesInGroup(testUser, testGroup));
+	}
+	
+	@Test
+	void viewMyPostsResponsesInGroup() {
+		SystemManager sm = new SystemManager();
+		Group testGroup = new Group("Standard Name");
+		Group testGroup1 = new Group("Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "n");
+		Response r2 = new Response(testUser, testGroup, "n");
+		Response r3 = new Response(testUser, testGroup1, "n");
+		r.add(r1);
+		r.add(r2);
+		r.add(r3);
+		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		sm.addPost(testPost1);
+		sm.addGroup(testGroup1);
+		
+		String expected = "Response: n";
+		assertEquals(expected, sm.viewMyPostsResponsesInGroup(testGroup1));
+	}
+	
+	@Test
+	void viewMyResponses() {
+		SystemManager sm = new SystemManager();
+		Group testGroup = new Group("Standard Name");
+		Group testGroup1 = new Group("Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "n");
+		Response r2 = new Response(testUser, testGroup, "n");
+		Response r3 = new Response(testUser, testGroup1, "n");
+		r.add(r1);
+		r.add(r2);
+		r.add(r3);
+		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		sm.addPost(testPost1);
+		sm.addGroup(testGroup1);
+		
+		String expected = "Response: n" + "\n" + "Response: n" + "\n" + "Response: n\n";
+		assertEquals(expected, sm.viewMyResponses(testUser, testPost1));
+	}
+
 }
