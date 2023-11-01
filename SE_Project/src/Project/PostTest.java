@@ -1,6 +1,9 @@
 package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -11,6 +14,11 @@ public class PostTest {
 	void getGroupTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 
 		assertEquals(testGroup, testPost1.getGroup());
@@ -22,6 +30,11 @@ public class PostTest {
 	void getUserTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(testUser, testPost1.getUser());
@@ -31,19 +44,46 @@ public class PostTest {
 	void getIDTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(1, testPost1.getId());
 		}
 	
-	//Tests getting the postbody
+	//Tests getting the postBody
 	@Test
 	void getPostBodyTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
-		
+
+
 		assertEquals("I'm posting.", testPost1.getPostBody());
+		}
+	
+	//Tests getting the response
+	@Test
+	void getResponse() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		r.add(r1);
+		
+		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		testPost1.addResponse(testUser, testGroup, "noooo");
+		
+		assertEquals(r, testPost1.getResponse());
 		}
 	
 	//Tests getting the score
@@ -51,6 +91,11 @@ public class PostTest {
 	void getScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(0, testPost1.getScore());
@@ -62,6 +107,11 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		java.util.Date timeTest = new java.util.Date();;
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		
 		assertEquals(timeTest, testPost1.getTime());
@@ -72,6 +122,11 @@ public class PostTest {
 	void addScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		testPost1.addScore();
 		
@@ -83,6 +138,11 @@ public class PostTest {
 	void subScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		Response r1 = new Response(testUser, testGroup, "noooo");
+		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
 		testPost1.subScore();
 		
