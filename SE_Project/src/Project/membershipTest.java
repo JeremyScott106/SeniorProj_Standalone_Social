@@ -50,14 +50,8 @@ public class membershipTest {
 		Group testGroup1 = new Group("Standard Name");
 		
 		// Create a Date object for the registration date.
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
-	    Date registrationDate = null;
-	    try {
-	        registrationDate = dateFormat.parse("01/12/12");
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	    }
-		membership m = new membership(u, testGroup1, registrationDate);
+		Date registrationDate = new Date();
+		membership m = new membership(u, testGroup1);
 
 		Date actual = m.getDate();
 		assertEquals(registrationDate, actual);
