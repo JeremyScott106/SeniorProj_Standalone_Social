@@ -640,4 +640,73 @@ class SystemManagerTest {
 		assertEquals(true, actual);
 		
 	}
+	
+	
+	@Test
+	void testGetUsers_Alphabetically_ByUsernames() {
+		
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		ArrayList<User> actual = manager.getUsers_Alphabetically_ByUsername();
+		
+		String expected[] = {"IDK", "jackster3", "LegalTrouble", "theWiz", "WestCarolina"};
+		
+		boolean namesMatch = true;
+		
+		for (int i = 0; i < actual.size(); i++) {
+			
+			if (!actual.get(i).getId().equals(expected[i])) {
+				namesMatch = false;
+				break;
+			}
+		}
+		
+		assertEquals(true, namesMatch);
+	}
+	
+	@Test
+	void testGetAdmins_Alphabetically_ByUsername() {
+		
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		ArrayList<Admin> actual = manager.getAdmins_Alphabetically_ByUsername();
+		
+		String expected[] = {"IDK", "jackster3", "LegalTrouble", "theWiz", "WestCarolina"};
+		
+		boolean namesMatch = true;
+		
+		for (int i = 0; i < actual.size(); i++) {
+			
+			if (!actual.get(i).getId().equals(expected[i])) {
+				namesMatch = false;
+				break;
+			}
+		}
+		
+		assertEquals(true, namesMatch);
+	}
 }

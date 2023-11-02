@@ -262,4 +262,16 @@ public class SystemManager {
 	 public category getCategoryByName(String catName) {
 		 return Validator.getCategoryFromName(categories, catName);
 	 }
+	 
+	 public ArrayList<User> getUsers_Alphabetically_ByUsername(){
+		 Collections.sort(users, new SortUsersByUsername());
+		 
+		 return users;
+	 }
+	 
+	 public ArrayList<Admin> getAdmins_Alphabetically_ByUsername() {
+		 Collections.sort(admins, new SortUsersByUsername());
+		 
+		 return admins;
+	 }
 }
