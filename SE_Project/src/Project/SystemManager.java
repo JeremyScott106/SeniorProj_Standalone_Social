@@ -274,4 +274,16 @@ public class SystemManager {
 		 
 		 return admins;
 	 }
+	 
+	 //FIXME: add test methods
+	 public Group getGroupByName(String name) {
+		 ArrayList<Group> allGroups = this.getAllGroups();
+		 
+		 return Validator.getGroupFromName(allGroups, name);
+	 }
+	 
+	 //FIXME: add test methods
+	 public User getUserByUsername(String username) {
+		 return Validator.getUserFromUsername(users, username);
+	 }
 }

@@ -125,5 +125,34 @@ public class Validator {
 		}
 		return false;
 	}
+	
+	//FIXME: add test methods
+	public static Group getGroupFromName(ArrayList<Group> groups, String name) {
+		
+		Group g = null;
+		
+		for (Group g1 : groups) {
+			
+			if (g1.getGroupName().equals(name)) {
+				g = g1;
+			}
+		}
+		
+		return g;
+	}
+	
+	//FIXME: add test methods
+	public static User getUserFromUsername(ArrayList<User> users, String username) {
+		
+		User u = null;
+		
+		for (User u1 : users) {
+			
+			if (u1.getId().equals(username)) {
+				u = u1;
+			}
+		}
+		return u;
+	}
 
 }

@@ -45,6 +45,9 @@ public class ReadFile {
 				else if(line.equals("@GROUP") && currentlyReadingData) {	//If current line rules next data set to be a Group
 					readGroup(manager, reader);									//go read the data in the Group
 				}
+				else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
+					readMembership(manager, reader);
+				}
 				else if (line.equals("")) {									//If the current line is empty
 					continue;													//continue to next line
 				}
@@ -439,6 +442,91 @@ public class ReadFile {
 				
 			}
 			
+		}
+		
+	}
+	
+	//FIXME: add test methods
+	private static void readMembership(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String userName = "";
+		boolean gotUserName = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String regDate = "";
+		boolean gotRegDate = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				 break;
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				 if (gotUserName) {
+					 throw new IncorrectFileFormatException();
+				 }
+				 else {
+					 userName = line.substring(6);
+					 gotUserName = true;
+					 continue;
+				 }
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@REGI")) {
+				if (gotRegDate) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					regDate = line.substring(16);
+					gotRegDate = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		if (gotUserName && gotGroupName && gotRegDate) {
+			
+			User u = manager.getUserByUsername(userName);
+			Group g = manager.getGroupByName(groupName);
+			
+			if (!(u == null) && !(g == null)) {
+				membership m = new membership(u, g, regDate);
+				//FIXME: Need to add Membership into system once abiltiy has been established
+				System.out.println("Member created");
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		else {
+			throw new IncorrectFileFormatException();
 		}
 		
 	}

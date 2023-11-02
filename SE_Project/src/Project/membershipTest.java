@@ -3,6 +3,7 @@ package Project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.ParseException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -49,18 +50,15 @@ public class membershipTest {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		// Create a Date object for the registration date.
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-	    Date registrationDate = null;
-	    try {
-	        registrationDate = dateFormat.parse("01/12/2012");
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	    }
-		membership m = new membership(u, testGroup1, registrationDate);
+		
+		membership m = new membership(u, testGroup1, "01/12/2012");
 
-		Date actual = m.getDate();
-		assertEquals(registrationDate, actual);
+		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		String actual = df.format(m.getDate());
+		
+		System.out.println(actual);
+		
+		assertEquals("01/12/2012", actual);
 	}	
 	
 	
@@ -69,15 +67,7 @@ public class membershipTest {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		 SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-		    Date registrationDate = null;
-		    try {
-		        registrationDate = dateFormat.parse("01/12/2012");
-		    } catch (ParseException e) {
-		        e.printStackTrace();
-		    }
-		
-		membership membership = new membership(u, testGroup1, registrationDate);
+		membership membership = new membership(u, testGroup1, "01/12/2012");
 		
 		String actual = membership.getMembershipWriteData();
 		
