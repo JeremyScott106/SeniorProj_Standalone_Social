@@ -71,26 +71,26 @@ public class Profile extends JFrame {
 		// Check to see if user exist in call, if so, print user information into form //
 		if (displayedUser != null) {
 			if (displayedUser instanceof Admin) {
-				JLabel lblNewLabel_5 = new JLabel("(ADMIN) " + manager.getCurrentUser().getId());
+				JLabel lblNewLabel_5 = new JLabel("(ADMIN) " + displayedUser.getId());
 				lblNewLabel_5.setBounds(137, 45, 207, 26);
 				panel.add(lblNewLabel_5);
 			}
 			else {
-				JLabel lblNewLabel_5 = new JLabel(manager.getCurrentUser().getId());
+				JLabel lblNewLabel_5 = new JLabel(displayedUser.getId());
 				lblNewLabel_5.setBounds(137, 45, 207, 26);
 				panel.add(lblNewLabel_5);
 			}
 			
-			JLabel lblNewLabel_5_1 = new JLabel(manager.getCurrentUser().getName());
+			JLabel lblNewLabel_5_1 = new JLabel(displayedUser.getName());
 			lblNewLabel_5_1.setBounds(137, 81, 207, 26);
 			panel.add(lblNewLabel_5_1);
 			
-			JLabel lblNewLabel_5_2 = new JLabel(manager.getCurrentUser().getCity() + ", " + manager.getCurrentUser().getState());
+			JLabel lblNewLabel_5_2 = new JLabel(displayedUser.getCity() + ", " + displayedUser.getState());
 			lblNewLabel_5_2.setBounds(137, 117, 207, 26);
 			panel.add(lblNewLabel_5_2);
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-			String bday = formatter.format(manager.getCurrentUser().getBirthday());
+			String bday = formatter.format(displayedUser.getBirthday());
 			JLabel lblNewLabel_5_3 = new JLabel(bday);
 			lblNewLabel_5_3.setBounds(137, 153, 207, 26);
 			panel.add(lblNewLabel_5_3);
