@@ -231,7 +231,7 @@ public class SystemManager {
 			r.addAll(p.getResponse());
 			for (Response r1 : r){
 				if(user == r1.getUser()){
-					msg += "Response: " + r1.getResponceBody() + "\n";
+					msg += "Response: " + r1.getResponseBody() + "\n";
 				}	
 			}
 		}
@@ -251,7 +251,7 @@ public class SystemManager {
 				 r.addAll(p.getResponse());
 				 for (Response r1 : r){
 					 if(user == r1.getUser()){
-					 msg += "Post: " + r1.getResponceBody() + "\n";
+					 msg += "Post: " + r1.getResponseBody() + "\n";
 					 }	
 				 }
 			 }
@@ -269,7 +269,7 @@ public class SystemManager {
 					ArrayList<Response> r = new ArrayList<>();
 					r.addAll(p.getResponse());
 					for (Response r1 : r){
-							msg += "Post: " + r1.getResponceBody() + "\n";
+							msg += "Post: " + r1.getResponseBody() + "\n";
 					}
 			}
 		 }
@@ -284,10 +284,10 @@ public class SystemManager {
 		 r.addAll(post.getResponse());
 		 for (Response r1 : r){
 			 if(user == r1.getUser()){
-			 msg += "Response: " + r1.getResponceBody() + "\n";
+			 msg += "Response: " + r1.getResponseBody() + "\n";
 			}	
 		}
-		 return msg;
+		return msg;
 	} 
 	 
 }
