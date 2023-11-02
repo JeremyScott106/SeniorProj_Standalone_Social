@@ -37,7 +37,7 @@ public class ResponseTest {
 		User testUser2 = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		Response testResponse1 = new Response(testUser2, testGroup1, "I disagree.");
 		
-		assertEquals("I disagree.", testResponse1.getResponceBody());
+		assertEquals("I disagree.", testResponse1.getResponseBody());
 	}
 
 }
