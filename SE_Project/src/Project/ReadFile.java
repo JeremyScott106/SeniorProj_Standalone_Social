@@ -9,7 +9,7 @@ public class ReadFile {
 	static boolean currentlyReadingData;	//True if data is currently being read, false if between sets of data
 	
 	
-	public static void readFile(SystemManager manager, String fileName) throws FileNotFoundException, incorrectFileFormatException {
+	public static void readFile(SystemManager manager, String fileName) throws FileNotFoundException, IncorrectFileFormatException {
 		
 		
 		
@@ -26,7 +26,7 @@ public class ReadFile {
 				
 				if (line.equals("@START")) {								//If line is the start of a set of Data
 					if (currentlyReadingData) {									//and data is currently being read
-						throw new incorrectFileFormatException();					//throw exception
+						throw new IncorrectFileFormatException();					//throw exception
 					}
 					else {														//or if data is not being read
 						currentlyReadingData = true;								//set currentlyReadingData to true
@@ -52,7 +52,7 @@ public class ReadFile {
 					break;														//break the loop
 				}
 				else {														//If none of the above
-					throw new incorrectFileFormatException();					//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();					//throw incorrectFileFormatException
 				}
 			}
 			
@@ -61,15 +61,15 @@ public class ReadFile {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			throw new FileNotFoundException();
-		} catch (incorrectFileFormatException e) {
+		} catch (IncorrectFileFormatException e) {
 			// TODO Auto-generated catch block
-			throw new incorrectFileFormatException();
+			throw new IncorrectFileFormatException();
 		}
 		
 	}
 	
 	
-	private static void readAdmin(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+	private static void readAdmin(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		String name = "";				//Name of the User
 		boolean gotName = false;			//Set to true once name is read
 		String birthdate = "";			//Birthday of the User
@@ -102,12 +102,12 @@ public class ReadFile {
 				sub = line.substring(0, 5);	//Set sub to first 5 characters of line
 			}
 			catch (StringIndexOutOfBoundsException e) {	//If that can't be read
-				throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+				throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 			}
 			
 			if (sub.equals("@NAME")) {					//If the substring rules that the line contains the Name
 				if(gotName) {								//and if a Name has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if a Name has not already been read
 					name = line.substring(6);					//get the Name from the line
@@ -118,7 +118,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@BIRT")) {				//If the substring rules that the line contains the Birthday
 				if(gotBday) {								//and if a Bday has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if a Bbay has not already been read
 					birthdate = line.substring(11);				//get the Bday from the line
@@ -129,7 +129,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@CITY")) {				//If the substring rules that the line contains the City
 				if(gotCity) {								//and if the City has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if the City has not already been read
 					city = line.substring(6);					//get the City from the line
@@ -140,7 +140,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@STAT")) {				//If the substring rules that the line contains the State
 				if(gotState) {								//and if the State has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if the State has not already been read
 					state = line.substring(7);					//get the State from the line
@@ -151,7 +151,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@USER")) {				//If the substring rules that the line contains the Username
 				if(gotUsername) {							//and if the Username has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if the Username has not already been read
 					username = line.substring(10);				//get Username from the line
@@ -162,7 +162,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@PASS")) {				//If the substring rules that the line contains the Password
 				if(gotPassword) {							//and if the Password has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if the Password has not already been read
 					password = line.substring(10);				//get Password from the line
@@ -173,7 +173,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@REGI")) {				//If the substring rules that the line contains the RegisteredDate
 				if(gotRegDate) {							//and if the RegDate has already been read
-					throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
 				else {										//or if the RegDate has nor already been read
 					regDate = line.substring(17);				//get RegDate from the line
@@ -183,7 +183,7 @@ public class ReadFile {
 				
 			}
 			else {										//If what data is being read cannot be determined
-				throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+				throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 			}
 			
 		}
@@ -195,13 +195,13 @@ public class ReadFile {
 			currentlyReadingData = false;		//set currentlyReadingData to false
 		}
 		else {										//If any bit of data was not collected
-			throw new incorrectFileFormatException();	//throw incorrectFileFormatException
+			throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 		}
 		
 	}
 	
 	
-	private static void readUser(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+	private static void readUser(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		String name = "";
 		boolean gotName = false;
 		String bday = "";
@@ -232,12 +232,12 @@ public class ReadFile {
 				sub = line.substring(0, 5);
 			}
 			catch (StringIndexOutOfBoundsException e) {
-				throw new incorrectFileFormatException();
+				throw new IncorrectFileFormatException();
 			}
 			
 			if (sub.equals("@NAME")) {
 				if(gotName) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					name = line.substring(6);
@@ -248,7 +248,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@BIRT")) {
 				if(gotBday) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					bday = line.substring(11);
@@ -259,7 +259,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@CITY")) {
 				if(gotCity) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					city = line.substring(6);
@@ -270,7 +270,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@STAT")) {
 				if(gotState) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					state = line.substring(7);
@@ -281,7 +281,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@USER")) {
 				if(gotUsername) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					username = line.substring(10);
@@ -292,7 +292,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@PASS")) {
 				if(gotPassword) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					password = line.substring(10);
@@ -303,7 +303,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@REGI")) {
 				if(gotRegDate) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					regDate = line.substring(17);
@@ -313,7 +313,7 @@ public class ReadFile {
 				
 			}
 			else {
-				throw new incorrectFileFormatException();
+				throw new IncorrectFileFormatException();
 			}
 		}
 		
@@ -324,12 +324,12 @@ public class ReadFile {
 			manager.addUser(a);
 		}
 		else {
-			throw new incorrectFileFormatException();
+			throw new IncorrectFileFormatException();
 		}
 	}
 
 	
-	private static void readCategory(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+	private static void readCategory(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String name = "";
 		boolean gotName = false;
@@ -349,12 +349,12 @@ public class ReadFile {
 				sub = line.substring(0, 5);
 			}
 			catch (StringIndexOutOfBoundsException e) {
-				throw new incorrectFileFormatException();
+				throw new IncorrectFileFormatException();
 			}
 			
 			if (sub.equals("@NAME")) {
 				if (gotName) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					name = line.substring(6);
@@ -363,7 +363,7 @@ public class ReadFile {
 				}
 			}
 			else {
-				throw new incorrectFileFormatException();
+				throw new IncorrectFileFormatException();
 			}
 			
 		}
@@ -376,7 +376,7 @@ public class ReadFile {
 	}
 	
 	
-	private static void readGroup(SystemManager manager, Scanner reader) throws incorrectFileFormatException {
+	private static void readGroup(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String name = "";
 		boolean gotName = false;
@@ -398,12 +398,12 @@ public class ReadFile {
 				sub = line.substring(0, 5);
 			}
 			catch (StringIndexOutOfBoundsException e) {
-				throw new incorrectFileFormatException();
+				throw new IncorrectFileFormatException();
 			}
 			
 			if (sub.equals("@NAME")) {
 				if (gotName) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					name = line.substring(6);
@@ -413,7 +413,7 @@ public class ReadFile {
 			}
 			else if (sub.equals("@CATE")) {
 				if (gotCatName) {
-					throw new incorrectFileFormatException();
+					throw new IncorrectFileFormatException();
 				}
 				else {
 					catName = line.substring(10);
@@ -422,7 +422,7 @@ public class ReadFile {
 				}
 			}
 			else {
-				throw new incorrectFileFormatException();
+				throw new IncorrectFileFormatException();
 			}
 			
 		}
@@ -443,18 +443,6 @@ public class ReadFile {
 		
 	}
 	
-	
-}
-
-
-
-class incorrectFileFormatException extends Exception {
-	
-	public incorrectFileFormatException() {}
-	
-	public incorrectFileFormatException(String msg) {
-		super(msg);
-	}
 	
 }
 

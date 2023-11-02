@@ -34,7 +34,7 @@ public class SystemManager {
 		
 		try {
 			ReadFile.readFile(this, filename);
-		} catch (FileNotFoundException | incorrectFileFormatException e) {
+		} catch (FileNotFoundException | IncorrectFileFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		

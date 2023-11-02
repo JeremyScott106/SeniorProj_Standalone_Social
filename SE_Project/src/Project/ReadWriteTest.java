@@ -33,7 +33,7 @@ class ReadWriteTest {
 				
 			}
 			
-		} catch (FileNotFoundException | incorrectFileFormatException e) {
+		} catch (FileNotFoundException | IncorrectFileFormatException e) {
 			e.printStackTrace();
 			fail();
 		} catch (IOException e) {

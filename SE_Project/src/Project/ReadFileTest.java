@@ -24,7 +24,7 @@ class ReadFileTest {
 		catch (FileNotFoundException e) {
 			fileNotFound = true;
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			fail();
 		}
 		
@@ -90,7 +90,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			e.printStackTrace();
 			fail();
 		}
@@ -110,7 +110,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFileFormat = true;
 		}
 		
@@ -131,7 +131,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFileFormat = true;
 		}
 		
@@ -152,7 +152,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFileFormat = true;
 		}
 		
@@ -173,7 +173,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFileFormat = true;
 		}
 		
@@ -194,7 +194,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFileFormat = true;
 		}
 		
@@ -246,7 +246,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			e.printStackTrace();
 			fail();
 			
@@ -268,7 +268,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 			
 		}
@@ -291,7 +291,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 			
 		}
@@ -314,7 +314,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 			
 		}
@@ -337,7 +337,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 			
 		}
@@ -422,7 +422,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			e.printStackTrace();
 			fail();
 			
@@ -467,7 +467,7 @@ class ReadFileTest {
 			
 			assertEquals(true, namesMatch);
 			
-		} catch (FileNotFoundException | incorrectFileFormatException e) {
+		} catch (FileNotFoundException | IncorrectFileFormatException e) {
 			
 			e.printStackTrace();
 			fail();
@@ -493,7 +493,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 		}
 		
@@ -517,7 +517,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 		}
 		
@@ -541,7 +541,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 		}
 		
@@ -565,7 +565,7 @@ class ReadFileTest {
 			e.printStackTrace();
 			fail();
 		}
-		catch (incorrectFileFormatException e) {
+		catch (IncorrectFileFormatException e) {
 			incorrectFormat = true;
 		}
 		
@@ -611,7 +611,7 @@ class ReadFileTest {
 			
 			
 			
-		} catch (FileNotFoundException | incorrectFileFormatException e) {
+		} catch (FileNotFoundException | IncorrectFileFormatException e) {
 			e.printStackTrace();
 			fail();
 		}
