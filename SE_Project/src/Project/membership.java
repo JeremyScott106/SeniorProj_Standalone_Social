@@ -2,6 +2,8 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class membership {
 	private User user;
@@ -30,6 +32,21 @@ public class membership {
 	
 	public Date getDate() {
 		return registeredDate;
+	}
+	
+	
+	
+	public String getMembershipWriteData() {
+		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		String regDate = df.format(registeredDate);
+		
+		String memberData = "@START\n" + 
+								"@MEMBERSHIP\n" + 
+								"@USER=" + user.getId() + "\n" + 
+								"@GROUP=" + group.getGroupName() + "\n" +
+								"@REGISTEREDDATE=" + regDate + "\n" + 
+								"@END\n\n";
+		return memberData;
 	}
 
 }

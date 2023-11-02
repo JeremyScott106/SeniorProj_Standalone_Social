@@ -50,10 +50,10 @@ public class membershipTest {
 		Group testGroup1 = new Group("Standard Name");
 		
 		// Create a Date object for the registration date.
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 	    Date registrationDate = null;
 	    try {
-	        registrationDate = dateFormat.parse("01/12/12");
+	        registrationDate = dateFormat.parse("01/12/2012");
 	    } catch (ParseException e) {
 	        e.printStackTrace();
 	    }
@@ -62,5 +62,33 @@ public class membershipTest {
 		Date actual = m.getDate();
 		assertEquals(registrationDate, actual);
 	}	
+	
+	
+	@Test
+	void testGetMembershipWriteData() {
+		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup1 = new Group("Standard Name");
+		
+		 SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+		    Date registrationDate = null;
+		    try {
+		        registrationDate = dateFormat.parse("01/12/2012");
+		    } catch (ParseException e) {
+		        e.printStackTrace();
+		    }
+		
+		membership membership = new membership(u, testGroup1, registrationDate);
+		
+		String actual = membership.getMembershipWriteData();
+		
+		String expected = "@START\n" + 
+							"@MEMBERSHIP\n" +
+							"@USER=jackster3\n" + 
+							"@GROUP=Standard Name\n" + 
+							"@REGISTEREDDATE=01/12/2012\n" + 
+							"@END\n\n";
+		
+		assertEquals(expected, actual);
+	}
 	
 }
