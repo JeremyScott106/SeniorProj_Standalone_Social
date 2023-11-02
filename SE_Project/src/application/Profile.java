@@ -1,9 +1,10 @@
 package application;
+import Project.Admin;
 import Project.SystemManager;
+import Project.User;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
-
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -12,38 +13,30 @@ public class Profile extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private JPanel homeView;
+	private User displayedUser;
 	
+		// If no user is pushed, get currently logged in user and push it to form (null checks in place) //
 	@SuppressWarnings("exports")
-	public Profile(SystemManager sm,  JMenuBar jmb,  JFrame frame) {
+	public Profile(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
+		this(sm, jmb, frame, dim, sm.getCurrentUser());
+	}
+
+	@SuppressWarnings("exports")
+	public Profile(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, User u) {
 		topBar = jmb;
 		manager = sm;
 		currentFrame = frame;
+		frame.setSize(dim);
+		displayedUser = u;
 		displayGUI();
 	}
 	
-				// ************ Home View ************ //
-	private class categoryPanel extends JPanel {
-
-		private JPanel homePane;
-		
-		public categoryPanel(JPanel p, Profile info) {
-			homePane = p;
-			setOpaque(true);
-			setBackground(Color.orange.darker());		
-		}
-		
-	    @Override
-	    public Dimension getPreferredSize() {
-	        return (new Dimension(500, 500));
-	    }
-	}
-	
-	
+		// Build The GUI //
 	private void displayGUI() {
 		currentFrame.setLayout(new BorderLayout(0, 0));
-		
 		currentFrame.add(topBar, BorderLayout.NORTH);
+		currentFrame.setTitle("This is the Profile view");
+		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		currentFrame.add(panel, BorderLayout.CENTER);
@@ -74,8 +67,10 @@ public class Profile extends JFrame {
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_4.setBounds(35, 117, 110, 26);
 		panel.add(lblNewLabel_4);
-		if (manager.isLoggedIn()) {
-			if (manager.isAdmin()) {
+		
+		// Check to see if user exist in call, if so, print user information into form //
+		if (displayedUser != null) {
+			if (displayedUser instanceof Admin) {
 				JLabel lblNewLabel_5 = new JLabel("(ADMIN) " + manager.getCurrentUser().getId());
 				lblNewLabel_5.setBounds(137, 45, 207, 26);
 				panel.add(lblNewLabel_5);
@@ -85,7 +80,6 @@ public class Profile extends JFrame {
 				lblNewLabel_5.setBounds(137, 45, 207, 26);
 				panel.add(lblNewLabel_5);
 			}
-			
 			
 			JLabel lblNewLabel_5_1 = new JLabel(manager.getCurrentUser().getName());
 			lblNewLabel_5_1.setBounds(137, 81, 207, 26);
@@ -101,8 +95,7 @@ public class Profile extends JFrame {
 			lblNewLabel_5_3.setBounds(137, 153, 207, 26);
 			panel.add(lblNewLabel_5_3);
 		}
-		
-//		currentFrame.pack();
+
 		currentFrame.setVisible(true);
 	}
 }

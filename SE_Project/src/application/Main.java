@@ -24,10 +24,12 @@ public class Main extends JFrame {
 		JMenu view = new JMenu("View");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
+		JMenuItem logout = new JMenuItem("Logout");
 		
 		JMenuItem myInfo = new JMenuItem("My Info");
 		JMenuItem fakeUser1 = new JMenuItem("Make Fake User1");
-		JMenuItem loadData = new JMenuItem("Load \"ReadFile_Test_Admin.txt\"");
+		JMenuItem loadData1 = new JMenuItem("Load \"ReadFile_Test_Admin.txt\"");
+		JMenuItem loadData2 = new JMenuItem("Load \"ReadFile_Test_User.txt\"");
 		
 		JMenuItem switchHome = new JMenuItem("Home");
 		JMenuItem switchCategory = new JMenuItem("Category View");
@@ -40,9 +42,11 @@ public class Main extends JFrame {
 		menus.add(test);
 				//Add sub-menus to menus//
 		file.add(login);
+		file.add(logout);
 		test.add(myInfo);
 		test.add(fakeUser1);
-		test.add(loadData);
+		test.add(loadData1);
+		test.add(loadData2);
 		view.add(switchHome);
 		view.add(switchCategory);
 		view.add(switchGroup);
@@ -52,6 +56,13 @@ public class Main extends JFrame {
 		login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	new Login(manager);
+            }
+        });
+		
+		logout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	manager.logout();
+            	repaint();
             }
         });
 		
@@ -80,9 +91,22 @@ public class Main extends JFrame {
             }
         });
 		
-		loadData.addActionListener(new ActionListener() {
+		loadData1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	String fileName = ".\\SE_Project\\src\\Project\\ReadFile_Test_Admin.txt";
+            	try {
+					ReadFile.readFile(manager, fileName);
+				} catch (Exception ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
+
+            }
+        });
+		
+		loadData2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	String fileName = ".\\SE_Project\\src\\Project\\ReadFile_Test_User.txt";
             	try {
 					ReadFile.readFile(manager, fileName);
 				} catch (Exception ex) {
@@ -96,35 +120,35 @@ public class Main extends JFrame {
 		switchHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Home(manager, topBar, currentFrame);
+            	new Home(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		
 		switchCategory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Category(manager, topBar, currentFrame);
+            	new Category(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		
 		switchGroup.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Group(manager, topBar, currentFrame);
+            	new Group(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		
 		switchPost.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Post(manager, topBar, currentFrame);
+            	new Post(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		
 		switchProfile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Profile(manager, topBar, currentFrame);
+            	new Profile(manager, topBar, currentFrame, currentFrame.getSize());
             	
             }
         });
@@ -142,14 +166,14 @@ public class Main extends JFrame {
 		if (manager == null) {
 			startMemory();
 		}
-		
-		new Home(manager, topBar, currentFrame);
+		new Home(manager, topBar, currentFrame, currentFrame.getSize());
 	}
 	
 	private void startMemory() {
 		manager = new SystemManager();
 		topBar = createMenus();
 		currentFrame = new JFrame();
+		currentFrame.setSize(800,800);
 	}
 	
 	

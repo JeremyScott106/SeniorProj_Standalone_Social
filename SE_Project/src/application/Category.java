@@ -3,8 +3,6 @@ import Project.SystemManager;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Date;
-
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -13,56 +11,29 @@ public class Category extends JFrame {
 	private static JMenuBar topBar;
 	private static SystemManager manager;
 	private JFrame currentFrame;
-	private JPanel categoryView;
 	
-	
-	public Category(SystemManager sm, @SuppressWarnings("exports") JMenuBar jmb, JFrame frame) {
+	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
+	public Category() {
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		getContentPane().add(lblNewLabel, BorderLayout.CENTER);
+	}
+	
+	@SuppressWarnings("exports")
+	public Category(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		topBar = jmb;
 		manager = sm;
 		currentFrame = frame;
+		currentFrame.setSize(dim);
 		displayGUI();
 	}
 	
-				// ************ Home View ************ //
-	private class categoryPanel extends JPanel {
-
-		private JPanel categoryPane;
-		
-		public categoryPanel(JPanel p, Category info) {
-			categoryPane = p;
-			setOpaque(true);
-			setBackground(Color.red.darker().darker());		
-		}
-		
-	    @Override
-	    public Dimension getPreferredSize() {
-	        return (new Dimension(500, 500));
-	    }
-	}
-	
-				//Only a menu so far//
 	private void displayGUI() {
-		//this.setSize(500,500);
-		currentFrame.setTitle("This is the category view");
+		currentFrame.setLayout(new BorderLayout(0, 0));
+		currentFrame.add(topBar, BorderLayout.NORTH);
+		currentFrame.setTitle("This is the Category view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-																		
-		JPanel mainPane = new JPanel();
-		mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-		mainPane.setLayout(new CardLayout());
 		
-		categoryView = new categoryPanel(mainPane, this);
+		// Put Code Here //
 		
-		mainPane.add(categoryView);
-		currentFrame.getContentPane().add(mainPane, BorderLayout.CENTER);   
-
-		
-		setJMenuBar(topBar);
-		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
-		
-		currentFrame.pack();
 		currentFrame.setVisible(true);
 	}
 }
