@@ -170,7 +170,11 @@ public class SystemManager {
 	
 	public User getCurrentUser() {
 		return currentUser;
-  }
+	}
+	
+	public void logout() {
+		currentUser = null;
+	}
 
 	public ArrayList<Admin> getAdmins_Alphabetically() {
 		Collections.sort(admins, new SortUsersByName());

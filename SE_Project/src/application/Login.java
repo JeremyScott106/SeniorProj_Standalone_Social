@@ -8,7 +8,6 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class Login extends JDialog {
-	private JTextArea txaMessage;
 	private JTextField txfName;
 	private JTextField txfPass;
 	private SystemManager manager;
@@ -24,7 +23,7 @@ public class Login extends JDialog {
 			Login = new JFrame();
 		
 			Login.setDefaultCloseOperation(HIDE_ON_CLOSE);
-			Login.setSize(250,150);
+			Login.setSize(300, 150);
 			Login.setLayout(new BorderLayout(10,5)); 				//Figure out getLayout!!!//
 			Login.setLocationRelativeTo(null);
 			Login.add(makeButtons(), BorderLayout.SOUTH);
