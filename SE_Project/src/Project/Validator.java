@@ -126,7 +126,7 @@ public class Validator {
 		return false;
 	}
 	
-	//FIXME: add test methods
+	
 	public static Group getGroupFromName(ArrayList<Group> groups, String name) {
 		
 		Group g = null;
@@ -141,7 +141,7 @@ public class Validator {
 		return g;
 	}
 	
-	//FIXME: add test methods
+	
 	public static User getUserFromUsername(ArrayList<User> users, String username) {
 		
 		User u = null;

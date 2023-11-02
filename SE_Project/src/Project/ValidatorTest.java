@@ -365,5 +365,96 @@ class ValidatorTest {
 		assertEquals(false, actual);
 		
 	}
+	
+	
+	@Test
+	void testGetGroupFromName_Success() {
+		
+		ArrayList<Group> groups = new ArrayList<>();
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Group actual = Validator.getGroupFromName(groups, "Basketball");
+		
+		assertEquals(g4, actual);
+	}
+	
+	@Test
+	void testGetGroupFromName_Failure() {
+		
+		ArrayList<Group> groups = new ArrayList<>();
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Group actual = Validator.getGroupFromName(groups, "Volley Ball");
+		
+		assertEquals(null, actual);
+	}
+	
+	
+	@Test
+	void testGetUserFromUsername_Success() {
+		
+		ArrayList<User> users = new ArrayList<>();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		users.add(u5);
+		
+		User actual = Validator.getUserFromUsername(users, "LegalTrouble");
+		
+		assertEquals(u4, actual);
+	}
+	
+	@Test
+	void testGetUserFromUsername_Failure() {
+		
+		ArrayList<User> users = new ArrayList<>();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		users.add(u5);
+		
+		User actual = Validator.getUserFromUsername(users, "Testing");
+		
+		assertEquals(null, actual);
+	}
+
 
 }

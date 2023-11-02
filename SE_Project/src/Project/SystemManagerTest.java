@@ -709,4 +709,102 @@ class SystemManagerTest {
 		
 		assertEquals(true, namesMatch);
 	}
+	
+	
+	@Test
+	void testGetGroupByName_Success() {
+		
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+
+		Group g1 = new Group("Sports");
+		Group g2 = new Group("Games");
+		Group g3 = new Group("Video Games");
+		Group g4 = new Group("Foods");
+		Group g5 = new Group("Apples");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
+		
+		sm.addCategory(c1);
+		
+		Group actual = sm.getGroupByName("Foods");
+		
+		assertEquals(g4, actual);
+	}
+	
+	@Test
+	void testGetGroupByName_Failure() {
+		
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+
+		Group g1 = new Group("Sports");
+		Group g2 = new Group("Games");
+		Group g3 = new Group("Video Games");
+		Group g4 = new Group("Foods");
+		Group g5 = new Group("Apples");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
+		
+		sm.addCategory(c1);
+		
+		Group actual = sm.getGroupByName("testing");
+		
+		assertEquals(null, actual);
+	}
+	
+	
+	@Test
+	void testGetUserByUsername_Success() {
+		
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		User actual = manager.getUserByUsername("theWiz");
+		
+		assertEquals(u2, actual);
+	}
+	
+	@Test
+	void testGetUserByUsername_Failure() {
+		
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		User actual = manager.getUserByUsername("testing");
+		
+		assertEquals(null, actual);
+	}
 }
