@@ -489,7 +489,17 @@ class SystemManagerTest {
 		r.add(r2);
 		r.add(r3);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		Post testPost2 = new Post (testUser, testGroup, 1, "I");
+		Post testPost3 = new Post (testUser, testGroup, 1, "I");
+
 		sm.addPost(testPost1);
+		sm.addPost(testPost2);
+		sm.addPost(testPost3);
+		
+		testPost1.addResponse(testUser, testGroup1, "n");
+		testPost2.addResponse(testUser, testGroup1, "n");
+		testPost3.addResponse(testUser, testGroup1, "n");
+
 		
 		String expected = "Post: I" + "\n" + "Response: n" + "\n" + "Response: n";
 		assertEquals(expected, sm.viewUsersPostsResponsesInGroup(testUser, testGroup));
@@ -503,11 +513,7 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
 		Response r1 = new Response(testUser, testGroup, "n");
-		Response r2 = new Response(testUser, testGroup, "n");
-		Response r3 = new Response(testUser, testGroup1, "n");
 		r.add(r1);
-		r.add(r2);
-		r.add(r3);
 		Post testPost1 = new Post (testUser, testGroup, 1, "I");
 		sm.addPost(testPost1);
 		sm.addGroup(testGroup1);
@@ -529,7 +535,7 @@ class SystemManagerTest {
 		r.add(r1);
 		r.add(r2);
 		r.add(r3);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		Post testPost1 = new Post(testUser, testGroup, 1, "I");
 		sm.addPost(testPost1);
 		sm.addGroup(testGroup1);
 		
