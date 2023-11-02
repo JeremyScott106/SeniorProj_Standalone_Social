@@ -3,12 +3,12 @@ package Project;
 public class Response{
 	private User user;
 	private Group group;
-	private String responceBody;
+	private String responseBody;
 	
-	public Response(User user, Group group, String responceBody) {
+	public Response(User user, Group group, String responseBody) {
 		this.user = user;
 		this.group = group;
-		this.responceBody = responceBody;
+		this.responseBody = responseBody;
 	}
 	
 	public User getUser() {
@@ -19,8 +19,8 @@ public class Response{
 		return group;
 	}
 	
-	public String getResponceBody() {
-		return responceBody;
+	public String getResponseBody() {
+		return responseBody;
 	}
 	
 }
