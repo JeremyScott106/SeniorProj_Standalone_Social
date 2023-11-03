@@ -63,5 +63,19 @@ public class Group {
     public List<String> getPost() {
         return posts;
     }
+    
+    
+    
+    public String getGroupWriteData(String catName) {
+    	
+    	String groupData = "@START\n" + 
+    						"@GROUP\n" + 
+    						"@NAME=" + groupName + "\n" + 
+    						"@CATEGORY=" + catName + "\n" + 
+    						"@END\n\n";
+    	
+    	return groupData;
+    	
+    }
 
 }

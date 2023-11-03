@@ -1,5 +1,7 @@
 package Project;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -11,26 +13,65 @@ public class SystemManager {
 	private User currentUser;
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
-
 	private ArrayList<category> categories;
 
 	public SystemManager() {
 		userSignedIn = false;
 		adminSignedIn = false;
-		users = new ArrayList<>();
-		admins = new ArrayList<>();		
-		categories = new ArrayList<>();
+		users = new ArrayList<User>();
+		admins = new ArrayList<Admin>();		
+		categories = new ArrayList<category>();
 
 	}
-
-	public boolean addUser(User u) {	//This should check to ensure that a new user doesn't have the same username as an existing user
-		users.add(u);  					//NOTICE: This will require more variables as the User class is updated
+	
+	//Constructor that will read given file
+	public SystemManager(String filename) {
+		userSignedIn = false;
+		adminSignedIn = false;
+		users = new ArrayList<User>();
+		admins = new ArrayList<Admin>();
+		categories = new ArrayList<category>();
+		
+		try {
+			ReadFile.readFile(this, filename);
+		} catch (FileNotFoundException | IncorrectFileFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	
+	public boolean writeManager(String fileName) {
+		
+		try {
+			WriteFile.writeFile(this, fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 		return true;
 	}
+	
 
-	public boolean addAdmin(Admin a) {	//This should check to ensure that a new user doesn't have the same username as an existing user
-		admins.add(a);					//NOTICE: This will require more variables as the User/Admin class is updated
-		return true;
+	public boolean addUser(User u) {
+		if (Validator.validateUserExists(u, users)) {
+			return false;
+		}
+		else {
+			users.add(u);
+			return true;
+		}
+	}
+
+	public boolean addAdmin(Admin a) {	
+		if (Validator.validateAdminExists(a, admins)) {
+			return false;
+		}
+		else {
+			admins.add(a);	
+			return true;
+		}
 	}
 
 	public boolean registerUser(String name, String bday, String city,
@@ -53,10 +94,16 @@ public class SystemManager {
 		return false;					//If there exists a User or Admin with the given username, return false
 	}
 
-	public boolean addCategory(category c) {	//This should check to ensure that a new category doesn't already exist
-		categories.add(c);				//NOTICE: This may require more variables as the Category class is updated
-
-		return true;
+	public boolean addCategory(category c) {
+		
+		if (Validator.validateCategoryExists(c, categories)) {
+			return false;
+		}
+		else {
+			categories.add(c);
+			return true;
+		}
+		
 	}
 
 
@@ -214,5 +261,33 @@ public class SystemManager {
 			 }
 		 }
 		 return groupInCategory;
+	 }
+	 
+	 public category getCategoryByName(String catName) {
+		 return Validator.getCategoryFromName(categories, catName);
+	 }
+	 
+	 public ArrayList<User> getUsers_Alphabetically_ByUsername(){
+		 Collections.sort(users, new SortUsersByUsername());
+		 
+		 return users;
+	 }
+	 
+	 public ArrayList<Admin> getAdmins_Alphabetically_ByUsername() {
+		 Collections.sort(admins, new SortUsersByUsername());
+		 
+		 return admins;
+	 }
+	 
+
+	 public Group getGroupByName(String name) {
+		 ArrayList<Group> allGroups = this.getAllGroups();
+		 
+		 return Validator.getGroupFromName(allGroups, name);
+	 }
+	 
+
+	 public User getUserByUsername(String username) {
+		 return Validator.getUserFromUsername(users, username);
 	 }
 }

@@ -92,5 +92,67 @@ public class Validator {
 		return false;	//return false otherwise
 	}
 	//returns true if there exists a user is in a group, returns false otherwise
+	
+	
+	public static boolean validateAdminExists(Admin a, ArrayList<Admin> admins) {
+		
+		for (Admin ad : admins) {
+			if (a.getId().equals(ad.getId())) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	
+	public static boolean validateCategoryExists(category c, ArrayList<category> categories) {
+		
+		for (category cat : categories) {
+			if (c.getName().equals(cat.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean validateUserExists(User u, ArrayList<User> users) {
+		
+		for (User user : users) {
+			if (u.getId().equals(user.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public static Group getGroupFromName(ArrayList<Group> groups, String name) {
+		
+		Group g = null;
+		
+		for (Group g1 : groups) {
+			
+			if (g1.getGroupName().equals(name)) {
+				g = g1;
+			}
+		}
+		
+		return g;
+	}
+	
+	
+	public static User getUserFromUsername(ArrayList<User> users, String username) {
+		
+		User u = null;
+		
+		for (User u1 : users) {
+			
+			if (u1.getId().equals(username)) {
+				u = u1;
+			}
+		}
+		return u;
+	}
 
 }
