@@ -1,6 +1,7 @@
 package application;
 import Project.SystemManager;
 import Project.category;
+import Project.Group;
 
 import java.awt.*;
 import javax.swing.*;
@@ -63,6 +64,7 @@ public class AdminTools extends JFrame {
 				if(newCategoryTextField.getText() != null)
 					if (manager.createCategory(newCategoryTextField.getText())) {
 						JOptionPane.showMessageDialog(null, "New Category Created");
+						btnRefreshPage.doClick();
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Create Category Failed Validation");
@@ -80,15 +82,6 @@ public class AdminTools extends JFrame {
 		panel.add(newCategoryTextField);
 		newCategoryTextField.setColumns(10);
 		
-		JButton btnCreateGroup = new JButton("<html><center>Create New Group</center></html>");
-		btnCreateGroup.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnCreateGroup.setBounds(20, 145, 89, 40);
-		panel.add(btnCreateGroup);
-		
 		ArrayList<category> categoryArrayList = manager.getCategories_Alphabetically();
 		String[] comboBoxCategoryList = new String[categoryArrayList.size()];
 		for (int i = 0; i < categoryArrayList.size(); i++) {
@@ -99,15 +92,14 @@ public class AdminTools extends JFrame {
 		panel.add(comboBoxCategories);
 		
 		JButton btnViewAllCategories = new JButton("<html><center>View All Categories</center></html>");
-		String msgAllCategories = "";
-		for (category c : categoryArrayList) {
-			msgAllCategories += c.getName() + "\n";
-		}
-		String m = msgAllCategories; // this is dumb, but showMessageDialog won't let me use it any other way //
 		btnViewAllCategories.setBounds(20, 93, 89, 40);
 		btnViewAllCategories.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, m);
+				String msgAllCategories = "";
+				for (category c : categoryArrayList) {
+					msgAllCategories += c.getName() + "\n";
+				}
+				JOptionPane.showMessageDialog(null, msgAllCategories);
 			}
 		});
 		panel.add(btnViewAllCategories);
@@ -116,6 +108,54 @@ public class AdminTools extends JFrame {
 		newGroupTextField.setBounds(137, 155, 154, 20);
 		panel.add(newGroupTextField);
 		newGroupTextField.setColumns(10);
+		
+		JButton btnCreateGroup = new JButton("<html><center>Create New Group</center></html>");
+		btnCreateGroup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (newGroupTextField.getText() != null) {
+					if (manager.createGroup(newGroupTextField.getText(), String.valueOf(comboBoxCategories.getSelectedItem()))) {
+						JOptionPane.showMessageDialog(null, "New Group Created");
+						btnRefreshPage.doClick();
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Create Group Failed Validation");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Text Box Empty or Category Not Selected");
+				}
+			}
+		});
+		btnCreateGroup.setBounds(20, 145, 89, 40);
+		panel.add(btnCreateGroup);
+		
+		JButton btnViewAllGroups = new JButton("<html><center>View All Groups</center></html>");
+		btnViewAllGroups.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String msgAllGroups = "";
+				for (Group g : manager.getAllGroups_Alphabetically()) {
+						msgAllGroups += g.getGroupName() + "\n";
+				}
+				JOptionPane.showMessageDialog(null, msgAllGroups);
+			}
+		});
+		btnViewAllGroups.setBounds(20, 191, 89, 40);
+		panel.add(btnViewAllGroups);
+		
+		JButton btnViewAllGroupsByCategory = new JButton("<html><center>View All Groups In Selected Category</center></html>");
+		btnViewAllGroupsByCategory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String msgAllGroupsByCategory = "";
+				for (Group g: manager.getGroupsInCategory_Alphabetically(manager.getCategoryByName(comboBoxCategories.getSelectedItem().toString()))) {
+					msgAllGroupsByCategory += g.getGroupName() + "\n";
+				}
+				JOptionPane.showMessageDialog(null, msgAllGroupsByCategory);
+			}
+		});
+		btnViewAllGroupsByCategory.setBounds(137, 191, 154, 40);
+		panel.add(btnViewAllGroupsByCategory);
+		
+		
 		return panel;
 	}
 	

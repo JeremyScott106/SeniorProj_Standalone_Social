@@ -215,4 +215,13 @@ public class SystemManager {
 		 }
 		 return groupInCategory;
 	 }
+	 
+	 public category getCategoryByName(String name) {
+		 for (category c : categories) {
+			 if (c.getName() == name) {
+				 return c;
+			 }
+		 }
+		 return null;
+	 }
 }
