@@ -8,8 +8,8 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class Category extends JFrame {
 
-	private static JMenuBar topBar;
-	private static SystemManager manager;
+	private JMenuBar topBar;
+	private SystemManager manager;
 	private JFrame currentFrame;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//

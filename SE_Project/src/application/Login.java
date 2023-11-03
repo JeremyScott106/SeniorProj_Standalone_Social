@@ -85,6 +85,8 @@ public class Login extends JDialog {
 				}
 			}
 		});
+				// Pressing enter clicks btnSignIn //
+		Login.getRootPane().setDefaultButton(btnSignIn);
 		return btnPanel;
 	}
 	

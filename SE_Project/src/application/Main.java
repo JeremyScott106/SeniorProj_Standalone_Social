@@ -134,7 +134,7 @@ public class Main extends JFrame {
 		switchGroup.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Group(manager, topBar, currentFrame, currentFrame.getSize());
+            	new Group(manager, topBar, currentFrame, currentFrame.getSize(), null);
             }
         });
 		
