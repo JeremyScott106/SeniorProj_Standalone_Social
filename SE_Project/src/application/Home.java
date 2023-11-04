@@ -48,7 +48,7 @@ public class Home extends JFrame {
 		if (manager.getCurrentUser() instanceof Admin) {
 			JButton adminBtn = new JButton("Admin Tools");
 			adminBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
-			adminBtn.setBounds(274, 10, 152, 19);
+			adminBtn.setBounds(274, 10, 152, 25);
 			titlePanel.add(adminBtn);
 			adminBtn.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,7 @@ public class Home extends JFrame {
 				new Home(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 97, 25);
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
 			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
 		
