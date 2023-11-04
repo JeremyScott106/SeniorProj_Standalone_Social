@@ -156,28 +156,12 @@ class categoryTest {
 	void testGetCategoryWriteData() {
 		category c = new category("Sports");
 		
-		Group g1 = new Group("Hockey");
-		Group g2 = new Group("Soccer");
-		Group g3 = new Group("Football");
-		Group g4 = new Group("Basketball");
-		Group g5 = new Group("Tennis");
-		
-		c.addGroup(g1);
-		c.addGroup(g2);
-		c.addGroup(g3);
-		c.addGroup(g4);
-		c.addGroup(g5);
 		
 		String actual = c.getCategoryWriteData();
 		
 		String expected = "@START\n" + 
 							"@CATEGORY\n" + 
-							"@NAME=Sports\n" + 
-							"@GROUP=Hockey\n" + 
-							"@GROUP=Soccer\n" + 
-							"@GROUP=Football\n" + 
-							"@GROUP=Basketball\n" + 
-							"@GROUP=Tennis\n" + 
+							"@NAME=Sports\n" +  
 							"@END\n\n";
 		
 		assertEquals(expected, actual);

@@ -98,7 +98,7 @@ public class Home extends JFrame {
 			}
 			category c = alCategories.get(i);
 			double weightY = 0.0;
-			if (i == maxHeight-1)
+			if (i == maxHeight - 1 || (i == alCategories.size() - 1 && i < maxHeight - 1))
 				weightY = 1;
 			JButton button = new JButton(alCategories.get(i).getName());
 			GridBagConstraints gbc = new GridBagConstraints(

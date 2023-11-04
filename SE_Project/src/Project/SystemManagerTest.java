@@ -457,4 +457,354 @@ class SystemManagerTest {
 		assertEquals(expected, actual);
 
 	}
+	
+	
+	@Test
+	void testAddAdmin_Success() {
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		
+		
+		boolean actual = manager.addAdmin(a5);
+		
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testAddAdmin_Failure() {
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		
+		boolean actual = manager.addAdmin(a5);
+		
+		assertEquals(false, actual);
+	}
+	
+	
+	@Test
+	void testAddCategory_Success() {
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		manager.addCategory(c4);
+		
+		category c5 = new category("Apples");
+		
+		boolean actual = manager.addCategory(c5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testAddCategory_Failure() {
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		manager.addCategory(c4);
+		manager.addCategory(c5);
+		
+		boolean actual = manager.addCategory(c5);
+		
+		assertEquals(false, actual);
+		
+	}
+	
+	
+	@Test
+	void testAddUser_Success() {
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = manager.addUser(u5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testAddUser_Failure() {
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		
+		boolean actual = manager.addUser(u3);
+		
+		assertEquals(false, actual);
+		
+	}
+	
+	
+	@Test
+	void testSystemManager_ReadFileConstructor_Admins() {
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
+		
+		SystemManager manager = new SystemManager(fileName);
+		
+		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
+		
+		String[] expected = {"Grayson", "Himanshu", "Jeremy", "John", "Ryan"};
+		
+		boolean namesMatch = true;
+		
+		for (int i = 0; i < actual.size(); i++) {
+			
+			if (!actual.get(i).getName().equals(expected[i])) {
+				namesMatch = false;
+				break;
+			}
+		}
+		
+		assertEquals(true, namesMatch);
+		
+	}
+	
+	
+	@Test
+	void testWriteManager_Admins() {
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins";
+		
+		boolean actual = manager.writeManager(fileName);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	
+	@Test
+	void testGetUsers_Alphabetically_ByUsernames() {
+		
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		ArrayList<User> actual = manager.getUsers_Alphabetically_ByUsername();
+		
+		String expected[] = {"IDK", "jackster3", "LegalTrouble", "theWiz", "WestCarolina"};
+		
+		boolean namesMatch = true;
+		
+		for (int i = 0; i < actual.size(); i++) {
+			
+			if (!actual.get(i).getId().equals(expected[i])) {
+				namesMatch = false;
+				break;
+			}
+		}
+		
+		assertEquals(true, namesMatch);
+	}
+	
+	@Test
+	void testGetAdmins_Alphabetically_ByUsername() {
+		
+		SystemManager manager = new SystemManager();
+		
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		Admin a3 = new Admin("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		Admin a4 = new Admin("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		Admin a5 = new Admin("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		ArrayList<Admin> actual = manager.getAdmins_Alphabetically_ByUsername();
+		
+		String expected[] = {"IDK", "jackster3", "LegalTrouble", "theWiz", "WestCarolina"};
+		
+		boolean namesMatch = true;
+		
+		for (int i = 0; i < actual.size(); i++) {
+			
+			if (!actual.get(i).getId().equals(expected[i])) {
+				namesMatch = false;
+				break;
+			}
+		}
+		
+		assertEquals(true, namesMatch);
+	}
+	
+	
+	@Test
+	void testGetGroupByName_Success() {
+		
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+
+		Group g1 = new Group("Sports");
+		Group g2 = new Group("Games");
+		Group g3 = new Group("Video Games");
+		Group g4 = new Group("Foods");
+		Group g5 = new Group("Apples");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
+		
+		sm.addCategory(c1);
+		
+		Group actual = sm.getGroupByName("Foods");
+		
+		assertEquals(g4, actual);
+	}
+	
+	@Test
+	void testGetGroupByName_Failure() {
+		
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+
+		Group g1 = new Group("Sports");
+		Group g2 = new Group("Games");
+		Group g3 = new Group("Video Games");
+		Group g4 = new Group("Foods");
+		Group g5 = new Group("Apples");
+		
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		c1.addGroup(g3);
+		c1.addGroup(g4);
+		c1.addGroup(g5);
+		
+		sm.addCategory(c1);
+		
+		Group actual = sm.getGroupByName("testing");
+		
+		assertEquals(null, actual);
+	}
+	
+	
+	@Test
+	void testGetUserByUsername_Success() {
+		
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		User actual = manager.getUserByUsername("theWiz");
+		
+		assertEquals(u2, actual);
+	}
+	
+	@Test
+	void testGetUserByUsername_Failure() {
+		
+		SystemManager manager = new SystemManager();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		User actual = manager.getUserByUsername("testing");
+		
+		assertEquals(null, actual);
+	}
 }
