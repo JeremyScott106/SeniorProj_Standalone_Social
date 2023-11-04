@@ -83,7 +83,7 @@ public class Home extends JFrame {
 			});
 		}
 		
-		JButton btnRefreshPage = new JButton("Refresh Page");
+		JButton btnRefreshPage = new JButton("Refresh");
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();

@@ -81,10 +81,14 @@ public class CategoryView extends JFrame {
 			if (i % maxHeight == 0) {
 				j++;
 			}
-			Group g = alGroups.get(i);
+			
+			Group currentGroup = alGroups.get(i);
 			double weightY = 0.0;
-			if (i == maxHeight - 1 || (i == alGroups.size() - 1 && i < maxHeight - 1))
+			if (i == maxHeight - 1 || (i == alGroups.size() - 1 && i < maxHeight - 1)) {
 				weightY = 1;
+			}
+			
+			
 			JButton button = new JButton(alGroups.get(i).getGroupName());
 			GridBagConstraints gbc = new GridBagConstraints(
 		            j, (i % maxHeight),                           //cell x , y
@@ -99,7 +103,7 @@ public class CategoryView extends JFrame {
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					onViewChangeClick();
-					new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), manager.getGroupByName(getName()));
+					new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory, currentGroup);
 				}
 			});
 			groupGridPane.add(button, gbc);

@@ -73,7 +73,7 @@ public class Main extends JFrame {
 		switchGroup.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), null);
+            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), null, null);
             }
         });
 		
