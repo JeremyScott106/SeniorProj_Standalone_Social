@@ -1,39 +1,39 @@
 package application;
+import Project.Group;
 import Project.SystemManager;
-import Project.category;
 
 import java.awt.*;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Group extends JFrame {
+public class GroupView extends JFrame {
 
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private category currentCategory;
+	private Group currentGroup;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
-	public Group() {
+	public GroupView() {
 		
 	}
 	
 	
 	@SuppressWarnings("exports")
-	public Group(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, category c) {
-		topBar = jmb;
-		manager = sm;
-		currentFrame = frame;
-		currentFrame.setSize(dim);
-		currentCategory = c;
+	public GroupView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, Group g) {
+		this.topBar = jmb;
+		this.manager = sm;
+		this.currentFrame = frame;
+		this.currentFrame.setSize(dim);
+		this.currentGroup = g;
 		displayGUI();
 	}
 	
 	private void displayGUI() {
 		currentFrame.setLayout(new BorderLayout(0, 0));
 		currentFrame.add(topBar, BorderLayout.NORTH);
-		currentFrame.setTitle("This is the Group view for Category " + currentCategory.getName());
+		currentFrame.setTitle("This is the listing of posts in group " + currentGroup.getGroupName());
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Put Code Here //

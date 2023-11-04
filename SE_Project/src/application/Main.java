@@ -45,7 +45,7 @@ public class Main extends JFrame {
 		
 		login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	new Login(manager);
+            	new LoginPopUp(manager);
             }
         });
 		
@@ -66,28 +66,28 @@ public class Main extends JFrame {
 		switchCategory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Category(manager, topBar, currentFrame, currentFrame.getSize());
+            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), null);
             }
         });
 		
 		switchGroup.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Group(manager, topBar, currentFrame, currentFrame.getSize(), null);
+            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), null);
             }
         });
 		
 		switchPost.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Post(manager, topBar, currentFrame, currentFrame.getSize());
+            	new PostView(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		
 		switchProfile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
-            	new Profile(manager, topBar, currentFrame, currentFrame.getSize());
+            	new ProfileView(manager, topBar, currentFrame, currentFrame.getSize());
             	
             }
         });

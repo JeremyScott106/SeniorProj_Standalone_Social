@@ -24,10 +24,10 @@ public class Home extends JFrame {
 	
 	@SuppressWarnings("exports")
 	public Home(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
-		topBar = jmb;
-		manager = sm;
-		currentFrame = frame;
-		currentFrame.setSize(dim);
+		this.topBar = jmb;
+		this.manager = sm;
+		this.currentFrame = frame;
+		this.currentFrame.setSize(dim);
 		displayGUI();
 	}
 	
@@ -58,6 +58,31 @@ public class Home extends JFrame {
 			});
 		}
 		
+		if (manager.getCurrentUser() == null) {
+			JButton btnLogin = new JButton("Login");
+			btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLogin.setBounds(129, 10, 131, 25);
+			titlePanel.add(btnLogin);
+			btnLogin.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+					new LoginPopUp(manager);
+				}
+			});
+		}
+		
+		if (manager.getCurrentUser() == null) {
+			titlePanel.setPreferredSize(new Dimension(0,80));
+			JButton btnNewUser = new JButton("Register New Account");
+			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnNewUser.setBounds(10, 45, 250, 25);
+			titlePanel.add(btnNewUser);
+			btnNewUser.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+					new CreateUserPopUp(manager);
+				}
+			});
+		}
+		
 		JButton btnRefreshPage = new JButton("Refresh Page");
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -65,18 +90,19 @@ public class Home extends JFrame {
 				new Home(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(496, 10, 97, 23);
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 97, 25);
+			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
 		
 		JLabel lblCurrentUser = new JLabel("Current User: ");
 		lblCurrentUser.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblCurrentUser.setBounds(10, 10, 122, 19);
+		lblCurrentUser.setBounds(10, 10, 122, 25);
 		titlePanel.add(lblCurrentUser);
 		
 		if (manager.getCurrentUser() != null) {
 			JLabel lblUid = new JLabel(manager.getCurrentUser().getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblUid.setBounds(129, 10, 150, 19);
+			lblUid.setBounds(129, 10, 150, 25);
 			titlePanel.add(lblUid);
 		}
 		
@@ -114,7 +140,7 @@ public class Home extends JFrame {
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					onViewChangeClick();
-					new Group(manager, topBar, currentFrame, currentFrame.getSize(), c);
+					new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), c);
 				}
 			});
 			categoryGridPane.add(button, gbc);

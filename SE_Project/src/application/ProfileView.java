@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Profile extends JFrame {
+public class ProfileView extends JFrame {
 
 	private JMenuBar topBar;
 	private SystemManager manager;
@@ -17,17 +17,17 @@ public class Profile extends JFrame {
 	
 		// If no user is pushed, get currently logged in user and push it to form (null checks in place) //
 	@SuppressWarnings("exports")
-	public Profile(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
+	public ProfileView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this(sm, jmb, frame, dim, sm.getCurrentUser());
 	}
 
 	@SuppressWarnings("exports")
-	public Profile(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, User u) {
-		topBar = jmb;
-		manager = sm;
-		currentFrame = frame;
-		frame.setSize(dim);
-		displayedUser = u;
+	public ProfileView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, User u) {
+		this.topBar = jmb;
+		this.manager = sm;
+		this.currentFrame = frame;
+		this.currentFrame.setSize(dim);
+		this.displayedUser = u;
 		displayGUI();
 	}
 	

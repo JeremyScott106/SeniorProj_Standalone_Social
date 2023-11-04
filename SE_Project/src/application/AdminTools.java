@@ -24,10 +24,10 @@ public class AdminTools extends JFrame {
 
 	@SuppressWarnings("exports")
 	public AdminTools(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
-		topBar = jmb;
-		manager = sm;
-		currentFrame = frame;
-		currentFrame.setSize(dim);
+		this.topBar = jmb;
+		this.manager = sm;
+		this.currentFrame = frame;
+		this.currentFrame.setSize(dim);
 		displayGUI();
 	}
 	

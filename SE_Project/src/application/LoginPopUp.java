@@ -7,30 +7,30 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Login extends JDialog {
+public class LoginPopUp extends JDialog {
 	private JTextField txfName;
 	private JTextField txfPass;
 	private SystemManager manager;
-	private JFrame Login;
+	private JFrame login;
 
-	public Login(SystemManager manager) {
+	public LoginPopUp(SystemManager manager) {
 		initialize();
 		this.manager = manager;
 	}
 	
 	public void initialize() {
 		try {
-			Login = new JFrame();
+			login = new JFrame();
 		
-			Login.setDefaultCloseOperation(HIDE_ON_CLOSE);
-			Login.setSize(300, 150);
-			Login.setLayout(new BorderLayout(10,5)); 				//Figure out getLayout!!!//
-			Login.setLocationRelativeTo(null);
-			Login.add(makeButtons(), BorderLayout.SOUTH);
-			Login.add(makeUser(), BorderLayout.NORTH);
-			Login.add(makePass(), BorderLayout.CENTER);
+			login.setDefaultCloseOperation(HIDE_ON_CLOSE);
+			login.setSize(300, 200);
+			login.setLayout(new BorderLayout(10,5)); 				//Figure out getLayout!!!//
+			login.setLocationRelativeTo(null);
+			login.add(makeButtons(), BorderLayout.SOUTH);
+			login.add(makeUser(), BorderLayout.NORTH);
+			login.add(makePass(), BorderLayout.CENTER);
 
-			Login.setVisible(true);
+			login.setVisible(true);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -40,7 +40,7 @@ public class Login extends JDialog {
 	private JPanel makeUser() {
 		JPanel username = new JPanel();
 		JLabel lblName = new JLabel("Username:");
-		txfName = new JTextField(10);
+		txfName = new JTextField(20);		// FIXME: Manually set bounds?  Can't expand field to look better by changing int
 		username.add(lblName);
 		username.add(txfName);
 		return username;
@@ -48,8 +48,8 @@ public class Login extends JDialog {
 
 	private JPanel makePass() {
 		JPanel password = new JPanel();
-		JLabel lblPass = new JLabel(" Password:");
-		txfPass = new JTextField(10);
+		JLabel lblPass = new JLabel("Password:");
+		txfPass = new JTextField(20);		// FIXME: Manually set bounds?  Can't expand field to look better by changing int
 		password.add(lblPass);
 		password.add(txfPass);
 
@@ -86,7 +86,7 @@ public class Login extends JDialog {
 			}
 		});
 				// Pressing enter clicks btnSignIn //
-		Login.getRootPane().setDefaultButton(btnSignIn);
+		login.getRootPane().setDefaultButton(btnSignIn);
 		return btnPanel;
 	}
 	
@@ -95,12 +95,12 @@ public class Login extends JDialog {
 			closeWindow();
 		}
 		else {
-			System.out.println("Incorrect username or pass");
+			JOptionPane.showMessageDialog(null, "Incorrect username or pass");
 		}
 	}
 	
 	private void closeWindow() {
-		Login.dispose();
+		login.dispose();
 	}
 	
 }
