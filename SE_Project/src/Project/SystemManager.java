@@ -106,8 +106,6 @@ public class SystemManager {
 		
 	}
 
-
-
 	public boolean createCategory(String name) {
 		if (Validator.validateCategoryNameExists(categories, name)) {	//If there exists a category with given name
 			return false;				//return false
@@ -261,8 +259,101 @@ public class SystemManager {
 			 }
 		 }
 		 return groupInCategory;
+	}
+	 
+	//helper method, returns a list of all groups.
+	private ArrayList<Post> getAllPost(){
+		ArrayList<Group> groups = new ArrayList<>();
+		ArrayList<Post> posts = new ArrayList<>();
+		for(category c : categories) {
+			groups.addAll(c.getGroupsAlphabetically());
+		}
+		for(Group g: groups) {
+			posts.addAll(g.getPost());
+		}
+		return posts;
+	}
+	 
+	//User story 22
+	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
+	 public ArrayList<Object> viewUsersPostsResponses(User user) {
+		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
+		 for(Post p : posts) {
+			 if(user == p.getUser()) {
+				  results.add(p);
+			 }
+			 ArrayList<Response> r = new ArrayList<>();
+			 r.addAll(p.getResponse());
+			 for (Response r1 : r){
+				 membership m = r1.getMember();
+				 if(user == m.getUser()){
+					  results.add(r1);
+				 }	
+			 }
+		 }
+		 return results;
 	 }
 	 
+	 //User story 23
+	 // takes in user and a group. if the post is in the group given then it records all the posts and responses created by the user in that group. 
+	 public ArrayList<Object> viewUsersPostsResponsesInGroup(User user, Group group) {
+		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
+		 for(Post p : posts) {
+			 if(group == p.getGroup()) {
+				 if(user == p.getUser()) {
+					 results.add(p);
+				 }
+				 ArrayList<Response> r = new ArrayList<>();
+				 r.addAll(p.getResponse());
+				 for (Response r1 : r){
+					 membership m = r1.getMember();
+					 if(user == m.getUser()){
+						 results.add(r1);
+					 }	
+				 }
+			 }
+		 }
+		 return results;
+	 }
+	 // recursion
+	 //User story 24
+	 //loops through the post arrayList and records all the posts and responses of a given group
+	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
+		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
+		 for(Post p : posts){
+			 if(group == p.getGroup()) {
+				 results.add(p);
+				 ArrayList<Response> r = new ArrayList<>();
+				 r.addAll(p.getResponse());
+				 for (Response r1 : r){
+					 results.add(r1);
+				 }
+			}
+		 }
+		 return results;
+	}
+	 
+	 //User story 25
+	 //checks if the post has the user if so it gets the responses from the post and returns the message.
+	 public ArrayList<Object> viewMyResponses(User user, Post post) {
+		 ArrayList<Response> pr = new ArrayList<>();
+		 pr.addAll(post.getResponse());
+		 ArrayList<Object> results = new ArrayList<>();
+		 for (Response r1 : pr){
+			 User u = r1.getUser();
+			 if(user == u){
+				 results.add(r1);
+			}	
+		}
+		return results;
+	} 
+
 	 public category getCategoryByName(String catName) {
 		 return Validator.getCategoryFromName(categories, catName);
 	 }
@@ -291,3 +382,4 @@ public class SystemManager {
 		 return Validator.getUserFromUsername(users, username);
 	 }
 }
+

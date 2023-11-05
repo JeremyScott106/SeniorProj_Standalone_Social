@@ -1,17 +1,23 @@
 package Project;
 
+import java.lang.reflect.Member;
+
 public class Response extends Post{
-
-	private Post paternalPost;
+	private membership membership;
+	private String responseBody;
 	
-	public Response(User user, Group group, int id, String postBody, Post paternalPost) {
-		super(user, group, id, postBody);
-		this.paternalPost = paternalPost;
-	}
-
-	public int getPaternalPostID() {
-		return paternalPost.getId();
+	public Response(membership membership, String responseBody) {
+		super(membership, responseBody);
+		this.membership = membership;
+		this.responseBody = responseBody;
 	}
 	
-
+	public membership getMember() {
+		return membership;
+	}
+	
+	public String getResponseBody() {
+		return responseBody;
+	}
+	
 }

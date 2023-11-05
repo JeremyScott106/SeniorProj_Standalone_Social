@@ -50,7 +50,8 @@ public class membershipTest {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		
+
+		// Create a Date object for the registration date.
 		membership m = new membership(u, testGroup1, "01/12/2012");
 
 		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
