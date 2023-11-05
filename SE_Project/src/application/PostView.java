@@ -6,23 +6,23 @@ import java.awt.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Post extends JFrame {
+public class PostView extends JFrame {
 
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//	
-	public Post() {
+	public PostView() {
 		
 	}
 	
 	@SuppressWarnings("exports")
-	public Post(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
-		topBar = jmb;
-		manager = sm;
-		currentFrame = frame;
-		currentFrame.setSize(dim);
+	public PostView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
+		this.topBar = jmb;
+		this.manager = sm;
+		this.currentFrame = frame;
+		this.currentFrame.setSize(dim);
 		displayGUI();
 	}
 	
