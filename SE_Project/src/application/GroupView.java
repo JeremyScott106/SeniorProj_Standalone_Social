@@ -6,6 +6,8 @@ import Project.category;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
@@ -44,41 +46,46 @@ public class GroupView extends JFrame {
 		
 		JPanel titlePanel = new JPanel();
 
-		int gridx = 10;
+		int gridx = 20;
 		int padding = 10;
 		
-		titlePanel.setPreferredSize(new Dimension(0,50));
+		titlePanel.setPreferredSize(new Dimension(0,80));
 		titlePanel.setLayout(null);
 		
-		JButton btnHome = new JButton("Home");
-		btnHome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnHome.setBounds(gridx, 10, 85, 25);
-		gridx += btnHome.getWidth() + padding;
-		btnHome.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+		JLabel lblHome = new JLabel("Home");
+		lblHome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblHome.setForeground(Color.BLUE.darker());
+		lblHome.setBounds(gridx, 10, lblHome.getPreferredSize().width + padding, 25);
+		gridx += lblHome.getWidth() + padding;
+		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblHome.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
             	new Home(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
-		titlePanel.add(btnHome);
+		titlePanel.add(lblHome);
 		
 		JLabel lblSpacer1 = new JLabel("//");
 		lblSpacer1.setBounds(gridx, 10, 10, 25);
 		gridx += lblSpacer1.getWidth() + padding;
 		titlePanel.add(lblSpacer1);
 		
-		String categoryLable = currentCategory.getName();
-		JButton btnCurrentCategory = new JButton(categoryLable);
-		btnCurrentCategory.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCurrentCategory.setBounds(gridx, 10, categoryLable.length()*18, 25);
-		gridx += btnCurrentCategory.getWidth() + padding;
-		btnCurrentCategory.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+		JLabel lblCurrentCategory = new JLabel(currentCategory.getName());
+		lblCurrentCategory.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCurrentCategory.setForeground(Color.BLUE.darker());
+		lblCurrentCategory.setBounds(gridx, 10, lblCurrentCategory.getPreferredSize().width + padding, 25);
+		gridx += lblCurrentCategory.getWidth() + padding;
+		lblCurrentCategory.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblCurrentCategory.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
             	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory);
             }
         });
-		titlePanel.add(btnCurrentCategory);
+		titlePanel.add(lblCurrentCategory);
 		
 		JLabel lblSpacer2 = new JLabel("//");
 		lblSpacer2.setBounds(gridx, 10, 10, 25);
@@ -86,9 +93,32 @@ public class GroupView extends JFrame {
 		titlePanel.add(lblSpacer2);
 		
 		JLabel lblCurrentGroup = new JLabel(currentGroup.getGroupName());
-		lblCurrentGroup.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCurrentGroup.setBounds(gridx, 10, 150, 25);
+		lblCurrentGroup.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
 		titlePanel.add(lblCurrentGroup);
+		
+		//	SECOND ROW OF LABLES //
+		gridx = 20;
+		
+		JLabel memberStatus = new JLabel("Member Status Unknown: Need Function");
+		memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+		memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+		gridx += memberStatus.getWidth() + padding;
+		titlePanel.add(memberStatus);
+		
+		JLabel joinGroup = new JLabel("Join This Group");
+		joinGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
+		joinGroup.setForeground(Color.BLUE.darker());
+		joinGroup.setBounds(gridx, 45, joinGroup.getPreferredSize().width + padding, 25);
+		gridx += joinGroup.getWidth() + padding;
+		joinGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		joinGroup.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		    	JOptionPane.showMessageDialog(null, "Need System Manager Function To Join Group");
+            }
+        });
+		titlePanel.add(joinGroup);
 		
 		return titlePanel;
 		

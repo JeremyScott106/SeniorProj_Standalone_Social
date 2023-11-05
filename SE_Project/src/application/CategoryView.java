@@ -41,28 +41,37 @@ public class CategoryView extends JFrame {
 	private JPanel createTitlePane() {
 		
 		JPanel titlePanel = new JPanel();
+
+		int gridx = 10;
+		int padding = 10;
 		
 		titlePanel.setPreferredSize(new Dimension(0,50));
 		titlePanel.setLayout(null);
 		
-		JButton btnHome = new JButton("Home");
-		btnHome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnHome.setBounds(10, 10, 85, 25);
-		btnHome.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+		JLabel lblHome = new JLabel("Home");
+		lblHome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblHome.setForeground(Color.BLUE.darker());
+		lblHome.setBounds(gridx, 10, lblHome.getPreferredSize().width + padding, 25);
+		gridx += lblHome.getWidth() + padding;
+		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblHome.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
             	new Home(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
-		titlePanel.add(btnHome);
+		titlePanel.add(lblHome);
 		
 		JLabel lblSpacer1 = new JLabel("//");
-		lblSpacer1.setBounds(100, 10, 10, 25);
+		lblSpacer1.setBounds(gridx, 10, 10, 25);
+		gridx += lblSpacer1.getWidth() + padding;
 		titlePanel.add(lblSpacer1);
 		
 		JLabel lblCurrentCategory = new JLabel(currentCategory.getName());
-		lblCurrentCategory.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCurrentCategory.setBounds(120, 10, 150, 25);
+		lblCurrentCategory.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCurrentCategory.setBounds(gridx, 10, lblCurrentCategory.getPreferredSize().width + padding, 25);
+		gridx += lblCurrentCategory.getWidth() + padding;
 		titlePanel.add(lblCurrentCategory);
 		
 		return titlePanel;

@@ -6,6 +6,8 @@ import Project.Group;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -31,10 +33,39 @@ public class AdminTools extends JFrame {
 		displayGUI();
 	}
 	
-			// used to reset the screen, clears all items from the current window //
+	// This will clear the current frame, allows for rebuilding the frame //
 	private void onViewChangeClick() {
-		currentFrame.getContentPane().removeAll();
-		currentFrame.repaint();
+			currentFrame.getContentPane().removeAll();
+			currentFrame.repaint();
+	}
+		
+	private JPanel createTitlePane() {
+			
+		JPanel titlePanel = new JPanel();
+	
+		int gridx = 20;
+		int padding = 10;
+				
+		titlePanel.setPreferredSize(new Dimension(0,50));
+		titlePanel.setLayout(null);
+		
+		JLabel lblHome = new JLabel("Home");
+		lblHome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblHome.setForeground(Color.BLUE.darker());
+		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblHome.setBounds(gridx, 10, lblHome.getPreferredSize().width + padding, 25);
+		gridx += lblHome.getWidth() + padding;
+		lblHome.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		    onViewChangeClick();
+		    	new Home(manager, topBar, currentFrame, currentFrame.getSize());
+		    }
+		});
+		titlePanel.add(lblHome);
+
+	return titlePanel;
+			
 	}
 	
 			// The only panel currently, can be separated into a title / main panel later if desired //
@@ -166,8 +197,15 @@ public class AdminTools extends JFrame {
 		currentFrame.setTitle("This is the Admin Tools view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel mainPanel = createMainPanel();
-		currentFrame.add(mainPanel, BorderLayout.CENTER);
+		JPanel mainPanel = new JPanel();
+		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+		mainPanel.setLayout(new BorderLayout(0,0));
+		
+		JPanel titlePanel = createTitlePane();
+		mainPanel.add(titlePanel, BorderLayout.NORTH);
+		
+		JPanel centerPanel = createMainPanel();
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}
