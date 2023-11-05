@@ -12,7 +12,6 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
-	private ArrayList<Post> posts;
 
 	public SystemManager() {
 		userSignedIn = false;
@@ -20,7 +19,6 @@ public class SystemManager {
 		users = new ArrayList<>();
 		admins = new ArrayList<>();		
 		categories = new ArrayList<>();
-		posts = new ArrayList<>();
 
 	}
 
@@ -60,8 +58,6 @@ public class SystemManager {
 		return true;
 	}
 
-
-
 	public boolean createCategory(String name) {
 		if (Validator.validateCategoryNameExists(categories, name)) {	//If there exists a category with given name
 			return false;				//return false
@@ -92,6 +88,8 @@ public class SystemManager {
 	}
 	
 	public boolean addPost(Post p) {	//This should check to ensure that a new category doesn't already exist
+		ArrayList<Post> posts = new ArrayList<>();
+		posts.addAll(getAllPost());
 		posts.add(p);				//NOTICE: This may require more variables as the Category class is updated
 
 		return true;
@@ -219,75 +217,97 @@ public class SystemManager {
 		 return groupInCategory;
 	 }
 	 
+		//helper method, returns a list of all groups.
+		private ArrayList<Post> getAllPost(){
+			ArrayList<Group> groups = new ArrayList<>();
+			ArrayList<Post> posts = new ArrayList<>();
+			for(category c : categories) {
+				groups.addAll(c.getGroupsAlphabetically());
+			}
+			for(Group g: groups) {
+				posts.addAll(g.getPost());
+			}
+			return posts;
+		}
+	 
 	//User story 22
 	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
-	 public String viewUsersPostsResponses(User user) {
-		String msg = "";
-		for(Post p : posts) {
-			if(user == p.getUser()) {
-				msg += "Post: " + p.getPostBody() + "\n";
-			}
-			ArrayList<Response> r = new ArrayList<>();
-			r.addAll(p.getResponse());
-			for (Response r1 : r){
-				if(user == r1.getUser()){
-					msg += "Response: " + r1.getResponseBody() + "\n";
-				}	
-			}
-		}
-		return msg;
+	 public ArrayList<Object> viewUsersPostsResponses(User user) {
+		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
+		 for(Post p : posts) {
+			 if(user == p.getUser()) {
+				  results.add(p);
+			 }
+			 ArrayList<Response> r = new ArrayList<>();
+			 r.addAll(p.getResponse());
+			 for (Response r1 : r){
+				 membership m = r1.getMember();
+				 if(user == m.getUser()){
+					  results.add(r1);
+				 }	
+			 }
+		 }
+		 return results;
 	 }
 	 
 	 //User story 23
 	 // takes in user and a group. if the post is in the group given then it records all the posts and responses created by the user in that group. 
-	 public String viewUsersPostsResponsesInGroup(User user, Group group) {
-		 String msg = "";
+	 public ArrayList<Object> viewUsersPostsResponsesInGroup(User user, Group group) {
+		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
 		 for(Post p : posts) {
 			 if(group == p.getGroup()) {
 				 if(user == p.getUser()) {
-					 msg += "Post: " + p.getPostBody() + "\n";
+					 results.add(p);
 				 }
 				 ArrayList<Response> r = new ArrayList<>();
 				 r.addAll(p.getResponse());
 				 for (Response r1 : r){
-					 if(user == r1.getUser()){
-					 msg += "Post: " + r1.getResponseBody() + "\n";
+					 membership m = r1.getMember();
+					 if(user == m.getUser()){
+						 results.add(r1);
 					 }	
 				 }
 			 }
 		 }
-		 return msg;
+		 return results;
 	 }
-		 
+	 // recursion
 	 //User story 24
 	 //loops through the post arrayList and records all the posts and responses of a given group
-	 public String viewMyPostsResponsesInGroup(Group group) {
-		 String msg = "";
+	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
+		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
 		 for(Post p : posts){
 			 if(group == p.getGroup()) {
-				 msg += "Post: " + p.getPostBody() + "\n";
-					ArrayList<Response> r = new ArrayList<>();
-					r.addAll(p.getResponse());
-					for (Response r1 : r){
-							msg += "Post: " + r1.getResponseBody() + "\n";
-					}
+				 results.add(p);
+				 ArrayList<Response> r = new ArrayList<>();
+				 r.addAll(p.getResponse());
+				 for (Response r1 : r){
+					 results.add(r1);
+				 }
 			}
 		 }
-		 return msg;
+		 return results;
 	}
 	 
 	 //User story 25
 	 //checks if the post has the user if so it gets the responses from the post and returns the message.
-	 public String viewMyResponses(User user, Post post) {
-		 String msg = "";
-		 ArrayList<Response> r = new ArrayList<>();
-		 r.addAll(post.getResponse());
-		 for (Response r1 : r){
-			 if(user == r1.getUser()){
-			 msg += "Response: " + r1.getResponseBody() + "\n";
+	 public ArrayList<Object> viewMyResponses(User user, Post post) {
+		 ArrayList<Response> pr = new ArrayList<>();
+		 pr.addAll(post.getResponse());
+		 ArrayList<Object> results = new ArrayList<>();
+		 for (Response r1 : pr){
+			 User u = r1.getUser();
+			 if(user == u){
+				 results.add(r1);
 			}	
 		}
-		return msg;
+		return results;
 	} 
 	 
 }
