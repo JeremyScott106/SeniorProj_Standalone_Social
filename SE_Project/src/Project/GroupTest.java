@@ -41,29 +41,23 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
+		membership m1 = new membership(u1, testGroup1);
+		membership m2 = new membership(u2, testGroup1);
+		membership m3 = new membership(u3, testGroup1);
+		membership m4 = new membership(u4, testGroup1);
+		membership m5 = new membership(u5, testGroup1);
 
-		testGroup1.addMember(u1, testGroup1);
-		testGroup1.addMember(u2, testGroup1);
-		testGroup1.addMember(u3, testGroup1);
-		testGroup1.addMember(u4, testGroup1);
-		testGroup1.addMember(u5, testGroup1);
 
-		ArrayList<membership> memList = new ArrayList<membership>();
+		testGroup1.addMember(m1);
+		testGroup1.addMember(m2);
+		testGroup1.addMember(m3);
+		testGroup1.addMember(m4);
+		testGroup1.addMember(m5);
 		
-		membership m1 = new membership(u1,testGroup1);
-		membership m2 = new membership(u2,testGroup1);
-		membership m3 = new membership(u3,testGroup1);
-		membership m4 = new membership(u4,testGroup1);
-		membership m5 = new membership(u5,testGroup1);
+		User actual = testGroup1.getMember("0");
+		User expected = u1;
 
-		
-		memList.add(m1);
-		memList.add(m2);
-		memList.add(m3);
-		memList.add(m4);
-		memList.add(m5);
-
-		assertEquals(memList, testGroup1.getMembers());
+		assertEquals(expected, actual);
 	}
 
 	@Test
