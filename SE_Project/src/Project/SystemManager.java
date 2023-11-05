@@ -226,6 +226,14 @@ public class SystemManager {
 		return admins;
 
 	}
+	
+	public Boolean isUserOfGroup(User u, Group g) {
+		User u1 = g.getMember(u.getId());
+		if((u).equals(u1)) {
+			return true;
+		}
+		return false;
+	}
 
 	 public ArrayList<Group> getGroupsByUser(User user) {
 	 ArrayList<Group> group = new ArrayList<>();
@@ -337,6 +345,12 @@ public class SystemManager {
 			}
 		 }
 		 return results;
+	}
+	 
+	 public ArrayList<Post> viewPostsInGroup(Group group) {
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(group.getPost());
+		 return posts;
 	}
 	 
 	 //User story 25
