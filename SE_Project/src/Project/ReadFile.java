@@ -205,175 +205,179 @@ public class ReadFile {
 	
 	
 	private static void readUser(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
-		String name = "";
+		String name = "";				//Name of the User
 		boolean gotName = false;
-		String bday = "";
+		String bday = "";				//Bday of the User
 		boolean gotBday = false;
-		String city = "";
+		String city = "";				//City of the User
 		boolean gotCity = false;
-		String state = "";
+		String state = "";				//State of the User
 		boolean gotState = false;
-		String username = "";
+		String username = "";			//Username of the User
 		boolean gotUsername = false;
-		String password = "";
+		String password = "";			//Password of the User
 		boolean gotPassword = false;
-		String regDate = "";
+		String regDate = "";			//RegDate of the User
 		boolean gotRegDate = false;
 		
-		while(currentlyReadingData) {
+		while(currentlyReadingData) {		//While current data sat is being read
 			
-			String line = reader.nextLine();
+			String line = reader.nextLine();	//current line being read
 			
 			
-			if (line.equals("@END")) {
-				break;
+			if (line.equals("@END")) {			//If the line rules the end of the data set
+				break;								//break the loop
 			}
 			
-			String sub = "";
+			String sub = "";	//For the first part of the line to identify what data is being read
 			
 			try {
-				sub = line.substring(0, 5);
+				sub = line.substring(0, 5);			//Set sub to first 5 characters of line
 			}
-			catch (StringIndexOutOfBoundsException e) {
-				throw new IncorrectFileFormatException();
+			catch (StringIndexOutOfBoundsException e) {	//If that can't be read
+				throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 			}
 			
-			if (sub.equals("@NAME")) {
-				if(gotName) {
-					throw new IncorrectFileFormatException();
+			if (sub.equals("@NAME")) {					//If the substring rules that the line contains the Name
+				if(gotName) {								//and if a Name has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
-				else {
-					name = line.substring(6);
-					gotName = true;
-					continue;
-				}
-				
-			}
-			else if (sub.equals("@BIRT")) {
-				if(gotBday) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					bday = line.substring(11);
-					gotBday = true;
-					continue;
+				else {										//or if a Name has not already been read
+					name = line.substring(6);					//get the Name from the line
+					gotName = true;								//set gotName to true
+					continue;									//and continue to next line
 				}
 				
 			}
-			else if (sub.equals("@CITY")) {
-				if(gotCity) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@BIRT")) {				//If the substring rules that the line contains the Birthday
+				if(gotBday) {								//and if a Bday has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
-				else {
-					city = line.substring(6);
-					gotCity = true;
-					continue;
-				}
-				
-			}
-			else if (sub.equals("@STAT")) {
-				if(gotState) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					state = line.substring(7);
-					gotState = true;
-					continue;
+				else {										//or if a Bbay has not already been read
+					bday = line.substring(11);				//get the Bday from the line
+					gotBday = true;								//set gotBday to true
+					continue;									//and continue to next line
 				}
 				
 			}
-			else if (sub.equals("@USER")) {
-				if(gotUsername) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@CITY")) {				//If the substring rules that the line contains the City
+				if(gotCity) {								//and if the City has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
-				else {
-					username = line.substring(10);
-					gotUsername = true;
-					continue;
-				}
-				
-			}
-			else if (sub.equals("@PASS")) {
-				if(gotPassword) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					password = line.substring(10);
-					gotPassword = true;
-					continue;
+				else {										//or if the City has not already been read
+					city = line.substring(6);					//get the City from the line
+					gotCity = true;								//set gotCity to true
+					continue;									//and continue to next line
 				}
 				
 			}
-			else if (sub.equals("@REGI")) {
-				if(gotRegDate) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@STAT")) {				//If the substring rules that the line contains the State
+				if(gotState) {								//and if the State has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
-				else {
-					regDate = line.substring(17);
-					gotRegDate = true;
-					continue;
+				else {										//or if the State has not already been read
+					state = line.substring(7);					//get the State from the line
+					gotState = true;							//set gotState to true
+					continue;									//and continue to the next line
 				}
 				
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else if (sub.equals("@USER")) {				//If the substring rules that the line contains the Username
+				if(gotUsername) {							//and if the Username has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
+				}
+				else {										//or if the Username has not already been read
+					username = line.substring(10);				//get Username from the line
+					gotUsername = true;							//set gotUsername to true
+					continue;									//and continue to the next line
+				}
+				
+			}
+			else if (sub.equals("@PASS")) {				//If the substring rules that the line contains the Password
+				if(gotPassword) {							//and if the Password has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
+				}
+				else {										//or if the Password has not already been read
+					password = line.substring(10);				//get Password from the line
+					gotPassword = true;							//set gotPassword to true
+					continue;									//and continue to the next line 
+				}
+				
+			}
+			else if (sub.equals("@REGI")) {				//If the substring rules that the line contains the RegisteredDate
+				if(gotRegDate) {							//and if the RegDate has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
+				}
+				else {										//or if the RegDate has nor already been read
+					regDate = line.substring(17);				//get RegDate from the line
+					gotRegDate = true;							//set gorRegDate to true
+					continue;									//and continue to the next line
+				}
+				
+			}
+			else {										//If what data is being read cannot be determined
+				throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 			}
 		}
 		
-		
+		//If all the bits of data were read from the file for the Admin
 		if (gotName && gotBday && gotCity && gotState && gotUsername && gotPassword && gotRegDate) {
-			User a = new User(name, username, password, bday, city, state, regDate);
-			currentlyReadingData = false;
-			manager.addUser(a);
+			User a = new User(name, username, password, bday, city, state, regDate);	//Create a new User
+			manager.addUser(a);				//Add new User to manager
+			currentlyReadingData = false;	//Set currentlyReadingData to false	
 		}
-		else {
-			throw new IncorrectFileFormatException();
+		else {										//If any bit of data was not collected
+			throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 		}
 	}
 
 	
 	private static void readCategory(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
-		String name = "";
-		boolean gotName = false;
+		String name = "";			//Name of the Category
+		boolean gotName = false;		//Set gotName to false
 		
-		while (currentlyReadingData) {
+		while (currentlyReadingData) {			//While current data set is being read
 			
-			String line = reader.nextLine();
+			String line = reader.nextLine();	//Current line being read
 			
-			if (line.equals("@END")) {
-				currentlyReadingData = false;
-				break;
+			if (line.equals("@END")) {			//If the line rules the end of the data set
+				break;								//break the loop
 			}
 			
-			String sub = "";
+			String sub = "";		//For the first part of the line to identify what data is being read
 			
 			try {
-				sub = line.substring(0, 5);
+				sub = line.substring(0, 5);			//Set sub to first 5 characters of line
 			}
-			catch (StringIndexOutOfBoundsException e) {
-				throw new IncorrectFileFormatException();
+			catch (StringIndexOutOfBoundsException e) {	//If that can't be read
+				throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 			}
 			
-			if (sub.equals("@NAME")) {
-				if (gotName) {
-					throw new IncorrectFileFormatException();
+			if (sub.equals("@NAME")) {					//If the substring rules that the line contains the Name
+				if (gotName) {								//and if a Name has already been read
+					throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 				}
-				else {
-					name = line.substring(6);
-					gotName = true;
-					continue;
+				else {										//or if a Name has not already been read
+					name = line.substring(6);					//get the Name from the line
+					gotName = true;								//set gotName to true
+					continue;									//and continue to next line
 				}
+				
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else {										//If what data is being read cannot be determined
+				throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 			}
 			
 		}
 		
-		if (gotName) {
-			category c = new category(name);
-			manager.addCategory(c);
+		if (gotName) {			//If all the bits of data were read from the file for the category
+			category c = new category(name);	//Create the category
+			manager.addCategory(c);				//Add it to the manager
+			currentlyReadingData = false;		//Set currentlyReadingData to false
+		}
+		else {					//If any bit of data was not collected
+			throw new IncorrectFileFormatException();	//throw incorrectFileFormatException
 		}
 		
 	}
