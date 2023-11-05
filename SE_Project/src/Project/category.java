@@ -5,9 +5,8 @@ import java.util.Collections;
 
 public class category {
 
-	String name;
-
-	ArrayList<Group> groups;
+	private String name;
+	private ArrayList<Group> groups;
 
 	public category(String name) {
 		this.name = name;
