@@ -144,5 +144,42 @@ class WriteFileTest {
 		
 		
 	}
+	
+	
+	
+	@Test
+	void testAddAdminToFile() {
+		
+		Admin a1 = new Admin("Jeremy", "unth!nk@b1e", "password#3", "04/27/1992", "New York City", "New York", "11/11/2011");
+		Admin a2 = new Admin("Grayson", "theGr@yS0n", "r@inB0wR0@DL0s3r", "03/09/2012", "Macon", "Georgia", "03/09/2011");
+		Admin a3 = new Admin("Ryan", "RKScandrol", "N0tT311iN", "08/08/1999", "Pensacola", "Florida", "07/07/2010");
+		Admin a4 = new Admin("John", "J0hnW!ck", "n0tth3D0g", "01/01/0001", "Boring", "Oregon", "12/29/2020");
+		Admin a5 = new Admin("Himanshu", "the01dM@n", "L3t5D0Th!s", "07/23/1836", "Climax", "Michigan", "12/09/2007");
+		
+		SystemManager manager = new SystemManager();
+		
+		manager.addAdmin(a1);
+		manager.addAdmin(a2);
+		manager.addAdmin(a3);
+		manager.addAdmin(a4);
+		manager.addAdmin(a5);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFiles_Test_AddAdmin.txt";
+		
+		try {
+			WriteFile.writeFile(manager, fileName);
+			
+			Admin a = new Admin("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+			
+			WriteFile.addAdminToFile(a, fileName);
+			
+			assertEquals(true, true);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
 
 }

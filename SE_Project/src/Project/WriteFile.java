@@ -98,5 +98,28 @@ public class WriteFile {
 		}
 		
 	}
+	
+	
+	
+	public static void addAdminToFile(Admin a, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = a.getAdminWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw new IOException();
+		}
+		
+	}
 
 }
