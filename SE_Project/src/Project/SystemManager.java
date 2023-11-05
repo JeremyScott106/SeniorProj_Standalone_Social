@@ -86,14 +86,6 @@ public class SystemManager {
 			return c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
 		}
 	}
-	
-	public boolean addPost(Post p) {	//This should check to ensure that a new category doesn't already exist
-		ArrayList<Post> posts = new ArrayList<>();
-		posts.addAll(getAllPost());
-		posts.add(p);				//NOTICE: This may require more variables as the Category class is updated
-
-		return true;
-	}
 
 	public boolean login(String username, String password) {
 		boolean signIn = false;

@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Post {
 	
@@ -8,8 +9,8 @@ public class Post {
 	private Group group;
 	private String postBody;
 	private ArrayList<Response> responses;
+	private Date dateTime;
     private int score;
-    java.util.Date dateTime;
     
     public Post (membership memberships, String postBody) {
     	this.user = memberships.getUser();
