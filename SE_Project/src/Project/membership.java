@@ -5,19 +5,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class membership {
 	private User user;
 	private Group group;
 	private Date registeredDate;
-	
-	public membership(User user, Group group, String registeredDate) {
-		this.user = user;
-		this.group = group;
+
+
+    public membership(User user, Group group, String registeredDate) {
+        this.user = user;
+        this.group = group;
+        
 		try {
 			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
 			this.registeredDate = df.parse(registeredDate);
-		}catch (ParseException e) {
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
@@ -38,6 +43,21 @@ public class membership {
 	
 	public Date getDate() {
 		return registeredDate;
+	}
+	
+	
+	
+	public String getMembershipWriteData() {
+		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		String regDate = df.format(registeredDate);
+		
+		String memberData = "@START\n" + 
+								"@MEMBERSHIP\n" + 
+								"@USER=" + user.getId() + "\n" + 
+								"@GROUP=" + group.getGroupName() + "\n" +
+								"@REGISTEREDDATE=" + regDate + "\n" + 
+								"@END\n\n";
+		return memberData;
 	}
 
 }

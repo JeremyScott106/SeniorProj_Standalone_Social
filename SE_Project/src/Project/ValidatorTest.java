@@ -259,5 +259,207 @@ class ValidatorTest {
 
 		assertEquals(false, actual);
 	}
+	
+	
+	@Test
+	void testValidateAdminExist_Success() {
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<Admin> admins = new ArrayList<Admin>();
+		
+		admins.add(a1);
+		admins.add(a2);
+		
+		boolean actual = Validator.validateAdminExists(a2, admins);
+		
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testValidateAdminExist_Failure() {
+		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<Admin> admins = new ArrayList<Admin>();
+		
+		admins.add(a1);
+		admins.add(a2);
+		
+		Admin a3 = new Admin("Jack2", "jackster5", "HKb@wser!!", "11/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = Validator.validateAdminExists(a3, admins);
+		
+		assertEquals(false, actual);
+	}
+	
+	
+	@Test
+	void testValidateCategoryExists_Success() {
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		categories.add(c1);
+		categories.add(c2);
+		
+		boolean actual = Validator.validateCategoryExists(c2, categories);
+		
+		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testValidateCategoryExists_Failure() {
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		
+		ArrayList<category> categories = new ArrayList<category>();
+		
+		categories.add(c1);
+		categories.add(c2);
+		
+		category c3 = new category("Games");
+		
+		boolean actual = Validator.validateCategoryExists(c3, categories);
+		
+		assertEquals(false, actual);
+	}
+	
+	
+	@Test
+	void testValidateUserExists_Success() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<User> users = new ArrayList<User>();
+		
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		users.add(u5);
+		
+		boolean actual = Validator.validateUserExists(u4, users);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testValidateUserExists_Failure() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		ArrayList<User>  users = new ArrayList<User>();
+		
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = Validator.validateUserExists(u5, users);
+		
+		assertEquals(false, actual);
+		
+	}
+	
+	
+	@Test
+	void testGetGroupFromName_Success() {
+		
+		ArrayList<Group> groups = new ArrayList<>();
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Group actual = Validator.getGroupFromName(groups, "Basketball");
+		
+		assertEquals(g4, actual);
+	}
+	
+	@Test
+	void testGetGroupFromName_Failure() {
+		
+		ArrayList<Group> groups = new ArrayList<>();
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		groups.add(g1);
+		groups.add(g2);
+		groups.add(g3);
+		groups.add(g4);
+		groups.add(g5);
+		
+		Group actual = Validator.getGroupFromName(groups, "Volley Ball");
+		
+		assertEquals(null, actual);
+	}
+	
+	
+	@Test
+	void testGetUserFromUsername_Success() {
+		
+		ArrayList<User> users = new ArrayList<>();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		users.add(u5);
+		
+		User actual = Validator.getUserFromUsername(users, "LegalTrouble");
+		
+		assertEquals(u4, actual);
+	}
+	
+	@Test
+	void testGetUserFromUsername_Failure() {
+		
+		ArrayList<User> users = new ArrayList<>();
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		users.add(u1);
+		users.add(u2);
+		users.add(u3);
+		users.add(u4);
+		users.add(u5);
+		
+		User actual = Validator.getUserFromUsername(users, "Testing");
+		
+		assertEquals(null, actual);
+	}
+
 
 }

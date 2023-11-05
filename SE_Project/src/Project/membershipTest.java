@@ -3,6 +3,7 @@ package Project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.ParseException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -49,12 +50,36 @@ public class membershipTest {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		// Create a Date object for the registration date.
-		Date registrationDate = new Date();
-		membership m = new membership(u, testGroup1);
 
-		Date actual = m.getDate();
-		assertEquals(registrationDate, actual);
+		// Create a Date object for the registration date.
+		membership m = new membership(u, testGroup1, "01/12/2012");
+
+		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		String actual = df.format(m.getDate());
+		
+		System.out.println(actual);
+		
+		assertEquals("01/12/2012", actual);
 	}	
+	
+	
+	@Test
+	void testGetMembershipWriteData() {
+		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup1 = new Group("Standard Name");
+		
+		membership membership = new membership(u, testGroup1, "01/12/2012");
+		
+		String actual = membership.getMembershipWriteData();
+		
+		String expected = "@START\n" + 
+							"@MEMBERSHIP\n" +
+							"@USER=jackster3\n" + 
+							"@GROUP=Standard Name\n" + 
+							"@REGISTEREDDATE=01/12/2012\n" + 
+							"@END\n\n";
+		
+		assertEquals(expected, actual);
+	}
 	
 }
