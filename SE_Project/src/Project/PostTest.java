@@ -15,11 +15,13 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 
 		assertEquals(testGroup, testPost1.getGroup());
 	}
@@ -30,28 +32,15 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 		
 		assertEquals(testUser, testPost1.getUser());
-	}
-	
-	//Tests getting the ID
-	@Test
-	void getIDTest() {
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
-		r.add(r1);
-		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
-		
-		assertEquals(1, testPost1.getId());
 	}
 	
 	//Tests getting the postBody
@@ -60,11 +49,13 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 
 
 		assertEquals("I'm posting.", testPost1.getPostBody());
@@ -75,16 +66,23 @@ public class PostTest {
 	void getResponse() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
 				
-		Post testPost1 = new Post(testUser, testGroup, 1, "I'm posting.");
-		testPost1.addResponse(testUser, testGroup, "n");
+		Post testPost1 = new Post(m, "I'm posting.");
+		membership m1 = new membership(testUser, testGroup);
 		
-		ArrayList<Response> r =  testPost1.getResponse();
-		String s = "";
-		for (Response r1 : r) {
-			s += r1.getResponseBody();
-		}
-		assertEquals("n", s);
+		Response r = new Response(m1, "n");
+		
+		ArrayList<Response> expected = new ArrayList<>();
+		expected.add(r);
+
+
+		testPost1.addResponse(r);
+				
+		ArrayList<Response> r1 =  testPost1.getResponse();
+		
+		assertEquals(expected, r1);
 	}
 	
 	//Tests getting the score
@@ -93,11 +91,13 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 		
 		assertEquals(0, testPost1.getScore());
 	}
@@ -109,11 +109,13 @@ public class PostTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		java.util.Date timeTest = new java.util.Date();;
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 		
 		assertEquals(timeTest, testPost1.getTime());
 	}
@@ -124,11 +126,13 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 		testPost1.addScore();
 		
 		assertEquals(1, testPost1.getScore());
@@ -140,11 +144,13 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "noooo");
-		Response r2 = new Response(testUser, testGroup, "no0000ooo");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.");
 		testPost1.subScore();
 		
 		assertEquals(-1, testPost1.getScore());
