@@ -1,10 +1,18 @@
 package application;
 import Project.Admin;
+import Project.Group;
 import Project.SystemManager;
 import Project.User;
+import Project.category;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -31,15 +39,64 @@ public class ProfileView extends JFrame {
 		displayGUI();
 	}
 	
-		// Build The GUI //
-	private void displayGUI() {
-		currentFrame.setLayout(new BorderLayout(0, 0));
-		currentFrame.add(topBar, BorderLayout.NORTH);
-		currentFrame.setTitle("This is the Profile view");
-		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	// This will clear the current frame, allows for rebuilding the frame //
+	private void onViewChangeClick() {
+		currentFrame.getContentPane().removeAll();
+		currentFrame.repaint();
+	}
+	
+	private JPanel createTitlePane() {
 		
+		JPanel titlePanel = new JPanel();
+
+		int gridx = 20;
+		int padding = 10;
+		
+		titlePanel.setPreferredSize(new Dimension(0,50));
+		titlePanel.setLayout(null);
+		
+		JLabel lblHome = new JLabel("Home");
+		lblHome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblHome.setForeground(Color.BLUE.darker());
+		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblHome.setBounds(gridx, 10, lblHome.getPreferredSize().width + padding, 25);
+		gridx += lblHome.getWidth() + padding;
+		lblHome.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+            	onViewChangeClick();
+            	new Home(manager, topBar, currentFrame, currentFrame.getSize());
+            }
+        });
+		titlePanel.add(lblHome);
+		
+		JLabel lblMyGroups = new JLabel("My Groups");
+		lblMyGroups.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblMyGroups.setForeground(Color.BLUE.darker());
+		lblMyGroups.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblMyGroups.setBounds(gridx, 10, lblMyGroups.getPreferredSize().width + padding, 25);
+		gridx += lblMyGroups.getWidth() + padding;
+		lblMyGroups.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+            	onViewChangeClick();
+            	category c = new category("My Groups");
+            	ArrayList<Group> myGroups = manager.getGroupsByUser(manager.getCurrentUser());
+            	for (Group g : myGroups) {
+            		c.addGroup(g);
+            	}
+            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), c);
+            }
+        });
+		titlePanel.add(lblMyGroups);
+
+		return titlePanel;
+		
+	}
+	
+	private JPanel createForm() {
 		JPanel panel = new JPanel();
-		currentFrame.add(panel, BorderLayout.CENTER);
+		
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Profile");
@@ -95,6 +152,27 @@ public class ProfileView extends JFrame {
 			lblNewLabel_5_3.setBounds(137, 153, 207, 26);
 			panel.add(lblNewLabel_5_3);
 		}
+		
+		
+		return panel;
+	}
+	
+		// Build The GUI //
+	private void displayGUI() {
+		currentFrame.setLayout(new BorderLayout(0, 0));
+		currentFrame.add(topBar, BorderLayout.NORTH);
+		currentFrame.setTitle("This is the Profile view");
+		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel mainPanel = new JPanel();
+		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+		mainPanel.setLayout(new BorderLayout(0,0));
+		
+		JPanel titlePanel = createTitlePane();
+		mainPanel.add(titlePanel, BorderLayout.NORTH);
+		
+		JPanel profilePanel = createForm();
+		mainPanel.add(profilePanel, BorderLayout.CENTER);
 
 		currentFrame.setVisible(true);
 	}

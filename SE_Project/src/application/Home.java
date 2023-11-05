@@ -102,7 +102,17 @@ public class Home extends JFrame {
 		if (manager.getCurrentUser() != null) {
 			JLabel lblUid = new JLabel(manager.getCurrentUser().getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblUid.setBounds(129, 10, 150, 25);
+			lblUid.setForeground(Color.BLUE.darker());
+			lblUid.setBounds(129, 10, lblUid.getPreferredSize().width+10, 25);
+			lblUid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			lblUid.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	onViewChangeClick();
+			    	new ProfileView(manager, topBar, currentFrame, currentFrame.getSize(), manager.getCurrentUser());
+			    }
+			});
+			
 			titlePanel.add(lblUid);
 		}
 		
