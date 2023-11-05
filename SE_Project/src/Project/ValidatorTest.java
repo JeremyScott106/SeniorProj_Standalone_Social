@@ -223,8 +223,10 @@ class ValidatorTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		
 		Group g1 = new Group("funny");
+		membership m = new membership(u1, g1);
+
 		
-		g1.addMember(u1, g1);
+		g1.addMember(m);
 		
 		ArrayList<Group> groups = new ArrayList<>();
 		groups.add(g1);
@@ -243,7 +245,10 @@ class ValidatorTest {
 
 		Group g1 = new Group("funny");
 		
-		g1.addMember(u1, g1);
+		membership m = new membership(u1, g1);
+
+		
+		g1.addMember(m);
 		
 		ArrayList<Group> groups = new ArrayList<>();
 		groups.add(g1);
