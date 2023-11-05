@@ -486,7 +486,6 @@ class SystemManagerTest {
 		testGroup.addMember(m);
 		testGroup.addPost(testPost1);
 		sm.addUser(testUser);
-		sm.addPost(testPost1);
 		
 		testPost1.addResponse(r1);
 		testPost1.addResponse(r2);
@@ -515,7 +514,6 @@ class SystemManagerTest {
 		testGroup.addMember(m);
 		testGroup.addPost(testPost1);
 		sm.addUser(testUser);
-		sm.addPost(testPost1);
 		
 		testPost1.addResponse(r1);
 		testPost1.addResponse(r2);
@@ -543,8 +541,7 @@ class SystemManagerTest {
 		c.addGroup(testGroup);
 		testGroup.addMember(m);
 		testGroup.addPost(testPost1);
-		sm.addUser(testUser);
-		sm.addPost(testPost1);
+		sm.addUser(testUser);	
 		
 		testPost1.addResponse(r1);
 		testPost1.addResponse(r2);
@@ -572,7 +569,6 @@ class SystemManagerTest {
 		testGroup.addMember(m);
 		testGroup.addPost(testPost1);
 		sm.addUser(testUser);
-		sm.addPost(testPost1);
 		
 		testPost1.addResponse(r1);
 		testPost1.addResponse(r2);
