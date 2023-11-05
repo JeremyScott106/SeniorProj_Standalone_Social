@@ -371,10 +371,14 @@ class SystemManagerTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
 		
-		g1.addMember(u1, g1);
-		g1.addMember(u2, g1);
-		g2.addMember(u1, g2);
-				
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u1, g2);
+
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g2.addMember(m3);
+		
 		sm.addGroup(g1);
 		sm.addGroup(g2);
 
@@ -399,8 +403,11 @@ class SystemManagerTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
 		
-		g.addMember(u1, g);
-		g.addMember(u2, g);
+		membership m1 = new membership(u1, g);
+		membership m2 = new membership(u2, g);
+
+		g.addMember(m1);
+		g.addMember(m2);
 		
 		sm.addGroup(g);
 
@@ -459,87 +466,117 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void viewUsersPostsResponses() {
+	void testViewUsersPostsResponses() {
 		SystemManager sm = new SystemManager();
+		category c = new category("fun");
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "n");
-		Response r2 = new Response(testUser, testGroup, "n");
-		r.add(r1);
-		r.add(r2);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I");
+		membership m = new membership(testUser, testGroup);
+		Post testPost1 = new Post (m, "I");
+		Response r1 = new Response(m, "n");
+		Response r2 = new Response(m, "n000");
+
+		ArrayList<Object> expected = new ArrayList<>();
+		expected.add(testPost1);
+		expected.add(r1);
+		expected.add(r2);
+		
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addMember(m);
+		testGroup.addPost(testPost1);
+		sm.addUser(testUser);
 		sm.addPost(testPost1);
 		
-		String expected = "Post: I" + "\n" + "Response: n" + "\n" + "Response: n" + "\n";
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
+		
 		assertEquals(expected, sm.viewUsersPostsResponses(testUser));
 	}
 	
 	@Test
-	void viewUsersPostsResponsesInGroup() {
+	void testViewUsersPostsResponsesInGroup() {
 		SystemManager sm = new SystemManager();
+		category c = new category("fun");
 		Group testGroup = new Group("Standard Name");
-		Group testGroup1 = new Group("Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "n");
-		Response r2 = new Response(testUser, testGroup, "n");
-		Response r3 = new Response(testUser, testGroup1, "n");
-		r.add(r1);
-		r.add(r2);
-		r.add(r3);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I");
-		Post testPost2 = new Post (testUser, testGroup, 1, "I");
-		Post testPost3 = new Post (testUser, testGroup, 1, "I");
+		membership m = new membership(testUser, testGroup);
+		Post testPost1 = new Post (m, "I");
+		Response r1 = new Response(m, "n");
+		Response r2 = new Response(m, "n000");
 
+		ArrayList<Object> expected = new ArrayList<>();
+		expected.add(testPost1);
+		expected.add(r1);
+		expected.add(r2);
+		
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addMember(m);
+		testGroup.addPost(testPost1);
+		sm.addUser(testUser);
 		sm.addPost(testPost1);
-		sm.addPost(testPost2);
-		sm.addPost(testPost3);
 		
-		testPost1.addResponse(testUser, testGroup1, "n");
-		testPost2.addResponse(testUser, testGroup1, "n");
-		testPost3.addResponse(testUser, testGroup1, "n");
-
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
 		
-		String expected = "Post: I" + "\n" + "Response: n" + "\n" + "Response: n";
 		assertEquals(expected, sm.viewUsersPostsResponsesInGroup(testUser, testGroup));
 	}
 	
 	@Test
-	void viewMyPostsResponsesInGroup() {
+	void testViewPostsResponsesInGroup() {
 		SystemManager sm = new SystemManager();
+		category c = new category("fun");
 		Group testGroup = new Group("Standard Name");
-		Group testGroup1 = new Group("Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "n");
-		r.add(r1);
-		Post testPost1 = new Post (testUser, testGroup, 1, "I");
-		sm.addPost(testPost1);
-		sm.addGroup(testGroup1);
+		membership m = new membership(testUser, testGroup);
+		Post testPost1 = new Post (m, "I");
+		Response r1 = new Response(m, "n");
+		Response r2 = new Response(m, "n000");
+
+		ArrayList<Object> expected = new ArrayList<>();
+		expected.add(testPost1);
+		expected.add(r1);
+		expected.add(r2);
 		
-		String expected = "Response: n";
-		assertEquals(expected, sm.viewMyPostsResponsesInGroup(testGroup1));
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addMember(m);
+		testGroup.addPost(testPost1);
+		sm.addUser(testUser);
+		sm.addPost(testPost1);
+		
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
+		
+		assertEquals(expected, sm.viewPostsResponsesInGroup(testGroup));
 	}
 	
 	@Test
-	void viewMyResponses() {
+	void testViewMyResponses() {
 		SystemManager sm = new SystemManager();
+		category c = new category("fun");
 		Group testGroup = new Group("Standard Name");
-		Group testGroup1 = new Group("Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		Response r1 = new Response(testUser, testGroup, "n");
-		Response r2 = new Response(testUser, testGroup, "n");
-		Response r3 = new Response(testUser, testGroup1, "n");
-		r.add(r1);
-		r.add(r2);
-		r.add(r3);
-		Post testPost1 = new Post(testUser, testGroup, 1, "I");
-		sm.addPost(testPost1);
-		sm.addGroup(testGroup1);
+		membership m = new membership(testUser, testGroup);
+		Post testPost1 = new Post (m, "I");
+		Response r1 = new Response(m, "n");
+		Response r2 = new Response(m, "n000");
+
+		ArrayList<Object> expected = new ArrayList<>();
+		expected.add(r1);
+		expected.add(r2);
 		
-		String expected = "Response: n" + "\n" + "Response: n" + "\n" + "Response: n\n";
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addMember(m);
+		testGroup.addPost(testPost1);
+		sm.addUser(testUser);
+		sm.addPost(testPost1);
+		
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
+		
 		assertEquals(expected, sm.viewMyResponses(testUser, testPost1));
 	}
 
