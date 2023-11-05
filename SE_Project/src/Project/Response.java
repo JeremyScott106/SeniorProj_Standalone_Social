@@ -1,22 +1,19 @@
 package Project;
 
-public class Response{
-	private User user;
-	private Group group;
+import java.lang.reflect.Member;
+
+public class Response extends Post{
+	private membership membership;
 	private String responseBody;
 	
-	public Response(User user, Group group, String responseBody) {
-		this.user = user;
-		this.group = group;
+	public Response(membership membership, String responseBody) {
+		super(membership, responseBody);
+		this.membership = membership;
 		this.responseBody = responseBody;
 	}
 	
-	public User getUser() {
-		return user;
-	}
-
-	public Group getGroup() {
-		return group;
+	public membership getMember() {
+		return membership;
 	}
 	
 	public String getResponseBody() {
