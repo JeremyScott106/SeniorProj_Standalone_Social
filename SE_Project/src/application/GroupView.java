@@ -100,25 +100,84 @@ public class GroupView extends JFrame {
 		//	SECOND ROW OF LABLES //
 		gridx = 20;
 		
-		JLabel memberStatus = new JLabel("Member Status Unknown: Need Function");
-		memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
-		memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
-		gridx += memberStatus.getWidth() + padding;
-		titlePanel.add(memberStatus);
+		if (manager.getCurrentUser() == null){
+
+			JButton btnLogin = new JButton("Login");
+			btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLogin.setBounds(gridx, 45, btnLogin.getPreferredSize().width + padding, 25);
+			gridx += btnLogin.getWidth() + padding;
+			titlePanel.add(btnLogin);
+			btnLogin.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+					new LoginPopUp(manager);
+				}
+			});
+
 		
-		JLabel joinGroup = new JLabel("Join This Group");
-		joinGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
-		joinGroup.setForeground(Color.BLUE.darker());
-		joinGroup.setBounds(gridx, 45, joinGroup.getPreferredSize().width + padding, 25);
-		gridx += joinGroup.getWidth() + padding;
-		joinGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		joinGroup.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		    	JOptionPane.showMessageDialog(null, "Need System Manager Function To Join Group");
-            }
-        });
-		titlePanel.add(joinGroup);
+
+			
+			JButton btnNewUser = new JButton("Register New Account");
+			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnNewUser.setBounds(gridx, 45, btnNewUser.getPreferredSize().width + padding, 25);
+			gridx += btnNewUser.getWidth() + padding;
+			titlePanel.add(btnNewUser);
+			btnNewUser.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+					new CreateUserPopUp(manager);
+				}
+			});
+
+		}
+		
+		else if (!currentGroup.isMemberInGroup(manager.getCurrentUser().getId())) {
+			
+			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+			
+			JLabel joinGroup = new JLabel("Join This Group");
+			joinGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
+			joinGroup.setForeground(Color.BLUE.darker());
+			joinGroup.setBounds(gridx, 45, joinGroup.getPreferredSize().width + padding, 25);
+			gridx += joinGroup.getWidth() + padding;
+			joinGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			joinGroup.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	boolean result = manager.joinGroup(manager.getCurrentUser(), currentGroup);
+			    	if (result) {
+			    		JOptionPane.showMessageDialog(null, "Successfully Joined Group");
+			    	}
+			    	else {
+			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
+			    	}
+	            }
+	        });
+			titlePanel.add(joinGroup);
+		}
+		
+		else {
+			String mbmSince = "Member Since: " + manager.getMembership(currentGroup, manager.getCurrentUser()).getDate().toString();
+
+			JLabel memberStatus = new JLabel(mbmSince);
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+		}
+		
+		JButton btnRefreshPage = new JButton("Refresh");
+		btnRefreshPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory, currentGroup);
+			}
+		});
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
+			// FIXME: BUG -> Refresh button disappears if frame shrinks.
+		titlePanel.add(btnRefreshPage);
 		
 		return titlePanel;
 		

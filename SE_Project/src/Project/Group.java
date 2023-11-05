@@ -24,7 +24,7 @@ public class Group {
     }
 
     //Adds members into groups
-    public void addMember(membership m) {
+    public boolean addMember(membership m) {
         boolean isMember = false;
         for (membership m1 : memberships) {
             if (m1.equals(m)) {
@@ -34,7 +34,9 @@ public class Group {
         }
         if (!isMember) {
             memberships.add(m);
+            return true;
         }
+        return false;
     }
 
 

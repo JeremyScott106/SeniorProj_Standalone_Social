@@ -93,6 +93,11 @@ public class SystemManager {
 		}
 		return false;					//If there exists a User or Admin with the given username, return false
 	}
+	
+	public boolean joinGroup(User user, Group group) {
+		membership m = new membership(user, group);
+		return (group.addMember(m));
+	}
 
 	public boolean addCategory(category c) {
 		
@@ -169,6 +174,16 @@ public class SystemManager {
 				return false;			//Return false
 			}
 		}
+	}
+	
+	public membership getMembership(Group group, User user) {
+		ArrayList<membership> memberships = group.getMembers();
+		for (membership m : memberships) {
+			if (m.getUser() == user) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public ArrayList<category> getCategories_Alphabetically() {
