@@ -1,14 +1,9 @@
 package application;
-import Project.Group;
+
 import Project.Post;
 import Project.SystemManager;
-import Project.category;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -208,6 +203,7 @@ private JScrollPane createScrollPane() {
 		gl.setRows(alPost.size());
 		gl.setVgap(4);
 		postGridPane.setLayout(gl);
+		postGridPane.setBackground(Color.BLACK);
 		postScrollPane.add(postGridPane);
 				
 		for (Post p : alPost) {
