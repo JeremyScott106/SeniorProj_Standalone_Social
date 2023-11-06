@@ -36,7 +36,7 @@ public class Admin extends User{
      *  
      */
     public String getAdminWriteData() {
-    	DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     	String bday = df.format(birthdate);
     	String regDate = df.format(registeredDate);
     	

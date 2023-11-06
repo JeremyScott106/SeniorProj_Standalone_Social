@@ -90,7 +90,7 @@ public class UserTest {
 		
 		Date dbay = u.getBirthday();
 		
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		
 		String actual = df.format(dbay);
 		
@@ -122,7 +122,7 @@ public class UserTest {
 		
 		Date regDate = u.getRegisteredDate();
 		
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		
 		String actual = df.format(regDate);
 		

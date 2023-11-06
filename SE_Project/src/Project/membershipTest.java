@@ -54,7 +54,7 @@ public class membershipTest {
 		// Create a Date object for the registration date.
 		membership m = new membership(u, testGroup1, "01/12/2012");
 
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String actual = df.format(m.getDate());
 		
 		System.out.println(actual);
