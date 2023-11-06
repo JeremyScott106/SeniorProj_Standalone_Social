@@ -18,7 +18,6 @@ class categoryTest {
 	 *
 	 */
 
-
 	@Test
 	void testGetGroupsAlphabetically() {
 		category c = new category("test");
