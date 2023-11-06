@@ -28,10 +28,6 @@ public class WriteFile {
 			
 			writeGroups(manager, writer);
 			
-			writePosts(manager, writer);
-			
-			writer.write("@ENDFILE");
-			
 			writer.close();
 			
 		} catch (IOException e) {
@@ -100,16 +96,89 @@ public class WriteFile {
 		}
 		
 	}
-	//FIXME: Needs Tests
-	private static void writePosts(SystemManager manager, FileWriter writer) throws IOException {
+	
+	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
-		ArrayList<Post> posts = manager.getAllPost();
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = a.getAdminWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw new IOException();
+		}
 		
-		for (Post p : posts) {
+	}
+	
+	
+	public static void addUserToFile(User u, String fileName) throws IOException {
+		
+		try {
 			
-			String postData = p.getPostWriteData();
+			File dataFile = new File(fileName);
 			
-			writer.write(postData);
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = u.getUserWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void addCategoryToFile(category c, String fileName) throws IOException {
+		
+		try {
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = c.getCategoryWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void addGroupToFile(Group g, String fileName, String catName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = g.getGroupWriteData(catName);
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
 		}
 		
 	}
