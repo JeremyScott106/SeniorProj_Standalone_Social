@@ -2,6 +2,7 @@ package Project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ReadFile {
@@ -47,6 +48,9 @@ public class ReadFile {
 				}
 				else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
 					readMembership(manager, reader);
+				}
+				else if(line.equals("@POST") && currentlyReadingData) {
+					readPost(manager, reader);
 				}
 				else if (line.equals("")) {									//If the current line is empty
 					continue;													//continue to next line
@@ -517,8 +521,106 @@ public class ReadFile {
 			
 			if (!(u == null) && !(g == null)) {
 				membership m = new membership(u, g, regDate);
-				//FIXME: Need to add Membership into system once abiltiy has been established
+				//FIXME: Need to add Membership into system once ability has been established
+				//This adds the membership to the list of members in the existing group. Users does not have a list of their own memberships, so this should be all thats needed.
+				manager.getGroupByName(groupName).addMember(m);
 				System.out.println("Member created");
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		else {
+			throw new IncorrectFileFormatException();
+		}
+		
+	}
+	
+	//FIXME: Needs Test methods as well
+	private static void readPost(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String userName = "";
+		boolean gotUserName = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String dateTime = "";
+		boolean gotDateTime = false;
+		String postBody = "";
+		boolean gotPostBody = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				 break;
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				 if (gotUserName) {
+					 throw new IncorrectFileFormatException();
+				 }
+				 else {
+					 userName = line.substring(9);
+					 gotUserName = true;
+					 continue;
+				 }
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(10);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@DATE")) {
+				if (gotDateTime) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					dateTime = line.substring(9);
+					gotDateTime = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@POST")) {
+				if (gotPostBody) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postBody = line.substring(9);
+					gotPostBody = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		if (gotUserName && gotGroupName && gotDateTime && gotPostBody) {
+			
+			Group g = manager.getGroupByName(groupName);
+			
+			if (g.isMemberInGroup(userName)) {
+				Post p=new Post(g.getMembership(userName), dateTime, postBody);
+				manager.getGroupByName(groupName).addPost(p);
+				System.out.println("New Post Created.");
 			}
 			else {
 				throw new IncorrectFileFormatException();

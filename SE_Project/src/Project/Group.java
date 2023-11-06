@@ -53,6 +53,17 @@ public class Group {
         }
         return null;
     }
+    
+  //Find memberships using their userID
+    public membership getMembership (String userId) {
+        for(membership m : memberships) {
+        	User u = m.getUser();
+            if(u.getId().equals(userId)) {
+                return m;
+            }
+        }
+        return null;
+    }
 
     //Checks to see if a member is already a part of a group
     public boolean isMemberInGroup (String memberId) {

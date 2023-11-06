@@ -261,8 +261,8 @@ public class SystemManager {
 		 return groupInCategory;
 	}
 	 
-	//helper method, returns a list of all groups.
-	private ArrayList<Post> getAllPost(){
+	//helper method, returns a list of all posts.
+	public ArrayList<Post> getAllPost(){
 		ArrayList<Group> groups = new ArrayList<>();
 		ArrayList<Post> posts = new ArrayList<>();
 		for(category c : categories) {
