@@ -303,7 +303,8 @@ public class SystemManager {
 			return false;
 		}
 		User u1 = g.getMember(u.getId());
-		if(u.compareTo(u1) == 1) {
+		
+		if(u1 != null) {
 			return true;
 		}
 		return false;

@@ -121,7 +121,7 @@ public class PostTest {
 	}
 	
 	//Not totally sure how to check this without having us physically just check the time printed, test should always fail because they are different times
-	@Test
+	@Test		//FIXME: Change to compare less specific strings //
 	void getTimeTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
