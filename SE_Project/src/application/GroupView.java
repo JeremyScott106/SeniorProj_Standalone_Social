@@ -192,23 +192,27 @@ public class GroupView extends JFrame {
 		
 	}
 	
-private JScrollPane createScrollPane() {
+
+private JPanel createScrollPane() {
+	
+		int gridLocY = 10;
+		int padding = 30;
 	
 		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
 		JScrollPane postScrollPane = new JScrollPane();
-		JPanel postGridPane = new JPanel();
+		JPanel postPane = new JPanel();
+		postPane.setLayout(null);
 		
-		GridLayout gl = new GridLayout();
-		gl.setColumns(1);
-		gl.setRows(alPost.size());
-		gl.setVgap(4);
-		postGridPane.setLayout(gl);
-		postGridPane.setBackground(Color.BLACK);
-		postScrollPane.add(postGridPane);
+		postScrollPane.add(postPane);
+
 				
 		for (Post p : alPost) {
 			
 			JLabel lblToAdd = new JLabel(p.getPostTitle());
+
+			lblToAdd.setBounds(20, gridLocY, lblToAdd.getPreferredSize().width + padding, 25);
+			gridLocY += lblToAdd.getHeight() + padding;
+
 			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			lblToAdd.setForeground(Color.BLUE.darker());
 			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -216,13 +220,14 @@ private JScrollPane createScrollPane() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 	            	onViewChangeClick();
-	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+
+	            	manager.setCurrentPost(p);
+	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 	            }
 	        });
-			postGridPane.add(lblToAdd);
+			postPane.add(lblToAdd);
 		}
-		
-		return postScrollPane;
+		return postPane;
 	}
 	
 	private void displayGUI() {
@@ -237,8 +242,9 @@ private JScrollPane createScrollPane() {
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
-		
-		JScrollPane centerInsidePanel = createScrollPane();
+    
+		JPanel centerInsidePanel = createScrollPane();
+
 		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);

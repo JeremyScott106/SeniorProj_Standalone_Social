@@ -25,6 +25,7 @@ public class Group implements Comparable<Group> {
 
     //Adds members into groups
     public boolean addMember(membership m) {
+
         if (Validator.validateMemberExistsInGroup(m, memberships)) {
         	return false;
         }
@@ -32,6 +33,7 @@ public class Group implements Comparable<Group> {
         	memberships.add(m);
         	return true;
         }
+        return false;
     }
 
 

@@ -13,6 +13,8 @@ public class SystemManager {
 	private User currentUser;
 	private category currentCategory;
 	private Group currentGroup;
+	private Post currentPost;
+
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
@@ -181,6 +183,7 @@ public class SystemManager {
 		}
 	}
 	
+
 	// allows a post to be created
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
@@ -188,6 +191,7 @@ public class SystemManager {
 		return(group.addPost(p));
 	}
 	
+
 	// gets the membership of the group and user inputted
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
@@ -250,10 +254,12 @@ public class SystemManager {
 		return currentUser;
 	}
 	
+
 	// gets current category
 	public category getCurrentCategory() {
 		return currentCategory;
 	}
+
 
 	// sets the current category
 	public void setCurrentCategory(category currentCategory) {
@@ -265,9 +271,18 @@ public class SystemManager {
 		return currentGroup;
 	}
 
-	// sets the current group
+
+  // sets the current group
 	public void setCurrentGroup(Group currentGroup) {
 		this.currentGroup = currentGroup;
+	}
+	
+	public Post getCurrentPost() {
+		return currentPost;
+	}
+
+	public void setCurrentPost(Post currentPost) {
+		this.currentPost = currentPost;
 	}
 
 	// allows a user to logout
@@ -319,15 +334,8 @@ public class SystemManager {
 	
 	 //returns an arraylist of all the groups in category alphabetically
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
-		 ArrayList<Group> groupInCategory = new ArrayList<>();
-		 ArrayList<Group> groups = new ArrayList<>();
-		 groups.addAll(getAllGroups_Alphabetically());
-		 for (Group g: groups) {
-			 if (c.isGroupInCategory(g.getGroupName()) == true){
-				 groupInCategory.add(g);
-			 }
-		 }
-		 return groupInCategory;
+		 
+		 return c.getGroupsAlphabetically();
 	}
 	 
 	//helper method, returns a list of all groups.

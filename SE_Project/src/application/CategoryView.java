@@ -1,7 +1,6 @@
 package application;
 import Project.Group;
 import Project.SystemManager;
-import Project.category;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -99,7 +98,7 @@ public class CategoryView extends JFrame {
 			
 			JButton button = new JButton(alGroups.get(i).getGroupName());
 			GridBagConstraints gbc = new GridBagConstraints(
-		            j, (i % maxHeight),                           //cell x , y
+		            j, (i % maxHeight),             //cell x , y
 		            1, 1,                           //cell width , cell height
 		            1, 								//weightx
 		            weightY,			            //weighty
