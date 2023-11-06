@@ -11,6 +11,8 @@ public class SystemManager {
 	private boolean userSignedIn;		//User sign in status, true if any User is signed in
 	private boolean adminSignedIn;		//Admin sign in status, true if an Admin is signed in
 	private User currentUser;
+	private category currentCategory;
+	private Group currentGroup;
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
@@ -93,6 +95,11 @@ public class SystemManager {
 		}
 		return false;					//If there exists a User or Admin with the given username, return false
 	}
+	
+	public boolean joinGroup(User user, Group group) {
+		membership m = new membership(user, group);
+		return (group.addMember(m));
+	}
 
 	public boolean addCategory(category c) {
 		
@@ -170,6 +177,22 @@ public class SystemManager {
 			}
 		}
 	}
+	
+	public boolean createNewPost(Group group, String postTitle, String postBody) {
+		membership m = getMembership(group, currentUser);
+		Post p = new Post(m, postTitle, postBody);
+		return(group.addPost(p));
+	}
+	
+	public membership getMembership(Group group, User user) {
+		ArrayList<membership> memberships = group.getMembers();
+		for (membership m : memberships) {
+			if (m.getUser() == user) {
+				return m;
+			}
+		}
+		return null;
+	}
 
 	public ArrayList<category> getCategories_Alphabetically() {
 
@@ -217,6 +240,24 @@ public class SystemManager {
 		return currentUser;
 	}
 	
+	public category getCurrentCategory() {
+		return currentCategory;
+	}
+
+	public void setCurrentCategory(category currentCategory) {
+		this.currentCategory = currentCategory;
+	}
+
+	public Group getCurrentGroup() {
+		return currentGroup;
+	}
+
+	public void setCurrentGroup(Group currentGroup) {
+		this.currentGroup = currentGroup;
+	}
+
+
+	
 	public void logout() {
 		currentUser = null;
 	}
@@ -228,6 +269,9 @@ public class SystemManager {
 	}
 	
 	public Boolean isUserOfGroup(User u, Group g) {
+		if (u == null) {
+			return false;
+		}
 		User u1 = g.getMember(u.getId());
 		if((u).equals(u1)) {
 			return true;

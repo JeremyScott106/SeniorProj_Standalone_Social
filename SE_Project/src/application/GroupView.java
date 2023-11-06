@@ -1,13 +1,10 @@
 package application;
-import Project.Group;
-import Project.SystemManager;
-import Project.category;
 
+import Project.Post;
+import Project.SystemManager;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -17,8 +14,7 @@ public class GroupView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private category currentCategory;
-	private Group currentGroup;
+
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
 	public GroupView() {
@@ -26,13 +22,11 @@ public class GroupView extends JFrame {
 	
 	
 	@SuppressWarnings("exports")
-	public GroupView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, category c, Group g) {
+	public GroupView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
-		this.currentCategory = c;
-		this.currentGroup = g;
 		displayGUI();
 	}
 	
@@ -72,7 +66,7 @@ public class GroupView extends JFrame {
 		gridx += lblSpacer1.getWidth() + padding;
 		titlePanel.add(lblSpacer1);
 		
-		JLabel lblCurrentCategory = new JLabel(currentCategory.getName());
+		JLabel lblCurrentCategory = new JLabel(manager.getCurrentCategory().getName());
 		lblCurrentCategory.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrentCategory.setForeground(Color.BLUE.darker());
 		lblCurrentCategory.setBounds(gridx, 10, lblCurrentCategory.getPreferredSize().width + padding, 25);
@@ -82,7 +76,8 @@ public class GroupView extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
-            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory);
+            	manager.setCurrentGroup(null);
+            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		titlePanel.add(lblCurrentCategory);
@@ -92,7 +87,7 @@ public class GroupView extends JFrame {
 		gridx += lblSpacer2.getWidth() + padding;
 		titlePanel.add(lblSpacer2);
 		
-		JLabel lblCurrentGroup = new JLabel(currentGroup.getGroupName());
+		JLabel lblCurrentGroup = new JLabel(manager.getCurrentGroup().getGroupName());
 		lblCurrentGroup.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
 		titlePanel.add(lblCurrentGroup);
@@ -100,34 +95,140 @@ public class GroupView extends JFrame {
 		//	SECOND ROW OF LABLES //
 		gridx = 20;
 		
-		JLabel memberStatus = new JLabel("Member Status Unknown: Need Function");
-		memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
-		memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
-		gridx += memberStatus.getWidth() + padding;
-		titlePanel.add(memberStatus);
+		if (manager.getCurrentUser() == null){
+
+			JButton btnLogin = new JButton("Login");
+			btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnLogin.setBounds(gridx, 45, btnLogin.getPreferredSize().width + padding, 25);
+			gridx += btnLogin.getWidth() + padding;
+			titlePanel.add(btnLogin);
+			btnLogin.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+					new LoginPopUp(manager);
+				}
+			});
+
 		
-		JLabel joinGroup = new JLabel("Join This Group");
-		joinGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
-		joinGroup.setForeground(Color.BLUE.darker());
-		joinGroup.setBounds(gridx, 45, joinGroup.getPreferredSize().width + padding, 25);
-		gridx += joinGroup.getWidth() + padding;
-		joinGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		joinGroup.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		    	JOptionPane.showMessageDialog(null, "Need System Manager Function To Join Group");
-            }
-        });
-		titlePanel.add(joinGroup);
+
+			
+			JButton btnNewUser = new JButton("Register New Account");
+			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnNewUser.setBounds(gridx, 45, btnNewUser.getPreferredSize().width + padding, 25);
+			gridx += btnNewUser.getWidth() + padding;
+			titlePanel.add(btnNewUser);
+			btnNewUser.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+					new CreateUserPopUp(manager);
+				}
+			});
+
+		}
+		
+		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			
+			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+			
+			JLabel joinGroup = new JLabel("Join This Group");
+			joinGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
+			joinGroup.setForeground(Color.BLUE.darker());
+			joinGroup.setBounds(gridx, 45, joinGroup.getPreferredSize().width + padding, 25);
+			gridx += joinGroup.getWidth() + padding;
+			joinGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			joinGroup.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	boolean result = manager.joinGroup(manager.getCurrentUser(), manager.getCurrentGroup());
+			    	if (result) {
+			    		JOptionPane.showMessageDialog(null, "Successfully Joined Group");
+			    	}
+			    	else {
+			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
+			    	}
+	            }
+	        });
+			titlePanel.add(joinGroup);
+		}
+		
+		else {
+			String mbmSince = "Member Since: " + manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate().toString();
+
+			JLabel memberStatus = new JLabel(mbmSince);
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+		}
+		
+		JButton btnRefreshPage = new JButton("Refresh");
+		btnRefreshPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
+			// FIXME: BUG -> Refresh button disappears if frame shrinks.
+		titlePanel.add(btnRefreshPage);
+		
+		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JButton newPost = new JButton("Create New Post");
+			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
+			int btnWidth = newPost.getPreferredSize().width + padding;
+			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 25, 45, newPost.getPreferredSize().width + padding, 25);
+			titlePanel.add(newPost);
+			newPost.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	onViewChangeClick();
+	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				}
+			});
+		}
 		
 		return titlePanel;
 		
 	}
 	
+private JScrollPane createScrollPane() {
+	
+		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
+		JScrollPane postScrollPane = new JScrollPane();
+		JPanel postGridPane = new JPanel();
+		
+		GridLayout gl = new GridLayout();
+		gl.setColumns(1);
+		gl.setRows(alPost.size());
+		gl.setVgap(4);
+		postGridPane.setLayout(gl);
+		postGridPane.setBackground(Color.BLACK);
+		postScrollPane.add(postGridPane);
+				
+		for (Post p : alPost) {
+			
+			JLabel lblToAdd = new JLabel(p.getPostTitle());
+			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lblToAdd.setForeground(Color.BLUE.darker());
+			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			lblToAdd.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+	            	onViewChangeClick();
+	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+	            }
+	        });
+			postGridPane.add(lblToAdd);
+		}
+		
+		return postScrollPane;
+	}
+	
 	private void displayGUI() {
 		currentFrame.setLayout(new BorderLayout(0, 0));
 		currentFrame.add(topBar, BorderLayout.NORTH);
-		currentFrame.setTitle("This is the listing of posts in group " + currentGroup.getGroupName());
+		currentFrame.setTitle("This is the listing of posts in group " + manager.getCurrentGroup().getGroupName());
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
@@ -136,6 +237,9 @@ public class GroupView extends JFrame {
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
+		
+		JScrollPane centerInsidePanel = createScrollPane();
+		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}

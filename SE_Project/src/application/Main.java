@@ -21,33 +21,33 @@ public class Main extends JFrame {
 		JMenuBar menus = new JMenuBar();
 				//Menus//
 		JMenu file = new JMenu("File");
-		JMenu view = new JMenu("View");
+		JMenu refresh = new JMenu("Refresh");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
 		JMenuItem logout = new JMenuItem("Logout");
 		
 		JMenuItem switchHome = new JMenuItem("Home");
-		JMenuItem switchCategory = new JMenuItem("Category View");
-		JMenuItem switchGroup = new JMenuItem("Group View");
-		JMenuItem switchPost = new JMenuItem("Post View");
 		JMenuItem switchProfile = new JMenuItem("Profile View");
 				//Add menus to bar//
 		menus.add(file);
-		menus.add(view);
+//		menus.add(refresh); // Add if currentView is added.
 				//Add sub-menus to menus//
 		file.add(login);
-		file.add(logout);
-		view.add(switchHome);
-		view.add(switchCategory);
-		view.add(switchGroup);
-		view.add(switchPost);
-		view.add(switchProfile);
+		file.add(switchHome);
+		file.add(switchProfile);
+		file.add(logout);		
 		
 		login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	new LoginPopUp(manager);
             }
         });
+		
+//		refresh.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//            	
+//            }
+//        });
 		
 		logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -59,28 +59,9 @@ public class Main extends JFrame {
 		switchHome.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	onViewChangeClick();
+            	manager.setCurrentCategory(null);
+            	manager.setCurrentGroup(null);
             	new Home(manager, topBar, currentFrame, currentFrame.getSize());
-            }
-        });
-		
-		switchCategory.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	onViewChangeClick();
-            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), null);
-            }
-        });
-		
-		switchGroup.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	onViewChangeClick();
-            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), null, null);
-            }
-        });
-		
-		switchPost.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	onViewChangeClick();
-            	new PostView(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		

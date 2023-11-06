@@ -24,7 +24,7 @@ public class Group {
     }
 
     //Adds members into groups
-    public void addMember(membership m) {
+    public boolean addMember(membership m) {
         boolean isMember = false;
         for (membership m1 : memberships) {
             if (m1.equals(m)) {
@@ -34,7 +34,9 @@ public class Group {
         }
         if (!isMember) {
             memberships.add(m);
+            return true;
         }
+        return false;
     }
 
 
@@ -67,7 +69,7 @@ public class Group {
     }
 
     //Adds a new post to the group
-    public void addPost(Post p) {
+    public boolean addPost(Post p) {
         boolean isMember = false;
         for (Post p1 : posts) {
             if (p1.equals(p)) {
@@ -77,7 +79,9 @@ public class Group {
         }
         if (!isMember) {
             posts.add(p);
+            return true;
         }
+        return false;
     }
 
     //Gets the list of post made within a group
