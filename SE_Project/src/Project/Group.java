@@ -25,18 +25,13 @@ public class Group {
 
     //Adds members into groups
     public boolean addMember(membership m) {
-        boolean isMember = false;
-        for (membership m1 : memberships) {
-            if (m1.equals(m)) {
-                isMember = true;
-                break;
-            }
+        if (Validator.validateMemberExistsInGroup(m, memberships)) {
+        	return false;
         }
-        if (!isMember) {
-            memberships.add(m);
-            return true;
+        else {
+        	memberships.add(m);
+        	return true;
         }
-        return false;
     }
 
 

@@ -154,5 +154,18 @@ public class Validator {
 		}
 		return u;
 	}
+	
+	
+	public static boolean validateMemberExistsInGroup(membership m, ArrayList<membership> memberships) {
+		
+		for (membership m1 : memberships) {
+			
+			if (m.getUser().getId().equals(m1.getUser().getId())) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
 
 }
