@@ -28,6 +28,8 @@ public class WriteFile {
 			
 			writeGroups(manager, writer);
 			
+			writePosts(manager, writer);
+			
 			writer.write("@ENDFILE");
 			
 			writer.close();
@@ -95,6 +97,19 @@ public class WriteFile {
 				
 			}
 			
+		}
+		
+	}
+	//FIXME: Needs Tests
+	private static void writePosts(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Post> posts = manager.getAllPost();
+		
+		for (Post p : posts) {
+			
+			String postData = p.getPostWriteData();
+			
+			writer.write(postData);
 		}
 		
 	}
