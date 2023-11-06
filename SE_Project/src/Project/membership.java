@@ -61,11 +61,11 @@ public class membership implements Comparable<membership> {
 	}
 	
 	@Override
-	public int compareTo(membership other) {
+	public int compareTo(membership m) {
 		
-		if (other.getUser().getId().equals(user.getId())) {
+		if (user.compareTo(m.getUser()) == 1) {
 			
-			if (other.getGroup().getGroupName().equals(group.getGroupName())) {
+			if (group.compareTo(m.getGroup()) == 1) {
 				return 1;
 			}
 		}

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Comparable<User> {
 
 	protected String id;
 	protected String name;
@@ -133,5 +133,14 @@ public class User {
     	
     	return userData;
     }
+
+    
+	@Override
+	public int compareTo(User u) {
+		if (u.getId().equals(id)) {
+			return 1;
+		}
+		return 0;
+	}
   
 }

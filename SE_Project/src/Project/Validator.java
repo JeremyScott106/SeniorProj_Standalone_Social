@@ -96,8 +96,8 @@ public class Validator {
 	
 	public static boolean validateAdminExists(Admin a, ArrayList<Admin> admins) {
 		
-		for (Admin ad : admins) {
-			if (a.getId().equals(ad.getId())) {
+		for (Admin admin : admins) {
+			if (a.compareTo(admin) == 1) {
 				return true;
 			}
 		}
@@ -109,7 +109,7 @@ public class Validator {
 	public static boolean validateCategoryExists(category c, ArrayList<category> categories) {
 		
 		for (category cat : categories) {
-			if (c.getName().equals(cat.getName())) {
+			if (c.compareTo(cat) == 1) {
 				return true;
 			}
 		}
@@ -119,7 +119,7 @@ public class Validator {
 	public static boolean validateUserExists(User u, ArrayList<User> users) {
 		
 		for (User user : users) {
-			if (u.getId().equals(user.getId())) {
+			if (u.compareTo(user) == 1) {
 				return true;
 			}
 		}

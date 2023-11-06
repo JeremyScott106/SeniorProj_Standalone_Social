@@ -31,5 +31,30 @@ public class AdminTest {
 		
 		assertEquals(expected, actual);
 	}
+	
+	
+	@Test
+	void testCompareTo_Success() {
+		
+		Admin a1 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		
+		int actual = a1.compareTo(a2);
+		
+		assertEquals(1, actual);
+		
+	}
+	
+	@Test
+	void testCompareTo_Failure() {
+		
+		Admin a1 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Billy", "test", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		
+		int actual = a1.compareTo(a2);
+		
+		assertEquals(0, actual);
+		
+	}
 
 }

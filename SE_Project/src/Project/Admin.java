@@ -3,7 +3,7 @@ package Project;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class Admin extends User{
+public class Admin extends User {
 
 	//For adding New Admins
 	public Admin(String name, String id, String password, String birthdate, 
@@ -52,6 +52,15 @@ public class Admin extends User{
     						"@END\n\n";
     	
     	return adminData;
+    }
+    
+    
+    
+    public int compareTo(Admin a) {
+    	if (a.getId().equals(id)) {
+    		return 1;
+    	}
+    	return 0;
     }
 
 
