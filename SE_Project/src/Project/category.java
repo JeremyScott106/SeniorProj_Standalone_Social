@@ -8,6 +8,7 @@ public class category {
 	private String name;
 	private ArrayList<Group> groups;
 
+	// gives a category a name with an arraylist of groups
 	public category(String name) {
 		this.name = name;
 		this.groups = new ArrayList<Group>();
@@ -18,6 +19,7 @@ public class category {
 		return name;
 	}
 
+	// adds a group if the group name doesn't exist
 	public boolean addGroup(Group g) {
 		if (Validator.validateGroupNameExists(groups, g.getGroupName())) {	//If the name of group g already exists within the list of Groups
 			return false;	//do not add the group and return false
@@ -28,6 +30,7 @@ public class category {
 		}
 	}
 
+	// create group if the group name doesn't exist
 	public boolean createGroup(String name) {
 		if(Validator.validateGroupNameExists(groups, name)) {	//If there exists a group with the given name
 			return false;	//Return false
@@ -40,6 +43,7 @@ public class category {
 	}
 
 
+	// returns all groups alphabetically
 	public ArrayList<Group> getGroupsAlphabetically() {
 		Collections.sort(groups, new SortGroupsByName());
 

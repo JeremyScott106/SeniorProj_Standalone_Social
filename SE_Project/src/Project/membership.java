@@ -45,8 +45,6 @@ public class membership {
 		return registeredDate;
 	}
 	
-	
-	
 	public String getMembershipWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String regDate = df.format(registeredDate);

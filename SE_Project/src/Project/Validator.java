@@ -93,7 +93,7 @@ public class Validator {
 	}
 	//returns true if there exists a user is in a group, returns false otherwise
 	
-	
+	// returns true if the admin exists and returns false otherwise
 	public static boolean validateAdminExists(Admin a, ArrayList<Admin> admins) {
 		
 		for (Admin ad : admins) {
@@ -105,7 +105,7 @@ public class Validator {
 		
 	}
 	
-	
+	// returns true if the category exists and returns false otherwise
 	public static boolean validateCategoryExists(category c, ArrayList<category> categories) {
 		
 		for (category cat : categories) {
@@ -116,6 +116,7 @@ public class Validator {
 		return false;
 	}
 	
+	// returns true if the user exists and returns false otherwise
 	public static boolean validateUserExists(User u, ArrayList<User> users) {
 		
 		for (User user : users) {
@@ -126,7 +127,7 @@ public class Validator {
 		return false;
 	}
 	
-	
+	// returns the group from the name provided
 	public static Group getGroupFromName(ArrayList<Group> groups, String name) {
 		
 		Group g = null;
@@ -141,7 +142,7 @@ public class Validator {
 		return g;
 	}
 	
-	
+	// returns the user from the username provided
 	public static User getUserFromUsername(ArrayList<User> users, String username) {
 		
 		User u = null;
@@ -155,7 +156,7 @@ public class Validator {
 		return u;
 	}
 	
-	
+	// returns true if the membership exists and returns false otherwise
 	public static boolean validateMemberExistsInGroup(membership m, ArrayList<membership> memberships) {
 		
 		for (membership m1 : memberships) {

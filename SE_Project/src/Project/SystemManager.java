@@ -42,7 +42,7 @@ public class SystemManager {
 		}		
 	}
 	
-	
+	//writes the manager
 	public boolean writeManager(String fileName) {
 		
 		try {
@@ -55,7 +55,7 @@ public class SystemManager {
 		return true;
 	}
 	
-
+	// add an user
 	public boolean addUser(User u) {
 		if (Validator.validateUserExists(u, users)) {
 			return false;
@@ -66,6 +66,7 @@ public class SystemManager {
 		}
 	}
 
+	// adds an admin
 	public boolean addAdmin(Admin a) {	
 		if (Validator.validateAdminExists(a, admins)) {
 			return false;
@@ -76,6 +77,7 @@ public class SystemManager {
 		}
 	}
 
+	// allows the user to be registered
 	public boolean registerUser(String name, String bday, String city,
 								String state, String username, String password) {
 
@@ -96,6 +98,7 @@ public class SystemManager {
 		return false;					//If there exists a User or Admin with the given username, return false
 	}
 	
+	// allows a user to join a group
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
 		return (group.addMember(m));
@@ -141,7 +144,7 @@ public class SystemManager {
 			return c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
 		}
 	}
-
+	// allows the user to login
 	public boolean login(String username, String password) {
 		boolean signIn = false;
 
@@ -178,12 +181,14 @@ public class SystemManager {
 		}
 	}
 	
+	// allows a post to be created
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
 		Post p = new Post(m, postTitle, postBody);
 		return(group.addPost(p));
 	}
 	
+	// gets the membership of the group and user inputted
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
 		for (membership m : memberships) {
@@ -194,6 +199,7 @@ public class SystemManager {
 		return null;
 	}
 
+	// returns all category alphabetically
 	public ArrayList<category> getCategories_Alphabetically() {
 
 		Collections.sort(categories, new SortCategoriesByName());
@@ -210,6 +216,7 @@ public class SystemManager {
 		return groups;
 	}
 	
+	// returns all groups alphabetically
 	public ArrayList<Group> getAllGroups_Alphabetically() {
 		ArrayList<Group> groups = new ArrayList<>();
 		groups.addAll(getAllGroups());
@@ -218,6 +225,7 @@ public class SystemManager {
 		return groups;
 	}
 
+	// returns users alphabetically
 	public ArrayList<User> getUsers_Alphabetically() {
 
 
@@ -227,47 +235,54 @@ public class SystemManager {
 		return users;
 	}
 	
-
+	// returns the status if the user is logged in
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
+	//returns the status of the admin
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
 	
+	// gets current user
 	public User getCurrentUser() {
 		return currentUser;
 	}
 	
+	// gets current category
 	public category getCurrentCategory() {
 		return currentCategory;
 	}
 
+	// sets the current category
 	public void setCurrentCategory(category currentCategory) {
 		this.currentCategory = currentCategory;
 	}
 
+	// gets the current group
 	public Group getCurrentGroup() {
 		return currentGroup;
 	}
 
+	// sets the current group
 	public void setCurrentGroup(Group currentGroup) {
 		this.currentGroup = currentGroup;
 	}
 
-
-	
+	// allows a user to logout
 	public void logout() {
 		currentUser = null;
 	}
 
+	// sorts admins alphabetically
 	public ArrayList<Admin> getAdmins_Alphabetically() {
 		Collections.sort(admins, new SortUsersByName());
 		return admins;
 
 	}
 	
+	// returns true if a user is a member of group, returns false if otherwise
 	public Boolean isUserOfGroup(User u, Group g) {
 		if (u == null) {
 			return false;
@@ -278,7 +293,8 @@ public class SystemManager {
 		}
 		return false;
 	}
-
+	
+	// returns an arraylist of groups that a user is in
 	 public ArrayList<Group> getGroupsByUser(User user) {
 	 ArrayList<Group> group = new ArrayList<>();
 	 ArrayList<Group> groups = new ArrayList<>();
@@ -290,7 +306,7 @@ public class SystemManager {
 	 }
 	 return group;
 }
-	 
+	 //returns an arraylist of of all the users in group
 	 public ArrayList<User> getUsersInGroup(Group group) {
 		 ArrayList<User> userInGroup = new ArrayList<>();
 		 for (User u: users) {
@@ -301,6 +317,7 @@ public class SystemManager {
 		 return userInGroup;
 	 }
 	
+	 //returns an arraylist of all the groups in category alphabetically
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
 		 ArrayList<Group> groupInCategory = new ArrayList<>();
 		 ArrayList<Group> groups = new ArrayList<>();
@@ -371,7 +388,7 @@ public class SystemManager {
 		 }
 		 return results;
 	 }
-	 // recursion
+
 	 //User story 24
 	 //loops through the post arrayList and records all the posts and responses of a given group
 	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
@@ -391,6 +408,7 @@ public class SystemManager {
 		 return results;
 	}
 	 
+	 //loops through the post arrayList and records all the posts of a given group
 	 public ArrayList<Post> viewPostsInGroup(Group group) {
 		 ArrayList<Post> posts = new ArrayList<>();
 		 posts.addAll(group.getPost());
@@ -398,7 +416,7 @@ public class SystemManager {
 	}
 	 
 	 //User story 25
-	 //checks if the post has the user if so it gets the responses from the post and returns the message.
+	 //checks if the post has the user if so it gets the responses from the post and returns an arraylist of responses.
 	 public ArrayList<Object> viewMyResponses(User user, Post post) {
 		 ArrayList<Response> pr = new ArrayList<>();
 		 pr.addAll(post.getResponse());
@@ -412,30 +430,33 @@ public class SystemManager {
 		return results;
 	} 
 
+	 // uses the validator class to get the category by name
 	 public category getCategoryByName(String catName) {
 		 return Validator.getCategoryFromName(categories, catName);
 	 }
 	 
+	 // returns the users alphabetically by the username
 	 public ArrayList<User> getUsers_Alphabetically_ByUsername(){
 		 Collections.sort(users, new SortUsersByUsername());
 		 
 		 return users;
 	 }
 	 
+	 // returns the admins alphabetically by the username
 	 public ArrayList<Admin> getAdmins_Alphabetically_ByUsername() {
 		 Collections.sort(admins, new SortUsersByUsername());
 		 
 		 return admins;
 	 }
 	 
-
+	 // uses the validator class to get the group by name
 	 public Group getGroupByName(String name) {
 		 ArrayList<Group> allGroups = this.getAllGroups();
 		 
 		 return Validator.getGroupFromName(allGroups, name);
 	 }
 	 
-
+	 // uses the Validator class to sort the user by username
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
 	 }
