@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Group {
+public class Group implements Comparable<Group> {
 
     private String groupName;
     private ArrayList<membership> memberships;
@@ -25,16 +25,13 @@ public class Group {
 
     //Adds members into groups
     public boolean addMember(membership m) {
-        boolean isMember = false;
-        for (membership m1 : memberships) {
-            if (m1.equals(m)) {
-                isMember = true;
-                break;
-            }
+
+        if (Validator.validateMemberExistsInGroup(m, memberships)) {
+        	return false;
         }
-        if (!isMember) {
-            memberships.add(m);
-            return true;
+        else {
+        	memberships.add(m);
+        	return true;
         }
         return false;
     }
@@ -102,5 +99,13 @@ public class Group {
     	return groupData;
     	
     }
+
+	@Override
+	public int compareTo(Group g) {
+		if (g.getGroupName().equals(groupName)) {
+			return 1;
+		}
+		return 0;
+	}
 
 }

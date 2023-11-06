@@ -1,8 +1,10 @@
 package application;
+
 import Project.SystemManager;
 
 import java.awt.*;
 import java.awt.event.*;
+
 
 import javax.swing.*;
 
@@ -200,6 +202,7 @@ public class NewPostView extends JFrame {
 		
 	}
 	
+
 	private JPanel createPostForm() {
 		
 		JPanel panel = new JPanel();
@@ -257,16 +260,19 @@ public class NewPostView extends JFrame {
 	private void displayGUI() {
 		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
+
 		currentFrame.setTitle("This is the New Post view");
+
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
 		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new BorderLayout(0,0));
 		
+
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
-		
+
 		JPanel postForm = createPostForm();
 		mainPanel.add(postForm, BorderLayout.CENTER);
 		

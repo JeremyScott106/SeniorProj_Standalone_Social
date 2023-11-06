@@ -192,6 +192,7 @@ public class GroupView extends JFrame {
 		
 	}
 	
+
 private JPanel createScrollPane() {
 	
 		int gridLocY = 10;
@@ -203,12 +204,15 @@ private JPanel createScrollPane() {
 		postPane.setLayout(null);
 		
 		postScrollPane.add(postPane);
+
 				
 		for (Post p : alPost) {
 			
 			JLabel lblToAdd = new JLabel(p.getPostTitle());
+
 			lblToAdd.setBounds(20, gridLocY, lblToAdd.getPreferredSize().width + padding, 25);
 			gridLocY += lblToAdd.getHeight() + padding;
+
 			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			lblToAdd.setForeground(Color.BLUE.darker());
 			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -216,13 +220,13 @@ private JPanel createScrollPane() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 	            	onViewChangeClick();
+
 	            	manager.setCurrentPost(p);
 	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 	            }
 	        });
 			postPane.add(lblToAdd);
 		}
-		
 		return postPane;
 	}
 	
@@ -238,8 +242,9 @@ private JPanel createScrollPane() {
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
-		
+    
 		JPanel centerInsidePanel = createScrollPane();
+
 		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);

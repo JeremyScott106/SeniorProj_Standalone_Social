@@ -3,7 +3,7 @@ package Project;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class Admin extends User{
+public class Admin extends User {
 
 	//For adding New Admins
 	public Admin(String name, String id, String password, String birthdate, 
@@ -36,7 +36,7 @@ public class Admin extends User{
      *  
      */
     public String getAdminWriteData() {
-    	DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     	String bday = df.format(birthdate);
     	String regDate = df.format(registeredDate);
     	
@@ -52,6 +52,15 @@ public class Admin extends User{
     						"@END\n\n";
     	
     	return adminData;
+    }
+    
+    
+    
+    public int compareTo(Admin a) {
+    	if (a.getId().equals(id)) {
+    		return 1;
+    	}
+    	return 0;
     }
 
 

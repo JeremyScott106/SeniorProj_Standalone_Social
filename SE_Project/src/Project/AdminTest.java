@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AdminTest {
 
+	// tests the constructor
 	@Test
 	void testConstructor() {
 		Admin a = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
 
 	}
 	
+	// Test getting Admin data from disk
 	@Test
 	void testGetAdminWriteData() {
 		Admin a = new Admin("Billy", "0010", "billyiscool", "10/10/1997", 
@@ -30,6 +32,31 @@ public class AdminTest {
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
+	}
+	
+	
+	@Test
+	void testCompareTo_Success() {
+		
+		Admin a1 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		
+		int actual = a1.compareTo(a2);
+		
+		assertEquals(1, actual);
+		
+	}
+	
+	@Test
+	void testCompareTo_Failure() {
+		
+		Admin a1 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		Admin a2 = new Admin("Billy", "test", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		
+		int actual = a1.compareTo(a2);
+		
+		assertEquals(0, actual);
+		
 	}
 
 }

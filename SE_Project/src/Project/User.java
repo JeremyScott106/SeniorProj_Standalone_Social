@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User implements Comparable<User> {
 
 	protected String id;
 	protected String name;
@@ -27,7 +27,7 @@ public class User {
 		this.password = password;
 		this.birthdate = new Date();
 		try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			this.birthdate = df.parse(birthdate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class User {
 		this.password = password;
 		this.birthdate = new Date();
 		try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			this.birthdate = df.parse(birthdate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class User {
 		this.city = city;
 		this.state = state;
 		try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			this.registeredDate = df.parse(registeredDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -116,7 +116,7 @@ public class User {
      *  
      */
     public String getUserWriteData() {
-    	DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     	String bday = df.format(birthdate);
     	String regDate = df.format(registeredDate);
     	
@@ -133,5 +133,14 @@ public class User {
     	
     	return userData;
     }
+
+    
+	@Override
+	public int compareTo(User u) {
+		if (u.getId().equals(id)) {
+			return 1;
+		}
+		return 0;
+	}
   
 }

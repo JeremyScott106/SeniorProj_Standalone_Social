@@ -85,6 +85,31 @@ public class GroupTest {
 		assertEquals(expected, actual);
 		
 	}
+	
+	
+	@Test
+	void testCompareTo_Success() {
+		
+		Group g1 = new Group("Standard Name");
+		Group g2 = new Group("Standard Name");
+		
+		int actual = g1.compareTo(g2);
+		
+		assertEquals(1, actual);
+		
+	}
+	
+	@Test
+	void testCompareTo_Failure() {
+		
+		Group g1 = new Group("Standard Name");
+		Group g2 = new Group("Test");
+		
+		int actual = g1.compareTo(g2);
+		
+		assertEquals(0, actual);
+		
+	}
 
 
 }
