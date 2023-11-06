@@ -20,7 +20,7 @@ public class membership {
         this.group = group;
         
 		try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			this.registeredDate = df.parse(registeredDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class membership {
 	
 	
 	public String getMembershipWriteData() {
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String regDate = df.format(registeredDate);
 		
 		String memberData = "@START\n" + 
