@@ -21,7 +21,7 @@ public class Post {
     	this.responses = new ArrayList<>();
     	Date d=new Date();
     	try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy'T'HH:mm:ssXXX");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy'T'HH:mm:ssXXX");
 			String x = df.format(d);
 			this.dateTime = df.parse(x);
 		} catch (ParseException e) {
@@ -36,7 +36,7 @@ public class Post {
     	this.postBody = postBody;
     	this.responses = new ArrayList<>();
     	try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy'T'HH:mm:ssXXX");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy'T'HH:mm:ssXXX");
 			this.dateTime = df.parse(dateTime);
 		} catch (ParseException e) {
 			e.printStackTrace();
