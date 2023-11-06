@@ -1,6 +1,10 @@
 package Project;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -179,6 +183,76 @@ public class WriteFile {
 		catch (IOException e) {
 			throw e;
 
+		}
+		
+	}
+	
+	
+	
+	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
+		
+		String find = a.getAdminWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void removeUserFromFile(User u, String fileName) throws IOException {
+		
+		String find = u.getUserWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			//FIXME: for whatever reason, this does no replace cannot find and replace the User
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
 		}
 		
 	}
