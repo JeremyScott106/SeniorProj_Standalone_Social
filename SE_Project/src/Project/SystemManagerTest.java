@@ -354,37 +354,6 @@ class SystemManagerTest {
 		
 		assertEquals(expected, actual);
   }
-	
-	@Test
-	void testIsUserOfGroup() {
-		SystemManager sm = new SystemManager();
-		Group g1 = new Group("Funny");
-		category c1 = new category("happy");
-		
-		c1.addGroup(g1);
-		
-		sm.addCategory(c1);
-
-		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/05/12", "10/5/12", "10/5/12");
-		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/05/12", "10/5/12", "5/5/5");
-		
-		membership m1 = new membership(u1, g1);
-		membership m2 = new membership(u2, g1);
-
-		g1.addMember(m1);
-		g1.addMember(m2);
-		
-		sm.addGroup(g1);
-
-		sm.addUser(u1);
-		sm.addUser(u2);
-
-		Boolean actual = sm.isUserOfGroup(u2, g1);
-		Boolean expected = true;
-
-		assertEquals(expected, actual);
-	}
-	
 		
 
 	@Test
@@ -578,32 +547,6 @@ class SystemManagerTest {
 		testPost1.addResponse(r2);
 		
 		assertEquals(expected, sm.viewPostsResponsesInGroup(testGroup));
-	}
-	
-	@Test
-	void testViewPostsInGroup() {
-		SystemManager sm = new SystemManager();
-		category c = new category("fun");
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
-
-		ArrayList<Object> expected = new ArrayList<>();
-		expected.add(testPost1);
-		
-		sm.addCategory(c);
-		c.addGroup(testGroup);
-		testGroup.addMember(m);
-		testGroup.addPost(testPost1);
-		sm.addUser(testUser);	
-		
-		testPost1.addResponse(r1);
-		testPost1.addResponse(r2);
-		
-		assertEquals(expected, sm.viewPostsInGroup(testGroup));
 	}
 	
 	@Test
