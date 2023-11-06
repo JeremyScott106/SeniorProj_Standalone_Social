@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class ReadWriteTest {
 
-	@Ignore // This will only work on the first try, fails after because the admin will be already made
+	@Test
 	void testReadWrite_Admins() {
 		String fileName = ".\\SE_Project\\src\\project\\TextFiles\\ReadWriteFile_Test\\ReadWriteFile_Test_Admins.txt";
 		
@@ -20,7 +20,11 @@ class ReadWriteTest {
 			
 			ReadFile.readFile(manager, fileName);
 			
-			Admin a = new Admin("Ethan", "Testing", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+			int numAdmins = manager.getAdmins_Alphabetically().size();
+			
+			String username = "Test#" + numAdmins;
+			
+			Admin a = new Admin("Testing", username, "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
 			
 			boolean successfullAddition = manager.addAdmin(a);
 			
