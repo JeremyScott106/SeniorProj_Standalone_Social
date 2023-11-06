@@ -97,8 +97,6 @@ public class WriteFile {
 		
 	}
 	
-	
-	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
 		try {
@@ -180,6 +178,7 @@ public class WriteFile {
 		}
 		catch (IOException e) {
 			throw e;
+
 		}
 		
 	}

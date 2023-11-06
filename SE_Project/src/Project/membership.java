@@ -9,7 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class membership {
+public class membership implements Comparable<membership> {
 	private User user;
 	private Group group;
 	private Date registeredDate;
@@ -20,7 +20,7 @@ public class membership {
         this.group = group;
         
 		try {
-			DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			this.registeredDate = df.parse(registeredDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -45,10 +45,8 @@ public class membership {
 		return registeredDate;
 	}
 	
-	
-	
 	public String getMembershipWriteData() {
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String regDate = df.format(registeredDate);
 		
 		String memberData = "@START\n" + 
@@ -58,6 +56,19 @@ public class membership {
 								"@REGISTEREDDATE=" + regDate + "\n" + 
 								"@END\n\n";
 		return memberData;
+	}
+	
+	@Override
+	public int compareTo(membership m) {
+		
+		if (user.compareTo(m.getUser()) == 1) {
+			
+			if (group.compareTo(m.getGroup()) == 1) {
+				return 1;
+			}
+		}
+		return 0;
+		
 	}
 
 }

@@ -90,7 +90,7 @@ public class UserTest {
 		
 		Date dbay = u.getBirthday();
 		
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		
 		String actual = df.format(dbay);
 		
@@ -122,7 +122,7 @@ public class UserTest {
 		
 		Date regDate = u.getRegisteredDate();
 		
-		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		
 		String actual = df.format(regDate);
 		
@@ -167,6 +167,31 @@ public class UserTest {
 		
 		assertEquals(null, actual);
 
+	}
+	
+	
+	@Test 
+	void testCompareTO_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		User u2 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		
+		int actual = u1.compareTo(u2);
+		
+		assertEquals(1, actual);
+		
+	}
+	
+	@Test 
+	void testCompareTO_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		
+		int actual = u1.compareTo(u2);
+		
+		assertEquals(0, actual);
+		
 	}
 
 }

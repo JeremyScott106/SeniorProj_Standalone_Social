@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Group {
+public class Group implements Comparable<Group> {
 
     private String groupName;
     private ArrayList<membership> memberships;
@@ -24,17 +24,16 @@ public class Group {
     }
 
     //Adds members into groups
-    public void addMember(membership m) {
-        boolean isMember = false;
-        for (membership m1 : memberships) {
-            if (m1.equals(m)) {
-                isMember = true;
-                break;
-            }
+    public boolean addMember(membership m) {
+
+        if (Validator.validateMemberExistsInGroup(m, memberships)) {
+        	return false;
         }
-        if (!isMember) {
-            memberships.add(m);
+        else {
+        	memberships.add(m);
+        	return true;
         }
+        return false;
     }
 
 
@@ -53,6 +52,17 @@ public class Group {
         }
         return null;
     }
+    
+  //Find memberships using their userID
+    public membership getMembership (String userId) {
+        for(membership m : memberships) {
+        	User u = m.getUser();
+            if(u.getId().equals(userId)) {
+                return m;
+            }
+        }
+        return null;
+    }
 
     //Checks to see if a member is already a part of a group
     public boolean isMemberInGroup (String memberId) {
@@ -67,7 +77,7 @@ public class Group {
     }
 
     //Adds a new post to the group
-    public void addPost(Post p) {
+    public boolean addPost(Post p) {
         boolean isMember = false;
         for (Post p1 : posts) {
             if (p1.equals(p)) {
@@ -77,7 +87,9 @@ public class Group {
         }
         if (!isMember) {
             posts.add(p);
+            return true;
         }
+        return false;
     }
 
     //Gets the list of post made within a group
@@ -98,5 +110,13 @@ public class Group {
     	return groupData;
     	
     }
+
+	@Override
+	public int compareTo(Group g) {
+		if (g.getGroupName().equals(groupName)) {
+			return 1;
+		}
+		return 0;
+	}
 
 }

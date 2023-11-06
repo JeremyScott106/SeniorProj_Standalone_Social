@@ -40,7 +40,7 @@ public class LoginPopUp extends JDialog {
 	private JPanel makeUser() {
 		JPanel username = new JPanel();
 		JLabel lblName = new JLabel("Username:");
-		txfName = new JTextField(20);		// FIXME: Manually set bounds?  Can't expand field to look better by changing int
+		txfName = new JTextField(15);		// FIXME: Manually set bounds?  Can't expand field to look better by changing int
 		username.add(lblName);
 		username.add(txfName);
 		return username;
@@ -49,7 +49,7 @@ public class LoginPopUp extends JDialog {
 	private JPanel makePass() {
 		JPanel password = new JPanel();
 		JLabel lblPass = new JLabel("Password:");
-		txfPass = new JTextField(20);		// FIXME: Manually set bounds?  Can't expand field to look better by changing int
+		txfPass = new JTextField(15);		// FIXME: Manually set bounds?  Can't expand field to look better by changing int
 		password.add(lblPass);
 		password.add(txfPass);
 
@@ -77,7 +77,7 @@ public class LoginPopUp extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(txfName.getText().isBlank() || txfPass.getText().isBlank()) {
-					System.out.println("Username or Pass blank");
+					JOptionPane.showMessageDialog(null, "Username or Password is Blank");
 				}
 				else {
 					boolean status = manager.login(txfName.getText(), txfPass.getText());
