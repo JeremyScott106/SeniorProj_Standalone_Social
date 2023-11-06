@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Group {
+public class Group implements Comparable<Group> {
 
     private String groupName;
     private ArrayList<membership> memberships;
@@ -97,5 +97,13 @@ public class Group {
     	return groupData;
     	
     }
+
+	@Override
+	public int compareTo(Group g) {
+		if (g.getGroupName().equals(groupName)) {
+			return 1;
+		}
+		return 0;
+	}
 
 }

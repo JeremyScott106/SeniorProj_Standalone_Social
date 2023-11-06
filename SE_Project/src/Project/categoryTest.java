@@ -165,4 +165,29 @@ class categoryTest {
 		
 		assertEquals(expected, actual);
 	}
+  
+  
+  @Test
+  void testCompareTo_Success() {
+	  
+	  category c1 = new category("test");
+	  category c2 = new category("test");
+	  
+	  int actual = c1.compareTo(c2);
+	  
+	  assertEquals(1, actual);
+	  
+  }
+  
+  @Test
+  void testCompareTo_Failure() {
+	  
+	  category c1 = new category("test");
+	  category c2 = new category("Test1");
+	  
+	  int actual = c1.compareTo(c2);
+	  
+	  assertEquals(0, actual);
+	  
+  }
 }

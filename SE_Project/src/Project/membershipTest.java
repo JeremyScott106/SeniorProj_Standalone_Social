@@ -82,4 +82,59 @@ public class membershipTest {
 		assertEquals(expected, actual);
 	}
 	
+	
+	@Test
+	void testCompareTo_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup1 = new Group("Standard Name");
+		
+		membership membership1 = new membership(u1, testGroup1, "01/12/2012");
+		
+		User u2 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup2 = new Group("Standard Name");
+		
+		membership membership2 = new membership(u2, testGroup2, "01/12/2012");
+		
+		int actual = membership1.compareTo(membership2);
+		
+		assertEquals(1, actual);
+	}
+	
+	@Test
+	void testCompareTo_Failure_DifferentUsernames() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup1 = new Group("Standard Name");
+		
+		membership membership1 = new membership(u1, testGroup1, "01/12/2012");
+		
+		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup2 = new Group("Standard Name");
+		
+		membership membership2 = new membership(u2, testGroup2, "01/12/2012");
+		
+		int actual = membership1.compareTo(membership2);
+		
+		assertEquals(0, actual);
+	}
+	
+	@Test
+	void testCompareTo_Failure_DifferentGruopNames() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup1 = new Group("Standard Name");
+		
+		membership membership1 = new membership(u1, testGroup1, "01/12/2012");
+		
+		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup2 = new Group("Test");
+		
+		membership membership2 = new membership(u2, testGroup2, "01/12/2012");
+		
+		int actual = membership1.compareTo(membership2);
+		
+		assertEquals(0, actual);
+	}
+	
 }

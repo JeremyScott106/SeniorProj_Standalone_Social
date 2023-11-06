@@ -288,7 +288,7 @@ public class SystemManager {
 			return false;
 		}
 		User u1 = g.getMember(u.getId());
-		if((u).equals(u1)) {
+		if(u.compareTo(u1) == 1) {
 			return true;
 		}
 		return false;

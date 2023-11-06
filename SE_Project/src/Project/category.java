@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class category {
+public class category implements Comparable<category> {
 
 	private String name;
 	private ArrayList<Group> groups;
@@ -93,6 +93,15 @@ public class category {
 								"@END\n\n";
 		
 		return categoryData;
+	}
+
+
+	@Override
+	public int compareTo(category c) {
+		if (c.getName().equals(name)) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
