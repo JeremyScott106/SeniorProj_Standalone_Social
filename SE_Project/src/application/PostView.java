@@ -1,4 +1,5 @@
 package application;
+import Project.Post;
 import Project.SystemManager;
 
 import java.awt.*;
@@ -18,7 +19,7 @@ public class PostView extends JFrame {
 	}
 	
 	@SuppressWarnings("exports")
-	public PostView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
+	public PostView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, Post p) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;

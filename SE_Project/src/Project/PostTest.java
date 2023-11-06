@@ -21,7 +21,7 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 
 		assertEquals(testGroup, testPost1.getGroup());
 	}
@@ -38,7 +38,7 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 		
 		assertEquals(testUser, testPost1.getUser());
 	}
@@ -55,10 +55,28 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 
 
-		assertEquals("I'm posting.", testPost1.getPostBody());
+		assertEquals("This is the message", testPost1.getPostBody());
+	}
+	
+	//Test to getting the original Post Title
+	@Test
+	void getPostTitleTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> r = new ArrayList<>();
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
+		r.add(r1);
+		r.add(r2);
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+
+
+		assertEquals("I'm posting.", testPost1.getPostTitle());
 	}
 	
 	//Tests getting the response
@@ -69,7 +87,7 @@ public class PostTest {
 		membership m = new membership(testUser, testGroup);
 
 				
-		Post testPost1 = new Post(m, "I'm posting.");
+		Post testPost1 = new Post(m, "I'm posting.", "This is the message");
 		membership m1 = new membership(testUser, testGroup);
 		
 		Response r = new Response(m1, "n");
@@ -97,7 +115,7 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 		
 		assertEquals(0, testPost1.getScore());
 	}
@@ -115,7 +133,7 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 		
 		assertEquals(timeTest, testPost1.getTime());
 	}
@@ -132,7 +150,7 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 		testPost1.addScore();
 		
 		assertEquals(1, testPost1.getScore());
@@ -150,7 +168,7 @@ public class PostTest {
 		Response r2 = new Response(m, "no0000ooo");
 		r.add(r1);
 		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
 		testPost1.subScore();
 		
 		assertEquals(-1, testPost1.getScore());

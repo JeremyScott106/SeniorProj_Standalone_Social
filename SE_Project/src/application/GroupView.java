@@ -1,5 +1,6 @@
 package application;
 import Project.Group;
+import Project.Post;
 import Project.SystemManager;
 import Project.category;
 
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -183,6 +185,38 @@ public class GroupView extends JFrame {
 		
 	}
 	
+private JScrollPane createScrollPane() {
+	
+		ArrayList<Post> alPost = manager.viewPostsInGroup(currentGroup);
+		JScrollPane postScrollPane = new JScrollPane();
+		JPanel postGridPane = new JPanel();
+		
+		GridLayout gl = new GridLayout();
+		gl.setColumns(1);
+		gl.setRows(alPost.size());
+		gl.setVgap(4);
+		postGridPane.setLayout(gl);
+		postScrollPane.add(postGridPane);
+				
+		for (Post p : alPost) {
+			
+			JLabel lblToAdd = new JLabel(p.getPostTitle());
+			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lblToAdd.setForeground(Color.BLUE.darker());
+			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			lblToAdd.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+	            	onViewChangeClick();
+	            	new PostView(manager, topBar, currentFrame, currentFrame.getSize(), p);
+	            }
+	        });
+			postGridPane.add(lblToAdd);
+		}
+		
+		return postScrollPane;
+	}
+	
 	private void displayGUI() {
 		currentFrame.setLayout(new BorderLayout(0, 0));
 		currentFrame.add(topBar, BorderLayout.NORTH);
@@ -195,6 +229,9 @@ public class GroupView extends JFrame {
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
+		
+		JScrollPane centerInsidePanel = createScrollPane();
+		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}

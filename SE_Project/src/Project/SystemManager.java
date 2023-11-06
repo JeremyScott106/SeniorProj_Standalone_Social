@@ -11,6 +11,8 @@ public class SystemManager {
 	private boolean userSignedIn;		//User sign in status, true if any User is signed in
 	private boolean adminSignedIn;		//Admin sign in status, true if an Admin is signed in
 	private User currentUser;
+	private category currentCategory;
+	private Group currentGroup;
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
@@ -231,6 +233,24 @@ public class SystemManager {
 	public User getCurrentUser() {
 		return currentUser;
 	}
+	
+	public category getCurrentCategory() {
+		return currentCategory;
+	}
+
+	public void setCurrentCategory(category currentCategory) {
+		this.currentCategory = currentCategory;
+	}
+
+	public Group getCurrentGroup() {
+		return currentGroup;
+	}
+
+	public void setCurrentGroup(Group currentGroup) {
+		this.currentGroup = currentGroup;
+	}
+
+
 	
 	public void logout() {
 		currentUser = null;
