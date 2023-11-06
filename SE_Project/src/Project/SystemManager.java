@@ -11,6 +11,9 @@ public class SystemManager {
 	private boolean userSignedIn;		//User sign in status, true if any User is signed in
 	private boolean adminSignedIn;		//Admin sign in status, true if an Admin is signed in
 	private User currentUser;
+	private category currentCategory;
+	private Group currentGroup;
+	private Post currentPost;
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
@@ -176,6 +179,12 @@ public class SystemManager {
 		}
 	}
 	
+	public boolean createNewPost(Group group, String postTitle, String postBody) {
+		membership m = getMembership(group, currentUser);
+		Post p = new Post(m, postTitle, postBody);
+		return(group.addPost(p));
+	}
+	
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
 		for (membership m : memberships) {
@@ -232,6 +241,31 @@ public class SystemManager {
 		return currentUser;
 	}
 	
+	public category getCurrentCategory() {
+		return currentCategory;
+	}
+
+	public void setCurrentCategory(category currentCategory) {
+		this.currentCategory = currentCategory;
+	}
+
+	public Group getCurrentGroup() {
+		return currentGroup;
+	}
+
+	public void setCurrentGroup(Group currentGroup) {
+		this.currentGroup = currentGroup;
+	}
+	
+	public Post getCurrentPost() {
+		return currentPost;
+	}
+
+	public void setCurrentPost(Post currentPost) {
+		this.currentPost = currentPost;
+	}
+
+	
 	public void logout() {
 		currentUser = null;
 	}
@@ -240,6 +274,17 @@ public class SystemManager {
 		Collections.sort(admins, new SortUsersByName());
 		return admins;
 
+	}
+	
+	public Boolean isUserOfGroup(User u, Group g) {
+		if (u == null) {
+			return false;
+		}
+		User u1 = g.getMember(u.getId());
+		if((u).equals(u1)) {
+			return true;
+		}
+		return false;
 	}
 
 	 public ArrayList<Group> getGroupsByUser(User user) {
@@ -265,15 +310,8 @@ public class SystemManager {
 	 }
 	
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
-		 ArrayList<Group> groupInCategory = new ArrayList<>();
-		 ArrayList<Group> groups = new ArrayList<>();
-		 groups.addAll(getAllGroups_Alphabetically());
-		 for (Group g: groups) {
-			 if (c.isGroupInCategory(g.getGroupName()) == true){
-				 groupInCategory.add(g);
-			 }
-		 }
-		 return groupInCategory;
+		 
+		 return c.getGroupsAlphabetically();
 	}
 	 
 	//helper method, returns a list of all groups.
@@ -352,6 +390,12 @@ public class SystemManager {
 			}
 		 }
 		 return results;
+	}
+	 
+	 public ArrayList<Post> viewPostsInGroup(Group group) {
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(group.getPost());
+		 return posts;
 	}
 	 
 	 //User story 25

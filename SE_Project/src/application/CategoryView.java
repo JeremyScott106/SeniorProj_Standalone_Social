@@ -1,7 +1,6 @@
 package application;
 import Project.Group;
 import Project.SystemManager;
-import Project.category;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,7 +14,6 @@ public class CategoryView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private category currentCategory;
 	private final int maxHeight = 10;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
@@ -23,12 +21,11 @@ public class CategoryView extends JFrame {
 	}
 	
 	@SuppressWarnings("exports")
-	public CategoryView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, category c) {
+	public CategoryView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
-		this.currentCategory = c;
 		displayGUI();
 	}
 	
@@ -58,6 +55,7 @@ public class CategoryView extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
+            	manager.setCurrentCategory(null);
             	new Home(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
@@ -68,7 +66,7 @@ public class CategoryView extends JFrame {
 		gridx += lblSpacer1.getWidth() + padding;
 		titlePanel.add(lblSpacer1);
 		
-		JLabel lblCurrentCategory = new JLabel(currentCategory.getName());
+		JLabel lblCurrentCategory = new JLabel(manager.getCurrentCategory().getName());
 		lblCurrentCategory.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrentCategory.setBounds(gridx, 10, lblCurrentCategory.getPreferredSize().width + padding, 25);
 		gridx += lblCurrentCategory.getWidth() + padding;
@@ -84,7 +82,7 @@ public class CategoryView extends JFrame {
 		GridBagLayout gbl = new GridBagLayout();
 		groupGridPane.setLayout(gbl);
 		
-		ArrayList<Group> alGroups = manager.getGroupsInCategory_Alphabetically(currentCategory);
+		ArrayList<Group> alGroups = manager.getGroupsInCategory_Alphabetically(manager.getCurrentCategory());
 		
 		for (int i = 0, j = 0; i < alGroups.size(); i++) {
 			if (i % maxHeight == 0) {
@@ -100,7 +98,7 @@ public class CategoryView extends JFrame {
 			
 			JButton button = new JButton(alGroups.get(i).getGroupName());
 			GridBagConstraints gbc = new GridBagConstraints(
-		            j, (i % maxHeight),                           //cell x , y
+		            j, (i % maxHeight),             //cell x , y
 		            1, 1,                           //cell width , cell height
 		            1, 								//weightx
 		            weightY,			            //weighty
@@ -112,7 +110,8 @@ public class CategoryView extends JFrame {
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					onViewChangeClick();
-					new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory, currentGroup);
+					manager.setCurrentGroup(currentGroup);
+					new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
 				}
 			});
 			groupGridPane.add(button, gbc);

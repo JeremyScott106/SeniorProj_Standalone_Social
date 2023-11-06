@@ -57,8 +57,6 @@ public class membershipTest {
 		DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
 		String actual = df.format(m.getDate());
 		
-		System.out.println(actual);
-		
 		assertEquals("01/12/2012", actual);
 	}	
 	

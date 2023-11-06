@@ -98,6 +98,13 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat1() {
+		
+		/*
+		 * Incorrect format that should be detected is double starts:
+		 * @START
+		 * @START
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
@@ -119,6 +126,12 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat2() {
+		
+		/*
+		 * Incorrect format that should be detected is missing data:
+		 * @BIRTHDATE
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
@@ -140,6 +153,13 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat3() {
+		
+		/*
+		 * Incorrect format that should be detected is duplicate information:
+		 * @NAME=Grayson
+		 * @NAME=John
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
@@ -161,6 +181,12 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat4() {
+		
+		/*
+		 * Incorrect format that should be detected is incorrect identifier:
+		 * @password=password#3
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt";
@@ -182,6 +208,12 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Admin_Failure_IncorrectFormat5() {
+		
+		/*
+		 * Incorrect format that should be detected, missing start line:
+		 * @START
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat5.txt";
@@ -256,6 +288,13 @@ class ReadFileTest {
 	@Test
 	void testReadFile_User_Failure_IncorrectFormat1() {
 		
+		/*
+		 * Incorrect format that should be detected, multiple end lines:
+		 * @END
+		 * @END
+		 */
+		
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
@@ -278,6 +317,12 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_User_Failure_IncorrectFormat2() {
+		
+		/*
+		 * Incorrect format that should be detected, missing data:
+		 * @USERNAME
+		 * @PASSWORD
+		 */
 		
 		SystemManager manager = new SystemManager();
 		
@@ -302,6 +347,12 @@ class ReadFileTest {
 	@Test
 	void testReadFile_User_Failure_IncorrectFormat3() {
 		
+		/*
+		 * Incorrect format that should be detected, duplicate data:
+		 * @STATE
+		 * @STATE
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
@@ -324,6 +375,11 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_User_Failure_IncorrectFormat4() {
+		
+		/*
+		 * Incorrect format that should be detected, incorrect data identifier:
+		 * @RegisteredDate
+		 */
 		
 		SystemManager manager = new SystemManager();
 		
@@ -479,6 +535,12 @@ class ReadFileTest {
 	@Test
 	void testReadFile_Category_Failure_IncorrectFormat1() {
 		
+		/*
+		 * Incorrect format that should be detected, Duplicate Data:
+		 * @NAME
+		 * @NAME
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat1.txt";
@@ -502,6 +564,11 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Category_Failure_IncorrectFormat2() {
+		
+		/*
+		 * Incorrect format that should be detected, Incorrect identifier:
+		 * @Name
+		 */
 		
 		SystemManager manager = new SystemManager();
 		
@@ -527,6 +594,11 @@ class ReadFileTest {
 	@Test
 	void testReadFile_Category_Failure_IncorrectFormat3() {
 		
+		/*
+		 * Incorrect format that should be detected, Missing end:
+		 * @END
+		 */
+		
 		SystemManager manager = new SystemManager();
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat3.txt";
@@ -550,6 +622,11 @@ class ReadFileTest {
 	
 	@Test
 	void testReadFile_Category_Failure_IncorrectFormat4() {
+		
+		/*
+		 * Incorrect format that should be detected, missing data identifier:
+		 * @CATEGORY
+		 */
 		
 		SystemManager manager = new SystemManager();
 		

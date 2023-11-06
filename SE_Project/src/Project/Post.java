@@ -7,15 +7,17 @@ public class Post {
 	
 	private User user;
 	private Group group;
+	private String postTitle;
 	private String postBody;
 	private ArrayList<Response> responses;
 	private Date dateTime;
     private int score;
     
-    public Post (membership memberships, String postBody) {
+    public Post (membership memberships, String postTitle, String postBody) {
     	this.user = memberships.getUser();
     	this.group = memberships.getGroup();
     	this.postBody = postBody;
+    	this.postTitle = postTitle;
     	this.responses = new ArrayList<>();
     	this.dateTime = new java.util.Date(); //should save the current date and time.
     	this.score = 0;
@@ -27,6 +29,10 @@ public class Post {
 	
 	public Group getGroup() {
 		return group;
+	}
+	
+	public String getPostTitle() {
+		return postTitle;
 	}
 
 	public String getPostBody() {

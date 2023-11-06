@@ -1,28 +1,41 @@
 package application;
-
 import Project.Post;
 import Project.SystemManager;
+
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class GroupView extends JFrame {
+public class ViewPostView extends JFrame {
 
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-
+	private JTextField txfPostTitle;
+	private JTextField txfPostBody;
 	
-	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
-	public GroupView() {
+	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//	
+	public ViewPostView() {
+		
+//		Post all of these below.
+//		
+//		JTextArea textArea_1 = new JTextArea();
+//		textArea_1.setBounds(40, 491, 547, 149);
+//		panel.add(textArea_1);
+//		
+//		JLabel lblResponses = new JLabel("Responses");
+//		lblResponses.setBounds(70, 448, 49, 14);
+//		panel.add(lblResponses);
+
 	}
 	
-	
 	@SuppressWarnings("exports")
-	public GroupView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
+	public ViewPostView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;
@@ -192,44 +205,34 @@ public class GroupView extends JFrame {
 		
 	}
 	
-private JPanel createScrollPane() {
-	
-		int gridLocY = 10;
-		int padding = 30;
-	
-		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
-		JScrollPane postScrollPane = new JScrollPane();
-		JPanel postPane = new JPanel();
-		postPane.setLayout(null);
+	private JPanel createPostForm() {
 		
-		postScrollPane.add(postPane);
-				
-		for (Post p : alPost) {
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		if (manager.getCurrentPost() != null) { 
+		
+			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
+			lblTitle.setBounds(40, 30, 500, 30);
+			panel.add(lblTitle);
 			
-			JLabel lblToAdd = new JLabel(p.getPostTitle());
-			lblToAdd.setBounds(20, gridLocY, lblToAdd.getPreferredSize().width + padding, 25);
-			gridLocY += lblToAdd.getHeight() + padding;
-			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lblToAdd.setForeground(Color.BLUE.darker());
-			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			lblToAdd.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseClicked(MouseEvent e) {
-	            	onViewChangeClick();
-	            	manager.setCurrentPost(p);
-	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-	            }
-	        });
-			postPane.add(lblToAdd);
+			JTextArea textArea = new JTextArea(manager.getCurrentPost().getPostBody());
+			textArea.setBounds(40, 80, 550, 300);
+			panel.add(textArea);
+			
+			JButton btnRespond = new JButton("Respond");
+			btnRespond.setBounds(500, 440, 90, 40);
+			panel.add(btnRespond);
+			
 		}
-		
-		return postPane;
+		return panel;
 	}
 	
 	private void displayGUI() {
-		currentFrame.setLayout(new BorderLayout(0, 0));
-		currentFrame.add(topBar, BorderLayout.NORTH);
-		currentFrame.setTitle("This is the listing of posts in group " + manager.getCurrentGroup().getGroupName());
+		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
+		currentFrame.setTitle("This is the Post view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
@@ -239,8 +242,8 @@ private JPanel createScrollPane() {
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
 		
-		JPanel centerInsidePanel = createScrollPane();
-		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
+		JPanel viewPostForm = createPostForm();
+		mainPanel.add(viewPostForm, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}
