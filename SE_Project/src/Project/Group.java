@@ -33,7 +33,6 @@ public class Group implements Comparable<Group> {
         	memberships.add(m);
         	return true;
         }
-        return false;
     }
 
 

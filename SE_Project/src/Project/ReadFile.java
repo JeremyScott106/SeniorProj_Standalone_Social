@@ -550,6 +550,8 @@ public class ReadFile {
 		boolean gotGroupName = false;
 		String dateTime = "";
 		boolean gotDateTime = false;
+		String postTitle = "";
+		boolean gotPostTitle = false;
 		String postBody = "";
 		boolean gotPostBody = false;
 		
@@ -576,17 +578,17 @@ public class ReadFile {
 					 throw new IncorrectFileFormatException();
 				 }
 				 else {
-					 userName = line.substring(9);
+					 userName = line.substring(10);
 					 gotUserName = true;
 					 continue;
 				 }
 			}
-			else if (sub.equals("@GROU")) {
+			else if (sub.equals("@GNAM")) {
 				if (gotGroupName) {
 					throw new IncorrectFileFormatException();
 				}
 				else {
-					groupName = line.substring(10);
+					groupName = line.substring(7);
 					gotGroupName = true;
 					continue;
 				}
@@ -596,17 +598,27 @@ public class ReadFile {
 					throw new IncorrectFileFormatException();
 				}
 				else {
-					dateTime = line.substring(9);
+					dateTime = line.substring(10);
 					gotDateTime = true;
 					continue;
 				}
 			}
-			else if (sub.equals("@POST")) {
+			else if (sub.equals("@TITL")) {
 				if (gotPostBody) {
 					throw new IncorrectFileFormatException();
 				}
 				else {
-					postBody = line.substring(9);
+					postTitle = line.substring(7);
+					gotPostTitle = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@BODY")) {
+				if (gotPostBody) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postBody = line.substring(6);
 					gotPostBody = true;
 					continue;
 				}
@@ -617,19 +629,14 @@ public class ReadFile {
 			
 		}
 		
-		if (gotUserName && gotGroupName && gotDateTime && gotPostBody) {
+		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody) {
 			
 			Group g = manager.getGroupByName(groupName);
-			
-			if (g.isMemberInGroup(userName)) {
-				Post p=new Post(g.getMembership(userName), dateTime, postBody);
+			User u = manager.getUserByUsername(userName);
+			if (g != null && u != null) {
+				Post p=new Post(u, g, dateTime, postTitle, postBody);
 				manager.getGroupByName(groupName).addPost(p);
-				System.out.println("New Post Created.");
 			}
-			else {
-				throw new IncorrectFileFormatException();
-			}
-			
 		}
 		else {
 			throw new IncorrectFileFormatException();

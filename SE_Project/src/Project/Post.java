@@ -32,9 +32,10 @@ public class Post {
     	this.score = 0;
     }
 	
-    public Post (membership memberships, String dateTime, String postBody) {
-    	this.user = memberships.getUser();
-    	this.group = memberships.getGroup();
+    public Post (User u, Group g, String dateTime, String postTitle, String postBody) {
+    	this.user = u;
+    	this.group = g;
+    	this.postTitle = postTitle;
     	this.postBody = postBody;
     	this.responses = new ArrayList<>();
     	try {
@@ -95,9 +96,10 @@ public class Post {
     	String userData = "@START\n" + 
     						"@POST\n" + 
     						"@USERNAME=" + getUser().getId() + "\n" + 
-    						"@GROUPNAME=" + getGroup().getGroupName() + "\n" + 
+    						"@GNAME=" + getGroup().getGroupName() + "\n" + 
     						"@DATETIME=" + dateTime + "\n" + 
-    						"@POSTBODY=" + postBody + "\n" + 
+    						"@TITLE=" + postTitle + "n" +
+    						"@BODY=" + postBody + "\n" + 
     						"@END\n\n";
     	
     	return userData;
