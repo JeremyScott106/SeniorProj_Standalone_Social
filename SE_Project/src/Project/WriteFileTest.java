@@ -27,7 +27,7 @@ class WriteFileTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFiles_Test_Admins.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Admins.txt";
 		
 		try {
 			WriteFile.writeFile(manager, fileName);
@@ -164,7 +164,7 @@ class WriteFileTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFiles_Test_AddAdmin.txt";
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddAdmin.txt";
 		
 		try {
 			WriteFile.writeFile(manager, fileName);
@@ -176,6 +176,121 @@ class WriteFileTest {
 			assertEquals(true, true);
 		} 
 		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
+	
+	@Test
+	void testAddUserToFile() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		SystemManager manager = new SystemManager();
+		
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddUser.txt";
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			User u = new User("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+			
+			WriteFile.addUserToFile(u, fileName);
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
+	
+	@Test
+	void testAddCategoryToFile() {
+		
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		category c3 = new category("Games");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddCategory.txt";
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			category c = new category("Tests");
+			
+			WriteFile.addCategoryToFile(c, fileName);
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
+	
+	@Test
+	void testAddGroupToFile() {
+		
+SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		
+		category c2 = new category("Foods");
+		Group g3 = new Group("Pizza");
+		Group g4 = new Group("Tacos");
+		Group g5 = new Group("Steak");
+		c2.addGroup(g3);
+		c2.addGroup(g4);
+		c2.addGroup(g5);
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddGroup.txt";
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			Group g = new Group("Donuts");
+			c2.addGroup(g);
+			
+			WriteFile.addGroupToFile(g, fileName, c2.getName());
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}

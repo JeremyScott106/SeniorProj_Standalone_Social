@@ -28,8 +28,6 @@ public class WriteFile {
 			
 			writeGroups(manager, writer);
 			
-			writer.write("@ENDFILE");
-			
 			writer.close();
 			
 		} catch (IOException e) {
@@ -118,6 +116,70 @@ public class WriteFile {
 		}
 		catch (IOException e) {
 			throw new IOException();
+		}
+		
+	}
+	
+	
+	public static void addUserToFile(User u, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = u.getUserWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void addCategoryToFile(category c, String fileName) throws IOException {
+		
+		try {
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = c.getCategoryWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void addGroupToFile(Group g, String fileName, String catName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = g.getGroupWriteData(catName);
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
 		}
 		
 	}
