@@ -110,6 +110,29 @@ public class GroupTest {
 		assertEquals(0, actual);
 		
 	}
+	
+	
+	@Test
+	void testCompareName_Success() {
+		
+		Group g1 = new Group("Standard Name");
+		
+		boolean actual = g1.compareName("Standard Name");
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testCompareName_Failure() {
+		
+		Group g1 = new Group("Standard Name");
+		
+		boolean actual = g1.compareName("Unstandard Name");
+		
+		assertEquals(false, actual);
+		
+	}
 
 
 }

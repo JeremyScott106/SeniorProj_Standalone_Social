@@ -10,7 +10,7 @@ public class Validator {
 		User u = null;	//Null User
 
 		for (User user : users) {	//Loops through Users
-			if (user.getId().equals(username)) {	//Checking Usernames
+			if (user.compareId(username)) {	//Checking Usernames
 				u = user;	//Set User if match is found
 				break;
 			}
@@ -24,7 +24,7 @@ public class Validator {
 		User u = null;	//Null Admin
 
 		for (Admin admin : admins) {	//Loops through Admins
-			if (admin.getId().equals(username)) {	//Checking Usernames
+			if (admin.compareId(username)) {	//Checking Usernames
 				u = admin;	//Set Admin if match is found
 				break;
 			}
@@ -37,7 +37,7 @@ public class Validator {
 	//returns true if the password of the given User matches the inputed password, returns false otherwise
 
 	public static boolean validPassword(User u, String password) {
-		if (u.getPassword().equals(password)) {		//Compare Passwords
+		if (u.comparePassword(password)) {		//Compare Passwords
 			return true;
 		}
 		else {
@@ -47,8 +47,8 @@ public class Validator {
 
 	//returns true if there exists a category name from the given list that matches the given name, returns false otherwise
 	public static boolean validateCategoryNameExists(ArrayList<category> categories, String name) {
-		for (category element : categories) {	//Loop through categories
-			if (element.getName().equals(name)) {	//Compare names
+		for (category cat : categories) {	//Loop through categories
+			if (cat.compareName(name)) {	//Compare names
 				return true;	//return true if names match
 			}
 		}
@@ -58,9 +58,9 @@ public class Validator {
 
 	//returns a category that has a matching name as given if it exists, returns null otherwise
 	public static category getCategoryFromName(ArrayList<category> categories, String name) {
-		for (category element : categories) {	//Loop through categories
-			if (element.getName().equals(name)) {	//Compare names
-				return element;	//return category if names match
+		for (category cat : categories) {	//Loop through categories
+			if (cat.compareName(name)) {	//Compare names
+				return cat;	//return category if names match
 			}
 		}
 
@@ -73,7 +73,7 @@ public class Validator {
 	public static boolean validateGroupNameExists(ArrayList<Group> groups, String name) {
 
 		for (Group group : groups) {	//Loop through groups
-			if (group.getGroupName().equals(name)) {	//Compare names
+			if (group.compareName(name)) {	//Compare names
 				return true;	//return true if names match
 			}
 		}
@@ -82,6 +82,7 @@ public class Validator {
 	}
 	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise
 
+	
 	//returns true if there exists a group that matches the given user, returns false otherwise
 	public static boolean validateUserInGroup(Group g, User user) {
 
@@ -92,6 +93,7 @@ public class Validator {
 		return false;	//return false otherwise
 	}
 	//returns true if there exists a user is in a group, returns false otherwise
+	
 	
 	// returns true if the admin exists and returns false otherwise
 	public static boolean validateAdminExists(Admin a, ArrayList<Admin> admins) {
@@ -134,7 +136,7 @@ public class Validator {
 		
 		for (Group g1 : groups) {
 			
-			if (g1.getGroupName().equals(name)) {
+			if (g1.compareName(name)) {
 				g = g1;
 			}
 		}
@@ -149,7 +151,7 @@ public class Validator {
 		
 		for (User u1 : users) {
 			
-			if (u1.getId().equals(username)) {
+			if (u1.compareId(username)) {
 				u = u1;
 			}
 		}

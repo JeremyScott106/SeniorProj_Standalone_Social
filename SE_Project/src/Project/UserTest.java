@@ -37,7 +37,7 @@ public class UserTest {
 	}
   
   @Test
-	void test_getUserWriteData() {
+	void testGetUserWriteData() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", 
 							"Valdosta", "Georgia", "12/17/2007");
 		
@@ -116,7 +116,7 @@ public class UserTest {
 	}
 	
 	@Test
-	void getRegisteredDate() {
+	void testGetRegisteredDate() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", 
 							"Valdosta", "Georgia", "10/12/2009");
 		
@@ -171,7 +171,7 @@ public class UserTest {
 	
 	
 	@Test 
-	void testCompareTO_Success() {
+	void testCompareTo_Success() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
 		User u2 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
@@ -183,7 +183,7 @@ public class UserTest {
 	}
 	
 	@Test 
-	void testCompareTO_Failure() {
+	void testCompareTo_Failure() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
 		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
@@ -193,5 +193,52 @@ public class UserTest {
 		assertEquals(0, actual);
 		
 	}
+	
+	
+	@Test
+	void testCompareId_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		
+		boolean actual = u1.compareId("jackster3");
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testCompareId_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		
+		boolean actual = u1.compareId("test");
+		
+		assertEquals(false, actual);
+		
+	}
+	
+	
+	@Test
+	void testComparePassword_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		
+		boolean actual = u1.comparePassword("HKb@wser!");
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testComparePassword_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+		
+		boolean actual = u1.comparePassword("test");
+		
+		assertEquals(false, actual);
+		
+	}
+	
 
 }

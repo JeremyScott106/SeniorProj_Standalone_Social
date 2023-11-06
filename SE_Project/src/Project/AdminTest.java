@@ -58,5 +58,28 @@ public class AdminTest {
 		assertEquals(0, actual);
 		
 	}
+	
+	
+	@Test
+	void testCompareId_Success() {
+		
+		Admin a1 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = a1.compareId("0010");
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testCompareId_Failure() {
+		
+		Admin a1 = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
+		
+		boolean actual = a1.compareId("1000");
+		
+		assertEquals(false, actual);
+		
+	}
 
 }
