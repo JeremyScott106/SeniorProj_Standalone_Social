@@ -190,4 +190,27 @@ class categoryTest {
 	  assertEquals(0, actual);
 	  
   }
+  
+  
+  @Test 
+  void testCompareName_Success() {
+	  
+	  category c1 = new category("test");
+	  
+	  boolean actual = c1.compareName("test");
+	  
+	  assertEquals(true, actual);
+	  
+  }
+  
+  @Test 
+  void testCompareName_Failure() {
+	  
+	  category c1 = new category("test");
+	  
+	  boolean actual = c1.compareName("fail");
+	  
+	  assertEquals(false, actual);
+	  
+  }
 }

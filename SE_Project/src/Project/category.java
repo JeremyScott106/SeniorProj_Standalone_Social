@@ -103,5 +103,15 @@ public class category implements Comparable<category> {
 		}
 		return 0;
 	}
+	
+	
+	public boolean compareName(String other) {
+		if (other.equals(name)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 }

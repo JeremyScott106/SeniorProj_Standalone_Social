@@ -142,5 +142,24 @@ public class User implements Comparable<User> {
 		}
 		return 0;
 	}
+	
+	
+	public boolean compareId(String other) {
+		if (other.equals(id)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean comparePassword(String other) {
+		if (other.equals(password)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
   
 }

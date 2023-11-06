@@ -105,5 +105,17 @@ public class Group implements Comparable<Group> {
 		}
 		return 0;
 	}
+	
+	
+	public boolean compareName(String other) {
+		
+		if (other.equals(groupName)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
 
 }
