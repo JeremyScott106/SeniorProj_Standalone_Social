@@ -160,7 +160,7 @@ public class Validator {
 		
 		for (membership m1 : memberships) {
 			
-			if (m.getUser().getId().equals(m1.getUser().getId())) {
+			if (m.compareTo(m1) == 1) {
 				return true;
 			}
 		}

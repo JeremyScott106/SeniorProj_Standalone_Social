@@ -9,7 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class membership {
+public class membership implements Comparable<membership> {
 	private User user;
 	private Group group;
 	private Date registeredDate;
@@ -58,6 +58,19 @@ public class membership {
 								"@REGISTEREDDATE=" + regDate + "\n" + 
 								"@END\n\n";
 		return memberData;
+	}
+	
+	@Override
+	public int compareTo(membership other) {
+		
+		if (other.getUser().getId().equals(user.getId())) {
+			
+			if (other.getGroup().getGroupName().equals(group.getGroupName())) {
+				return 1;
+			}
+		}
+		return 0;
+		
 	}
 
 }
