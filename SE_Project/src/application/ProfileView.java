@@ -65,6 +65,8 @@ public class ProfileView extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
+            	manager.setCurrentCategory(null);
+            	manager.setCurrentGroup(null);
             	new Home(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
@@ -85,7 +87,9 @@ public class ProfileView extends JFrame {
             	for (Group g : myGroups) {
             		c.addGroup(g);
             	}
-            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), c);
+            	manager.setCurrentCategory(c);
+            	manager.setCurrentGroup(null);
+            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		titlePanel.add(lblMyGroups);

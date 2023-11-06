@@ -19,8 +19,7 @@ public class GroupView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private category currentCategory;
-	private Group currentGroup;
+
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
 	public GroupView() {
@@ -28,13 +27,11 @@ public class GroupView extends JFrame {
 	
 	
 	@SuppressWarnings("exports")
-	public GroupView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, category c, Group g) {
+	public GroupView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
-		this.currentCategory = c;
-		this.currentGroup = g;
 		displayGUI();
 	}
 	
@@ -74,7 +71,7 @@ public class GroupView extends JFrame {
 		gridx += lblSpacer1.getWidth() + padding;
 		titlePanel.add(lblSpacer1);
 		
-		JLabel lblCurrentCategory = new JLabel(currentCategory.getName());
+		JLabel lblCurrentCategory = new JLabel(manager.getCurrentCategory().getName());
 		lblCurrentCategory.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrentCategory.setForeground(Color.BLUE.darker());
 		lblCurrentCategory.setBounds(gridx, 10, lblCurrentCategory.getPreferredSize().width + padding, 25);
@@ -84,7 +81,8 @@ public class GroupView extends JFrame {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
             	onViewChangeClick();
-            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory);
+            	manager.setCurrentGroup(null);
+            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
 		titlePanel.add(lblCurrentCategory);
@@ -94,7 +92,7 @@ public class GroupView extends JFrame {
 		gridx += lblSpacer2.getWidth() + padding;
 		titlePanel.add(lblSpacer2);
 		
-		JLabel lblCurrentGroup = new JLabel(currentGroup.getGroupName());
+		JLabel lblCurrentGroup = new JLabel(manager.getCurrentGroup().getGroupName());
 		lblCurrentGroup.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
 		titlePanel.add(lblCurrentGroup);
@@ -131,7 +129,7 @@ public class GroupView extends JFrame {
 
 		}
 		
-		else if (!currentGroup.isMemberInGroup(manager.getCurrentUser().getId())) {
+		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			
 			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
 			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -148,7 +146,7 @@ public class GroupView extends JFrame {
 			joinGroup.addMouseListener(new MouseAdapter() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
-			    	boolean result = manager.joinGroup(manager.getCurrentUser(), currentGroup);
+			    	boolean result = manager.joinGroup(manager.getCurrentUser(), manager.getCurrentGroup());
 			    	if (result) {
 			    		JOptionPane.showMessageDialog(null, "Successfully Joined Group");
 			    	}
@@ -161,7 +159,7 @@ public class GroupView extends JFrame {
 		}
 		
 		else {
-			String mbmSince = "Member Since: " + manager.getMembership(currentGroup, manager.getCurrentUser()).getDate().toString();
+			String mbmSince = "Member Since: " + manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate().toString();
 
 			JLabel memberStatus = new JLabel(mbmSince);
 			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -174,7 +172,7 @@ public class GroupView extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize(), currentCategory, currentGroup);
+				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
 		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
@@ -187,7 +185,7 @@ public class GroupView extends JFrame {
 	
 private JScrollPane createScrollPane() {
 	
-		ArrayList<Post> alPost = manager.viewPostsInGroup(currentGroup);
+		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
 		JScrollPane postScrollPane = new JScrollPane();
 		JPanel postGridPane = new JPanel();
 		
@@ -208,7 +206,7 @@ private JScrollPane createScrollPane() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 	            	onViewChangeClick();
-	            	new PostView(manager, topBar, currentFrame, currentFrame.getSize(), p);
+	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 	            }
 	        });
 			postGridPane.add(lblToAdd);
@@ -220,7 +218,7 @@ private JScrollPane createScrollPane() {
 	private void displayGUI() {
 		currentFrame.setLayout(new BorderLayout(0, 0));
 		currentFrame.add(topBar, BorderLayout.NORTH);
-		currentFrame.setTitle("This is the listing of posts in group " + currentGroup.getGroupName());
+		currentFrame.setTitle("This is the listing of posts in group " + manager.getCurrentGroup().getGroupName());
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();

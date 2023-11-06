@@ -178,6 +178,12 @@ public class SystemManager {
 		}
 	}
 	
+	public boolean createNewPost(Group group, String postTitle, String postBody) {
+		membership m = getMembership(group, currentUser);
+		Post p = new Post(m, postTitle, postBody);
+		return(group.addPost(p));
+	}
+	
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
 		for (membership m : memberships) {

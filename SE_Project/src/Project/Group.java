@@ -69,7 +69,7 @@ public class Group {
     }
 
     //Adds a new post to the group
-    public void addPost(Post p) {
+    public boolean addPost(Post p) {
         boolean isMember = false;
         for (Post p1 : posts) {
             if (p1.equals(p)) {
@@ -79,7 +79,9 @@ public class Group {
         }
         if (!isMember) {
             posts.add(p);
+            return true;
         }
+        return false;
     }
 
     //Gets the list of post made within a group

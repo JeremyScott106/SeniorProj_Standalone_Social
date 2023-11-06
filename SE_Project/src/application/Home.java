@@ -150,7 +150,8 @@ public class Home extends JFrame {
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					onViewChangeClick();
-					new CategoryView(manager, topBar, currentFrame, currentFrame.getSize(), c);
+					manager.setCurrentCategory(c);
+					new CategoryView(manager, topBar, currentFrame, currentFrame.getSize());
 				}
 			});
 			categoryGridPane.add(button, gbc);
