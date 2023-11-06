@@ -21,7 +21,7 @@ public class Main extends JFrame {
 		JMenuBar menus = new JMenuBar();
 				//Menus//
 		JMenu file = new JMenu("File");
-		JMenu view = new JMenu("View");
+		JMenu refresh = new JMenu("Refresh");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
 		JMenuItem logout = new JMenuItem("Logout");
@@ -30,6 +30,7 @@ public class Main extends JFrame {
 		JMenuItem switchProfile = new JMenuItem("Profile View");
 				//Add menus to bar//
 		menus.add(file);
+//		menus.add(refresh); // Add if currentView is added.
 				//Add sub-menus to menus//
 		file.add(login);
 		file.add(switchHome);
@@ -41,6 +42,12 @@ public class Main extends JFrame {
             	new LoginPopUp(manager);
             }
         });
+		
+//		refresh.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//            	
+//            }
+//        });
 		
 		logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

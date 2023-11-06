@@ -269,6 +269,9 @@ public class SystemManager {
 	}
 	
 	public Boolean isUserOfGroup(User u, Group g) {
+		if (u == null) {
+			return false;
+		}
 		User u1 = g.getMember(u.getId());
 		if((u).equals(u1)) {
 			return true;

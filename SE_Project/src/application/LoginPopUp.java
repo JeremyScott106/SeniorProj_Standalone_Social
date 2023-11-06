@@ -77,7 +77,7 @@ public class LoginPopUp extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(txfName.getText().isBlank() || txfPass.getText().isBlank()) {
-					System.out.println("Username or Pass blank");
+					JOptionPane.showMessageDialog(null, "Username or Password is Blank");
 				}
 				else {
 					boolean status = manager.login(txfName.getText(), txfPass.getText());
