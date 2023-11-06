@@ -460,6 +460,64 @@ class ValidatorTest {
 		
 		assertEquals(null, actual);
 	}
+	
+	
+	@Test
+	void testValidateMembershipExistsInGroup_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g1);
+		
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g1.addMember(m3);
+		g1.addMember(m4);
+		
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		membership m5 = new membership(u5, g1);
+		boolean actual = g1.addMember(m5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testValidateMembershipExistsInGroup_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g1);
+		membership m5 = new membership(u5, g1);
+		
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g1.addMember(m3);
+		g1.addMember(m4);
+		g1.addMember(m5);
+		
+		boolean actual = g1.addMember(m5);
+		
+		assertEquals(false, actual);
+		
+	}
 
 
 }
