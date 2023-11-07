@@ -830,4 +830,69 @@ class ReadFileTest {
 		
 	}
 	
+	
+	@Test
+	void testReadFile_Response_Success() {
+		
+		//Create Users
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		//Create Groups
+		Group g = new Group("Football");
+		//Create Responses
+		Response r1 = new Response(u1, g, "10/10/2009", "R1 Body", 1);
+		Response r2 = new Response(u1, g, "10/10/2009", "R2 Body", 2);
+		Response r3 = new Response(u2, g, "10/10/2009", "R3 Body", 1);
+		Response r4 = new Response(u2, g, "10/10/2009", "R4 Body", 2);
+		//Create List of Responses
+		ArrayList<Response> expected = new ArrayList<Response>();
+		//Add Responses in Order
+		expected.add(r1);
+		expected.add(r3);
+		expected.add(r2);
+		expected.add(r4);
+		
+		
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Response.txt";
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<Response> actual = new ArrayList<Response>();
+			ArrayList<Post> posts = manager.getAllPost();
+			
+			for (Post p : posts) {
+				actual.addAll(p.getResponse());
+			}
+			
+			boolean pass = true;
+			
+			for (int i = 0 ; i < actual.size(); i++) {
+				
+				if (actual.get(i).compareTo(expected.get(i)) == 0) {
+					pass = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, pass);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (IncorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+		
+	
+	
 }

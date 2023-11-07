@@ -9,6 +9,11 @@ public class Response extends Post{
 		this.parentalId = parentalId;
 	}
 	
+	public Response(User u, Group g, String date, String responseBody, int parentalId) {
+		super(u, g, date, "", responseBody, parentalId);
+		this.parentalId = parentalId;
+	}
+	
 	//FIXME: add tests
 	public int getParentalId() {
 		return parentalId;
@@ -18,11 +23,10 @@ public class Response extends Post{
 	
 	public String getResponseWriteData() {
 		String responseData = "@START\n" + 
-				"@POST\n" + 
+				"@RESPONSE\n" + 
 				"@USERNAME=" + user.getId() + "\n" + 
 				"@GNAME=" + group.getGroupName() + "\n" + 
 				"@DATETIME=" + dateTime + "\n" + 
-				"@TITLE=" + postTitle + "n" +
 				"@BODY=" + postBody + "\n" + 
 				"@PARENTALID=" + parentalId + "\n" +
 				"@END\n\n";

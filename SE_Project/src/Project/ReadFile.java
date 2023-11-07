@@ -52,6 +52,9 @@ public class ReadFile {
 				else if(line.equals("@POST") && currentlyReadingData) {
 					readPost(manager, reader);
 				}
+				else if (line.equals("@RESPONSE") && currentlyReadingData) {
+					readResponse(manager, reader);
+				}
 				else if (line.equals("")) {									//If the current line is empty
 					continue;													//continue to next line
 				}
@@ -657,7 +660,113 @@ public class ReadFile {
 	}
 	
 	
-	
+private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String userName = "";
+		boolean gotUserName = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String dateTime = "";
+		boolean gotDateTime = false;
+		String responseBody = "";
+		boolean gotResponseBody = false;
+		String parentalId = "";
+		boolean gotParentalId = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				 if (gotUserName) {
+					 throw new IncorrectFileFormatException();
+				 }
+				 else {
+					 userName = line.substring(10);
+					 gotUserName = true;
+					 continue;
+				 }
+			}
+			else if (sub.equals("@GNAM")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@DATE")) {
+				if (gotDateTime) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					dateTime = line.substring(10);
+					gotDateTime = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@BODY")) {
+				if (gotResponseBody) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					responseBody = line.substring(6);
+					gotResponseBody = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@PARE")) {
+				if (gotParentalId) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					parentalId = line.substring(12);
+					gotParentalId = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		
+		
+		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			int id = Integer.parseInt(parentalId);
+			Post p = manager.getPostByGroupId(g, id);
+			if (g != null && u != null && p != null) {
+				
+				Response r = new Response(u, g, dateTime, responseBody, id);
+				p.addResponse(r);
+				
+			}
+		}
+		else {
+			throw new IncorrectFileFormatException();
+		}
+		
+	}
 	
 	
 }

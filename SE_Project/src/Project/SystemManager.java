@@ -470,5 +470,10 @@ public class SystemManager {
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
 	 }
+	 
+	 //FIXME: add tests
+	 public Post getPostByGroupId(Group g, int id) {
+		 return Validator.getPostFromId(g.getPost(), id);
+	 }
 }
 
