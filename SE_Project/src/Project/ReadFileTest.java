@@ -695,4 +695,73 @@ class ReadFileTest {
 		
 	}
 	
+	
+	@Test
+	void testReadFile_Membership_Success() {
+		
+		//Create Users
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		//Create Groups
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		//Create Memberships
+		membership m1 = new membership(u1, g1, "10/10/2007");
+		membership m2 = new membership(u2, g2, "10/10/2007");
+		membership m3 = new membership(u3, g2, "10/10/2007");
+		membership m4 = new membership(u4, g1, "10/10/2007");
+		membership m5 = new membership(u5, g2, "10/10/2007");
+		membership m6 = new membership(u2, g1, "10/10/2007");
+		//Create List for Memberships that are expected
+		ArrayList<membership> expected = new ArrayList<membership>();
+		//Add Memberships in expected order
+		expected.add(m1);
+		expected.add(m4);
+		expected.add(m6);
+		expected.add(m2);
+		expected.add(m3);
+		expected.add(m5);
+		
+		
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Membership.txt";
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<Group> groups = manager.getAllGroups_Alphabetically();
+			ArrayList<membership> actual = new ArrayList<membership>();
+			
+			for (Group g : groups) {
+				actual.addAll(g.getMembers());
+			}
+			
+			boolean pass = true;
+			for (int i = 0; i < actual.size(); i++) {
+				
+				if (actual.get(i).compareTo(expected.get(i)) == 0) {
+					pass = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, pass);
+			
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IncorrectFileFormatException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

@@ -524,11 +524,10 @@ public class ReadFile {
 			Group g = manager.getGroupByName(groupName);
 			
 			if (!(u == null) && !(g == null)) {
+				
 				membership m = new membership(u, g, regDate);
-				//FIXME: Need to add Membership into system once ability has been established
-				//This adds the membership to the list of members in the existing group. Users does not have a list of their own memberships, so this should be all thats needed.
-				manager.getGroupByName(groupName).addMember(m);
-				System.out.println("Member created");
+				g.addMember(m);
+				
 			}
 			else {
 				throw new IncorrectFileFormatException();
