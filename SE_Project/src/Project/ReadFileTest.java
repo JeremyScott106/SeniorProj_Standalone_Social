@@ -757,9 +757,75 @@ class ReadFileTest {
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
+			fail();
 		}
 		catch (IncorrectFileFormatException e) {
 			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
+	
+	@Test
+	void testReadFile_Post_Success() {
+		
+		//Create Users
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		//Create Groups
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		//Create Posts
+		Post p1 = new Post(u1, g1, "10/10/2008", "P1", "P1 Body");
+		Post p2 = new Post(u2, g1, "10/10/2008", "P2", "P2 Body");
+		Post p3 = new Post(u3, g1, "10/10/2008", "P3", "P3 Body");
+		Post p4 = new Post(u2, g2, "10/10/2008", "P4", "P4 Body");
+		Post p5 = new Post(u4, g2, "10/10/2008", "P5", "P5 Body");
+		Post p6 = new Post(u5, g2, "10/10/2008", "P6", "P6 Body");
+		//Create List of Posts
+		ArrayList<Post> expected = new ArrayList<Post>();
+		//Add Posts in Order
+		expected.add(p1);
+		expected.add(p2);
+		expected.add(p3);
+		expected.add(p4);
+		expected.add(p5);
+		expected.add(p6);
+		
+		
+		SystemManager manager = new SystemManager();
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Post.txt";
+		
+		try {
+			
+			ReadFile.readFile(manager, fileName);
+			
+			ArrayList<Post> actual = manager.getAllPost();
+			boolean pass = true;
+			
+			for (int i = 0 ; i < actual.size(); i++) {
+				
+				if (actual.get(i).compareTo(expected.get(i)) == 0) {
+					pass = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, pass);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (IncorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
 		}
 		
 	}

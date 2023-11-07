@@ -5,7 +5,7 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-public class Post {
+public class Post implements Comparable<Post> {
 	
 	private User user;
 	private Group group;
@@ -23,7 +23,7 @@ public class Post {
     	this.responses = new ArrayList<>();
     	Date d=new Date();
     	try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy'T'HH:mm:ssXXX");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			String x = df.format(d);
 			this.dateTime = df.parse(x);
 		} catch (ParseException e) {
@@ -39,7 +39,7 @@ public class Post {
     	this.postBody = postBody;
     	this.responses = new ArrayList<>();
     	try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy'T'HH:mm:ssXXX");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			this.dateTime = df.parse(dateTime);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -104,5 +104,18 @@ public class Post {
     	
     	return userData;
     }
+
+	@Override
+	public int compareTo(Post p) {
+		
+		if (user.compareTo(p.getUser()) == 1 && group.compareTo(p.getGroup()) == 1 &&
+				postTitle.equals(p.getPostTitle()) && postBody.equals(p.getPostBody()) ) {
+			
+			return 1;
+			
+		}
+		
+		return 0;
+	}
 
 }

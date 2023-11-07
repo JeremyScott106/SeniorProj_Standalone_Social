@@ -540,7 +540,7 @@ public class ReadFile {
 		
 	}
 	
-	//FIXME: Needs Test methods as well
+	
 	private static void readPost(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String userName = "";
@@ -642,6 +642,9 @@ public class ReadFile {
 		}
 		
 	}
+	
+	
+	
 	
 	
 }
