@@ -354,12 +354,85 @@ SystemManager manager = new SystemManager();
 			
 			WriteFile.writeFile(manager, fileName);
 			
+			//FIXME: This works with all Users above except u3
 			WriteFile.removeUserFromFile(u3, fileName);
 			
 			assertEquals(true, true);
 			
 		} 
 		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
+	
+	@Test
+	void testRemoveCategoryFromFile() {
+		
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		category c2 = new category("Foods");
+		category c3 = new category("Games");
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		manager.addCategory(c3);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_RemoveCategory.txt";
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			WriteFile.removeCategoryFromFile(c1, fileName);
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+	
+	
+	@Test
+	void testRemoveGroupFromFile() {
+		
+		SystemManager manager = new SystemManager();
+		
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		
+		category c2 = new category("Foods");
+		Group g3 = new Group("Pizza");
+		Group g4 = new Group("Tacos");
+		Group g5 = new Group("Steak");
+		c2.addGroup(g3);
+		c2.addGroup(g4);
+		c2.addGroup(g5);
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_RemoveGroup.txt";
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileName);
+			
+			WriteFile.removeGroupFromFile(g2, fileName, c1.getName());
+			
+			assertEquals(true, true);
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}

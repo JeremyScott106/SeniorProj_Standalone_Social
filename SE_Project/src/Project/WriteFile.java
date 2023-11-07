@@ -1,7 +1,5 @@
 package Project;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -31,6 +29,8 @@ public class WriteFile {
 			writeCategories(manager, writer);
 			
 			writeGroups(manager, writer);
+			
+			writer.write("\n\n\n");
 			
 			writer.close();
 			
@@ -243,6 +243,78 @@ public class WriteFile {
 	        }
 			
 			//FIXME: for whatever reason, this does no replace cannot find and replace the User
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			//For Testing purposes
+//			System.out.println(find);
+//			System.out.println(totalStr);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void removeCategoryFromFile(category c, String fileName) throws IOException {
+		
+		String find = c.getCategoryWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void removeGroupFromFile(Group g, String fileName, String catName) throws IOException {
+		
+		String find = g.getGroupWriteData(catName);
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
 			totalStr = totalStr.replaceAll(find, replace);
 			
 			FileWriter writer = new FileWriter(dataFile);
