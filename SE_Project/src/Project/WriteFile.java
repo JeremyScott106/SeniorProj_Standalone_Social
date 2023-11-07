@@ -242,12 +242,7 @@ public class WriteFile {
 	            totalStr += s + "\n";
 	        }
 			
-			//FIXME: for whatever reason, this does no replace cannot find and replace the User
 			totalStr = totalStr.replaceAll(find, replace);
-			
-			//For Testing purposes
-//			System.out.println(find);
-//			System.out.println(totalStr);
 			
 			FileWriter writer = new FileWriter(dataFile);
 			

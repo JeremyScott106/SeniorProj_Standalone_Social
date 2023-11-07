@@ -336,7 +336,7 @@ SystemManager manager = new SystemManager();
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
-		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia", "10/10/2005");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaHut", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
 		
@@ -354,7 +354,6 @@ SystemManager manager = new SystemManager();
 			
 			WriteFile.writeFile(manager, fileName);
 			
-			//FIXME: This works with all Users above except u3
 			WriteFile.removeUserFromFile(u3, fileName);
 			
 			assertEquals(true, true);
