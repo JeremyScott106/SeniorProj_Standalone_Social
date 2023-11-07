@@ -7,15 +7,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 public class Post implements Comparable<Post> {
 	
-	private User user;
-	private Group group;
-	private String postTitle;
-	private String postBody;
+	protected User user;
+	protected Group group;
+	protected String postTitle;
+	protected String postBody;
 	private ArrayList<Response> responses;
-	private Date dateTime;
+	protected Date dateTime;
     private int score;
+    private int id;
     
-    public Post (membership memberships, String postTitle, String postBody) {
+    public Post (membership memberships, String postTitle, String postBody, int Id) {
     	this.user = memberships.getUser();
     	this.group = memberships.getGroup();
     	this.postBody = postBody;
@@ -30,9 +31,10 @@ public class Post implements Comparable<Post> {
 			e.printStackTrace();
 		}
     	this.score = 0;
+    	this.id = Id;
     }
 	
-    public Post (User u, Group g, String dateTime, String postTitle, String postBody) {
+    public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id) {
     	this.user = u;
     	this.group = g;
     	this.postTitle = postTitle;
@@ -45,6 +47,7 @@ public class Post implements Comparable<Post> {
 			e.printStackTrace();
 		}
     	this.score = 0;
+    	this.id = id;
     }
     
 	public User getUser() {
@@ -61,6 +64,11 @@ public class Post implements Comparable<Post> {
 
 	public String getPostBody() {
 		return postBody;
+	}
+	
+	//FIXME: add tests
+	public int getId() {
+		return id;
 	}
 	
 	public ArrayList<Response> getResponse() {
@@ -100,16 +108,18 @@ public class Post implements Comparable<Post> {
     						"@DATETIME=" + dateTime + "\n" + 
     						"@TITLE=" + postTitle + "n" +
     						"@BODY=" + postBody + "\n" + 
+    						"@PSTID=" + id + "\n" + 
     						"@END\n\n";
     	
     	return userData;
     }
 
+	//FIXME: add tests
 	@Override
 	public int compareTo(Post p) {
 		
 		if (user.compareTo(p.getUser()) == 1 && group.compareTo(p.getGroup()) == 1 &&
-				postTitle.equals(p.getPostTitle()) && postBody.equals(p.getPostBody()) ) {
+				id == p.getId()) {
 			
 			return 1;
 			

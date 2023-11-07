@@ -503,9 +503,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -531,9 +531,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -559,9 +559,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -587,9 +587,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -613,9 +613,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(r1);

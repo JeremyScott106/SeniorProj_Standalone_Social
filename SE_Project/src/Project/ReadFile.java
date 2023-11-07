@@ -553,6 +553,8 @@ public class ReadFile {
 		boolean gotPostTitle = false;
 		String postBody = "";
 		boolean gotPostBody = false;
+		String postId = "";
+		boolean gotPostId = false;
 		
 		while (currentlyReadingData) {
 			
@@ -622,18 +624,29 @@ public class ReadFile {
 					continue;
 				}
 			}
+			else if (sub.equals("@PSTI")) {
+				if (gotPostId) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postId = line.substring(7);
+					gotPostId = true;
+					continue;
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();
 			}
 			
 		}
 		
-		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody) {
+		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId) {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
+			int id = Integer.parseInt(postId);
 			if (g != null && u != null) {
-				Post p=new Post(u, g, dateTime, postTitle, postBody);
+				Post p=new Post(u, g, dateTime, postTitle, postBody, id);
 				manager.getGroupByName(groupName).addPost(p);
 			}
 		}

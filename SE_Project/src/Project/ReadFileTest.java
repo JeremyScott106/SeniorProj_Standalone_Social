@@ -780,12 +780,12 @@ class ReadFileTest {
 		Group g1 = new Group("Football");
 		Group g2 = new Group("Soccer");
 		//Create Posts
-		Post p1 = new Post(u1, g1, "10/10/2008", "P1", "P1 Body");
-		Post p2 = new Post(u2, g1, "10/10/2008", "P2", "P2 Body");
-		Post p3 = new Post(u3, g1, "10/10/2008", "P3", "P3 Body");
-		Post p4 = new Post(u2, g2, "10/10/2008", "P4", "P4 Body");
-		Post p5 = new Post(u4, g2, "10/10/2008", "P5", "P5 Body");
-		Post p6 = new Post(u5, g2, "10/10/2008", "P6", "P6 Body");
+		Post p1 = new Post(u1, g1, "10/10/2008", "P1", "P1 Body", 1);
+		Post p2 = new Post(u2, g1, "10/10/2008", "P2", "P2 Body", 2);
+		Post p3 = new Post(u3, g1, "10/10/2008", "P3", "P3 Body", 3);
+		Post p4 = new Post(u2, g2, "10/10/2008", "P4", "P4 Body", 4);
+		Post p5 = new Post(u4, g2, "10/10/2008", "P5", "P5 Body", 5);
+		Post p6 = new Post(u5, g2, "10/10/2008", "P6", "P6 Body", 6);
 		//Create List of Posts
 		ArrayList<Post> expected = new ArrayList<Post>();
 		//Add Posts in Order

@@ -1,21 +1,32 @@
 package Project;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Group implements Comparable<Group> {
 
     private String groupName;
     private ArrayList<membership> memberships;
     private ArrayList<Post> posts;
+    private int postId;
 
     public Group (String groupName) {
         this.groupName = groupName;
         this.memberships = new ArrayList<>();
         this.posts = new ArrayList<>();
+        this.postId = 0;
 
+    }
+    
+    public Group (String groupName, int postId) {
+    	this.groupName = groupName;
+        this.memberships = new ArrayList<>();
+        this.posts = new ArrayList<>();
+        this.postId = postId;
+    }
+    
+    //FIXME: add tests
+    public int getPostId() {
+    	return postId;
     }
 
     //Gets the name of the groups that are created
@@ -86,6 +97,7 @@ public class Group implements Comparable<Group> {
         }
         if (!isMember) {
             posts.add(p);
+            postId++;
             return true;
         }
         return false;
@@ -103,7 +115,8 @@ public class Group implements Comparable<Group> {
     	String groupData = "@START\n" + 
     						"@GROUP\n" + 
     						"@NAME=" + groupName + "\n" + 
-    						"@CATEGORY=" + catName + "\n" + 
+    						"@CATEGORY=" + catName + "\n" +
+    						"@POSTID=" + postId + "\n" + 
     						"@END\n\n";
     	
     	return groupData;

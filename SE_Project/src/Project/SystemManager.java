@@ -187,7 +187,8 @@ public class SystemManager {
 	// allows a post to be created
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
-		Post p = new Post(m, postTitle, postBody);
+		int id = group.getPostId();
+		Post p = new Post(m, postTitle, postBody, id);
 		return(group.addPost(p));
 	}
 	
@@ -365,8 +366,8 @@ public class SystemManager {
 			 ArrayList<Response> r = new ArrayList<>();
 			 r.addAll(p.getResponse());
 			 for (Response r1 : r){
-				 membership m = r1.getMember();
-				 if(user == m.getUser()){
+				 User u = r1.getUser();
+				 if(user == u){
 					  results.add(r1);
 				 }	
 			 }
@@ -388,8 +389,8 @@ public class SystemManager {
 				 ArrayList<Response> r = new ArrayList<>();
 				 r.addAll(p.getResponse());
 				 for (Response r1 : r){
-					 membership m = r1.getMember();
-					 if(user == m.getUser()){
+					 User u = r1.getUser();
+					 if(user == u){
 						 results.add(r1);
 					 }	
 				 }
