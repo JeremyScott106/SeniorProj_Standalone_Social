@@ -68,8 +68,8 @@ public class Post {
 	}
 	
     //Adds responses into responses
-    public void addResponse(Response r) {
-        responses.add(r);
+    public boolean addResponse(Response r) {
+        return(responses.add(r));
     }
 	
 	public int getScore() {

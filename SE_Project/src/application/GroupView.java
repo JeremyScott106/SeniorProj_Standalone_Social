@@ -104,8 +104,6 @@ public class GroupView extends JFrame {
 		});
 		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
 		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
-		System.out.printf("\nx1 = %d\n", x1);
-		System.out.printf("\ncurrentFrame.getBounds().width =%d\nbtnRefreshPage.getPreferredSize().width =%d\npadding =%d\nextra =%d", currentFrame.getBounds().width, btnRefreshPage.getPreferredSize().width, padding, 150);
 			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
 		
@@ -185,9 +183,7 @@ public class GroupView extends JFrame {
 			JButton newPost = new JButton("Create New Post");
 			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
 			int x2 = currentFrame.getBounds().width - (newPost.getPreferredSize().width + padding + 50);
-			System.out.printf("\nx2 = %d\n", x2);
-			System.out.printf("\ncurrentFrame.getBounds().width =%d\nnewPost.getPreferredSize().width =%d\npadding =%d\nextra =%d",currentFrame.getBounds().width,newPost.getPreferredSize().width, padding, 150);
-			
+
 			newPost.setBounds(x2, 45, newPost.getPreferredSize().width + padding, 25);
 			titlePanel.add(newPost);
 			newPost.addActionListener(new ActionListener() {
@@ -235,7 +231,7 @@ private JPanel createInsidePane() {
 	        });
 			postPane.add(lblToAdd);
 		}
-		postPane.setPreferredSize(new Dimension(currentFrame.getWidth(), gridLocY));
+		postPane.setPreferredSize(new Dimension(currentFrame.getWidth()-50, gridLocY));
 		
 		return postPane;
 	}
@@ -247,7 +243,6 @@ private JPanel createInsidePane() {
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
-		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new BorderLayout(0,0));
 		
 		JPanel topInsidePanel = createTitlePane();

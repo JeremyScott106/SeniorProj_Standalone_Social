@@ -179,26 +179,13 @@ public class NewPostView extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+				new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
 			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
-		
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
-			JButton newPost = new JButton("Create New Post");
-			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int btnWidth = newPost.getPreferredSize().width + padding;
-			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 25, 45, newPost.getPreferredSize().width + padding, 25);
-			titlePanel.add(newPost);
-			newPost.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	onViewChangeClick();
-	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-				}
-			});
-		}
 		
 		return titlePanel;
 		
@@ -275,9 +262,6 @@ public class NewPostView extends JFrame {
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
 
 		JPanel postForm = createPostForm();
-//		JScrollPane scrollBar = new JScrollPane(postForm);
-//		scrollBar.setSize(dim);
-//		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		mainPanel.add(postForm, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
