@@ -8,33 +8,62 @@ import java.util.ArrayList;
 public class WriteFile {
 	
 	
-	public static void writeFile(SystemManager manager, String fileName) throws IOException {
+	public static void writeFile(SystemManager manager, ArrayList<String> fileNames) throws IOException {
 		
-		try {
+		
+		for (String fileName : fileNames) {
 			
-			File dataFile = new File(fileName);
+			try {
 			
-			if (!dataFile.exists()) {
-				dataFile.createNewFile();
+				File dataFile = new File(fileName);
+				
+				if (!dataFile.exists()) {
+					dataFile.createNewFile();
+				}
+				
+				FileWriter writer = new FileWriter(fileName);
+				
+				if (fileName.contains("Admin")) {
+					writeAdmins(manager, writer);
+				}
+				else if (fileName.contains("User")) {
+					writeUsers(manager, writer);
+				}
+				else if (fileName.contains("Categor")) {
+					writeCategories(manager, writer);
+				}
+				else if (fileName.contains("Group")) {
+					writeGroups(manager, writer);
+				}
+				
+				
+				writer.close();
+			
+			}
+			catch (IOException e) {
+				throw new IOException();
 			}
 			
-			FileWriter writer = new FileWriter(fileName);
-			
-			writeAdmins(manager, writer);
-			
-			writeUsers(manager, writer);
-			
-			writeCategories(manager, writer);
-			
-			writeGroups(manager, writer);
-			
-			writer.close();
-			
-		} catch (IOException e) {
-			throw new IOException();
 		}
 		
-	}
+		
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+		
+	
 	
 	
 	private static void writeAdmins(SystemManager manager, FileWriter writer) throws IOException {

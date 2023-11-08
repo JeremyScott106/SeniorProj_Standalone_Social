@@ -4,76 +4,76 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class ReadFile {
 	
 	static boolean currentlyReadingData;	//True if data is currently being read, false if between sets of data
 	
 	
-	public static void readFile(SystemManager manager, String fileName) throws FileNotFoundException, IncorrectFileFormatException {
+	public static void readFile(SystemManager manager, ArrayList<String> fileNames) throws FileNotFoundException, IncorrectFileFormatException {
 		
+		for (String fileName : fileNames) {		//Loop through each file provided
 		
-		
-		File dataFile = new File(fileName);
-		
-		try {
-			Scanner reader = new Scanner(dataFile);
+			File dataFile = new File(fileName);		//Create File from name
 			
-			currentlyReadingData = false;	//not Currently reading data
-			
-			
-			while (reader.hasNextLine()) {	//While there are still lines to be read
-				String line = reader.nextLine();	//Line currently being read
+			try {
+				Scanner reader = new Scanner(dataFile);
 				
-				if (line.equals("@START")) {								//If line is the start of a set of Data
-					if (currentlyReadingData) {									//and data is currently being read
-						throw new IncorrectFileFormatException();					//throw exception
+				currentlyReadingData = false;	//not Currently reading data
+				
+				
+				while (reader.hasNextLine()) {	//While there are still lines to be read
+					String line = reader.nextLine();	//Line currently being read
+					
+					if (line.equals("@START")) {								//If line is the start of a set of Data
+						if (currentlyReadingData) {									//and data is currently being read
+							throw new IncorrectFileFormatException();					//throw exception
+						}
+						else {														//or if data is not being read
+							currentlyReadingData = true;								//set currentlyReadingData to true
+							continue;													//and continue to next line
+						}
 					}
-					else {														//or if data is not being read
-						currentlyReadingData = true;								//set currentlyReadingData to true
-						continue;													//and continue to next line
+					else if (line.equals("@ADMIN") && currentlyReadingData) {	//If current line rules next data set to be a Admin
+						readAdmin(manager, reader);									//go read the data in the Admin
+					}
+					else if (line.equals("@USER") && currentlyReadingData) {	//If current line rules next data set to be a User
+						readUser(manager, reader);									//go read the data in the User
+					}
+					else if(line.equals("@CATEGORY") && currentlyReadingData) {	//If current line rules next data set to be a Category
+						readCategory(manager, reader);								//go  read the data in the Category
+					}
+					else if(line.equals("@GROUP") && currentlyReadingData) {	//If current line rules next data set to be a Group
+						readGroup(manager, reader);									//go read the data in the Group
+					}
+					else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
+						readMembership(manager, reader);
+					}
+					else if(line.equals("@POST") && currentlyReadingData) {
+						readPost(manager, reader);
+					}
+					else if (line.equals("@RESPONSE") && currentlyReadingData) {
+						readResponse(manager, reader);
+					}
+					else if (line.equals("")) {									//If the current line is empty
+						continue;													//continue to next line
+					}
+					else {														//If none of the above
+						throw new IncorrectFileFormatException();					//throw incorrectFileFormatException
 					}
 				}
-				else if (line.equals("@ADMIN") && currentlyReadingData) {	//If current line rules next data set to be a Admin
-					readAdmin(manager, reader);									//go read the data in the Admin
-				}
-				else if (line.equals("@USER") && currentlyReadingData) {	//If current line rules next data set to be a User
-					readUser(manager, reader);									//go read the data in the User
-				}
-				else if(line.equals("@CATEGORY") && currentlyReadingData) {	//If current line rules next data set to be a Category
-					readCategory(manager, reader);								//go  read the data in the Category
-				}
-				else if(line.equals("@GROUP") && currentlyReadingData) {	//If current line rules next data set to be a Group
-					readGroup(manager, reader);									//go read the data in the Group
-				}
-				else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
-					readMembership(manager, reader);
-				}
-				else if(line.equals("@POST") && currentlyReadingData) {
-					readPost(manager, reader);
-				}
-				else if (line.equals("@RESPONSE") && currentlyReadingData) {
-					readResponse(manager, reader);
-				}
-				else if (line.equals("")) {									//If the current line is empty
-					continue;													//continue to next line
-				}
-				else if (line.equals("@ENDFILE")) {							//If the current line rules that this is the end of the file
-					break;														//break the loop
-				}
-				else {														//If none of the above
-					throw new IncorrectFileFormatException();					//throw incorrectFileFormatException
-				}
+				
+				
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				throw new FileNotFoundException();
+			} catch (IncorrectFileFormatException e) {
+				// TODO Auto-generated catch block
+				throw new IncorrectFileFormatException();
 			}
-			
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			throw new FileNotFoundException();
-		} catch (IncorrectFileFormatException e) {
-			// TODO Auto-generated catch block
-			throw new IncorrectFileFormatException();
+		
 		}
 		
 	}

@@ -3,6 +3,7 @@ package Project;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,10 +28,11 @@ class WriteFileTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Admins.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Admins.txt");
 		
 		try {
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			assertEquals(true, true);
 		} catch (IOException e) {
@@ -58,11 +60,12 @@ class WriteFileTest {
 		manager.addUser(u4);
 		manager.addUser(u5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Users.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Users.txt");
 		
 		try {
 			
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			assertEquals(true, true);
 			
@@ -90,11 +93,12 @@ class WriteFileTest {
 		manager.addCategory(c2);
 		manager.addCategory(c3);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Categories.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Categories.txt");
 		
 		try {
 			
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			assertEquals(true, true);
 			
@@ -128,12 +132,13 @@ class WriteFileTest {
 		manager.addCategory(c1);
 		manager.addCategory(c2);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Groups.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Groups.txt");
 		
 		
 		try {
 			
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			assertEquals(true, true);
 			
@@ -164,14 +169,15 @@ class WriteFileTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddAdmin.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddAdmin.txt");
 		
 		try {
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			Admin a = new Admin("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
 			
-			WriteFile.addAdminToFile(a, fileName);
+			WriteFile.addAdminToFile(a, fileNames.get(0));
 			
 			assertEquals(true, true);
 		} 
@@ -200,15 +206,16 @@ class WriteFileTest {
 		manager.addUser(u4);
 		manager.addUser(u5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddUser.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddUser.txt");
 		
 		try {
 			
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			User u = new User("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
 			
-			WriteFile.addUserToFile(u, fileName);
+			WriteFile.addUserToFile(u, fileNames.get(0));
 			
 			assertEquals(true, true);
 			
@@ -234,15 +241,16 @@ class WriteFileTest {
 		manager.addCategory(c2);
 		manager.addCategory(c3);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddCategory.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddCategory.txt");
 		
 		try {
 			
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			category c = new category("Tests");
 			
-			WriteFile.addCategoryToFile(c, fileName);
+			WriteFile.addCategoryToFile(c, fileNames.get(0));
 			
 			assertEquals(true, true);
 			
@@ -257,7 +265,7 @@ class WriteFileTest {
 	@Test
 	void testAddGroupToFile() {
 		
-SystemManager manager = new SystemManager();
+		SystemManager manager = new SystemManager();
 		
 		category c1 = new category("Sports");
 		Group g1 = new Group("Football");
@@ -276,17 +284,18 @@ SystemManager manager = new SystemManager();
 		manager.addCategory(c1);
 		manager.addCategory(c2);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddGroup.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddGroup.txt");
 		
 		
 		try {
 			
-			WriteFile.writeFile(manager, fileName);
+			WriteFile.writeFile(manager, fileNames);
 			
 			Group g = new Group("Donuts");
 			c2.addGroup(g);
 			
-			WriteFile.addGroupToFile(g, fileName, c2.getName());
+			WriteFile.addGroupToFile(g, fileNames.get(0), c2.getName());
 			
 			assertEquals(true, true);
 			

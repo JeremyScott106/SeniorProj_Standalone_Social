@@ -2,6 +2,8 @@ package application;
 import Project.ReadFile;
 import Project.SystemManager;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -9,8 +11,8 @@ public class Main extends JFrame {
 	
 	private static JMenuBar topBar;
 	private static SystemManager manager;
-	private String fileName = ".\\SE_Project\\src\\LoadThisFile.txt";
 	private JFrame currentFrame;
+	private ArrayList<String> fileNames = new ArrayList<String>();
 	
 	public Main() {
 	}
@@ -91,7 +93,9 @@ public class Main extends JFrame {
 	
 	private void startMemory() {
 		
-		manager = new SystemManager(fileName);
+		fileNames.add(".\\SE_Project\\src\\LoadThisFile.txt");
+		
+		manager = new SystemManager(fileNames);
 		topBar = createMenus();
 		currentFrame = new JFrame();
 		currentFrame.setSize(800,800);

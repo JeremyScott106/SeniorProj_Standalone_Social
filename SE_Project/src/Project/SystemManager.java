@@ -18,6 +18,7 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
+	private ArrayList<String> fileNames;
 
 	public SystemManager() {
 		userSignedIn = false;
@@ -29,32 +30,32 @@ public class SystemManager {
 	}
 	
 	//Constructor that will read given file
-	public SystemManager(String filename) {
-		userSignedIn = false;
-		adminSignedIn = false;
-		users = new ArrayList<User>();
-		admins = new ArrayList<Admin>();
-		categories = new ArrayList<category>();
+	public SystemManager(ArrayList<String> fileNames) {
+		this.userSignedIn = false;
+		this.adminSignedIn = false;
+		this.users = new ArrayList<User>();
+		this.admins = new ArrayList<Admin>();
+		this.categories = new ArrayList<category>();
+		this.fileNames = fileNames;
 		
 		try {
-			ReadFile.readFile(this, filename);
-		} catch (FileNotFoundException | IncorrectFileFormatException e) {
-			// TODO Auto-generated catch block
+			ReadFile.readFile(this, fileNames);
+		} 
+		catch (FileNotFoundException | IncorrectFileFormatException e) {
 			e.printStackTrace();
 		}		
 	}
 	
 	//writes the manager
-	public boolean writeManager(String fileName) {
+	public boolean writeManager() {
 		
 		try {
-			WriteFile.writeFile(this, fileName);
+			WriteFile.writeFile(this, fileNames);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
-		
-		return true;
 	}
 	
 	// add an user

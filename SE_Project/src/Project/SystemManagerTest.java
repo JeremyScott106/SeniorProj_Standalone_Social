@@ -768,9 +768,10 @@ class SystemManagerTest {
 	@Test
 	void testSystemManager_ReadFileConstructor_Admins() {
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt");
 		
-		SystemManager manager = new SystemManager(fileName);
+		SystemManager manager = new SystemManager(fileNames);
 		
 		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
 		
@@ -793,7 +794,11 @@ class SystemManagerTest {
 	
 	@Test
 	void testWriteManager_Admins() {
-		SystemManager manager = new SystemManager();
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins");
+		
+		SystemManager manager = new SystemManager(fileNames);
 		
 		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -807,9 +812,7 @@ class SystemManagerTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins";
-		
-		boolean actual = manager.writeManager(fileName);
+		boolean actual = manager.writeManager();
 		
 		assertEquals(true, actual);
 		

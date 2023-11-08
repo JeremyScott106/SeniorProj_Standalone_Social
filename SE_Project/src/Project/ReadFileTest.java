@@ -15,11 +15,12 @@ class ReadFileTest {
 	void testReadFile_Failure_FileNotFound() {
 		SystemManager manager = new SystemManager();
 		
-		String fileName = "fileNotFound.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add("fileNotFound.txt");
 		boolean fileNotFound = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			fileNotFound = true;
@@ -37,11 +38,12 @@ class ReadFileTest {
 	void testReadFile_Admin_Success() {
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt");
 		
 		try {
 		
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<Admin> expected = new ArrayList<Admin>();
 			
@@ -107,11 +109,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat1.txt");
 		boolean incorrectFileFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -134,11 +137,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat2.txt");
 		boolean incorrectFileFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -162,11 +166,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat3.txt");
 		boolean incorrectFileFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -189,11 +194,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat4.txt");
 		boolean incorrectFileFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -216,11 +222,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat5.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_Failure_IncorrectFormat5.txt");
 		boolean incorrectFileFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -242,11 +249,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User.txt");
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<User> actual = manager.getUsers_Alphabetically_ByUsername();
 			
@@ -297,11 +305,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat1.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat1.txt");
 		boolean incorrectFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -326,11 +335,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat2.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat2.txt");
 		boolean incorrectFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -355,11 +365,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat3.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat3.txt");
 		boolean incorrectFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -383,11 +394,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat4.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User_Failure_IncorrectFormat4.txt");
 		boolean incorrectFormat = false;
 		
 		try {
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -417,12 +429,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		//NOTICE: File path will have to be changed for each user/branch/etc
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_User.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_User.txt");
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<Admin> actualAdmins = manager.getAdmins_Alphabetically_ByUsername();
 			ArrayList<User> actualUsers = manager.getUsers_Alphabetically_ByUsername();
@@ -494,12 +506,13 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category.txt");
 		
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<category> actualCats = manager.getCategories_Alphabetically();
 			
@@ -543,13 +556,14 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat1.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat1.txt");
 		
 		boolean incorrectFormat = false;
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -572,13 +586,14 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat2.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat2.txt");
 		
 		boolean incorrectFormat = false;
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -601,13 +616,14 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat3.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat3.txt");
 		
 		boolean incorrectFormat = false;
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -630,13 +646,14 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat4.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Category_Failure_IncorrectFormat4.txt");
 		
 		boolean incorrectFormat = false;
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -657,13 +674,14 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Group.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Group.txt");
 		
 		
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<Group> actualGroups = manager.getAllGroups_Alphabetically();
 			
@@ -729,11 +747,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Membership.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Membership.txt");
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<Group> groups = manager.getAllGroups_Alphabetically();
 			ArrayList<membership> actual = new ArrayList<membership>();
@@ -799,11 +818,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Post.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Post.txt");
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<Post> actual = manager.getAllPost();
 			boolean pass = true;
@@ -856,11 +876,12 @@ class ReadFileTest {
 		
 		SystemManager manager = new SystemManager();
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Response.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Response.txt");
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			ArrayList<Response> actual = new ArrayList<Response>();
 			ArrayList<Post> posts = manager.getAllPost();
