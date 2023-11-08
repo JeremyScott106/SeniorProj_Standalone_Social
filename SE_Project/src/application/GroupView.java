@@ -92,6 +92,17 @@ public class GroupView extends JFrame {
 		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
 		titlePanel.add(lblCurrentGroup);
 		
+		JButton btnRefreshPage = new JButton("Refresh");
+		btnRefreshPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
+			// FIXME: BUG -> Refresh button disappears if frame shrinks.
+		titlePanel.add(btnRefreshPage);
+		
 		//	SECOND ROW OF LABLES //
 		gridx = 20;
 		
@@ -144,6 +155,7 @@ public class GroupView extends JFrame {
 			    	boolean result = manager.joinGroup(manager.getCurrentUser(), manager.getCurrentGroup());
 			    	if (result) {
 			    		JOptionPane.showMessageDialog(null, "Successfully Joined Group");
+			    		btnRefreshPage.doClick();
 			    	}
 			    	else {
 			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
@@ -162,17 +174,6 @@ public class GroupView extends JFrame {
 			gridx += memberStatus.getWidth() + padding;
 			titlePanel.add(memberStatus);
 		}
-		
-		JButton btnRefreshPage = new JButton("Refresh");
-		btnRefreshPage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-			}
-		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
-			// FIXME: BUG -> Refresh button disappears if frame shrinks.
-		titlePanel.add(btnRefreshPage);
 		
 		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			JButton newPost = new JButton("Create New Post");

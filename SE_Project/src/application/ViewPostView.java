@@ -102,8 +102,17 @@ public class ViewPostView extends JFrame {
 		
 		JLabel lblCurrentGroup = new JLabel(manager.getCurrentGroup().getGroupName());
 		lblCurrentGroup.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCurrentGroup.setForeground(Color.BLUE.darker());
 		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
+		lblCurrentGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		titlePanel.add(lblCurrentGroup);
+		lblCurrentGroup.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+            	onViewChangeClick();
+            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+            }
+        });
 		
 		//	SECOND ROW OF LABLES //
 		gridx = 20;
@@ -120,9 +129,6 @@ public class ViewPostView extends JFrame {
 					new LoginPopUp(manager);
 				}
 			});
-
-		
-
 			
 			JButton btnNewUser = new JButton("Register New Account");
 			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -180,7 +186,7 @@ public class ViewPostView extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
 		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
@@ -210,21 +216,30 @@ public class ViewPostView extends JFrame {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
+		int gridy = 10;
+		int padding = 10;
 		
 		if (manager.getCurrentPost() != null) { 
 		
 			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
-			lblTitle.setBounds(40, 30, 500, 30);
+			lblTitle.setBounds(40, gridy, 500, lblTitle.getPreferredSize().height + padding);
+			gridy += lblTitle.getHeight() + padding;
 			panel.add(lblTitle);
 			
 			JTextArea textArea = new JTextArea(manager.getCurrentPost().getPostBody());
-			textArea.setBounds(40, 80, 550, 300);
+			textArea.isOpaque();
+			textArea.setBounds(40, gridy, 550, textArea.getPreferredSize().height + padding);
+			gridy += textArea.getHeight() + padding;
+			textArea.setEditable(false);
 			panel.add(textArea);
 			
-			JButton btnRespond = new JButton("Respond");
-			btnRespond.setBounds(500, 440, 90, 40);
-			panel.add(btnRespond);
+//		    JScrollPane scrollPane= new JScrollPane(textArea);
+//		    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//		    panel.add(scrollPane);
 			
+			JButton btnRespond = new JButton("Respond");
+			btnRespond.setBounds(500, gridy, 90, 40);
+			panel.add(btnRespond);
 		}
 		return panel;
 	}

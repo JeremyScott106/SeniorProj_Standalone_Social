@@ -14,8 +14,9 @@ public class NewPostView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
+	private Dimension dim;
 	private JTextField txfPostTitle;
-	private JTextField txfPostBody;
+	private JTextArea txfPostBody;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//	
 	public NewPostView() {	
@@ -27,6 +28,7 @@ public class NewPostView extends JFrame {
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
+		this.dim = dim;
 		displayGUI();
 	}
 	
@@ -210,22 +212,24 @@ public class NewPostView extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblPostTitle = new JLabel("Post Title");
-		lblPostTitle.setBounds(10, 10, 45, 13);
+		lblPostTitle.setBounds(10, 10, lblPostTitle.getPreferredSize().width + 10, 13);
 		panel.add(lblPostTitle);
 		
 		JLabel lblPostBody = new JLabel("Message");
-		lblPostBody.setBounds(10, 62, 45, 13);
+		lblPostBody.setBounds(10, 62, lblPostBody.getPreferredSize().width + 10, 13);
 		panel.add(lblPostBody);
 		
 		txfPostTitle = new JTextField();
 		txfPostTitle.setBounds(10, 33, 416, 19);
 		panel.add(txfPostTitle);
 		txfPostTitle.setColumns(10);
-		
-		txfPostBody = new JTextField();
-		txfPostBody.setBounds(10, 85, 416, 124);
-		panel.add(txfPostBody);
+
+		txfPostBody = new JTextArea();
 		txfPostBody.setColumns(10);
+	    JScrollPane scrollPane= new JScrollPane(txfPostBody);
+	    scrollPane.setBounds(10, 85, 416, 124);
+	    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    panel.add(scrollPane);		
 		
 		JButton btnPost = new JButton("Post");
 		btnPost.setBounds(341, 232, 85, 21);
@@ -260,20 +264,20 @@ public class NewPostView extends JFrame {
 	private void displayGUI() {
 		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
-
 		currentFrame.setTitle("This is the New Post view");
-
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
 		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new BorderLayout(0,0));
-		
 
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
 
 		JPanel postForm = createPostForm();
+//		JScrollPane scrollBar = new JScrollPane(postForm);
+//		scrollBar.setSize(dim);
+//		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		mainPanel.add(postForm, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
