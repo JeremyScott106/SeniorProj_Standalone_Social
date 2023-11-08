@@ -93,7 +93,23 @@ public class Main extends JFrame {
 	
 	private void startMemory() {
 		
-		fileNames.add(".\\SE_Project\\src\\LoadThisFile.txt");
+		/*
+		 * Files need to be read/added in a specific order:
+		 * 1. Admins
+		 * 2. Users
+		 * 3. Categories
+		 * 4. Groups
+		 * 5. Memberships
+		 * 6. Posts
+		 * 7. Responses
+		 */
+		
+		//fileNames.add(".\\SE_Project\\src\\LoadThisFile.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Admins.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Users.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Categories.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Groups.txt");
+		
 		
 		manager = new SystemManager(fileNames);
 		topBar = createMenus();
