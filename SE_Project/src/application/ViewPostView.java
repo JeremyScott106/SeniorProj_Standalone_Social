@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -17,7 +18,7 @@ public class ViewPostView extends JFrame {
 	private SystemManager manager;
 	private JFrame currentFrame;
 	private JTextField txfPostTitle;
-	private JTextField txfPostBody;
+	private JTextArea txfPostBody;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//	
 	public ViewPostView() {
@@ -211,10 +212,10 @@ public class ViewPostView extends JFrame {
 		
 	}
 	
-	private JPanel createPostForm() {
+	private JPanel createPostViewForm() {
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
 		int gridy = 10;
 		int padding = 10;
@@ -222,26 +223,116 @@ public class ViewPostView extends JFrame {
 		if (manager.getCurrentPost() != null) { 
 		
 			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
-			lblTitle.setBounds(40, gridy, 500, lblTitle.getPreferredSize().height + padding);
+			lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+			lblTitle.setBounds(40, gridy, currentFrame.getBounds().width + 25, lblTitle.getPreferredSize().height + padding);
 			gridy += lblTitle.getHeight() + padding;
 			panel.add(lblTitle);
 			
 			JTextArea textArea = new JTextArea(manager.getCurrentPost().getPostBody());
-			textArea.isOpaque();
+			textArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			textArea.setBounds(40, gridy, 550, textArea.getPreferredSize().height + padding);
 			gridy += textArea.getHeight() + padding;
 			textArea.setEditable(false);
 			panel.add(textArea);
-			
-//		    JScrollPane scrollPane= new JScrollPane(textArea);
-//		    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//		    panel.add(scrollPane);
 			
 			JButton btnRespond = new JButton("Respond");
 			btnRespond.setBounds(500, gridy, 90, 40);
 			panel.add(btnRespond);
 		}
 		return panel;
+	}
+	
+	private JPanel createPostForm() {
+		
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblPostTitle = new JLabel("Post Title");
+		lblPostTitle.setBounds(10, 10, lblPostTitle.getPreferredSize().width + 10, 13);
+		panel.add(lblPostTitle);
+		
+		JLabel lblPostBody = new JLabel("Message");
+		lblPostBody.setBounds(10, 62, lblPostBody.getPreferredSize().width + 10, 13);
+		panel.add(lblPostBody);
+		
+		txfPostTitle = new JTextField();
+		txfPostTitle.setBounds(10, 33, 416, 19);
+		panel.add(txfPostTitle);
+		txfPostTitle.setColumns(10);
+
+		txfPostBody = new JTextArea();
+		txfPostBody.setColumns(10);
+	    JScrollPane scrollPane= new JScrollPane(txfPostBody);
+	    scrollPane.setBounds(10, 85, 416, 124);
+	    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    panel.add(scrollPane);		
+		
+		JButton btnPost = new JButton("Post");
+		btnPost.setBounds(341, 232, 85, 21);
+		btnPost.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	if (manager.createNewPost(manager.getCurrentGroup(), txfPostTitle.getText(), txfPostBody.getText())) {
+	            	onViewChangeClick();
+					new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+						// Change to PostView after PostView is created  -- This would require a post return //
+            	}
+            	else {
+            		JOptionPane.showMessageDialog(null, "An error occured");
+            	}
+			}
+		});
+		panel.add(btnPost);
+		
+		JButton btnBack = new JButton("Cancel");
+		btnBack.setBounds(246, 232, 85, 21);
+		btnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		panel.add(btnBack);
+		
+		
+		return panel;
+	}
+	
+	private JPanel createResponsesPane() {
+		
+		int gridLocY = 10;
+		int padding = 30;
+	
+		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
+		
+		JPanel postPane = new JPanel();
+		postPane.setLayout(null);
+
+				
+		for (Post p : alPost) {
+			
+			JLabel lblToAdd = new JLabel(p.getPostTitle());
+
+			lblToAdd.setBounds(20, gridLocY, lblToAdd.getPreferredSize().width + padding, 25);
+			gridLocY += lblToAdd.getHeight() + padding;
+
+			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			lblToAdd.setForeground(Color.BLUE.darker());
+			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			lblToAdd.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+	            	onViewChangeClick();
+
+	            	manager.setCurrentPost(p);
+	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+	            }
+	        });
+			postPane.add(lblToAdd);
+		}
+		postPane.setPreferredSize(new Dimension(currentFrame.getWidth(), gridLocY));
+		
+		return postPane;
 	}
 	
 	private void displayGUI() {
@@ -257,7 +348,7 @@ public class ViewPostView extends JFrame {
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
 		
-		JPanel viewPostForm = createPostForm();
+		JPanel viewPostForm = createPostViewForm();
 		mainPanel.add(viewPostForm, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);

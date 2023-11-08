@@ -238,7 +238,7 @@ public class NewPostView extends JFrame {
             	if (manager.createNewPost(manager.getCurrentGroup(), txfPostTitle.getText(), txfPostBody.getText())) {
 	            	onViewChangeClick();
 					new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-						// Change to PostView after PostView is created //
+						// Change to PostView after PostView is created  -- This would require a post return //
             	}
             	else {
             		JOptionPane.showMessageDialog(null, "An error occured");

@@ -13,4 +13,3 @@
 @NAME=Sports
 @END
 
-@ENDFILE

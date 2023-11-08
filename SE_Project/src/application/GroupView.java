@@ -102,7 +102,10 @@ public class GroupView extends JFrame {
 				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 150, 10, 100, 25);
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
+		System.out.printf("\nx1 = %d\n", x1);
+		System.out.printf("\ncurrentFrame.getBounds().width =%d\nbtnRefreshPage.getPreferredSize().width =%d\npadding =%d\nextra =%d", currentFrame.getBounds().width, btnRefreshPage.getPreferredSize().width, padding, 150);
 			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
 		
@@ -181,8 +184,11 @@ public class GroupView extends JFrame {
 		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			JButton newPost = new JButton("Create New Post");
 			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int btnWidth = newPost.getPreferredSize().width + padding;
-			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 150, 45, newPost.getPreferredSize().width + padding, 25);
+			int x2 = currentFrame.getBounds().width - (newPost.getPreferredSize().width + padding + 50);
+			System.out.printf("\nx2 = %d\n", x2);
+			System.out.printf("\ncurrentFrame.getBounds().width =%d\nnewPost.getPreferredSize().width =%d\npadding =%d\nextra =%d",currentFrame.getBounds().width,newPost.getPreferredSize().width, padding, 150);
+			
+			newPost.setBounds(x2, 45, newPost.getPreferredSize().width + padding, 25);
 			titlePanel.add(newPost);
 			newPost.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
