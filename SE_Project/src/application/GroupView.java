@@ -14,6 +14,7 @@ public class GroupView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
+	private Dimension dim;
 
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
@@ -27,6 +28,7 @@ public class GroupView extends JFrame {
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
+		this.dim = dim;
 		displayGUI();
 	}
 	
@@ -44,6 +46,7 @@ public class GroupView extends JFrame {
 		int padding = 10;
 		
 		titlePanel.setPreferredSize(new Dimension(0,80));
+	
 		titlePanel.setLayout(null);
 		
 		JLabel lblHome = new JLabel("Home");
@@ -99,7 +102,7 @@ public class GroupView extends JFrame {
 				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 150, 10, 100, 25);
 			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
 		
@@ -179,7 +182,7 @@ public class GroupView extends JFrame {
 			JButton newPost = new JButton("Create New Post");
 			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
 			int btnWidth = newPost.getPreferredSize().width + padding;
-			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 25, 45, newPost.getPreferredSize().width + padding, 25);
+			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 150, 45, newPost.getPreferredSize().width + padding, 25);
 			titlePanel.add(newPost);
 			newPost.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -194,17 +197,15 @@ public class GroupView extends JFrame {
 	}
 	
 
-private JPanel createScrollPane() {
+private JPanel createInsidePane() {
 	
 		int gridLocY = 10;
 		int padding = 30;
 	
 		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
-		JScrollPane postScrollPane = new JScrollPane();
+		
 		JPanel postPane = new JPanel();
 		postPane.setLayout(null);
-		
-		postScrollPane.add(postPane);
 
 				
 		for (Post p : alPost) {
@@ -228,6 +229,8 @@ private JPanel createScrollPane() {
 	        });
 			postPane.add(lblToAdd);
 		}
+		postPane.setPreferredSize(new Dimension(currentFrame.getWidth(), gridLocY));
+		
 		return postPane;
 	}
 	
@@ -243,10 +246,18 @@ private JPanel createScrollPane() {
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
-    
-		JPanel centerInsidePanel = createScrollPane();
+		
+		JPanel centerInsidePanel = createInsidePane();
+		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);	
 
-		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
+		mainPanel.add(centerInsidePanel);
+		mainPanel.setSize(getPreferredSize());
+
+		JScrollPane scrollPanel = new JScrollPane(mainPanel);
+		scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPanel.setSize(dim);
+		
+		currentFrame.getContentPane().add(scrollPanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}
