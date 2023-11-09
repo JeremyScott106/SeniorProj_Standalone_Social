@@ -55,6 +55,7 @@ public class Post implements Comparable<Post>{
 		return group;
 	}
 	
+	//FIXME : Add Unit Tests
 	public String getPostTitle() {
 		return postTitle;
 	}

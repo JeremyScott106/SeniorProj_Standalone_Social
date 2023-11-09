@@ -47,16 +47,10 @@ class SortUsersByUsername implements Comparator<User> {
 	
 }
 
+//FIXME : Add Unit Tests
 class SortPostsByDate implements Comparator<Post> {
 	@Override
 	public int compare(Post p1, Post p2) {
 		return p2.getTime().compareTo(p1.getTime());
 	}
 }
-
-//class SortResponsesByDate implements Comparator<Response> {
-//	@Override
-//	public int compare(Response r1, Response r2) {
-//		return r2.getTime().compareTo(r1.getTime());
-//	}
-//}
