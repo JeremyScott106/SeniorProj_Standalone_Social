@@ -107,9 +107,9 @@ public class SystemManager {
 		return (group.addMember(m));
 	}
 	
-	//FIXME: Add Unit Tests
+	// allows a user to leave a group
 	public boolean leaveGroup(User user, Group group) {
-		membership m = new membership(user, group);
+		membership m = group.getMembership(user.getId());
 		return (group.removeMember(m));
 	}
 
@@ -276,6 +276,14 @@ public class SystemManager {
 	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
+	}
+	
+	public boolean isUserAdmin(User u) {
+		if (u instanceof Admin) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	// gets current user
@@ -520,6 +528,14 @@ public class SystemManager {
 	 
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
+			SimpleDateFormat df = new SimpleDateFormat(pattern);
+			return df.format(date);
+
+	 }
+	 
+	 	//FIXME: Add unit tests
+	 public String getSimpleTime(Date date) {
+			String pattern = "h:mm a";
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
 			return df.format(date);
 
