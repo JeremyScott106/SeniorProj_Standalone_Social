@@ -58,7 +58,44 @@ public class GroupTest {
 		User expected = u1;
 
 		assertEquals(expected, actual);
-	}	
+	}
+	
+	//Testing addMember and getMember//
+	@Test
+	void removeMemberTest(){
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
+
+		membership m1 = new membership(u1, testGroup1);
+		membership m2 = new membership(u2, testGroup1);
+		membership m3 = new membership(u3, testGroup1);
+		membership m4 = new membership(u4, testGroup1);
+		membership m5 = new membership(u5, testGroup1);
+
+
+		testGroup1.addMember(m1);
+		testGroup1.addMember(m2);
+		testGroup1.addMember(m3);
+		testGroup1.addMember(m4);
+		testGroup1.addMember(m5);
+		testGroup1.removeMember(m5);
+		
+		ArrayList<membership> actual = testGroup1.getMembers();
+		
+		ArrayList<membership> expected = new ArrayList<>();
+		expected.add(m1);
+		expected.add(m2);
+		expected.add(m3);
+		expected.add(m4);
+
+
+		assertEquals(expected, actual);
+	}
 	
 	@Test
 	void testGetGroupWriteData() {
@@ -129,7 +166,7 @@ public class GroupTest {
 	
 	//Testing addBanned and getBanned//
 	@Test
-	void addBannedTest() throws ParseException {
+	void addBannedTest(){
 		Group testGroup1 = new Group("MembersTest");
 		
 		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
@@ -151,8 +188,15 @@ public class GroupTest {
 		testGroup1.addBanned(b4);
 		testGroup1.addBanned(b5);
 		
-		User actual = testGroup1.getUserInBanned("0");
-		User expected = u1;
+		ArrayList<Banned> actual = new ArrayList<>();
+		actual.addAll(testGroup1.getBanned());
+		ArrayList<Banned> expected = new ArrayList<>();
+		expected.add(b1);
+		expected.add(b2);
+		expected.add(b3);
+		expected.add(b4);
+		expected.add(b5);
+
 
 		assertEquals(expected, actual);
 	}
@@ -160,7 +204,7 @@ public class GroupTest {
 	//Testing addMember and getMember//
 	@Test
 	void addSuspendedTest() throws ParseException {
-		Group g1 = new Group("MembersTest");
+		Group testGroup1 = new Group("MembersTest");
 		
 		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
@@ -168,20 +212,28 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 		
-		Suspended s1 = new Suspended(u1, g1);
-		Suspended s2 = new Suspended(u2, g1);
-		Suspended s3 = new Suspended(u3, g1);
-		Suspended s4 = new Suspended(u4, g1);
-		Suspended b5 = new Suspended(u5, g1);
+		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
-		g1.addSuspended(s1);
-		g1.addSuspended(s2);
-		g1.addSuspended(s3);
-		g1.addSuspended(s4);
-		g1.addSuspended(b5);
+
+		testGroup1.addSuspended(b1);
+		testGroup1.addSuspended(b2);
+		testGroup1.addSuspended(b3);
+		testGroup1.addSuspended(b4);
+		testGroup1.addSuspended(b5);
 		
-		User actual = g1.getUserInSuspended("0");
-		User expected = u1;
+		ArrayList<Suspended> actual = new ArrayList<>();
+		actual.addAll(testGroup1.getSuspended());
+		ArrayList<Suspended> expected = new ArrayList<>();
+		expected.add(b1);
+		expected.add(b2);
+		expected.add(b3);
+		expected.add(b4);
+		expected.add(b5);
+
 
 		assertEquals(expected, actual);
 	}
