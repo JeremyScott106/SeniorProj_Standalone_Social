@@ -199,7 +199,9 @@ public class SystemManager {
 		return(group.addPost(p));
 	}
 	
+
 	//FIXME : Add Unit Tests
+
 	public boolean createNewResponse(Group group, String responseBody) {
 		membership m = getMembership(group, currentUser);
 		Response r = new Response(m, responseBody);
@@ -398,6 +400,7 @@ public class SystemManager {
 		return posts;
 	}
 	
+
 	//FIXME : Add Unit Tests
 	public ArrayList<Response> viewAllPostResponses (Post p) {
 		
@@ -406,6 +409,13 @@ public class SystemManager {
 		Collections.sort(alResponses, new SortPostsByDate());
 		
 		return alResponses;
+  }
+
+	public ArrayList<Response> viewAllPostResponses () {
+		if (currentPost != null) {
+			return currentPost.getResponse();
+		}
+		return null;
 	}
 	 
 	//User story 22

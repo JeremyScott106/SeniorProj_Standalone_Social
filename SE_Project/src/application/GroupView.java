@@ -331,10 +331,9 @@ public class GroupView extends JFrame {
 		int padding = 10;
 	
 		ArrayList<Post> alPost = manager.getPosts_InGroupByDate(manager.getCurrentGroup());
-		
 		JPanel postPane = new JPanel();
 		postPane.setLayout(null);
-		
+
 		for (Post p : alPost) {
 			JPanel jp = createPostBox(p);
 			jp.setBounds(20, gridLocY, jp.getSize().width, jp.getSize().height);
@@ -349,7 +348,6 @@ public class GroupView extends JFrame {
 				}
 			});
 			postPane.add(jp);
-			
 		}
 		postPane.setPreferredSize(new Dimension(currentFrame.getWidth()-50, gridLocY));
 		

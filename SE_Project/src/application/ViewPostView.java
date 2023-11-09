@@ -263,13 +263,11 @@ public class ViewPostView extends JFrame {
 		
 		int gridLocY = 10;
 		int padding = 30;
-	
+
 		ArrayList<Response> alResponse = manager.viewAllPostResponses(manager.getCurrentPost());
-		
 		JPanel responsePane = new JPanel();
 		responsePane.setLayout(null);
 
-				
 		for (Response r : alResponse) {
 			
 			JTextArea responseArea = new JTextArea(r.getResponseBody());
@@ -280,7 +278,6 @@ public class ViewPostView extends JFrame {
 			responsePane.add(responseArea);
 		}
 		responsePane.setPreferredSize(new Dimension(currentFrame.getWidth(), gridLocY));
-		
 		return responsePane;
 	}
 	
