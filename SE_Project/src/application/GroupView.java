@@ -5,6 +5,7 @@ import Project.SystemManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.*;
 
@@ -204,12 +205,10 @@ private JPanel createInsidePane() {
 		int gridLocY = 10;
 		int padding = 30;
 	
-		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
-		
+		ArrayList<Post> alPost = manager.getPosts_InGroupByDate(manager.getCurrentGroup());
 		JPanel postPane = new JPanel();
 		postPane.setLayout(null);
 
-				
 		for (Post p : alPost) {
 			
 			JLabel lblToAdd = new JLabel(p.getPostTitle());
@@ -224,7 +223,6 @@ private JPanel createInsidePane() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 	            	onViewChangeClick();
-
 	            	manager.setCurrentPost(p);
 	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 	            }

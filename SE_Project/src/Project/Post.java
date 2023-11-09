@@ -5,14 +5,14 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-public class Post {
+public class Post implements Comparable<Post>{
 	
 	private User user;
 	private Group group;
 	private String postTitle;
 	private String postBody;
 	private ArrayList<Response> responses;
-	private Date dateTime;
+	private Date dateTime;		//May add private Date lastResponse;
     private int score;
     
     public Post (membership memberships, String postTitle, String postBody) {
@@ -55,6 +55,7 @@ public class Post {
 		return group;
 	}
 	
+	//FIXME : Add Unit Tests
 	public String getPostTitle() {
 		return postTitle;
 	}
@@ -104,5 +105,13 @@ public class Post {
     	
     	return userData;
     }
+
+	@Override
+	public int compareTo(Post o) {
+		if (o.dateTime.equals(dateTime)) {
+			return 1;
+		}
+		return 0;
+	}
 
 }

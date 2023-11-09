@@ -185,12 +185,16 @@ public class SystemManager {
 	
 
 	// allows a post to be created
+	//FIXME : Add Unit Tests
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
 		Post p = new Post(m, postTitle, postBody);
 		return(group.addPost(p));
 	}
 	
+
+	//FIXME : Add Unit Tests
+
 	public boolean createNewResponse(Group group, String responseBody) {
 		membership m = getMembership(group, currentUser);
 		Response r = new Response(m, responseBody);
@@ -198,7 +202,8 @@ public class SystemManager {
 	}
 	
 
-	// gets the membership of the group and user inputted
+	// gets the membership of the group and user inputed
+	//FIXME : Add Unit Tests
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
 		for (membership m : memberships) {
@@ -245,52 +250,73 @@ public class SystemManager {
 		return users;
 	}
 	
+	//FIXME : Add Unit Tests
+	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
+		
+		ArrayList<Post> alPosts = g.getPost();
+		
+		Collections.sort(alPosts, new SortPostsByDate());
+		
+		return alPosts;
+		
+	}
+	
 	// returns the status if the user is logged in
+	//FIXME : Add Unit Tests
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
 	//returns the status of the admin
+	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
 	
 	// gets current user
+	//FIXME : Add Unit Tests
 	public User getCurrentUser() {
 		return currentUser;
 	}
 	
 
 	// gets current category
+	//FIXME : Add Unit Tests
 	public category getCurrentCategory() {
 		return currentCategory;
 	}
 
 
 	// sets the current category
+	//FIXME : Add Unit Tests
 	public void setCurrentCategory(category currentCategory) {
 		this.currentCategory = currentCategory;
 	}
 
 	// gets the current group
+	//FIXME : Add Unit Tests
 	public Group getCurrentGroup() {
 		return currentGroup;
 	}
 
 
   // sets the current group
+	//FIXME : Add Unit Tests
 	public void setCurrentGroup(Group currentGroup) {
 		this.currentGroup = currentGroup;
 	}
 	
+	//FIXME : Add Unit Tests
 	public Post getCurrentPost() {
 		return currentPost;
 	}
 
+	//FIXME : Add Unit Tests
 	public void setCurrentPost(Post currentPost) {
 		this.currentPost = currentPost;
 	}
 
+	//FIXME : Add Unit Tests
 	// allows a user to logout
 	public void logout() {
 		currentUser = null;
@@ -346,6 +372,7 @@ public class SystemManager {
 	}
 	 
 	//helper method, returns a list of all posts.
+	//FIXME : Add Unit Tests
 	public ArrayList<Post> getAllPost(){
 		ArrayList<Group> groups = new ArrayList<>();
 		ArrayList<Post> posts = new ArrayList<>();
@@ -358,6 +385,17 @@ public class SystemManager {
 		return posts;
 	}
 	
+
+	//FIXME : Add Unit Tests
+	public ArrayList<Response> viewAllPostResponses (Post p) {
+		
+		ArrayList<Response> alResponses = p.getResponse();
+			
+		Collections.sort(alResponses, new SortPostsByDate());
+		
+		return alResponses;
+  }
+
 	public ArrayList<Response> viewAllPostResponses () {
 		if (currentPost != null) {
 			return currentPost.getResponse();
