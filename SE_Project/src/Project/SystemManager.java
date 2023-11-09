@@ -302,7 +302,7 @@ public class SystemManager {
 		if (u == null) {
 			return false;
 		}
-		User u1 = g.getMember(u.getId());
+		User u1 = g.getUserInMembership(u.getId());
 		
 		if(u1 != null) {
 			return true;
@@ -316,7 +316,7 @@ public class SystemManager {
 	 ArrayList<Group> groups = new ArrayList<>();
 	 groups.addAll(getAllGroups());
 	 for (Group g: groups) {
-		 if (g.isMemberInGroup(user.getId()) == true){
+		 if (g.isMemberInGroupInMembership(user.getId()) == true){
 			 group.add(g);
 		 }
 	 }
@@ -326,7 +326,7 @@ public class SystemManager {
 	 public ArrayList<User> getUsersInGroup(Group group) {
 		 ArrayList<User> userInGroup = new ArrayList<>();
 		 for (User u: users) {
-			 if (group.isMemberInGroup(u.getId()) == true){
+			 if (group.isMemberInGroupInMembership(u.getId()) == true){
 				 userInGroup.add(u);
 			 }
 		 }
