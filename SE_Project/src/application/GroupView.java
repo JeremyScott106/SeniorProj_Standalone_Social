@@ -5,7 +5,6 @@ import Project.SystemManager;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.*;
 
@@ -20,6 +19,49 @@ public class GroupView extends JFrame {
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
 	public GroupView() {
+		getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(50, 38, 600, 70);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JTextArea lblTitle = new JTextArea("New label");
+		lblTitle.setWrapStyleWord(true);
+		lblTitle.setRows(2);
+		lblTitle.setLineWrap(true);
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTitle.setBounds(49, 0, 551, 40);
+		panel.add(lblTitle);
+		
+		JLabel lblScore = new JLabel("New label");
+		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblScore.setBounds(10, 30, 20, 10);
+		panel.add(lblScore);
+		
+		JButton btnUpVote = new JButton("New button");
+		btnUpVote.setBounds(10, 5, 20, 20);
+		panel.add(btnUpVote);
+		
+		JButton btnDownVote = new JButton("New button");
+		btnDownVote.setBounds(10, 45, 20, 20);
+		panel.add(btnDownVote);
+		
+		JLabel lblUidLable = new JLabel("User:");
+		lblUidLable.setBounds(49, 49, 34, 13);
+		panel.add(lblUidLable);
+		
+		JLabel lblUserId = new JLabel("New label");
+		lblUserId.setBounds(86, 49, 45, 13);
+		panel.add(lblUserId);
+		
+		JLabel lblPostedLabel = new JLabel("Posted: ");
+		lblPostedLabel.setBounds(448, 49, 45, 13);
+		panel.add(lblPostedLabel);
+		
+		JLabel lblPostedDate = new JLabel("New label");
+		lblPostedDate.setBounds(497, 49, 93, 13);
+		panel.add(lblPostedDate);
 	}
 	
 	
@@ -123,10 +165,7 @@ public class GroupView extends JFrame {
 					new LoginPopUp(manager);
 				}
 			});
-
-		
-
-			
+						
 			JButton btnNewUser = new JButton("Register New Account");
 			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
 			btnNewUser.setBounds(gridx, 45, btnNewUser.getPreferredSize().width + padding, 25);
@@ -171,13 +210,34 @@ public class GroupView extends JFrame {
 		}
 		
 		else {
-			String mbmSince = "Member Since: " + manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate().toString();
+			String mbrDate = manager.getSimpleDate(manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate());
+			String mbmSince = "Member Since: " + mbrDate;
 
 			JLabel memberStatus = new JLabel(mbmSince);
 			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
 			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
 			gridx += memberStatus.getWidth() + padding;
 			titlePanel.add(memberStatus);
+			
+			JLabel leaveGroup = new JLabel("Leave Group");
+			leaveGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
+			leaveGroup.setForeground(Color.BLUE.darker());
+			leaveGroup.setBounds(gridx, 45, leaveGroup.getPreferredSize().width + padding, 25);
+			gridx += leaveGroup.getWidth() + padding;
+			leaveGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			leaveGroup.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	if (manager.leaveGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			    		JOptionPane.showMessageDialog(null, "Successfully Left Group");
+			    		btnRefreshPage.doClick();
+			    	}
+			    	else {
+			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
+			    	}
+	            }
+	        });
+			titlePanel.add(leaveGroup);
 		}
 		
 		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
@@ -199,35 +259,95 @@ public class GroupView extends JFrame {
 		
 	}
 	
+	private JPanel createPostBox(Post p) {
+		JPanel panel = new JPanel();
+		panel.setBounds(50, 38, 600, 70);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		panel.setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		JTextArea lblTitle = new JTextArea(p.getPostTitle());
+		lblTitle.setWrapStyleWord(true);
+		lblTitle.setRows(2);
+		lblTitle.setLineWrap(true);
+		lblTitle.setFocusable(false);
+		lblTitle.setOpaque(false);
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblTitle.setBounds(50, 5, 545, 40);
+		panel.add(lblTitle);
+		lblTitle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onViewChangeClick();
+				manager.setCurrentPost(p);
+				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());					
+			}
+		});
+		
+		JLabel lblScore = new JLabel("" + p.getScore());
+		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScore.setVerticalAlignment(SwingConstants.CENTER);
+		lblScore.setBounds(10, 30, 20, 10);
+		panel.add(lblScore);
+		
+		JButton btnUpVote = new JButton("Up");
+		btnUpVote.setBounds(10, 5, 20, 20);
+		panel.add(btnUpVote);
+		
+		JButton btnDownVote = new JButton("Down");
+		btnDownVote.setBounds(10, 45, 20, 20);
+		panel.add(btnDownVote);
+		
+		JLabel lblUidLable = new JLabel("By:");
+		lblUidLable.setBounds(60, 49, 34, 13);
+		panel.add(lblUidLable);
+		
+		JLabel lblUserId = new JLabel();
+		if (manager.isUserAdmin(p.getUser())) {
+			lblUserId = new JLabel("(ADMIN) " + p.getUser().getId());
+		}
+		else {
+			lblUserId = new JLabel(p.getUser().getId());
+		}
+		lblUserId.setBounds(86, 49, lblUserId.getPreferredSize().width + 10, 13);
+		panel.add(lblUserId);
+		
+		JLabel lblPostedLabel = new JLabel("Posted:");
+		lblPostedLabel.setBounds(420, 49, 45, 13);
+		panel.add(lblPostedLabel);
+		
+		JLabel lblPostedDate = new JLabel(manager.getSimpleDate(p.getTime()) + ", " + manager.getSimpleTime(p.getTime()));
+		lblPostedDate.setBounds(470, 49, 120, 13);
+		panel.add(lblPostedDate);
+		
+		return panel;
+	}
+	
 
-private JPanel createInsidePane() {
+	private JPanel createInsidePane() {
 	
 		int gridLocY = 10;
-		int padding = 30;
+		int padding = 10;
 	
 		ArrayList<Post> alPost = manager.getPosts_InGroupByDate(manager.getCurrentGroup());
 		JPanel postPane = new JPanel();
 		postPane.setLayout(null);
 
 		for (Post p : alPost) {
+			JPanel jp = createPostBox(p);
+			jp.setBounds(20, gridLocY, jp.getSize().width, jp.getSize().height);
+			gridLocY += jp.getHeight() + padding;
 			
-			JLabel lblToAdd = new JLabel(p.getPostTitle());
-
-			lblToAdd.setBounds(20, gridLocY, lblToAdd.getPreferredSize().width + padding, 25);
-			gridLocY += lblToAdd.getHeight() + padding;
-
-			lblToAdd.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			lblToAdd.setForeground(Color.BLUE.darker());
-			lblToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			lblToAdd.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseClicked(MouseEvent e) {
-	            	onViewChangeClick();
-	            	manager.setCurrentPost(p);
-	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-	            }
-	        });
-			postPane.add(lblToAdd);
+			jp.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					onViewChangeClick();
+					manager.setCurrentPost(p);
+					new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());					
+				}
+			});
+			postPane.add(jp);
 		}
 		postPane.setPreferredSize(new Dimension(currentFrame.getWidth()-50, gridLocY));
 		
@@ -235,8 +355,8 @@ private JPanel createInsidePane() {
 	}
 	
 	private void displayGUI() {
-		currentFrame.setLayout(new BorderLayout(0, 0));
-		currentFrame.add(topBar, BorderLayout.NORTH);
+		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
 		currentFrame.setTitle("This is the listing of posts in group " + manager.getCurrentGroup().getGroupName());
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

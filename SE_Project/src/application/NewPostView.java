@@ -14,7 +14,6 @@ public class NewPostView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private Dimension dim;
 	private JTextField txfPostTitle;
 	private JTextArea txfPostBody;
 	
@@ -28,7 +27,6 @@ public class NewPostView extends JFrame {
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
-		this.dim = dim;
 		displayGUI();
 	}
 	

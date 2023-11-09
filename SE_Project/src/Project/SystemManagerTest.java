@@ -1,9 +1,15 @@
 package Project;
 
+import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 class SystemManagerTest {
 
@@ -981,5 +987,87 @@ class SystemManagerTest {
 		
 		assertEquals(null, actual);
 	}
+	@Test
+	void testgetSimpleDate_Success() {
+		SystemManager manager = new SystemManager();
+		Date d1 = new Date();
+		
+		String day = d1.toString().substring(8,10);
+		String month = d1.toString().substring(4,7);
+		String year = d1.toString().substring(24);
+	 
+		String expected = day + " " + month + " " + year;
+		
+		String result = manager.getSimpleDate(d1);
+		
+		assertEquals(expected, result);
+		
+	}
+	
+	@Test
+	void testgetSimpleDate_Failure() {
+		SystemManager manager = new SystemManager();
+		Date d1 = new Date();
+		Date d2 = new Date(7/11/1111);
+		String day = d1.toString().substring(8,10);
+		String month = d1.toString().substring(4,7);
+		String year = d1.toString().substring(24);
+	 
+		String expected = day + " " + month + " " + year;
+		
+		String result = manager.getSimpleDate(d2);
+		
+		assertNotSame(expected, result);
+		
+	}
+	
+	@Test
+	void testJoinGroup_Success() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
 
+		assertEquals(true, manager.isUserOfGroup(u1, g1));
+	}
+	
+	@Test
+	void testJoinGroup_Fail() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		Group g2 = new Group("Test2");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
+
+		assertEquals(false, manager.isUserOfGroup(u1, g2));
+	}
+	
+	@Test
+	void testLeaveGroup_Success() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		Group g2 = new Group("Test2");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
+		manager.joinGroup(u1, g2);
+		
+		manager.leaveGroup(u1, g1);
+
+		assertEquals(false, manager.isUserOfGroup(u1, g1));
+	}
+	
+	@Test
+	void testLeaveGroup_Fail() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		Group g2 = new Group("Test2");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
+		manager.joinGroup(u1, g2);
+		
+		manager.leaveGroup(u1, g1);
+
+		assertEquals(true, manager.isUserOfGroup(u1, g2));
+	}
+	
 }
