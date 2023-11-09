@@ -2,6 +2,8 @@ package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -125,17 +127,17 @@ public class PostTest {
 	void getTimeTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		java.util.Date timeTest = new java.util.Date();;
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
-
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
+		
+		java.util.Date timeTest = new java.util.Date();
+		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
-		assertEquals(timeTest, testPost1.getTime());
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		String actual = df.format(testPost1.getTime());
+		String expected = df.format(timeTest);
+		
+		assertEquals(expected, actual);
 	}
 	
 	//Tests adding the score, end score should be positive 1
@@ -143,14 +145,10 @@ public class PostTest {
 	void addScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		testPost1.addScore();
 		
 		assertEquals(1, testPost1.getScore());
 	}

@@ -430,7 +430,8 @@ class ReadFileTest {
 		SystemManager manager = new SystemManager();
 		
 		ArrayList<String> fileNames = new ArrayList<String>();
-		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin_User.txt");
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt");
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_User.txt");
 		
 		try {
 			
