@@ -54,18 +54,11 @@ public class GroupTest {
 		testGroup1.addMember(m4);
 		testGroup1.addMember(m5);
 		
-		User actual = testGroup1.getMember("0");
+		User actual = testGroup1.getUserInMembership("0");
 		User expected = u1;
 
 		assertEquals(expected, actual);
-	}
-
-	@Test
-	void getPostsTest() {
-													// FIXME :: Post Class Needs Added First //
-	}
-	
-	
+	}	
 	
 	@Test
 	void testGetGroupWriteData() {
@@ -132,6 +125,70 @@ public class GroupTest {
 		
 		assertEquals(false, actual);
 		
+	}
+	
+	//Testing addBanned and getBanned//
+	@Test
+	void addBannedTest() throws ParseException {
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		Banned b1 = new Banned(u1, testGroup1);
+		Banned b2 = new Banned(u2, testGroup1);
+		Banned b3 = new Banned(u3, testGroup1);
+		Banned b4 = new Banned(u4, testGroup1);
+		Banned b5 = new Banned(u5, testGroup1);
+
+
+		testGroup1.addBanned(b1);
+		testGroup1.addBanned(b2);
+		testGroup1.addBanned(b3);
+		testGroup1.addBanned(b4);
+		testGroup1.addBanned(b5);
+		
+		User actual = testGroup1.getUserInBanned("0");
+		User expected = u1;
+
+		assertEquals(expected, actual);
+	}
+	
+	//Testing addMember and getMember//
+	@Test
+	void addSuspendedTest() throws ParseException {
+		Group g1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		Suspended s1 = new Suspended(u1, g1);
+		Suspended s2 = new Suspended(u2, g1);
+		Suspended s3 = new Suspended(u3, g1);
+		Suspended s4 = new Suspended(u4, g1);
+		Suspended b5 = new Suspended(u5, g1);
+
+		g1.addSuspended(s1);
+		g1.addSuspended(s2);
+		g1.addSuspended(s3);
+		g1.addSuspended(s4);
+		g1.addSuspended(b5);
+		
+		User actual = g1.getUserInSuspended("0");
+		User expected = u1;
+
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void getPostsTest() {
+													// FIXME :: Post Class Needs Added First //
 	}
 
 
