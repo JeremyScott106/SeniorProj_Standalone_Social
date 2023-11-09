@@ -245,6 +245,16 @@ public class SystemManager {
 		return users;
 	}
 	
+	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
+		
+		ArrayList<Post> alPosts = g.getPost();
+		
+		Collections.sort(alPosts, new SortPostsByDate());
+		
+		return alPosts;
+		
+	}
+	
 	// returns the status if the user is logged in
 	public boolean isLoggedIn() {
 		return userSignedIn;
@@ -358,11 +368,13 @@ public class SystemManager {
 		return posts;
 	}
 	
-	public ArrayList<Response> viewAllPostResponses () {
-		if (currentPost != null) {
-			return currentPost.getResponse();
-		}
-		return null;
+	public ArrayList<Response> viewAllPostResponses (Post p) {
+		
+		ArrayList<Response> alResponses = p.getResponse();
+			
+		Collections.sort(alResponses, new SortPostsByDate());
+		
+		return alResponses;
 	}
 	 
 	//User story 22

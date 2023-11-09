@@ -269,7 +269,7 @@ public class ViewPostView extends JFrame {
 		int gridLocY = 10;
 		int padding = 30;
 	
-		ArrayList<Response> alResponse = manager.viewAllPostResponses();
+		ArrayList<Response> alResponse = manager.viewAllPostResponses(manager.getCurrentPost());
 		
 		JPanel responsePane = new JPanel();
 		responsePane.setLayout(null);

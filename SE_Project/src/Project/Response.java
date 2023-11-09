@@ -2,7 +2,7 @@ package Project;
 
 import java.lang.reflect.Member;
 
-public class Response extends Post{
+public class Response extends Post {
 	private membership membership;
 	private String responseBody;
 	
