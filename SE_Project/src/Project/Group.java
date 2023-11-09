@@ -10,12 +10,15 @@ public class Group implements Comparable<Group> {
     private String groupName;
     private ArrayList<membership> memberships;
     private ArrayList<Post> posts;
-
+    private ArrayList<Banned> bans;
+    private ArrayList<Suspended> suspensions;
+    
     public Group (String groupName) {
         this.groupName = groupName;
         this.memberships = new ArrayList<>();
         this.posts = new ArrayList<>();
-
+        this.bans = new ArrayList<>();
+        this.suspensions = new ArrayList<>();
     }
 
     //Gets the name of the groups that are created
@@ -34,6 +37,18 @@ public class Group implements Comparable<Group> {
         	return true;
         }
     }
+    
+    //Removes members into groups
+    public boolean removeMember(membership m) {
+
+        if (Validator.validateMemberExistsInGroup(m, memberships)) {
+        	return false;
+        }
+        else {
+        	memberships.remove(m);
+        	return true;
+        }
+    }
 
 
     //Gets the list of member in the group
@@ -42,7 +57,7 @@ public class Group implements Comparable<Group> {
     }
 
     //Find members using their userID
-    public User getMember (String userId) {
+    public User getUserInMembership (String userId) {
         for(membership m : memberships) {
         	User u = m.getUser();
             if(u.getId().equals(userId)) {
@@ -64,7 +79,7 @@ public class Group implements Comparable<Group> {
     }
 
     //Checks to see if a member is already a part of a group
-    public boolean isMemberInGroup (String memberId) {
+    public boolean isMemberInGroupInMembership (String memberId) {
         for(membership m : memberships) {
         	User u = m.getUser();
             if(u.getId().equals(memberId)) {
@@ -89,6 +104,18 @@ public class Group implements Comparable<Group> {
             return true;
         }
         return false;
+    }
+    
+    //removes a post from the group
+    public boolean removePost(Post p) {
+        boolean isMember = true;
+        for (Post p1 : posts) {
+            if (p1.equals(p)) {
+                posts.remove(p);
+                isMember = false;
+            }
+        }
+        return isMember;
     }
 
     //Gets the list of post made within a group
@@ -129,5 +156,119 @@ public class Group implements Comparable<Group> {
 		}
 		
 	}
+	
+    //Adds members into groups
+    public boolean addBanned(Banned b) {
+
+        if (Validator.validateBannedExistsInGroup(b, bans)) {
+        	return false;
+        }
+        else {
+        	bans.add(b);
+        	return true;
+        }
+    }
+    
+    //Gets the list of member in the group
+    public ArrayList<Banned> getBanned() {
+        return bans;
+    }
+
+    //Find members using their userID
+    public User getUserInBanned (String userId) {
+        for(Banned b : bans) {
+        	User u = b.getUser();
+            if(u.getId().equals(userId)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+  //Find memberships using their userID
+    public Banned getBanned (String userId) {
+        for(Banned b : bans) {
+        	User u = b.getUser();
+            if(u.getId().equals(userId)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    //Checks to see if a member is already a part of a group
+    public boolean isMemberInGroupInBanned (String memberId) {
+        for(Banned b : bans) {
+        	User u = b.getUser();
+            if(u.getId().equals(memberId)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    //Gets the list of member in the group
+    public ArrayList<Suspended> getSuspended() {
+        return suspensions;
+    }
+    
+    //Find members using their userID
+    public User getUserInSuspended (String userId) {
+        for(Suspended s : suspensions) {
+        	User u = s.getUser();
+            if(u.getId().equals(userId)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+  //Find memberships using their userID
+    public Suspended getSuspended (String userId) {
+        for(Suspended s : suspensions) {
+        	User u = s.getUser();
+            if(u.getId().equals(userId)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    //Checks to see if a member is already a part of a group
+    public boolean isMemberInGroupInSuspended (String memberId) {
+        for(Suspended s : suspensions) {
+        	User u = s.getUser();
+            if(u.getId().equals(memberId)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
+    //Adds members into suspensions
+    public boolean addSuspended(Suspended s) {
+
+        if (Validator.validateSuspendedExistsInGroup(s, suspensions)) {
+        	return false;
+        }
+        else {
+        	suspensions.add(s);
+        	return true;
+        }
+    }
+    
+    //Removes members into groups
+    public boolean removeSuspended(Suspended s) {
+
+        if (Validator.validateSuspendedExistsInGroup(s, suspensions)) {
+        	return false;
+        }
+        else {
+        	memberships.remove(s);
+        	return true;
+        }
+    }
 
 }
