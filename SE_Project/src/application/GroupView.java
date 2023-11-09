@@ -14,6 +14,7 @@ public class GroupView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
+	private Dimension dim;
 
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
@@ -27,6 +28,7 @@ public class GroupView extends JFrame {
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
+		this.dim = dim;
 		displayGUI();
 	}
 	
@@ -44,6 +46,7 @@ public class GroupView extends JFrame {
 		int padding = 10;
 		
 		titlePanel.setPreferredSize(new Dimension(0,80));
+	
 		titlePanel.setLayout(null);
 		
 		JLabel lblHome = new JLabel("Home");
@@ -91,6 +94,18 @@ public class GroupView extends JFrame {
 		lblCurrentGroup.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
 		titlePanel.add(lblCurrentGroup);
+		
+		JButton btnRefreshPage = new JButton("Refresh");
+		btnRefreshPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
+			// FIXME: BUG -> Refresh button disappears if frame shrinks.
+		titlePanel.add(btnRefreshPage);
 		
 		//	SECOND ROW OF LABLES //
 		gridx = 20;
@@ -144,6 +159,7 @@ public class GroupView extends JFrame {
 			    	boolean result = manager.joinGroup(manager.getCurrentUser(), manager.getCurrentGroup());
 			    	if (result) {
 			    		JOptionPane.showMessageDialog(null, "Successfully Joined Group");
+			    		btnRefreshPage.doClick();
 			    	}
 			    	else {
 			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
@@ -163,22 +179,12 @@ public class GroupView extends JFrame {
 			titlePanel.add(memberStatus);
 		}
 		
-		JButton btnRefreshPage = new JButton("Refresh");
-		btnRefreshPage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-			}
-		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
-			// FIXME: BUG -> Refresh button disappears if frame shrinks.
-		titlePanel.add(btnRefreshPage);
-		
 		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			JButton newPost = new JButton("Create New Post");
 			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int btnWidth = newPost.getPreferredSize().width + padding;
-			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 25, 45, newPost.getPreferredSize().width + padding, 25);
+			int x2 = currentFrame.getBounds().width - (newPost.getPreferredSize().width + padding + 50);
+
+			newPost.setBounds(x2, 45, newPost.getPreferredSize().width + padding, 25);
 			titlePanel.add(newPost);
 			newPost.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -193,17 +199,15 @@ public class GroupView extends JFrame {
 	}
 	
 
-private JPanel createScrollPane() {
+private JPanel createInsidePane() {
 	
 		int gridLocY = 10;
 		int padding = 30;
 	
 		ArrayList<Post> alPost = manager.viewPostsInGroup(manager.getCurrentGroup());
-		JScrollPane postScrollPane = new JScrollPane();
+		
 		JPanel postPane = new JPanel();
 		postPane.setLayout(null);
-		
-		postScrollPane.add(postPane);
 
 				
 		for (Post p : alPost) {
@@ -227,6 +231,8 @@ private JPanel createScrollPane() {
 	        });
 			postPane.add(lblToAdd);
 		}
+		postPane.setPreferredSize(new Dimension(currentFrame.getWidth()-50, gridLocY));
+		
 		return postPane;
 	}
 	
@@ -237,15 +243,22 @@ private JPanel createScrollPane() {
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
-		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new BorderLayout(0,0));
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
-    
-		JPanel centerInsidePanel = createScrollPane();
+		
+		JPanel centerInsidePanel = createInsidePane();
+		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);	
 
-		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);
+		mainPanel.add(centerInsidePanel);
+		mainPanel.setSize(getPreferredSize());
+
+		JScrollPane scrollPanel = new JScrollPane(mainPanel);
+		scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPanel.setSize(dim);
+		
+		currentFrame.getContentPane().add(scrollPanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}

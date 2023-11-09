@@ -191,6 +191,12 @@ public class SystemManager {
 		return(group.addPost(p));
 	}
 	
+	public boolean createNewResponse(Group group, String responseBody) {
+		membership m = getMembership(group, currentUser);
+		Response r = new Response(m, responseBody);
+		return (currentPost.addResponse(r));		
+	}
+	
 
 	// gets the membership of the group and user inputted
 	public membership getMembership(Group group, User user) {
@@ -350,6 +356,13 @@ public class SystemManager {
 			posts.addAll(g.getPost());
 		}
 		return posts;
+	}
+	
+	public ArrayList<Response> viewAllPostResponses () {
+		if (currentPost != null) {
+			return currentPost.getResponse();
+		}
+		return null;
 	}
 	 
 	//User story 22

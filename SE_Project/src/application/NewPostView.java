@@ -14,8 +14,9 @@ public class NewPostView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
+	private Dimension dim;
 	private JTextField txfPostTitle;
-	private JTextField txfPostBody;
+	private JTextArea txfPostBody;
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//	
 	public NewPostView() {	
@@ -27,6 +28,7 @@ public class NewPostView extends JFrame {
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
+		this.dim = dim;
 		displayGUI();
 	}
 	
@@ -177,26 +179,13 @@ public class NewPostView extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+				new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
 			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
-		
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
-			JButton newPost = new JButton("Create New Post");
-			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int btnWidth = newPost.getPreferredSize().width + padding;
-			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 25, 45, newPost.getPreferredSize().width + padding, 25);
-			titlePanel.add(newPost);
-			newPost.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	onViewChangeClick();
-	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-				}
-			});
-		}
 		
 		return titlePanel;
 		
@@ -210,22 +199,24 @@ public class NewPostView extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblPostTitle = new JLabel("Post Title");
-		lblPostTitle.setBounds(10, 10, 45, 13);
+		lblPostTitle.setBounds(10, 10, lblPostTitle.getPreferredSize().width + 10, 13);
 		panel.add(lblPostTitle);
 		
 		JLabel lblPostBody = new JLabel("Message");
-		lblPostBody.setBounds(10, 62, 45, 13);
+		lblPostBody.setBounds(10, 62, lblPostBody.getPreferredSize().width + 10, 13);
 		panel.add(lblPostBody);
 		
 		txfPostTitle = new JTextField();
 		txfPostTitle.setBounds(10, 33, 416, 19);
 		panel.add(txfPostTitle);
 		txfPostTitle.setColumns(10);
-		
-		txfPostBody = new JTextField();
-		txfPostBody.setBounds(10, 85, 416, 124);
-		panel.add(txfPostBody);
+
+		txfPostBody = new JTextArea();
 		txfPostBody.setColumns(10);
+	    JScrollPane scrollPane= new JScrollPane(txfPostBody);
+	    scrollPane.setBounds(10, 85, 416, 124);
+	    scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    panel.add(scrollPane);		
 		
 		JButton btnPost = new JButton("Post");
 		btnPost.setBounds(341, 232, 85, 21);
@@ -234,7 +225,7 @@ public class NewPostView extends JFrame {
             	if (manager.createNewPost(manager.getCurrentGroup(), txfPostTitle.getText(), txfPostBody.getText())) {
 	            	onViewChangeClick();
 					new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-						// Change to PostView after PostView is created //
+						// Change to PostView after PostView is created  -- This would require a post return //
             	}
             	else {
             		JOptionPane.showMessageDialog(null, "An error occured");
@@ -260,15 +251,12 @@ public class NewPostView extends JFrame {
 	private void displayGUI() {
 		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
-
 		currentFrame.setTitle("This is the New Post view");
-
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
 		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new BorderLayout(0,0));
-		
 
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
