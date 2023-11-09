@@ -518,6 +518,121 @@ class ValidatorTest {
 		assertEquals(false, actual);
 		
 	}
+	
+	@Test
+	void testvalidateBannedExistsInGroup_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		Banned b1 = new Banned(u1, g1);
+		Banned b2 = new Banned(u2, g1);
+		Banned b3 = new Banned(u3, g1);
+		Banned b4 = new Banned(u4, g1);
+		
+		g1.addBanned(b1);
+		g1.addBanned(b2);
+		g1.addBanned(b3);
+		g1.addBanned(b4);
+		
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		Banned b5 = new Banned(u5, g1);
+		boolean actual = g1.addBanned(b5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testvalidateBannedExistsInGroup_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		Banned b1 = new Banned(u1, g1);
+		Banned b2 = new Banned(u2, g1);
+		Banned b3 = new Banned(u3, g1);
+		Banned b4 = new Banned(u4, g1);
+		Banned b5 = new Banned(u5, g1);
+		
+		g1.addBanned(b1);
+		g1.addBanned(b2);
+		g1.addBanned(b3);
+		g1.addBanned(b4);
+		g1.addBanned(b5);
+		
+		boolean actual = g1.addBanned(b5);
+		
+		assertEquals(false, actual);
+		
+	}
+	
+	@Test
+	void testvalidateSuspendedExistsInGroup_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		Suspended s1 = new Suspended(u1, g1);
+		Suspended s2 = new Suspended(u2, g1);
+		Suspended s3 = new Suspended(u3, g1);
+		Suspended s4 = new Suspended(u4, g1);
+		
+		g1.addSuspended(s1);
+		g1.addSuspended(s2);
+		g1.addSuspended(s3);
+		g1.addSuspended(s4);
+		
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		Suspended s5 = new Suspended(u5, g1);
+		boolean actual = g1.addSuspended(s5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testvalidateSuspendedExistsInGroup_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		Suspended s1 = new Suspended(u1, g1);
+		Suspended s2 = new Suspended(u2, g1);
+		Suspended s3 = new Suspended(u3, g1);
+		Suspended s4 = new Suspended(u4, g1);
+		Suspended b5 = new Suspended(u5, g1);
+
+		
+		g1.addSuspended(s1);
+		g1.addSuspended(s2);
+		g1.addSuspended(s3);
+		g1.addSuspended(s4);
+		g1.addSuspended(b5);
+		
+		boolean actual = g1.addSuspended(b5);
+		
+		assertEquals(false, actual);
+		
+	}
 
 
 }
