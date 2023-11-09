@@ -48,10 +48,10 @@ public class Suspended implements Comparable<Suspended> {
         this.group = group;
         suspensionDate = new Date();
 		expiredSuspensionDate = new Date();
-        // Adding 30 minutes to the expiredSuspensionDate
+        // Adding 5 minutes to the expiredSuspensionDate
         Calendar cal = Calendar.getInstance();
         cal.setTime(expiredSuspensionDate);
-        cal.add(Calendar.MINUTE, 30);
+        cal.add(Calendar.MINUTE, 5);
 
         expiredSuspensionDate = cal.getTime();
 	}
