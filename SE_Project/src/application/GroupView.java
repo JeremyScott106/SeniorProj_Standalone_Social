@@ -206,11 +206,9 @@ private JPanel createInsidePane() {
 		int padding = 30;
 	
 		ArrayList<Post> alPost = manager.getPosts_InGroupByDate(manager.getCurrentGroup());
-		
 		JPanel postPane = new JPanel();
 		postPane.setLayout(null);
 
-				
 		for (Post p : alPost) {
 			
 			JLabel lblToAdd = new JLabel(p.getPostTitle());
@@ -225,7 +223,6 @@ private JPanel createInsidePane() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 	            	onViewChangeClick();
-
 	            	manager.setCurrentPost(p);
 	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 	            }
