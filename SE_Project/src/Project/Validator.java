@@ -86,7 +86,7 @@ public class Validator {
 	//returns true if there exists a group that matches the given user, returns false otherwise
 	public static boolean validateUserInGroup(Group g, User user) {
 
-		if (g.isMemberInGroup(user.getId())) {	//Check if user is in group
+		if (g.isMemberInGroupInMembership(user.getId())) {	//Check if user is in group
 			return true;	//return true if user is in group
 		}
 
@@ -164,6 +164,32 @@ public class Validator {
 		for (membership m1 : memberships) {
 			
 			if (m.compareTo(m1) == 1) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	// returns true if the banned exists and returns false otherwise
+	public static boolean validateBannedExistsInGroup(Banned b, ArrayList<Banned> bans) {
+		
+		for (Banned b1 : bans) {
+			
+			if (b.compareTo(b1) == 1) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	// returns true if the membership exists and returns false otherwise
+	public static boolean validateSuspendedExistsInGroup(Suspended s, ArrayList<Suspended> suspensions) {
+		
+		for (Suspended s1 : suspensions) {
+			
+			if (s.compareTo(s1) == 1) {
 				return true;
 			}
 		}
