@@ -12,25 +12,11 @@ import java.text.SimpleDateFormat;
 public class Banned implements Comparable<Banned> {
 	private User user;
 	private Group group;
-	private Date registeredDate;
 
 
-    public Banned(User user, Group group, String registeredDate) {
+    public Banned(User user, Group group) {
         this.user = user;
         this.group = group;
-        
-		try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-			this.registeredDate = df.parse(registeredDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public Banned(User user, Group group) {
-        this.user = user;
-        this.group = group;
-		registeredDate = new Date();
 	}
 	
 	public User getUser() {
@@ -40,20 +26,14 @@ public class Banned implements Comparable<Banned> {
 	public Group getGroup() {
 		return group;
 	}
-	
-	public Date getDate() {
-		return registeredDate;
-	}
+
 	
 	public String getBannedWriteData() {
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		String regDate = df.format(registeredDate);
 		
 		String bannedData = "@START\n" + 
 								"@BANNED\n" + 
 								"@USER=" + user.getId() + "\n" + 
 								"@GROUP=" + group.getGroupName() + "\n" +
-								"@REGISTEREDDATE=" + regDate + "\n" + 
 								"@END\n\n";
 		return bannedData;
 	}
