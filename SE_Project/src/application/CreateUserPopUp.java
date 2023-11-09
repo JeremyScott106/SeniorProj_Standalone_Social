@@ -1,15 +1,9 @@
 package application;
-import Project.Admin;
 import Project.SystemManager;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 @SuppressWarnings("serial")
 public class CreateUserPopUp extends JDialog {
@@ -130,11 +124,11 @@ public class CreateUserPopUp extends JDialog {
 		panel.add(txfPassword2);
 		
 		txfBirthdate = new JTextField();
-		txfBirthdate.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				// FIXME: Add date checker here //
-			}
-		});
+//		txfBirthdate.addPropertyChangeListener(new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				// FIXME: Add date checker here //
+//			}
+//		});
 		txfBirthdate.setColumns(10);
 		txfBirthdate.setBounds(177, 226, 300, 20);
 		panel.add(txfBirthdate);

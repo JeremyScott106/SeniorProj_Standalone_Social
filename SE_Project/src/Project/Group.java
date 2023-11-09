@@ -1,9 +1,6 @@
 package Project;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Group implements Comparable<Group> {
 
@@ -33,6 +30,17 @@ public class Group implements Comparable<Group> {
         	memberships.add(m);
         	return true;
         }
+    }
+    
+  //FIXME: Add Unit Tests; Remove information from saved file
+    public boolean removeMember(membership m) {
+    	if (Validator.validateMemberExistsInGroup(m, memberships)) {
+    		memberships.remove(m);
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 
 

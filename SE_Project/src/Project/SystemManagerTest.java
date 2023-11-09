@@ -1,9 +1,15 @@
 package Project;
 
+import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 class SystemManagerTest {
 
@@ -981,5 +987,37 @@ class SystemManagerTest {
 		
 		assertEquals(null, actual);
 	}
-
+	@Test
+	void testgetSimpleDate_Success() {
+		SystemManager manager = new SystemManager();
+		Date d1 = new Date();
+		
+		String day = d1.toString().substring(8,10);
+		String month = d1.toString().substring(4,7);
+		String year = d1.toString().substring(24);
+	 
+		String expected = day + " " + month + " " + year;
+		
+		String result = manager.getSimpleDate(d1);
+		
+		assertEquals(expected, result);
+		
+	}
+	
+	@Test
+	void testgetSimpleDate_Failure() {
+		SystemManager manager = new SystemManager();
+		Date d1 = new Date();
+		Date d2 = new Date(7/11/1111);
+		String day = d1.toString().substring(8,10);
+		String month = d1.toString().substring(4,7);
+		String year = d1.toString().substring(24);
+	 
+		String expected = day + " " + month + " " + year;
+		
+		String result = manager.getSimpleDate(d2);
+		
+		assertNotSame(expected, result);
+		
+	}
 }

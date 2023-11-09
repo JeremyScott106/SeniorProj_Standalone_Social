@@ -1,5 +1,5 @@
 package application;
-import Project.ReadFile;
+
 import Project.SystemManager;
 import java.awt.event.*;
 import javax.swing.*;
@@ -21,7 +21,7 @@ public class Main extends JFrame {
 		JMenuBar menus = new JMenuBar();
 				//Menus//
 		JMenu file = new JMenu("File");
-		JMenu refresh = new JMenu("Refresh");
+//		JMenu refresh = new JMenu("Refresh");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
 		JMenuItem logout = new JMenuItem("Logout");

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class SystemManager {
 
@@ -104,6 +105,12 @@ public class SystemManager {
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
 		return (group.addMember(m));
+	}
+	
+	//FIXME: Add Unit Tests
+	public boolean leaveGroup(User user, Group group) {
+		membership m = new membership(user, group);
+		return (group.removeMember(m));
 	}
 
 	public boolean addCategory(category c) {
@@ -509,6 +516,13 @@ public class SystemManager {
 	 // uses the Validator class to sort the user by username
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
+	 }
+	 
+	 public String getSimpleDate(Date date) {
+			String pattern = "dd MMM yyyy";
+			SimpleDateFormat df = new SimpleDateFormat(pattern);
+			return df.format(date);
+
 	 }
 }
 
