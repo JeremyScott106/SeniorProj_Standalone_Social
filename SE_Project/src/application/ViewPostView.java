@@ -169,7 +169,6 @@ public class ViewPostView extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				System.out.println(manager.getCurrentPost().getTime());
 				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});

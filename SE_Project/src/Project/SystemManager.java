@@ -537,19 +537,16 @@ public class SystemManager {
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
 	 }
-	 
 
 	 	//FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
 	}
 
-
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
 			return df.format(date);
-
 	 }
 	 
 	 	//FIXME: Add unit tests

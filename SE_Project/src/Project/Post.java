@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
 
+
 public class Post implements Comparable<Post> {
 
 	protected User user;
@@ -14,7 +15,6 @@ public class Post implements Comparable<Post> {
 	protected String postBody;
 	private ArrayList<Response> responses;
 	protected Date dateTime;
-
     private int score;
     private int id;
     
@@ -113,7 +113,6 @@ public class Post implements Comparable<Post> {
     	
     	return userData;
     }
-
 
 	//FIXME: add tests
 	@Override
