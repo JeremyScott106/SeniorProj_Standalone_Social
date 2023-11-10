@@ -26,7 +26,7 @@ public class BannedTest {
 	}
 	
 	@Test
-	void testGetBanned() {
+	void testGetUser() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		Banned b = new Banned(u, testGroup1);

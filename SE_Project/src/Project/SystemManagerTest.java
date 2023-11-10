@@ -131,8 +131,6 @@ class SystemManagerTest {
 	}
 
 
-
-	@Ignore
 	@Test
 	void testGetGroupsSortedAlphabetically() {
 
@@ -196,6 +194,27 @@ class SystemManagerTest {
 		expected.add(c3);
 
 		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testCreateCategory_Success() {
+		SystemManager sm = new SystemManager();
+
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+
+		sm.addCategory(c1);
+		sm.addCategory(c2);
+		sm.addCategory(c3);
+		sm.addCategory(c4);
+		sm.addCategory(c5);
+
+		boolean actual = sm.createCategory("hey");
+
+		assertEquals(true, actual);
 	}
 
 

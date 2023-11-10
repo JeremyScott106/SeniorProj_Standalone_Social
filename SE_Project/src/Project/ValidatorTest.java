@@ -89,8 +89,28 @@ class ValidatorTest {
 
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	void testValidPassword_Success() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 
 
+		Boolean actual = Validator.validPassword(u1, "HKb@wser!");
+		Boolean expected = true;
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testValidPassword_Failure() {
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+
+
+		Boolean actual = Validator.validPassword(u1, "failure");
+		Boolean expected = false;
+
+		assertEquals(expected, actual);
+	}
 
 	@Test
 	void testValidateCategoryNameExists_True() {

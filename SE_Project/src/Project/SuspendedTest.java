@@ -27,7 +27,7 @@ public class SuspendedTest {
 	}
 	
 	@Test
-	void testGetSuspended() {
+	void testgetUser() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		Suspended s = new Suspended(u, testGroup1);
@@ -66,8 +66,26 @@ public class SuspendedTest {
 		assertEquals(expected, actual);
 	}	
 	
-	// need to update REGISTEREDDATE and expiredSuspensionDate
-	@Ignore
+	@Test
+	void testgetExpiredDate() {
+		
+		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
+		Group testGroup1 = new Group("Standard Name");
+		
+
+		// Create a Date object for the registration date.
+		Suspended m = new Suspended(u, testGroup1);
+
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		String actual = df.format(m.getExpiredDate());
+		
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String expected = currentDate.format(formatter);
+		
+		assertEquals(expected, actual);
+	}	
+	
 	@Test
 	void testGetSuspendedWriteData() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
