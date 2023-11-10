@@ -107,28 +107,6 @@ public class ProfileView extends JFrame {
             }
         });
 		titlePanel.add(lblHome);
-		
-		JLabel lblMyGroups = new JLabel("My Groups");
-		lblMyGroups.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblMyGroups.setForeground(Color.BLUE.darker());
-		lblMyGroups.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblMyGroups.setBounds(gridx, 10, lblMyGroups.getPreferredSize().width + padding, 25);
-		gridx += lblMyGroups.getWidth() + padding;
-		lblMyGroups.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-            	onViewChangeClick();
-            	category c = new category("My Groups");
-            	ArrayList<Group> myGroups = manager.getGroupsByUser(manager.getCurrentUser());
-            	for (Group g : myGroups) {
-            		c.addGroup(g);
-            	}
-            	manager.setCurrentCategory(c);
-            	manager.setCurrentGroup(null);
-            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize());
-            }
-        });
-		titlePanel.add(lblMyGroups);
 
 		return titlePanel;
 		

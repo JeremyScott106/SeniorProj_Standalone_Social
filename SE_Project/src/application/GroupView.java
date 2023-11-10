@@ -19,49 +19,6 @@ public class GroupView extends JFrame {
 	
 	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//
 	public GroupView() {
-		getContentPane().setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(50, 38, 600, 70);
-		getContentPane().add(panel);
-		panel.setLayout(null);
-		
-		JTextArea lblTitle = new JTextArea("New label");
-		lblTitle.setWrapStyleWord(true);
-		lblTitle.setRows(2);
-		lblTitle.setLineWrap(true);
-		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTitle.setBounds(49, 0, 551, 40);
-		panel.add(lblTitle);
-		
-		JLabel lblScore = new JLabel("New label");
-		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblScore.setBounds(10, 30, 20, 10);
-		panel.add(lblScore);
-		
-		JButton btnUpVote = new JButton("New button");
-		btnUpVote.setBounds(10, 5, 20, 20);
-		panel.add(btnUpVote);
-		
-		JButton btnDownVote = new JButton("New button");
-		btnDownVote.setBounds(10, 45, 20, 20);
-		panel.add(btnDownVote);
-		
-		JLabel lblUidLable = new JLabel("User:");
-		lblUidLable.setBounds(49, 49, 34, 13);
-		panel.add(lblUidLable);
-		
-		JLabel lblUserId = new JLabel("New label");
-		lblUserId.setBounds(86, 49, 45, 13);
-		panel.add(lblUserId);
-		
-		JLabel lblPostedLabel = new JLabel("Posted: ");
-		lblPostedLabel.setBounds(448, 49, 45, 13);
-		panel.add(lblPostedLabel);
-		
-		JLabel lblPostedDate = new JLabel("New label");
-		lblPostedDate.setBounds(497, 49, 93, 13);
-		panel.add(lblPostedDate);
 	}
 	
 	
@@ -310,6 +267,17 @@ public class GroupView extends JFrame {
 			lblUserId = new JLabel(p.getUser().getId());
 		}
 		lblUserId.setBounds(86, 49, lblUserId.getPreferredSize().width + 10, 13);
+		lblUserId.setForeground(Color.BLUE.darker());
+		lblUserId.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblUserId.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onViewChangeClick();
+				manager.setCurrentCategory(null);
+				manager.setCurrentGroup(null);
+				new ProfileView(manager, topBar, currentFrame, currentFrame.getSize(), p.getUser());					
+			}
+		});
 		panel.add(lblUserId);
 		
 		JLabel lblPostedLabel = new JLabel("Posted:");
