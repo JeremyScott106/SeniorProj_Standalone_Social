@@ -12,10 +12,12 @@ public class Response extends Post{
 		this.responseBody = responseBody;
 	}
 	
+	//test:1
 	public membership getMember() {
 		return membership;
 	}
 	
+	//test:1
 	public String getResponseBody() {
 		return responseBody;
 	}

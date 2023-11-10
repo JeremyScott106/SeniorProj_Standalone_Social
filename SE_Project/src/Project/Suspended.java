@@ -16,7 +16,7 @@ public class Suspended implements Comparable<Suspended> {
 	private Date suspensionDate;
 	private Date expiredSuspensionDate;
 
-
+	//test:1
     public Suspended(User user, Group group, String suspensionDate, String expiredSuspensionDate) {
         this.user = user;
         this.group = group;
@@ -43,6 +43,7 @@ public class Suspended implements Comparable<Suspended> {
             }
 	}
 	
+	//test:1
 	public Suspended(User user, Group group) {
         this.user = user;
         this.group = group;
@@ -56,22 +57,27 @@ public class Suspended implements Comparable<Suspended> {
         expiredSuspensionDate = cal.getTime();
 	}
 	
+	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//test:1
 	public Group getGroup() {
 		return group;
 	}
 	
+	//test:1
 	public Date getDate() {
 		return suspensionDate;
 	}
 	
+	//test:1
 	public Date getExpiredDate() {
 		return expiredSuspensionDate;
 	}
 	
+	//test:1
 	public String getSuspendedWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String regDate = df.format(suspensionDate);
@@ -85,6 +91,7 @@ public class Suspended implements Comparable<Suspended> {
 		return suspendedData;
 	}
 	
+	//test:3
 	public int compareTo(Suspended s) {
 		
 		if (user.compareTo(s.getUser()) == 1) {

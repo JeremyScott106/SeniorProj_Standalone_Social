@@ -14,7 +14,7 @@ public class membership implements Comparable<membership> {
 	private Group group;
 	private Date registeredDate;
 
-
+	//test:1
     public membership(User user, Group group, String registeredDate) {
         this.user = user;
         this.group = group;
@@ -27,24 +27,29 @@ public class membership implements Comparable<membership> {
 		}
 	}
 	
+	//test:1
 	public membership(User user, Group group) {
         this.user = user;
         this.group = group;
 		registeredDate = new Date();
 	}
 	
+	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//test:1
 	public Group getGroup() {
 		return group;
 	}
 	
+	//test:1
 	public Date getDate() {
 		return registeredDate;
 	}
 	
+	//test:1
 	public String getMembershipWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String regDate = df.format(registeredDate);
@@ -58,6 +63,7 @@ public class membership implements Comparable<membership> {
 		return memberData;
 	}
 	
+	//test:3
 	@Override
 	public int compareTo(membership m) {
 		

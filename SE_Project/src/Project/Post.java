@@ -47,50 +47,61 @@ public class Post {
     	this.score = 0;
     }
     
+	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//test:1
 	public Group getGroup() {
 		return group;
 	}
 	
+	//test:1
 	public String getPostTitle() {
 		return postTitle;
 	}
 
+	//test:1
 	public String getPostBody() {
 		return postBody;
 	}
 	
+	//test:1
 	public ArrayList<Response> getResponse() {
 		return responses;
 	}
 	
+	//test:1
     //Adds responses into responses
     public void addResponse(Response r) {
         responses.add(r);
     }
 	
+	//test:1
 	public int getScore() {
 		return score;
 	}
 	
+	//test:1
 	//Returns date saved in dateTime
 	public java.util.Date getTime() {
 		return dateTime;
 	}
 	
+	//test:1
 	//Increases score
 	public void addScore() {
 		score++;
 	}
 	
+	//test:1
 	//Decreases score
 	public void subScore() {
 		score--;
 	}
 	
+	//test:1
 	public String getPostWriteData() {
     	
     	String userData = "@START\n" + 
