@@ -1,5 +1,8 @@
 package Project;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Response extends Post{
 	
 	private int parentalId;
@@ -22,11 +25,14 @@ public class Response extends Post{
 	
 	
 	public String getResponseWriteData() {
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+		String date = df.format(dateTime);
+		
 		String responseData = "@START\n" + 
 				"@RESPONSE\n" + 
 				"@USERNAME=" + user.getId() + "\n" + 
 				"@GNAME=" + group.getGroupName() + "\n" + 
-				"@DATETIME=" + dateTime + "\n" + 
+				"@DATETIME=" + date + "\n" + 
 				"@BODY=" + postBody + "\n" + 
 				"@PARENTALID=" + parentalId + "\n" +
 				"@END\n\n";

@@ -22,14 +22,7 @@ public class Post implements Comparable<Post> {
     	this.postBody = postBody;
     	this.postTitle = postTitle;
     	this.responses = new ArrayList<>();
-    	Date d=new Date();
-    	try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-			String x = df.format(d);
-			this.dateTime = df.parse(x);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+    	this.dateTime = new Date();
     	this.score = 0;
     	this.id = Id;
     }
@@ -41,7 +34,7 @@ public class Post implements Comparable<Post> {
     	this.postBody = postBody;
     	this.responses = new ArrayList<>();
     	try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
 			this.dateTime = df.parse(dateTime);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -85,7 +78,7 @@ public class Post implements Comparable<Post> {
 	}
 	
 	//Returns date saved in dateTime
-	public java.util.Date getTime() {
+	public Date getTime() {
 		return dateTime;
 	}
 	
@@ -100,12 +93,15 @@ public class Post implements Comparable<Post> {
 	}
 	
 	public String getPostWriteData() {
+		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+		String date = df.format(dateTime);
     	
     	String userData = "@START\n" + 
     						"@POST\n" + 
     						"@USERNAME=" + getUser().getId() + "\n" + 
     						"@GNAME=" + getGroup().getGroupName() + "\n" + 
-    						"@DATETIME=" + dateTime + "\n" + 
+    						"@DATETIME=" + date + "\n" + 
     						"@TITLE=" + postTitle + "n" +
     						"@BODY=" + postBody + "\n" + 
     						"@PSTID=" + id + "\n" + 

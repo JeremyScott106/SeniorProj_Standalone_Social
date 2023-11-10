@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
@@ -129,11 +130,11 @@ public class PostTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 		
-		java.util.Date timeTest = new java.util.Date();
+		Date timeTest = new Date();
 		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
 		String actual = df.format(testPost1.getTime());
 		String expected = df.format(timeTest);
 		
