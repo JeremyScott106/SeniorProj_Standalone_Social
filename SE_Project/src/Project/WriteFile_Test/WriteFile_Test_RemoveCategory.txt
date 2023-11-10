@@ -1,20 +1,10 @@
 @START
 @CATEGORY
-@NAME=Sports
-@END
-
-@START
-
 @NAME=Foods
 @END
 
 @START
 @CATEGORY
 @NAME=Games
-@END
-
-@START
-@CATEGORY
-@NAME=Memes
 @END
 

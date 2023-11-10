@@ -4,73 +4,76 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class ReadFile {
 	
 	static boolean currentlyReadingData;	//True if data is currently being read, false if between sets of data
 	
 	
-	public static void readFile(SystemManager manager, String fileName) throws FileNotFoundException, IncorrectFileFormatException {
+	public static void readFile(SystemManager manager, ArrayList<String> fileNames) throws FileNotFoundException, IncorrectFileFormatException {
 		
+		for (String fileName : fileNames) {		//Loop through each file provided
 		
-		
-		File dataFile = new File(fileName);
-		
-		try {
-			Scanner reader = new Scanner(dataFile);
+			File dataFile = new File(fileName);		//Create File from name
 			
-			currentlyReadingData = false;	//not Currently reading data
-			
-			
-			while (reader.hasNextLine()) {	//While there are still lines to be read
-				String line = reader.nextLine();	//Line currently being read
+			try {
+				Scanner reader = new Scanner(dataFile);
 				
-				if (line.equals("@START")) {								//If line is the start of a set of Data
-					if (currentlyReadingData) {									//and data is currently being read
-						throw new IncorrectFileFormatException();					//throw exception
+				currentlyReadingData = false;	//not Currently reading data
+				
+				
+				while (reader.hasNextLine()) {	//While there are still lines to be read
+					String line = reader.nextLine();	//Line currently being read
+					
+					if (line.equals("@START")) {								//If line is the start of a set of Data
+						if (currentlyReadingData) {									//and data is currently being read
+							throw new IncorrectFileFormatException();					//throw exception
+						}
+						else {														//or if data is not being read
+							currentlyReadingData = true;								//set currentlyReadingData to true
+							continue;													//and continue to next line
+						}
 					}
-					else {														//or if data is not being read
-						currentlyReadingData = true;								//set currentlyReadingData to true
-						continue;													//and continue to next line
+					else if (line.equals("@ADMIN") && currentlyReadingData) {	//If current line rules next data set to be a Admin
+						readAdmin(manager, reader);									//go read the data in the Admin
+					}
+					else if (line.equals("@USER") && currentlyReadingData) {	//If current line rules next data set to be a User
+						readUser(manager, reader);									//go read the data in the User
+					}
+					else if(line.equals("@CATEGORY") && currentlyReadingData) {	//If current line rules next data set to be a Category
+						readCategory(manager, reader);								//go  read the data in the Category
+					}
+					else if(line.equals("@GROUP") && currentlyReadingData) {	//If current line rules next data set to be a Group
+						readGroup(manager, reader);									//go read the data in the Group
+					}
+					else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
+						readMembership(manager, reader);
+					}
+					else if(line.equals("@POST") && currentlyReadingData) {
+						readPost(manager, reader);
+					}
+					else if (line.equals("@RESPONSE") && currentlyReadingData) {
+						readResponse(manager, reader);
+					}
+					else if (line.equals("")) {									//If the current line is empty
+						continue;													//continue to next line
+					}
+					else {														//If none of the above
+						throw new IncorrectFileFormatException();					//throw incorrectFileFormatException
 					}
 				}
-				else if (line.equals("@ADMIN") && currentlyReadingData) {	//If current line rules next data set to be a Admin
-					readAdmin(manager, reader);									//go read the data in the Admin
-				}
-				else if (line.equals("@USER") && currentlyReadingData) {	//If current line rules next data set to be a User
-					readUser(manager, reader);									//go read the data in the User
-				}
-				else if(line.equals("@CATEGORY") && currentlyReadingData) {	//If current line rules next data set to be a Category
-					readCategory(manager, reader);								//go  read the data in the Category
-				}
-				else if(line.equals("@GROUP") && currentlyReadingData) {	//If current line rules next data set to be a Group
-					readGroup(manager, reader);									//go read the data in the Group
-				}
-				else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
-					readMembership(manager, reader);
-				}
-				else if(line.equals("@POST") && currentlyReadingData) {
-					readPost(manager, reader);
-				}
-				else if (line.equals("")) {									//If the current line is empty
-					continue;													//continue to next line
-				}
-				else if (line.equals("@ENDFILE")) {							//If the current line rules that this is the end of the file
-					break;														//break the loop
-				}
-				else {														//If none of the above
-					throw new IncorrectFileFormatException();					//throw incorrectFileFormatException
-				}
+				
+				
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				throw new FileNotFoundException();
+			} catch (IncorrectFileFormatException e) {
+				// TODO Auto-generated catch block
+				throw new IncorrectFileFormatException();
 			}
-			
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			throw new FileNotFoundException();
-		} catch (IncorrectFileFormatException e) {
-			// TODO Auto-generated catch block
-			throw new IncorrectFileFormatException();
+		
 		}
 		
 	}
@@ -524,11 +527,10 @@ public class ReadFile {
 			Group g = manager.getGroupByName(groupName);
 			
 			if (!(u == null) && !(g == null)) {
+				
 				membership m = new membership(u, g, regDate);
-				//FIXME: Need to add Membership into system once ability has been established
-				//This adds the membership to the list of members in the existing group. Users does not have a list of their own memberships, so this should be all thats needed.
-				manager.getGroupByName(groupName).addMember(m);
-				System.out.println("Member created");
+				g.addMember(m);
+				
 			}
 			else {
 				throw new IncorrectFileFormatException();
@@ -541,7 +543,7 @@ public class ReadFile {
 		
 	}
 	
-	//FIXME: Needs Test methods as well
+	
 	private static void readPost(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String userName = "";
@@ -554,6 +556,8 @@ public class ReadFile {
 		boolean gotPostTitle = false;
 		String postBody = "";
 		boolean gotPostBody = false;
+		String postId = "";
+		boolean gotPostId = false;
 		
 		while (currentlyReadingData) {
 			
@@ -623,19 +627,139 @@ public class ReadFile {
 					continue;
 				}
 			}
+			else if (sub.equals("@PSTI")) {
+				if (gotPostId) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postId = line.substring(7);
+					gotPostId = true;
+					continue;
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();
 			}
 			
 		}
 		
-		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody) {
+		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId) {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
+			int id = Integer.parseInt(postId);
 			if (g != null && u != null) {
-				Post p=new Post(u, g, dateTime, postTitle, postBody);
+				Post p=new Post(u, g, dateTime, postTitle, postBody, id);
 				manager.getGroupByName(groupName).addPost(p);
+			}
+		}
+		else {
+			throw new IncorrectFileFormatException();
+		}
+		
+	}
+	
+	
+private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String userName = "";
+		boolean gotUserName = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String dateTime = "";
+		boolean gotDateTime = false;
+		String responseBody = "";
+		boolean gotResponseBody = false;
+		String parentalId = "";
+		boolean gotParentalId = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				 if (gotUserName) {
+					 throw new IncorrectFileFormatException();
+				 }
+				 else {
+					 userName = line.substring(10);
+					 gotUserName = true;
+					 continue;
+				 }
+			}
+			else if (sub.equals("@GNAM")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@DATE")) {
+				if (gotDateTime) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					dateTime = line.substring(10);
+					gotDateTime = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@BODY")) {
+				if (gotResponseBody) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					responseBody = line.substring(6);
+					gotResponseBody = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@PARE")) {
+				if (gotParentalId) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					parentalId = line.substring(12);
+					gotParentalId = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		
+		
+		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			int id = Integer.parseInt(parentalId);
+			Post p = manager.getPostByGroupId(g, id);
+			if (g != null && u != null && p != null) {
+				
+				Response r = new Response(u, g, dateTime, responseBody, id);
+				p.addResponse(r);
+				
 			}
 		}
 		else {

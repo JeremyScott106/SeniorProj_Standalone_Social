@@ -147,7 +147,6 @@ public class GroupView extends JFrame {
 		});
 		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
 		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
-			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
 		
 		//	SECOND ROW OF LABLES //
@@ -314,11 +313,11 @@ public class GroupView extends JFrame {
 		panel.add(lblUserId);
 		
 		JLabel lblPostedLabel = new JLabel("Posted:");
-		lblPostedLabel.setBounds(420, 49, 45, 13);
+		lblPostedLabel.setBounds(410, 49, 45, 13);
 		panel.add(lblPostedLabel);
 		
 		JLabel lblPostedDate = new JLabel(manager.getSimpleDate(p.getTime()) + ", " + manager.getSimpleTime(p.getTime()));
-		lblPostedDate.setBounds(470, 49, 120, 13);
+		lblPostedDate.setBounds(460, 49, 130, 13);
 		panel.add(lblPostedDate);
 		
 		return panel;

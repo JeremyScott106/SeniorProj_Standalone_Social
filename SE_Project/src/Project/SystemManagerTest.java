@@ -509,9 +509,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -537,9 +537,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -565,9 +565,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -593,9 +593,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -619,9 +619,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(r1);
@@ -774,9 +774,10 @@ class SystemManagerTest {
 	@Test
 	void testSystemManager_ReadFileConstructor_Admins() {
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt");
 		
-		SystemManager manager = new SystemManager(fileName);
+		SystemManager manager = new SystemManager(fileNames);
 		
 		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
 		
@@ -799,7 +800,11 @@ class SystemManagerTest {
 	
 	@Test
 	void testWriteManager_Admins() {
-		SystemManager manager = new SystemManager();
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins");
+		
+		SystemManager manager = new SystemManager(fileNames);
 		
 		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -813,9 +818,7 @@ class SystemManagerTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins";
-		
-		boolean actual = manager.writeManager(fileName);
+		boolean actual = manager.writeManager();
 		
 		assertEquals(true, actual);
 		

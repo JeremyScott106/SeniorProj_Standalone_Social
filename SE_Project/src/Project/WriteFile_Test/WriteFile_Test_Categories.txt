@@ -1,12 +1,7 @@
 @START
 @CATEGORY
-@NAME=Sports
-@END
-
-@START
-@CATEGORY
 @NAME=Foods
-
+@END
 
 @START
 @CATEGORY
@@ -15,6 +10,6 @@
 
 @START
 @CATEGORY
-@NAME=Memes
+@NAME=Sports
 @END
 

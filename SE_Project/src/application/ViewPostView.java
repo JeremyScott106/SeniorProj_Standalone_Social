@@ -231,7 +231,7 @@ public class ViewPostView extends JFrame {
 		btnRespond.setBounds(341, gridy, 85, 21);
 		btnRespond.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-		    	if (manager.createNewResponse(manager.getCurrentGroup(), txfPostBody.getText())) {
+		    	if (manager.createNewResponse(manager.getCurrentGroup(), txfPostBody.getText(), manager.getCurrentPost())) {
 		    		onViewChangeClick();
 					new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 		        }
@@ -270,7 +270,7 @@ public class ViewPostView extends JFrame {
 
 		for (Response r : alResponse) {
 			
-			JTextArea responseArea = new JTextArea(r.getResponseBody());
+			JTextArea responseArea = new JTextArea(r.getPostBody());
 			responseArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			responseArea.setBounds(40, gridLocY, 550, responseArea.getPreferredSize().height + padding);
 			gridLocY += responseArea.getHeight() + padding;
