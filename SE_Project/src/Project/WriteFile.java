@@ -1,6 +1,8 @@
 package Project;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,28 +45,8 @@ public class WriteFile {
 			catch (IOException e) {
 				throw new IOException();
 			}
-			
 		}
-		
-		
-		
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		}
-		
-	
-	
+	}
 	
 	private static void writeAdmins(SystemManager manager, FileWriter writer) throws IOException {
 		
@@ -208,6 +190,143 @@ public class WriteFile {
 		catch (IOException e) {
 			throw e;
 
+		}
+		
+	}
+	
+	
+	
+	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
+		
+		String find = a.getAdminWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void removeUserFromFile(User u, String fileName) throws IOException {
+		
+		String find = u.getUserWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void removeCategoryFromFile(category c, String fileName) throws IOException {
+		
+		String find = c.getCategoryWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	public static void removeGroupFromFile(Group g, String fileName, String catName) throws IOException {
+		
+		String find = g.getGroupWriteData(catName);
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			BufferedReader br = new BufferedReader(reader);
+			
+			while ((s = br.readLine()) != null) {
+	            totalStr += s + "\n";
+	        }
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
 		}
 		
 	}

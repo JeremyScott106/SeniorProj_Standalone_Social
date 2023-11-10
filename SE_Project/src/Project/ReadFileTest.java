@@ -865,6 +865,7 @@ class ReadFileTest {
 		Response r2 = new Response(u1, g, "10/10/2009 4:27 AM", "R2 Body", 2);
 		Response r3 = new Response(u2, g, "10/10/2009 4:27 AM", "R3 Body", 1);
 		Response r4 = new Response(u2, g, "10/10/2009 4:27 AM", "R4 Body", 2);
+
 		//Create List of Responses
 		ArrayList<Response> expected = new ArrayList<Response>();
 		//Add Responses in Order

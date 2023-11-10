@@ -45,6 +45,17 @@ public class Group implements Comparable<Group> {
         	return true;
         }
     }
+    
+  //FIXME: Add Unit Tests; Remove information from saved file
+    public boolean removeMember(membership m) {
+    	if (Validator.validateMemberExistsInGroup(m, memberships)) {
+    		memberships.remove(m);
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
 
 
     //Gets the list of member in the group

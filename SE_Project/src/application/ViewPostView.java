@@ -1,13 +1,10 @@
 package application;
-import Project.Post;
+import Project.Response;
 import Project.SystemManager;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
+import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -16,30 +13,16 @@ public class ViewPostView extends JFrame {
 	private JMenuBar topBar;
 	private SystemManager manager;
 	private JFrame currentFrame;
-	private JTextField txfPostTitle;
-	private JTextField txfPostBody;
-	
-	// Window builder only seems to know how to use the blank constructor -- Use this to develop code then transfer to buildGUI//	
-	public ViewPostView() {
+	private JTextArea txfPostBody;
+	private Dimension dim;
 		
-//		Post all of these below.
-//		
-//		JTextArea textArea_1 = new JTextArea();
-//		textArea_1.setBounds(40, 491, 547, 149);
-//		panel.add(textArea_1);
-//		
-//		JLabel lblResponses = new JLabel("Responses");
-//		lblResponses.setBounds(70, 448, 49, 14);
-//		panel.add(lblResponses);
-
-	}
-	
 	@SuppressWarnings("exports")
 	public ViewPostView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
+		this.dim = dim;
 		displayGUI();
 	}
 	
@@ -102,8 +85,17 @@ public class ViewPostView extends JFrame {
 		
 		JLabel lblCurrentGroup = new JLabel(manager.getCurrentGroup().getGroupName());
 		lblCurrentGroup.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCurrentGroup.setForeground(Color.BLUE.darker());
 		lblCurrentGroup.setBounds(gridx, 10, lblCurrentGroup.getPreferredSize().width + padding, 25);
+		lblCurrentGroup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		titlePanel.add(lblCurrentGroup);
+		lblCurrentGroup.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+            	onViewChangeClick();
+            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+            }
+        });
 		
 		//	SECOND ROW OF LABLES //
 		gridx = 20;
@@ -120,9 +112,6 @@ public class ViewPostView extends JFrame {
 					new LoginPopUp(manager);
 				}
 			});
-
-		
-
 			
 			JButton btnNewUser = new JButton("Register New Account");
 			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -180,53 +169,117 @@ public class ViewPostView extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+				System.out.println(manager.getCurrentPost().getTime());
+				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
-			// FIXME: BUG -> Refresh button disappears if frame shrinks.
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
 		titlePanel.add(btnRefreshPage);
 		
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
-			JButton newPost = new JButton("Create New Post");
-			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int btnWidth = newPost.getPreferredSize().width + padding;
-			newPost.setBounds(currentFrame.getBounds().width - btnWidth - 25, 45, newPost.getPreferredSize().width + padding, 25);
-			titlePanel.add(newPost);
-			newPost.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	onViewChangeClick();
-	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-				}
-			});
-		}
+
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
+		int x2 = currentFrame.getBounds().width - (btnBack.getPreferredSize().width + padding + 50);
+		btnBack.setBounds(x2, 45, btnBack.getPreferredSize().width + padding, 25);;
+		titlePanel.add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+	
 		
 		return titlePanel;
 		
 	}
 	
-	private JPanel createPostForm() {
+	private JPanel createPostViewForm() {
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(null);
+		int gridy = 10;
+		int padding = 10;
 		
-		if (manager.getCurrentPost() != null) { 
+		if (manager.getCurrentPost() != null) {
 		
 			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
-			lblTitle.setBounds(40, 30, 500, 30);
+			lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+			lblTitle.setBounds(40, gridy, currentFrame.getBounds().width + 25, lblTitle.getPreferredSize().height + padding);
+			gridy += lblTitle.getHeight() + padding;
 			panel.add(lblTitle);
 			
 			JTextArea textArea = new JTextArea(manager.getCurrentPost().getPostBody());
-			textArea.setBounds(40, 80, 550, 300);
+			textArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			textArea.setBounds(40, gridy, 550, textArea.getPreferredSize().height + padding);
+			gridy += textArea.getHeight() + padding;
+			textArea.setEditable(false);
 			panel.add(textArea);
-			
-			JButton btnRespond = new JButton("Respond");
-			btnRespond.setBounds(500, 440, 90, 40);
-			panel.add(btnRespond);
-			
 		}
+
+				
+		txfPostBody = new JTextArea();
+		txfPostBody.setColumns(10);
+		JScrollPane scrollPane= new JScrollPane(txfPostBody);
+		scrollPane.setBounds(60, gridy, 416, 124);
+		gridy += scrollPane.getHeight() + padding;
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panel.add(scrollPane);		
+			
+		JButton btnRespond = new JButton("Respond");
+		btnRespond.setBounds(341, gridy, 85, 21);
+		btnRespond.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+		    	if (manager.createNewResponse(manager.getCurrentGroup(), txfPostBody.getText(), manager.getCurrentPost())) {
+		    		onViewChangeClick();
+					new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+		        }
+            	else {
+            		JOptionPane.showMessageDialog(null, "An error occured");
+            	}
+			}
+		});
+		
+		panel.add(btnRespond);
+			
+		JButton btnBack = new JButton("Cancel");
+		btnBack.setBounds(246, gridy, 85, 21);
+		gridy += scrollPane.getHeight() + padding;
+		btnBack.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	onViewChangeClick();
+		    	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+		    }
+		});
+		panel.add(btnBack);
+	
+		panel.setPreferredSize(new Dimension(currentFrame.getWidth(), gridy));
 		return panel;
+	}
+	
+	
+	private JPanel createResponsesPane() {
+		
+		int gridLocY = 10;
+		int padding = 30;
+
+		ArrayList<Response> alResponse = manager.viewAllPostResponses(manager.getCurrentPost());
+		JPanel responsePane = new JPanel();
+		responsePane.setLayout(null);
+
+		for (Response r : alResponse) {
+			
+			JTextArea responseArea = new JTextArea(r.getPostBody());
+			responseArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			responseArea.setBounds(40, gridLocY, 550, responseArea.getPreferredSize().height + padding);
+			gridLocY += responseArea.getHeight() + padding;
+			responseArea.setEditable(false);
+			responsePane.add(responseArea);
+		}
+		responsePane.setPreferredSize(new Dimension(currentFrame.getWidth(), gridLocY));
+		return responsePane;
 	}
 	
 	private void displayGUI() {
@@ -236,14 +289,22 @@ public class ViewPostView extends JFrame {
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel mainPanel = new JPanel();
-		currentFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new BorderLayout(0,0));
 		
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
 		
-		JPanel viewPostForm = createPostForm();
+		JPanel viewPostForm = createPostViewForm();
 		mainPanel.add(viewPostForm, BorderLayout.CENTER);
+		
+		JPanel viewResponsePanel = createResponsesPane();
+		mainPanel.add(viewResponsePanel, BorderLayout.SOUTH);
+		
+		JScrollPane scrollPanel = new JScrollPane(mainPanel);
+		scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPanel.setSize(dim);
+		
+		currentFrame.getContentPane().add(scrollPanel, BorderLayout.CENTER);
 		
 		currentFrame.setVisible(true);
 	}

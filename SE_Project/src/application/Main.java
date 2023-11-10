@@ -1,5 +1,5 @@
 package application;
-import Project.ReadFile;
+
 import Project.SystemManager;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Main extends JFrame {
 		JMenuBar menus = new JMenuBar();
 				//Menus//
 		JMenu file = new JMenu("File");
-		JMenu refresh = new JMenu("Refresh");
+//		JMenu refresh = new JMenu("Refresh");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
 		JMenuItem logout = new JMenuItem("Logout");
@@ -104,7 +104,6 @@ public class Main extends JFrame {
 		 * 7. Responses
 		 */
 		
-		//fileNames.add(".\\SE_Project\\src\\LoadThisFile.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Admins.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Users.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Categories.txt");

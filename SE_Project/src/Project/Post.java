@@ -2,17 +2,19 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 public class Post implements Comparable<Post> {
-	
+
 	protected User user;
 	protected Group group;
 	protected String postTitle;
 	protected String postBody;
 	private ArrayList<Response> responses;
 	protected Date dateTime;
+
     private int score;
     private int id;
     
@@ -27,7 +29,8 @@ public class Post implements Comparable<Post> {
     	this.id = Id;
     }
 	
-    public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id) {
+    
+	public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id) {
     	this.user = u;
     	this.group = g;
     	this.postTitle = postTitle;
@@ -51,6 +54,7 @@ public class Post implements Comparable<Post> {
 		return group;
 	}
 	
+	//FIXME : Add Unit Tests
 	public String getPostTitle() {
 		return postTitle;
 	}
@@ -69,8 +73,8 @@ public class Post implements Comparable<Post> {
 	}
 	
     //Adds responses into responses
-    public void addResponse(Response r) {
-        responses.add(r);
+    public boolean addResponse(Response r) {
+        return(responses.add(r));
     }
 	
 	public int getScore() {
@@ -110,6 +114,7 @@ public class Post implements Comparable<Post> {
     	return userData;
     }
 
+
 	//FIXME: add tests
 	@Override
 	public int compareTo(Post p) {
@@ -120,7 +125,7 @@ public class Post implements Comparable<Post> {
 			return 1;
 			
 		}
-		
+
 		return 0;
 	}
 
