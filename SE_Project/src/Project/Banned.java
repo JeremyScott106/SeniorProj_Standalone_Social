@@ -13,21 +13,23 @@ public class Banned implements Comparable<Banned> {
 	private User user;
 	private Group group;
 
-
+	//test:1
     public Banned(User user, Group group) {
         this.user = user;
         this.group = group;
 	}
-	
+    
+	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//test:1
 	public Group getGroup() {
 		return group;
 	}
 
-	
+	//test:1
 	public String getBannedWriteData() {
 		
 		String bannedData = "@START\n" + 
@@ -38,6 +40,7 @@ public class Banned implements Comparable<Banned> {
 		return bannedData;
 	}
 	
+	//test:3
 	public int compareTo(Banned b) {
 		
 		if (user.compareTo(b.getUser()) == 1) {
