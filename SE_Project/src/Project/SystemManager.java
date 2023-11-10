@@ -381,6 +381,18 @@ public class SystemManager {
 		 }
 		 return userInGroup;
 	 }
+	 
+	 	//FIXME: Add Unit Tests
+	 public category getCategoryByGroup(Group group) {
+		 for (category c : this.getCategories_Alphabetically()) {
+			 for (Group g : c.getGroups()) {
+				 if (g == group) {
+					 return c;
+				 }
+			 }
+		 }
+		 return null;
+	 }
 	
 	 //returns an arraylist of all the groups in category alphabetically
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
