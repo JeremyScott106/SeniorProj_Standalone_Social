@@ -56,7 +56,7 @@ public class Validator {
 
 		return false;	//return false otherwise
 	}
-
+	
 	//test:2
 	//returns a category that has a matching name as given if it exists, returns null otherwise
 	public static category getCategoryFromName(ArrayList<category> categories, String name) {
