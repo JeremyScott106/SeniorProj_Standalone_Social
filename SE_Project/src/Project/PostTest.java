@@ -174,7 +174,7 @@ public class PostTest {
 		assertEquals(-1, testPost1.getScore());
 	}
 	
-	//Testing Constructor and getGroup//
+	//Testing addResponse//
 	@Test
 	void addResponseTest() {
 		Group testGroup = new Group("Standard Name");
@@ -190,6 +190,88 @@ public class PostTest {
 		testPost1.addResponse(r2);
 
 		assertEquals(expected, testPost1.getResponse());
+	}
+	
+	//Testing addResponse//
+	@Test
+	void removeResponseTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> expected = new ArrayList<>();
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Response r2 = new Response(m, "no0000ooo");
+		expected.add(r2);
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
+		
+		testPost1.removeResponse(r1);
+
+		assertEquals(expected, testPost1.getResponse());
+	}
+	
+	//Testing getFlag//
+	@Test
+	void getFlagTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		
+		Boolean actual = testPost1.getFlag();
+		
+		assertEquals(false, actual);
+	}
+	
+	//Testing setFlag//
+	@Test
+	void setFlagTrueTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		
+		testPost1.setFlagTrue();
+		Boolean actual = testPost1.getFlag();
+		
+		assertEquals(true, actual);
+	}
+	
+	//Testing setFlag//
+	@Test
+	void setFlagFalseTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		
+		testPost1.setFlagFalse();
+		Boolean actual = testPost1.getFlag();
+		
+		assertEquals(false, actual);
+	}
+	
+	//Tests adding total score
+	@Test
+	void getTotalScoreTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		r1.addScore();
+		testPost1.addResponse(r1);
+		testPost1.addScore();
+		testPost1.addScore();
+		
+		assertEquals(3, testPost1.getTotalScore());
 	}
 	
 }
