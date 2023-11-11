@@ -14,6 +14,7 @@ public class Post {
 	private ArrayList<Response> responses;
 	private Date dateTime;
     private int score;
+    private boolean flag;
     
     public Post (membership memberships, String postTitle, String postBody) {
     	this.user = memberships.getUser();
@@ -30,6 +31,7 @@ public class Post {
 			e.printStackTrace();
 		}
     	this.score = 0;
+    	this.flag = false;
     }
 	
     public Post (User u, Group g, String dateTime, String postTitle, String postBody) {
@@ -45,6 +47,7 @@ public class Post {
 			e.printStackTrace();
 		}
     	this.score = 0;
+    	this.flag = false;
     }
     
 	//test:1
@@ -77,10 +80,31 @@ public class Post {
     public void addResponse(Response r) {
         responses.add(r);
     }
+    
+    //test:1
+    //removes responses into responses
+    public void removeResponse(Response r) {
+        responses.remove(r);
+    }
 	
 	//test:1
 	public int getScore() {
 		return score;
+	}
+	
+	//test:1
+	public boolean getFlag() {
+		return flag;
+	}
+	
+	//test:1
+	public void setFlagTrue() {
+		flag = true;
+	}
+	
+	//test:1
+	public void setFlagFalse() {
+		flag = false;
 	}
 	
 	//test:1
@@ -114,6 +138,14 @@ public class Post {
     						"@END\n\n";
     	
     	return userData;
+    }
+	
+    public int getTotalScore() {
+        int totalScore = this.score;
+        for (Response response : responses) {
+            totalScore += response.getScore();
+        }
+        return totalScore;
     }
 
 }
