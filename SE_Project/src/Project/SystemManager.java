@@ -105,6 +105,7 @@ public class SystemManager {
 		return false;					//If there exists a User or Admin with the given username, return false
 	}
 	
+	//test:1
 	// allows a user to join a group
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
@@ -136,14 +137,7 @@ public class SystemManager {
 		}
 	}
 
-	public boolean addGroup(Group g) {	//This should check to ensure that a new Group doesn't already exist
-		ArrayList<Group> groups = new ArrayList<>();
-		groups.addAll(getAllGroups());
-		return true;
-	}
-
-	//test:3
-										//Assumes GUI will send over just category name, not category object
+	//test:3									//Assumes GUI will send over just category name, not category object
 	public boolean createGroup(String groupName, String categoryName) {
 		category c = Validator.getCategoryFromName(categories, categoryName);	//Get category with given name if there exists one, null otherwise
 
@@ -192,8 +186,7 @@ public class SystemManager {
 			}
 		}
 	}
-	
-
+	//test:1
 	// allows a post to be created
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
@@ -201,7 +194,32 @@ public class SystemManager {
 		return(group.addPost(p));
 	}
 	
+	//test:1
+	// allows a post to be deleted
+	//US36 - Administrator can remove a post
+	public boolean deletePost(Group group, String postTitle, String postBody) {
+		membership m = getMembership(group, currentUser);
+		Post p = new Post(m, postTitle, postBody);
+		return(group.removePost(p));
+	}
+	
+	//test:1
+	//US37 - Administrator can remove a response to a post
+	//US38 - User can remove a response to a post
+	public void removeResponseToPost(Post p, Response r) {
+		if(p.getResponse().contains(r)){
+			p.removeResponse(r);
+		}
+	}
+	
+	//test:1
+	//US39 - User can request a new group
+	public boolean createNewGroup(category c, String groupName) {
+		Group g = new Group(groupName);
+		return(c.addGroup(g));
+	}
 
+	//test:1
 	// gets the membership of the group and user inputted
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
@@ -241,6 +259,7 @@ public class SystemManager {
 		return groups;
 	}
 
+	//test:1
 	// returns users alphabetically
 	public ArrayList<User> getUsers_Alphabetically() {
 
@@ -251,52 +270,59 @@ public class SystemManager {
 		return users;
 	}
 	
+	//test:1
 	// returns the status if the user is logged in
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
+	//test:1
 	//returns the status of the admin
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
 	
+	//test:1
 	// gets current user
 	public User getCurrentUser() {
 		return currentUser;
 	}
 	
-
+	//test:1
 	// gets current category
 	public category getCurrentCategory() {
 		return currentCategory;
 	}
 
-
+	//test:1
 	// sets the current category
 	public void setCurrentCategory(category currentCategory) {
 		this.currentCategory = currentCategory;
 	}
 
+	//test:1
 	// gets the current group
 	public Group getCurrentGroup() {
 		return currentGroup;
 	}
 
-
+	//test:1
   // sets the current group
 	public void setCurrentGroup(Group currentGroup) {
 		this.currentGroup = currentGroup;
 	}
 	
+	//test:1
 	public Post getCurrentPost() {
 		return currentPost;
 	}
 
+	//test:1
 	public void setCurrentPost(Post currentPost) {
 		this.currentPost = currentPost;
 	}
 
+	//test:1
 	// allows a user to logout
 	public void logout() {
 		currentUser = null;
@@ -357,6 +383,7 @@ public class SystemManager {
 		 return c.getGroupsAlphabetically();
 	}
 	 
+	//test:3
 	//helper method, returns a list of all posts.
 	public ArrayList<Post> getAllPost(){
 		ArrayList<Group> groups = new ArrayList<>();
@@ -496,5 +523,197 @@ public class SystemManager {
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
 	 }
-}
+	 
+	 //test:1
+	 //US28 - Administrator can suspend a User from a group and they will have a cooling period
+	 //TODO add cooling period
+	 public void removeUserSuspended(membership m) {
+		 Group g =  m.getGroup();
+		 g.removeMember(m);
+		 Suspended s = new Suspended(m.getUser(), g);
+		 g.addSuspended(s);
+ 	 }
+	 
+	 //test:1
+	 // return a list of names of members
+	 //US29 - Administrator can view a list of Users and the corresponding group(s) they are suspendend from
+	public ArrayList<Suspended> getAllSuspensions(){
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.addAll(getAllGroups());
+		ArrayList<Suspended> suspensions = new ArrayList<>();
+		for(Group g : groups) {
+			suspensions.addAll(g.getSuspended());
+		}
+		return suspensions;
+	}
+	
+	//test:1
+	// return a list of suspensions sorted by username
+	public ArrayList<Suspended> getAllSuspensions_ByUsername(){
+		ArrayList<Suspended> suspensions = new ArrayList<>();
+		suspensions.addAll(getAllSuspensions());
+		Collections.sort(suspensions, new SortSuspensionsByUsername());
+		return suspensions;
+	}
 
+	//test:1
+	//US30 - Administrator can reinstate a suspended user to good standing in a group
+	public void reinstateUserSuspended(membership m) {
+		Group g = m.getGroup();
+		g.addMember(m);
+		Suspended s = new Suspended(m.getUser(), g);
+		g.removeSuspended(s);
+	}
+
+	//test:1
+	//US31 - Administrator can ban a user from a group
+	public void removeUserBanned(membership m) {
+		Group g = m.getGroup();
+		g.removeMember(m);
+		Banned b = new Banned(m.getUser(), g);
+		g.addBanned(b);
+	 }
+	
+	//test:1 
+	//US32 - Administrator can view a list of Users and the corresponding group(s) they are banned from
+	public ArrayList<Banned> getAllBans(){
+		ArrayList<Group> groups = new ArrayList<>();
+		groups.addAll(getAllGroups());
+		ArrayList<Banned> bans = new ArrayList<>();
+		for(Group g : groups) {
+			bans.addAll(g.getBanned());
+		}
+		return bans;
+	}
+	
+	//test:1
+	// return a list of bans sorted by username
+	public ArrayList<Banned> getAllBans_ByUsername(){
+		ArrayList<Banned> bans = new ArrayList<>();
+		bans.addAll(getAllBans());
+		Collections.sort(bans, new SortBannedByUsername());
+		return bans;
+	}
+	
+	//test:2
+	//US33 - User can flag a post or response that I find problematic
+	public void flagPost(Post p) {
+		p.setFlagTrue();
+	}
+		 
+	public void flagResponse(Response r) {
+		r.setFlagTrue();
+	}
+	
+	//test:1
+	//US34 - Administrator can view all flagged post or responses
+	public ArrayList<Object> getAllFlaggedPostAndResponses(){
+		ArrayList<Post> posts = new ArrayList<>();
+		posts.addAll(getAllPost());
+		ArrayList<Response> responses = new ArrayList<>();
+		ArrayList<Object> objects = new ArrayList<>();
+		for(Post p : posts) {
+			responses.addAll(p.getResponse());
+			if(p.getFlag() == true) {
+				objects.add(p);
+			}
+		}
+		for(Response r : responses) {
+			if(r.getFlag() == true) {
+				objects.add(r);
+			}
+		}
+		return objects;
+	}
+	
+	//test:1
+	// gets all flagged posts
+	public ArrayList<Post> getAllFlaggedPost(){
+		ArrayList<Post> posts = new ArrayList<>();
+		posts.addAll(getAllPost());
+		ArrayList<Post> results = new ArrayList<>();
+		for(Post p : posts) {
+			if(p.getFlag() == true) {
+				results.add(p);
+			}
+		}
+		return results;
+	}
+	
+	//test:1
+	// gets all flagged responses
+	public ArrayList<Post> getAllFlaggedResponses(){
+		ArrayList<Post> posts = new ArrayList<>();
+		posts.addAll(getAllPost());
+		ArrayList<Response> responses = new ArrayList<>();
+		ArrayList<Post> results = new ArrayList<>();
+		for(Post p : posts) {
+			responses.addAll(p.getResponse());
+		}
+		for(Response r : responses) {
+			if(r.getFlag() == true) {
+				results.add(r);
+			}
+		}
+		return results;
+	}
+	
+	//test:2
+	//US35 - Administrator can remove all flags on a post or response
+	public void removeFlagOnPost(Post p) {
+		p.setFlagFalse();
+	}
+	 
+	public void removeFlagOnResponse(Response r) {
+		r.setFlagFalse();
+	}
+	
+	//test:4
+	// US40 - User can up-vote or down-vote a post or response other than my own
+	public void upVotePost(Post P) {
+		P.addScore();
+	}
+	 
+	public void upVoteResponse(Response R) {
+		R.addScore();
+	}
+	 
+	public void downVotePost(Post P) {
+		P.subScore();
+	}
+	 
+	public void downVoteResponse(Response R) {
+		R.subScore();
+	}
+	
+	//test:2
+	//US41 - User can view a list of posts with the largest number of up-votes summed across a post and all its responses
+	// sorts post by score
+	public ArrayList<Post> getPosts_ByScore() {
+		ArrayList<Post> posts = new ArrayList<>();
+		posts.addAll(getAllPost());
+		Collections.sort(posts, new SortPostsByCombinedScore());
+		return posts;
+	}
+	
+    // returns the posts with the largest up votes this includes responses
+	public ArrayList<Post> getLargestUpVotes(){
+		ArrayList<Post> posts = new ArrayList<>();
+		posts.addAll(getPosts_ByScore());
+		return posts;
+		 
+	}
+	
+	//test:1
+	// US42 - User can view a list of most up-voted Users
+	public ArrayList<User> viewMostUpVotedUsers(){
+		ArrayList<Post> posts = new ArrayList<>();
+		ArrayList<User> users = new ArrayList<>();
+		posts.addAll(getLargestUpVotes());
+		for(Post p: posts) {
+			users.add(p.getUser());
+		}
+		return users;
+	}
+	 
+}
