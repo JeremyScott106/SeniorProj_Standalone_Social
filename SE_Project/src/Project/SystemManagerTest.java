@@ -359,8 +359,8 @@ class SystemManagerTest {
 		expected.add(a5);
 		expected.add(a1);
 		
+		
 		assertEquals(expected, actual);
-
   }
 	
 	@Test
@@ -790,7 +790,7 @@ class SystemManagerTest {
 		for (int i = 0; i < actual.size(); i++) {
 			if (!actual.get(i).getName().equals(expected[i])) {
 				namesMatch = false;
-				break;
+//				break;
 			}
 		}
 		assertEquals(true, namesMatch);
