@@ -3,6 +3,7 @@ package Project;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import org.junit.Ignore;
@@ -359,6 +360,7 @@ class SystemManagerTest {
 		expected.add(a1);
 		
 		assertEquals(expected, actual);
+
   }
 	
 	@Test
@@ -786,15 +788,12 @@ class SystemManagerTest {
 		boolean namesMatch = true;
 		
 		for (int i = 0; i < actual.size(); i++) {
-			
 			if (!actual.get(i).getName().equals(expected[i])) {
 				namesMatch = false;
 				break;
 			}
 		}
-		
 		assertEquals(true, namesMatch);
-		
 	}
 	
 	
