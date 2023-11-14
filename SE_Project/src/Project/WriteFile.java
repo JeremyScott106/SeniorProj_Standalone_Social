@@ -231,6 +231,52 @@ public class WriteFile {
 	}
 	
 	
+	public static void addMembershipToFile(membership m, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = m.getMembershipWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
+		}
+		
+	}
+	
+	
+	public static void addPostToFile(Post p, String fileName) throws IOException {
+		
+try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = p.getPostWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
+		}
+		
+	}
+	
+	
 	
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
 		
