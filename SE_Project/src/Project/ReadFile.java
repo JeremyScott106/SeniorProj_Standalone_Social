@@ -665,7 +665,7 @@ public class ReadFile {
 			int id = Integer.parseInt(postId);
 			if (g != null && u != null) {
 				Post p=new Post(u, g, dateTime, postTitle, postBody, id);
-				manager.getGroupByName(groupName).addPost(p);
+				manager.getGroupByName(groupName).addExistingPost(p);
 			}
 		}
 		else {

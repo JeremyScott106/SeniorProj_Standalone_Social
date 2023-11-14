@@ -98,7 +98,23 @@ public class Group implements Comparable<Group> {
     }
 
     //Adds a new post to the group
-    public boolean addPost(Post p) {
+    public boolean addExistingPost(Post p) {
+        boolean isMember = false;
+        for (Post p1 : posts) {
+            if (p1.equals(p)) {
+                isMember = true;
+                break;
+            }
+        }
+        if (!isMember) {
+            posts.add(p);
+            return true;
+        }
+        return false;
+    }
+    
+  //Adds a new post to the group
+    public boolean addNewPost(Post p) {
         boolean isMember = false;
         for (Post p1 : posts) {
             if (p1.equals(p)) {

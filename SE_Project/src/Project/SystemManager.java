@@ -224,16 +224,22 @@ public class SystemManager {
 	
 
 	// allows a post to be created
-	//FIXME : Add Unit Tests
+	//FIXME : Add Unit Tests, needs to verify membership exists between User and Group
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
+		String find = group.getGroupWriteData(currentCategory.getName());
+		
 		membership m = getMembership(group, currentUser);
 		int id = group.getPostId();
 		Post p = new Post(m, postTitle, postBody, id);
-		group.addPost(p);
+		group.addNewPost(p);
 		
 		if (writable) {
 			try {
 				WriteFile.addPostToFile(p, fileNames.get(5));
+				
+				String replace = group.getGroupWriteData(currentCategory.getName());
+				WriteFile.updateGroupinFile(find, replace, fileNames.get(3));
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

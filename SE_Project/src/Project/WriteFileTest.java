@@ -335,11 +335,11 @@ class WriteFileTest {
 		g2.addMember(m4);
 		g2.addMember(m5);
 
-		g1.addPost(p1);
-		g1.addPost(p2);
-		g1.addPost(p3);
-		g2.addPost(p4);
-		g2.addPost(p5);
+		g1.addNewPost(p1);
+		g1.addNewPost(p2);
+		g1.addNewPost(p3);
+		g2.addNewPost(p4);
+		g2.addNewPost(p5);
 
 		c1.addGroup(g1);
 		c1.addGroup(g2);
@@ -696,11 +696,11 @@ class WriteFileTest {
 		g2.addMember(m4);
 		g2.addMember(m5);
 
-		g1.addPost(p1);
-		g1.addPost(p2);
-		g1.addPost(p3);
-		g2.addPost(p4);
-		g2.addPost(p5);
+		g1.addNewPost(p1);
+		g1.addNewPost(p2);
+		g1.addNewPost(p3);
+		g2.addNewPost(p4);
+		g2.addNewPost(p5);
 
 		c1.addGroup(g1);
 		c1.addGroup(g2);
@@ -943,5 +943,74 @@ class WriteFileTest {
 		}
 
 		assertEquals(expected, actual);
+	}
+	
+	
+	@Test
+	void testUpdateGroupInFile() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		membership m1 = new membership(u1, g1);
+		g1.addMember(m1);
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+		
+		category c2 = new category("Foods");
+		Group g3 = new Group("Pizza");
+		Group g4 = new Group("Tacos");
+		Group g5 = new Group("Steak");
+		c2.addGroup(g3);
+		c2.addGroup(g4);
+		c2.addGroup(g5);
+		
+		manager.addCategory(c1);
+		manager.addCategory(c2);
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_UpdateGroup.txt");
+		
+		Post p1 = new Post(m1, "Test", "Testing", g1.getPostId());
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+			
+			String find = g1.getGroupWriteData(c1.getName());
+			g1.addNewPost(p1);
+			String replace = g1.getGroupWriteData(c1.getName());
+			WriteFile.updateGroupinFile(find, replace, fileNames.get(0));
+			
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			for (Group g : c.getGroupsAlphabetically()) {
+
+				expected += g.getGroupWriteData(c.getName());
+
+			}
+
+		}
+
+		assertEquals(expected, actual);
+		
 	}
 }
