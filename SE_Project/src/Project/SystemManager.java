@@ -555,5 +555,18 @@ public class SystemManager {
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
 			return df.format(date);
 	 }
+	 
+	//FIXME: add test methods
+	public ArrayList<membership> getAllMemberships() {
+		 ArrayList<membership> memberships = new ArrayList<membership>();
+
+		 for (Group g : this.getAllGroups_Alphabetically()) {
+
+			 memberships.addAll(g.getMembers());
+
+		 }
+
+		 return memberships;
+	}
 }
 

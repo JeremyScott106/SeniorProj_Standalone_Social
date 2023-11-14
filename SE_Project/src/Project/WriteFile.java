@@ -37,6 +37,12 @@ public class WriteFile {
 				else if (fileName.contains("Group")) {
 					writeGroups(manager, writer);
 				}
+				else if (fileName.contains("Membership")) {
+					writeMemberships(manager, writer);
+				}
+				else if (fileName.contains("Post")) {
+					writePosts(manager, writer);
+				}
 				
 				
 				writer.close();
@@ -107,6 +113,36 @@ public class WriteFile {
 		}
 		
 	}
+	
+	private static void writeMemberships(SystemManager manager, FileWriter writer) throws IOException {
+
+		ArrayList<membership> memberships = manager.getAllMemberships();
+
+		for (membership m : memberships) {
+
+			String memberData = m.getMembershipWriteData();
+
+			writer.write(memberData);
+
+		}
+
+	}
+
+	private static void writePosts(SystemManager manager, FileWriter writer) throws IOException {
+
+		ArrayList<Post> posts = manager.getAllPost();
+
+		for (Post p : posts) {
+
+			String postData = p.getPostWriteData();
+
+			writer.write(postData);
+
+		}
+
+	}
+	
+	
 	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
@@ -209,11 +245,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			
@@ -243,11 +279,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			
@@ -277,11 +313,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			
@@ -311,11 +347,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			

@@ -2,13 +2,51 @@ package Project;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
 class WriteFileTest {
 	
+	
+	private String getFileData(ArrayList<String> fileNames) {
+
+		String totalStr = "";
+		
+		for (String fileName : fileNames) {
+
+			File dataFile = new File(fileName);
+			try {
+	
+				Scanner reader = new Scanner(dataFile);
+	
+				while (reader.hasNextLine()) {
+	
+					String next = reader.nextLine();
+					totalStr += next + "\n";
+	
+	//				if (next.equals("@END")) {
+	//					totalStr += "\n";
+	//				}
+	
+				}
+	
+				reader.close();
+	
+			} 
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		return totalStr;
+
+	}
 	
 	
 	@Test
@@ -32,13 +70,25 @@ class WriteFileTest {
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Admins.txt");
 		
 		try {
+			
 			WriteFile.writeFile(manager, fileNames);
 			
-			assertEquals(true, true);
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (Admin a : manager.getAdmins_Alphabetically_ByUsername()) {
+
+			expected = expected.concat(a.getAdminWriteData());
+
+		}
+
+		assertEquals(expected, actual);
 		
 		
 	}
@@ -67,15 +117,23 @@ class WriteFileTest {
 			
 			WriteFile.writeFile(manager, fileNames);
 			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
-			
-			
-			
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (User u : manager.getUsers_Alphabetically_ByUsername()) {
+
+			expected = expected.concat(u.getUserWriteData());
+
+		}
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -100,12 +158,23 @@ class WriteFileTest {
 			
 			WriteFile.writeFile(manager, fileNames);
 			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			expected = expected.concat(c.getCategoryWriteData());
+
+		}
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -140,15 +209,177 @@ class WriteFileTest {
 			
 			WriteFile.writeFile(manager, fileNames);
 			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
 		
 		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			for (Group g : c.getGroupsAlphabetically()) {
+
+				expected += g.getGroupWriteData(c.getName());
+
+			}
+
+		}
+
+		assertEquals(expected, actual);
+		
+		
 	}
+	
+	
+	@Test
+	void testWriteFile_Memberships() {
+
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g2);
+		membership m5 = new membership(u5, g2);
+
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g1.addMember(m3);
+		g2.addMember(m4);
+		g2.addMember(m5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Memberships.txt");
+
+		try {
+
+			WriteFile.writeFile(manager, fileNames);
+
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (membership m : manager.getAllMemberships()) {
+
+			expected += m.getMembershipWriteData();
+
+		}
+
+		assertEquals(expected, actual);
+
+	}
+
+
+	@Test
+	void testWriteFile_Posts() {
+
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g2);
+		membership m5 = new membership(u5, g2);
+
+		Post p1 = new Post(m1, "Test#1", "testing", 0);
+		Post p2 = new Post(m2, "Test#2", "testing", 1);
+		Post p3 = new Post(m3, "Test#3", "testing", 2);
+		Post p4 = new Post(m4, "Test#4", "testing", 3);
+		Post p5 = new Post(m5, "Test#5", "testing", 4);
+
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g1.addMember(m3);
+		g2.addMember(m4);
+		g2.addMember(m5);
+
+		g1.addPost(p1);
+		g1.addPost(p2);
+		g1.addPost(p3);
+		g2.addPost(p4);
+		g2.addPost(p5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Posts.txt");
+
+		try {
+
+			WriteFile.writeFile(manager, fileNames);
+
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (Post p : manager.getAllPost()) {
+
+			expected += p.getPostWriteData();
+
+		}
+
+		assertEquals(expected, actual);
+
+	}
+	
+	
 	
 	
 	
@@ -172,19 +403,32 @@ class WriteFileTest {
 		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddAdmin.txt");
 		
+		Admin test = new Admin("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+		
 		try {
 			WriteFile.writeFile(manager, fileNames);
 			
-			Admin a = new Admin("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+			WriteFile.addAdminToFile(test, fileNames.get(0));
 			
-			WriteFile.addAdminToFile(a, fileNames.get(0));
-			
-			assertEquals(true, true);
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (Admin a : manager.getAdmins_Alphabetically_ByUsername()) {
+
+			expected += a.getAdminWriteData();
+
+		}
+		expected += test.getAdminWriteData();
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -209,21 +453,33 @@ class WriteFileTest {
 		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddUser.txt");
 		
+		User test = new User("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+		
 		try {
 			
 			WriteFile.writeFile(manager, fileNames);
 			
-			User u = new User("Testing", "AddTest", "Testing1234", "10/10/10", "Valdosta", "Georgia", "04/02/1978");
+			WriteFile.addUserToFile(test, fileNames.get(0));
 			
-			WriteFile.addUserToFile(u, fileNames.get(0));
-			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (User u : manager.getUsers_Alphabetically_ByUsername()) {
+
+			expected = expected.concat(u.getUserWriteData());
+
+		}
+		expected += test.getUserWriteData();
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -244,13 +500,13 @@ class WriteFileTest {
 		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddCategory.txt");
 		
+		category test = new category("Tests");
+		
 		try {
 			
 			WriteFile.writeFile(manager, fileNames);
 			
-			category c = new category("Tests");
-			
-			WriteFile.addCategoryToFile(c, fileNames.get(0));
+			WriteFile.addCategoryToFile(test, fileNames.get(0));
 			
 			assertEquals(true, true);
 			
@@ -258,6 +514,19 @@ class WriteFileTest {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			expected = expected.concat(c.getCategoryWriteData());
+
+		}
+		expected += test.getCategoryWriteData();
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -287,22 +556,37 @@ class WriteFileTest {
 		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddGroup.txt");
 		
+		Group test = new Group("Donuts");
 		
 		try {
 			
 			WriteFile.writeFile(manager, fileNames);
 			
-			Group g = new Group("Donuts");
-			c2.addGroup(g);
+			WriteFile.addGroupToFile(test, fileNames.get(0), c2.getName());
 			
-			WriteFile.addGroupToFile(g, fileNames.get(0), c2.getName());
-			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			for (Group g : c.getGroupsAlphabetically()) {
+
+				expected += g.getGroupWriteData(c.getName());
+
+			}
+
+		}
+		expected += test.getGroupWriteData(c2.getName());
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -333,12 +617,25 @@ class WriteFileTest {
 			WriteFile.writeFile(manager, fileNames);
 			
 			WriteFile.removeAdminFromFile(a4, fileNames.get(0));
+			manager.getAdmins_Alphabetically_ByUsername().remove(a4);
 			
-			assertEquals(true, true);
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (Admin a : manager.getAdmins_Alphabetically_ByUsername()) {
+
+			expected = expected.concat(a.getAdminWriteData());
+
+		}
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -368,14 +665,25 @@ class WriteFileTest {
 			WriteFile.writeFile(manager, fileNames);
 			
 			WriteFile.removeUserFromFile(u3, fileNames.get(0));
-			
-			assertEquals(true, true);
-			
+			manager.getUsers_Alphabetically_ByUsername().remove(u3);
+						
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (User u : manager.getUsers_Alphabetically_ByUsername()) {
+
+			expected = expected.concat(u.getUserWriteData());
+
+		}
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -401,13 +709,25 @@ class WriteFileTest {
 			WriteFile.writeFile(manager, fileNames);
 			
 			WriteFile.removeCategoryFromFile(c1, fileNames.get(0));
+			manager.getCategories_Alphabetically().remove(c1);
 			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
 		}
+		
+		
+		String actual = getFileData(fileNames);
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			expected = expected.concat(c.getCategoryWriteData());
+
+		}
+
+		assertEquals(expected, actual);
 		
 	}
 	
@@ -443,12 +763,29 @@ class WriteFileTest {
 			WriteFile.writeFile(manager, fileNames);
 			
 			WriteFile.removeGroupFromFile(g2, fileNames.get(0), c1.getName());
+			manager.getCategoryByName("Sports").getGroupsAlphabetically().remove(g2);
 			
-			assertEquals(true, true);
-			
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 			fail();
-		}	
+		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (category c : manager.getCategories_Alphabetically()) {
+
+			for (Group g : c.getGroupsAlphabetically()) {
+
+				expected += g.getGroupWriteData(c.getName());
+
+			}
+
+		}
+
+		assertEquals(expected, actual);
 	}
 }
