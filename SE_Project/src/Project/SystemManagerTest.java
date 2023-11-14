@@ -1026,6 +1026,17 @@ class SystemManagerTest {
 		
 	}
 	
+	@Test
+	void testGetCategoryByName() {
+
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+		sm.addCategory(c1);
+		sm.setCurrentCategory(c1);	
+
+		assertEquals(c1, sm.getCategoryByName("fun"));
+	}	
 	
 	@Test
 	void testGetUsers_Alphabetically_ByUsernames() {
