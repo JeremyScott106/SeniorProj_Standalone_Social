@@ -197,10 +197,9 @@ public class SystemManager {
 	//test:1
 	// allows a post to be deleted
 	//US36 - Administrator can remove a post
-	public boolean deletePost(Group group, String postTitle, String postBody) {
-		membership m = getMembership(group, currentUser);
-		Post p = new Post(m, postTitle, postBody);
-		return(group.removePost(p));
+	public boolean deleteNewPost(Post p) {
+		Group g = p.getGroup();
+		return(g.removePost(p));
 	}
 	
 	//test:1
@@ -670,6 +669,8 @@ public class SystemManager {
 	
 	//test:4
 	// US40 - User can up-vote or down-vote a post or response other than my own
+	// when upvotes are stored update FIXME
+	// add a validator
 	public void upVotePost(Post P) {
 		P.addScore();
 	}
