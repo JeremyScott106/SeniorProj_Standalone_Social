@@ -54,3 +54,13 @@ class SortPostsByDate implements Comparator<Post> {
 		return p2.getTime().compareTo(p1.getTime());
 	}
 }
+
+class SortObjectsByDate implements Comparator<Object> {
+	@Override
+	public int compare(Object o1, Object o2) {
+		Post p2 = (Post) o2;
+		Post p1 = (Post) o1;
+
+		return p2.getTime().compareTo(p1.getTime());
+	}
+}
