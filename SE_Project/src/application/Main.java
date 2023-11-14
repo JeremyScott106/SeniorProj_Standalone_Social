@@ -108,6 +108,7 @@ public class Main extends JFrame {
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Users.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Categories.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Groups.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Memberships.txt");
 		
 		
 		manager = new SystemManager(fileNames);
