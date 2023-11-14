@@ -488,6 +488,7 @@ public class SystemManager {
 		return results;
 	} 
 
+	 //test:1
 	 // uses the validator class to get the category by name
 	 public category getCategoryByName(String catName) {
 		 return Validator.getCategoryFromName(categories, catName);
