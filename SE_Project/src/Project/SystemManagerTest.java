@@ -431,11 +431,16 @@ class SystemManagerTest {
 				
 		membership m = new membership(u5, g1);
 		
+		Post p1 = new Post(m, "dsudgu", "dusdg");
+		Post p2 = new Post(m, "dsudgu", "dusdg");
+
+		
 		sm.addCategory(c1);
+		sm.addUser(u5);
 		c1.addGroup(g1);
 		g1.addMember(m);
-		
-		sm.createNewPost(m.getGroup(), "dsd", "dsds");
+		g1.addPost(p1);
+		g1.addPost(p2);
 		
 		ArrayList<Post> actual = g1.getPost();
 		
@@ -445,7 +450,7 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testDeletePost_Success() {
+	void testDeleteNewPost_Success() {
 		SystemManager sm = new SystemManager();
 		
 		category c1 = new category("djsh"); 
@@ -461,11 +466,12 @@ class SystemManagerTest {
 
 		
 		sm.addCategory(c1);
+		sm.addUser(u5);
 		c1.addGroup(g1);
 		g1.addMember(m);
 		g1.addPost(p1);
-		g1.addPost(p1);
-		sm.deletePost(g1, "dsudgu", "dusdg");
+		g1.addPost(p2);
+		sm.deleteNewPost(p1);
 
 				
 		ArrayList<Post> actual = g1.getPost();
