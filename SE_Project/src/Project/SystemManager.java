@@ -15,6 +15,8 @@ public class SystemManager {
 	private category currentCategory;
 	private Group currentGroup;
 	private Post currentPost;
+	
+	private boolean writable;
 
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
@@ -27,6 +29,8 @@ public class SystemManager {
 		users = new ArrayList<User>();
 		admins = new ArrayList<Admin>();		
 		categories = new ArrayList<category>();
+		
+		this.writable = false;
 
 	}
 	
@@ -38,6 +42,7 @@ public class SystemManager {
 		this.admins = new ArrayList<Admin>();
 		this.categories = new ArrayList<category>();
 		this.fileNames = fileNames;
+		this.writable = true;
 		
 		try {
 			ReadFile.readFile(this, fileNames);
@@ -95,6 +100,14 @@ public class SystemManager {
 
 				u = new User(name, username, password, bday, city, state);	//create new User	NOTICE: this will have to be updated once User class is updated
 				users.add(u);			//add new user
+				if (writable) {			//If there is a file to write to
+					try {					//Try adding the user to the UserFile
+						WriteFile.addUserToFile(u, fileNames.get(1));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 
 			return true;				//return true
 			}
@@ -133,6 +146,14 @@ public class SystemManager {
 		else {
 			category c = new category(name);	//else, create new category	NOTICE: This may require more variables as the Category class is updated
 			categories.add(c);			//add category
+			if (writable) {		//If there is a file to write to
+				try {				//Try adding the new category
+					WriteFile.addCategoryToFile(c, fileNames.get(2));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			return true;				//return true
 		}
 	}
@@ -151,7 +172,17 @@ public class SystemManager {
 			return false;				//return false
 		}
 		else {							//If validator returned a category
-			return c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
+			c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
+			if (writable) {					//If there is a file to write to
+				Group g = Validator.getGroupFromName(c.getGroupsAlphabetically(), groupName);	//Get the group
+				try {							//Try adding the group to the file
+					WriteFile.addGroupToFile(g, fileNames.get(3), categoryName);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return true;
 		}
 	}
 	// allows the user to login
