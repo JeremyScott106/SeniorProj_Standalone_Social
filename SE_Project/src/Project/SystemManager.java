@@ -229,7 +229,18 @@ public class SystemManager {
 		membership m = getMembership(group, currentUser);
 		int id = group.getPostId();
 		Post p = new Post(m, postTitle, postBody, id);
-		return(group.addPost(p));
+		group.addPost(p);
+		
+		if (writable) {
+			try {
+				WriteFile.addPostToFile(p, fileNames.get(5));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
 	}
 	
 
