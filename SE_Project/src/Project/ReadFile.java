@@ -64,6 +64,8 @@ public class ReadFile {
 					}
 				}
 				
+				reader.close();
+				
 				
 				
 			} catch (FileNotFoundException e) {
