@@ -157,13 +157,11 @@ public class GroupTest {
 	void getUserInMembershipTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		membership m1 = new membership(u1, testGroup1);
 		membership m2 = new membership(u2, testGroup1);
 		membership m3 = new membership(u3, testGroup1);
 		membership m4 = new membership(u4, testGroup1);
@@ -212,13 +210,11 @@ public class GroupTest {
 	void getMembershipTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		membership m1 = new membership(u1, testGroup1);
 		membership m2 = new membership(u2, testGroup1);
 		membership m3 = new membership(u3, testGroup1);
 		membership m4 = new membership(u4, testGroup1);
@@ -267,13 +263,11 @@ public class GroupTest {
 	void isMemberInGroupInMembershipTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		membership m1 = new membership(u1, testGroup1);
 		membership m2 = new membership(u2, testGroup1);
 		membership m3 = new membership(u3, testGroup1);
 		membership m4 = new membership(u4, testGroup1);
@@ -573,13 +567,11 @@ public class GroupTest {
 	void getUserInBannedTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Banned b1 = new Banned(u1, testGroup1);
 		Banned b2 = new Banned(u2, testGroup1);
 		Banned b3 = new Banned(u3, testGroup1);
 		Banned b4 = new Banned(u4, testGroup1);
@@ -628,13 +620,11 @@ public class GroupTest {
 	void getMemberInBannedTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Banned b1 = new Banned(u1, testGroup1);
 		Banned b2 = new Banned(u2, testGroup1);
 		Banned b3 = new Banned(u3, testGroup1);
 		Banned b4 = new Banned(u4, testGroup1);
@@ -809,13 +799,11 @@ public class GroupTest {
 	void getMemberInSuspendedTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
@@ -862,13 +850,11 @@ public class GroupTest {
 	void getUserInSuspendedTest_Failure(){
 		Group testGroup1 = new Group("MembersTest");
 		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
