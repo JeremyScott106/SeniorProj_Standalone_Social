@@ -1499,7 +1499,7 @@ class SystemManagerTest {
 		sm.addUser(u5);
 		
 		sm.suspendUser(s5);
-		sm.reinstateSuspendedUser(s5);
+		sm.reinstateSuspendedUser(s5, m5);
 		ArrayList<membership> actual = testGroup1.getMembers();
 
 		assertEquals(expected, actual);
