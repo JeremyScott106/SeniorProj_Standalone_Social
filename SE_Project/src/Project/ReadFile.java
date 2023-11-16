@@ -64,6 +64,8 @@ public class ReadFile {
 					}
 				}
 				
+				reader.close();
+				
 				
 				
 			} catch (FileNotFoundException e) {
@@ -78,7 +80,7 @@ public class ReadFile {
 		
 	}
 	
-	
+	//test:7
 	private static void readAdmin(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		String name = "";				//Name of the User
 		boolean gotName = false;			//Set to true once name is read
@@ -210,7 +212,7 @@ public class ReadFile {
 		
 	}
 	
-	
+	//test:6
 	private static void readUser(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		String name = "";				//Name of the User
 		boolean gotName = false;
@@ -338,7 +340,7 @@ public class ReadFile {
 		}
 	}
 
-	
+	//test:5
 	private static void readCategory(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String name = "";			//Name of the Category
@@ -389,7 +391,7 @@ public class ReadFile {
 		
 	}
 	
-	
+	//test:1
 	private static void readGroup(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String name = "";

@@ -2,6 +2,7 @@ package Project;
 
 import java.util.Comparator;
 
+//test:1
 class SortCategoriesByName implements Comparator<category> {
 
 	@Override
@@ -12,7 +13,7 @@ class SortCategoriesByName implements Comparator<category> {
 
 }
 
-
+//test:1
 class SortGroupsByName implements Comparator<Group> {
 
 	@Override
@@ -23,7 +24,7 @@ class SortGroupsByName implements Comparator<Group> {
 
 }
 
-
+//test:1
 class SortUsersByName implements Comparator<User> {
 
 	@Override
@@ -34,7 +35,7 @@ class SortUsersByName implements Comparator<User> {
 
 }
 
-
+//test:1
 class SortUsersByUsername implements Comparator<User> {
 	
 	@Override

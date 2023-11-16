@@ -3,14 +3,8 @@ package Project;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-import java.text.ParseException;
 
 class SystemManagerTest {
 
@@ -65,7 +59,6 @@ class SystemManagerTest {
 
 		assertEquals(false, tf);
 	}
-
 
 	@Test
 	void testLogin_Failure_Password_User() {
@@ -137,9 +130,6 @@ class SystemManagerTest {
 		assertEquals(false, tf);
 	}
 
-
-
-	@Ignore
 	@Test
 	void testGetGroupsSortedAlphabetically() {
 
@@ -172,7 +162,6 @@ class SystemManagerTest {
 		expected.add(g3);
 
 		assertEquals(expected, actual);
-
 	}
 
 	@Test
@@ -204,6 +193,27 @@ class SystemManagerTest {
 
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	void testCreateCategory_Success() {
+		SystemManager sm = new SystemManager();
+
+		category c1 = new category("Sports");
+		category c2 = new category("Games");
+		category c3 = new category("Video Games");
+		category c4 = new category("Foods");
+		category c5 = new category("Apples");
+
+		sm.addCategory(c1);
+		sm.addCategory(c2);
+		sm.addCategory(c3);
+		sm.addCategory(c4);
+		sm.addCategory(c5);
+
+		boolean actual = sm.createCategory("hey");
+
+		assertEquals(true, actual);
+	}
 
 
 	@Test
@@ -227,7 +237,6 @@ class SystemManagerTest {
 		assertEquals(false, actual);
 	}
 
-
 	@Test
 	void testCreateGroup_Success() {
 		SystemManager sm = new SystemManager();
@@ -246,7 +255,6 @@ class SystemManagerTest {
 
 		assertEquals(true, actual);
 	}
-
 
 	@Test
 	void testCreateGroup_Failure_InvalidCategory() {
@@ -267,7 +275,6 @@ class SystemManagerTest {
 		assertEquals(false, actual);
 	}
 
-
 	@Test
 	void testCreateGroup_Failure_DuplicateGroup() {
 		SystemManager sm = new SystemManager();
@@ -286,7 +293,6 @@ class SystemManagerTest {
 
 		assertEquals(false, actual);
 	}
-
 
 	@Test
 	void testRegisterUser_Success() {
@@ -328,10 +334,7 @@ class SystemManagerTest {
 		boolean actual = sm.registerUser("Jack", "11/3/99", "Valdosta", "GA", "jackster3", "W@ck0#5");
 
 		assertEquals(false, actual);
-
 	}
-	
-
 	
 	@Test
 	void testGetAdmins_Alphabetically() {
@@ -358,7 +361,6 @@ class SystemManagerTest {
 		expected.add(a4);
 		expected.add(a5);
 		expected.add(a1);
-		
 		
 		assertEquals(expected, actual);
   }
@@ -392,8 +394,6 @@ class SystemManagerTest {
 
 		assertEquals(expected, actual);
 	}
-	
-		
 
 	@Test
 	void testgetGroupsByUser_success() {
@@ -501,7 +501,6 @@ class SystemManagerTest {
 		ArrayList<Group> actual = new ArrayList<>();
 		actual.addAll(sm.getGroupsInCategory_Alphabetically(c1));
 		assertEquals(expected, actual);
-
 	}
 	
 	@Test
@@ -656,7 +655,6 @@ class SystemManagerTest {
 		manager.addAdmin(a3);
 		manager.addAdmin(a4);
 		
-		
 		boolean actual = manager.addAdmin(a5);
 		
 		assertEquals(true, actual);
@@ -677,7 +675,6 @@ class SystemManagerTest {
 		manager.addAdmin(a3);
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
-		
 		
 		boolean actual = manager.addAdmin(a5);
 		
@@ -704,7 +701,6 @@ class SystemManagerTest {
 		boolean actual = manager.addCategory(c5);
 		
 		assertEquals(true, actual);
-		
 	}
 	
 	@Test
@@ -726,9 +722,7 @@ class SystemManagerTest {
 		boolean actual = manager.addCategory(c5);
 		
 		assertEquals(false, actual);
-		
 	}
-	
 	
 	@Test
 	void testAddUser_Success() {
@@ -749,7 +743,6 @@ class SystemManagerTest {
 		boolean actual = manager.addUser(u5);
 		
 		assertEquals(true, actual);
-		
 	}
 	
 	@Test
@@ -769,7 +762,6 @@ class SystemManagerTest {
 		boolean actual = manager.addUser(u3);
 		
 		assertEquals(false, actual);
-		
 	}
 	
 	
@@ -788,14 +780,14 @@ class SystemManagerTest {
 		boolean namesMatch = true;
 		
 		for (int i = 0; i < actual.size(); i++) {
+			
 			if (!actual.get(i).getName().equals(expected[i])) {
 				namesMatch = false;
-//				break;
+				break;
 			}
 		}
 		assertEquals(true, namesMatch);
 	}
-	
 	
 	@Test
 	void testWriteManager_Admins() {
@@ -820,9 +812,7 @@ class SystemManagerTest {
 		boolean actual = manager.writeManager();
 		
 		assertEquals(true, actual);
-		
 	}
-	
 	
 	@Test
 	void testGetUsers_Alphabetically_ByUsernames() {
@@ -854,7 +844,6 @@ class SystemManagerTest {
 				break;
 			}
 		}
-		
 		assertEquals(true, namesMatch);
 	}
 	
@@ -888,10 +877,8 @@ class SystemManagerTest {
 				break;
 			}
 		}
-		
 		assertEquals(true, namesMatch);
 	}
-	
 	
 	@Test
 	void testGetGroupByName_Success() {
@@ -945,7 +932,6 @@ class SystemManagerTest {
 		assertEquals(null, actual);
 	}
 	
-	
 	@Test
 	void testGetUserByUsername_Success() {
 		
@@ -989,6 +975,7 @@ class SystemManagerTest {
 		
 		assertEquals(null, actual);
 	}
+	
 	@Test
 	void testgetSimpleDate_Success() {
 		SystemManager manager = new SystemManager();
@@ -1003,7 +990,6 @@ class SystemManagerTest {
 		String result = manager.getSimpleDate(d1);
 		
 		assertEquals(expected, result);
-		
 	}
 	
 	@Test
@@ -1020,7 +1006,6 @@ class SystemManagerTest {
 		String result = manager.getSimpleDate(d2);
 		
 		assertNotSame(expected, result);
-		
 	}
 	
 	@Test
@@ -1071,5 +1056,5 @@ class SystemManagerTest {
 
 		assertEquals(true, manager.isUserOfGroup(u1, g2));
 	}
-	
 }
+

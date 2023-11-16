@@ -173,4 +173,22 @@ public class PostTest {
 		assertEquals(-1, testPost1.getScore());
 	}
 	
+	//Testing Constructor and getGroup//
+	@Test
+	void addResponseTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> expected = new ArrayList<>();
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo", 1);
+		Response r2 = new Response(m, "no0000ooo", 1);
+		expected.add(r2);
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		
+		testPost1.addResponse(r2);
+
+		assertEquals(expected, testPost1.getResponse());
+	}
+	
 }
