@@ -47,10 +47,10 @@ public class Group implements Comparable<Group> {
 
         if (Validator.validateMemberExistsInGroup(m, memberships)) {
         	memberships.remove(m);
-        	return false;
+        	return true;
         }
         else {
-        	return true;
+        	return false;
         }
     }
 
@@ -266,10 +266,10 @@ public class Group implements Comparable<Group> {
 
         if (Validator.validateSuspendedExistsInGroup(s, suspensions)) {
         	suspensions.remove(s);
-        	return false;
+        	return true;
         }
         else {
-        	return true;
+        	return false;
         }
     }
 

@@ -1328,7 +1328,7 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testRemoveUserSuspended() {
+	void testSuspendUser() {
 
 		SystemManager sm = new SystemManager();
 		
@@ -1345,12 +1345,15 @@ class SystemManagerTest {
 		membership m3 = new membership(u3, testGroup1);
 		membership m4 = new membership(u4, testGroup1);
 		membership m5 = new membership(u5, testGroup1);
-
+		
 		testGroup1.addMember(m1);
 		testGroup1.addMember(m2);
 		testGroup1.addMember(m3);
 		testGroup1.addMember(m4);
 		testGroup1.addMember(m5);
+		
+		Suspended s5 = new Suspended(u5, testGroup1);
+
 		
 		ArrayList<membership> expected = new ArrayList<>();
 		
@@ -1365,7 +1368,8 @@ class SystemManagerTest {
 		sm.addUser(u4);
 		sm.addUser(u5);
 		
-		sm.removeUserSuspended(m5);
+		
+		sm.suspendUser(s5);
 		ArrayList<membership> actual = testGroup1.getMembers();
 
 		assertEquals(expected, actual);
@@ -1454,7 +1458,7 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testReinstateUserSuspended() {
+	void testReinstateSuspendUser() {
 
 		SystemManager sm = new SystemManager();
 		
@@ -1471,13 +1475,15 @@ class SystemManagerTest {
 		membership m3 = new membership(u3, testGroup1);
 		membership m4 = new membership(u4, testGroup1);
 		membership m5 = new membership(u5, testGroup1);
-
+		
 		testGroup1.addMember(m1);
 		testGroup1.addMember(m2);
 		testGroup1.addMember(m3);
 		testGroup1.addMember(m4);
 		testGroup1.addMember(m5);
 		
+		Suspended s5 = new Suspended(u5, testGroup1);
+
 		ArrayList<membership> expected = new ArrayList<>();
 		
 		expected.add(m1);
@@ -1492,15 +1498,15 @@ class SystemManagerTest {
 		sm.addUser(u4);
 		sm.addUser(u5);
 		
-		sm.removeUserSuspended(m5);
-		sm.reinstateUserSuspended(m5);
+		sm.suspendUser(s5);
+		sm.reinstateSuspendedUser(s5);
 		ArrayList<membership> actual = testGroup1.getMembers();
 
 		assertEquals(expected, actual);
 	}
 	
 	@Test
-	void testRemoveUserBanned() {
+	void testBanUser() {
 
 		SystemManager sm = new SystemManager();
 		
@@ -1517,12 +1523,16 @@ class SystemManagerTest {
 		membership m3 = new membership(u3, testGroup1);
 		membership m4 = new membership(u4, testGroup1);
 		membership m5 = new membership(u5, testGroup1);
-
+		
 		testGroup1.addMember(m1);
 		testGroup1.addMember(m2);
 		testGroup1.addMember(m3);
 		testGroup1.addMember(m4);
 		testGroup1.addMember(m5);
+		
+		Banned b5 = new Banned(u5, testGroup1);
+
+		testGroup1.addBanned(b5);
 		
 		ArrayList<membership> expected = new ArrayList<>();
 		
@@ -1537,7 +1547,7 @@ class SystemManagerTest {
 		sm.addUser(u4);
 		sm.addUser(u5);
 		
-		sm.removeUserBanned(m5);
+		sm.banUser(b5);
 		ArrayList<membership> actual = testGroup1.getMembers();
 
 		assertEquals(expected, actual);

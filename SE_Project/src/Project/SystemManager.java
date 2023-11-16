@@ -251,8 +251,7 @@ public class SystemManager {
 	//test:1
 	// returns all groups alphabetically
 	public ArrayList<Group> getAllGroups_Alphabetically() {
-		ArrayList<Group> groups = new ArrayList<>();
-		groups.addAll(getAllGroups());
+		ArrayList<Group> groups = getAllGroups();
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
@@ -353,8 +352,7 @@ public class SystemManager {
 	// returns an arraylist of groups that a user is in
 	 public ArrayList<Group> getGroupsByUser(User user) {
 	 ArrayList<Group> group = new ArrayList<>();
-	 ArrayList<Group> groups = new ArrayList<>();
-	 groups.addAll(getAllGroups());
+	 ArrayList<Group> groups = getAllGroups();
 	 for (Group g: groups) {
 		 if (g.isMemberInGroupInMembership(user.getId()) == true){
 			 group.add(g);
@@ -401,14 +399,12 @@ public class SystemManager {
 	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
 	 public ArrayList<Object> viewUsersPostsResponses(User user) {
 		 ArrayList<Object> results = new ArrayList<>();
-		 ArrayList<Post> posts = new ArrayList<>();
-		 posts.addAll(getAllPost());
+		 ArrayList<Post> posts = getAllPost();
 		 for(Post p : posts) {
 			 if(user == p.getUser()) {
 				  results.add(p);
 			 }
-			 ArrayList<Response> r = new ArrayList<>();
-			 r.addAll(p.getResponse());
+			 ArrayList<Response> r = p.getResponse();
 			 for (Response r1 : r){
 				 membership m = r1.getMember();
 				 if(user == m.getUser()){
@@ -424,15 +420,13 @@ public class SystemManager {
 	 // takes in user and a group. if the post is in the group given then it records all the posts and responses created by the user in that group. 
 	 public ArrayList<Object> viewUsersPostsResponsesInGroup(User user, Group group) {
 		 ArrayList<Object> results = new ArrayList<>();
-		 ArrayList<Post> posts = new ArrayList<>();
-		 posts.addAll(getAllPost());
+		 ArrayList<Post> posts = getAllPost();
 		 for(Post p : posts) {
 			 if(group == p.getGroup()) {
 				 if(user == p.getUser()) {
 					 results.add(p);
 				 }
-				 ArrayList<Response> r = new ArrayList<>();
-				 r.addAll(p.getResponse());
+				 ArrayList<Response> r = p.getResponse();
 				 for (Response r1 : r){
 					 membership m = r1.getMember();
 					 if(user == m.getUser()){
@@ -449,13 +443,11 @@ public class SystemManager {
 	 //loops through the post arrayList and records all the posts and responses of a given group
 	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
 		 ArrayList<Object> results = new ArrayList<>();
-		 ArrayList<Post> posts = new ArrayList<>();
-		 posts.addAll(getAllPost());
+		 ArrayList<Post> posts = getAllPost();
 		 for(Post p : posts){
 			 if(group == p.getGroup()) {
 				 results.add(p);
-				 ArrayList<Response> r = new ArrayList<>();
-				 r.addAll(p.getResponse());
+				 ArrayList<Response> r = p.getResponse();
 				 for (Response r1 : r){
 					 results.add(r1);
 				 }
@@ -467,8 +459,7 @@ public class SystemManager {
      //test:1
 	 //loops through the post arrayList and records all the posts of a given group
 	 public ArrayList<Post> viewPostsInGroup(Group group) {
-		 ArrayList<Post> posts = new ArrayList<>();
-		 posts.addAll(group.getPost());
+		 ArrayList<Post> posts = group.getPost();
 		 return posts;
 	}
 	 
@@ -476,8 +467,7 @@ public class SystemManager {
 	 //User story 25
 	 //checks if the post has the user if so it gets the responses from the post and returns an arraylist of responses.
 	 public ArrayList<Object> viewMyResponses(User user, Post post) {
-		 ArrayList<Response> pr = new ArrayList<>();
-		 pr.addAll(post.getResponse());
+		 ArrayList<Response> pr = post.getResponse();
 		 ArrayList<Object> results = new ArrayList<>();
 		 for (Response r1 : pr){
 			 User u = r1.getUser();
@@ -527,10 +517,11 @@ public class SystemManager {
 	 //test:1
 	 //US28 - Administrator can suspend a User from a group and they will have a cooling period
 	 //TODO add cooling period
-	 public void removeUserSuspended(membership m) {
-		 Group g =  m.getGroup();
+	 public void suspendUser(Suspended s) {
+		 User u = s.getUser();
+		 Group g = s.getGroup();
+		 membership m = g.getMembership(u.getId());
 		 g.removeMember(m);
-		 Suspended s = new Suspended(m.getUser(), g);
 		 g.addSuspended(s);
  	 }
 	 
@@ -538,8 +529,7 @@ public class SystemManager {
 	 // return a list of names of members
 	 //US29 - Administrator can view a list of Users and the corresponding group(s) they are suspendend from
 	public ArrayList<Suspended> getAllSuspensions(){
-		ArrayList<Group> groups = new ArrayList<>();
-		groups.addAll(getAllGroups());
+		ArrayList<Group> groups = getAllGroups();
 		ArrayList<Suspended> suspensions = new ArrayList<>();
 		for(Group g : groups) {
 			suspensions.addAll(g.getSuspended());
@@ -550,35 +540,33 @@ public class SystemManager {
 	//test:1
 	// return a list of suspensions sorted by username
 	public ArrayList<Suspended> getAllSuspensions_ByUsername(){
-		ArrayList<Suspended> suspensions = new ArrayList<>();
-		suspensions.addAll(getAllSuspensions());
+		ArrayList<Suspended> suspensions = getAllSuspensions();
 		Collections.sort(suspensions, new SortSuspensionsByUsername());
 		return suspensions;
 	}
 
 	//test:1
 	//US30 - Administrator can reinstate a suspended user to good standing in a group
-	public void reinstateUserSuspended(membership m) {
-		Group g = m.getGroup();
+	public void reinstateSuspendedUser(Suspended s, membership m) {
+		Group g = s.getGroup();
 		g.addMember(m);
-		Suspended s = new Suspended(m.getUser(), g);
 		g.removeSuspended(s);
 	}
 
 	//test:1
 	//US31 - Administrator can ban a user from a group
-	public void removeUserBanned(membership m) {
-		Group g = m.getGroup();
-		g.removeMember(m);
-		Banned b = new Banned(m.getUser(), g);
-		g.addBanned(b);
+	public void banUser(Banned b) {
+		 User u = b.getUser();
+		 Group g = b.getGroup();
+		 membership m = g.getMembership(u.getId());
+		 g.removeMember(m);
+		 g.addBanned(b);
 	 }
 	
 	//test:1 
 	//US32 - Administrator can view a list of Users and the corresponding group(s) they are banned from
 	public ArrayList<Banned> getAllBans(){
-		ArrayList<Group> groups = new ArrayList<>();
-		groups.addAll(getAllGroups());
+		ArrayList<Group> groups = getAllGroups();
 		ArrayList<Banned> bans = new ArrayList<>();
 		for(Group g : groups) {
 			bans.addAll(g.getBanned());
@@ -589,8 +577,7 @@ public class SystemManager {
 	//test:1
 	// return a list of bans sorted by username
 	public ArrayList<Banned> getAllBans_ByUsername(){
-		ArrayList<Banned> bans = new ArrayList<>();
-		bans.addAll(getAllBans());
+		ArrayList<Banned> bans = getAllBans();
 		Collections.sort(bans, new SortBannedByUsername());
 		return bans;
 	}
@@ -608,8 +595,7 @@ public class SystemManager {
 	//test:1
 	//US34 - Administrator can view all flagged post or responses
 	public ArrayList<Object> getAllFlaggedPostAndResponses(){
-		ArrayList<Post> posts = new ArrayList<>();
-		posts.addAll(getAllPost());
+		ArrayList<Post> posts = getAllPost();
 		ArrayList<Response> responses = new ArrayList<>();
 		ArrayList<Object> objects = new ArrayList<>();
 		for(Post p : posts) {
@@ -629,8 +615,7 @@ public class SystemManager {
 	//test:1
 	// gets all flagged posts
 	public ArrayList<Post> getAllFlaggedPost(){
-		ArrayList<Post> posts = new ArrayList<>();
-		posts.addAll(getAllPost());
+		ArrayList<Post> posts = getAllPost();
 		ArrayList<Post> results = new ArrayList<>();
 		for(Post p : posts) {
 			if(p.getFlag() == true) {
@@ -643,8 +628,7 @@ public class SystemManager {
 	//test:1
 	// gets all flagged responses
 	public ArrayList<Post> getAllFlaggedResponses(){
-		ArrayList<Post> posts = new ArrayList<>();
-		posts.addAll(getAllPost());
+		ArrayList<Post> posts = getAllPost();
 		ArrayList<Response> responses = new ArrayList<>();
 		ArrayList<Post> results = new ArrayList<>();
 		for(Post p : posts) {
@@ -692,16 +676,14 @@ public class SystemManager {
 	//US41 - User can view a list of posts with the largest number of up-votes summed across a post and all its responses
 	// sorts post by score
 	public ArrayList<Post> getPosts_ByScore() {
-		ArrayList<Post> posts = new ArrayList<>();
-		posts.addAll(getAllPost());
+		ArrayList<Post> posts = getAllPost();
 		Collections.sort(posts, new SortPostsByCombinedScore());
 		return posts;
 	}
 	
     // returns the posts with the largest up votes this includes responses
 	public ArrayList<Post> getLargestUpVotes(){
-		ArrayList<Post> posts = new ArrayList<>();
-		posts.addAll(getPosts_ByScore());
+		ArrayList<Post> posts = getPosts_ByScore();
 		return posts;
 		 
 	}
@@ -709,9 +691,8 @@ public class SystemManager {
 	//test:1
 	// US42 - User can view a list of most up-voted Users
 	public ArrayList<User> viewMostUpVotedUsers(){
-		ArrayList<Post> posts = new ArrayList<>();
+		ArrayList<Post> posts = getLargestUpVotes();
 		ArrayList<User> users = new ArrayList<>();
-		posts.addAll(getLargestUpVotes());
 		for(Post p: posts) {
 			users.add(p.getUser());
 		}
