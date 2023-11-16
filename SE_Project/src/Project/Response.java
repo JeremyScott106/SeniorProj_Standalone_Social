@@ -22,14 +22,7 @@ public class Response extends Post{
 		return parentalId;
 	}
 	
-	//test:1
-	public membership getMember() {
-		return membership;
-	}
-	
-	//test:1
-	public String getResponseBody() {
-		return responseBody;
+
 	
 	public String getResponseWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");

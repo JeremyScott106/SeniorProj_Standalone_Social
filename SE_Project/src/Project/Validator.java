@@ -203,6 +203,7 @@ public class Validator {
 			}
 		}
 		return false;
+	}
 
 	//FIXME: add tests
 	public static Post getPostFromId(ArrayList<Post> posts, int id) {

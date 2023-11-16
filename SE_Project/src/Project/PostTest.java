@@ -181,10 +181,10 @@ public class PostTest {
 		ArrayList<Response> expected = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo");
-		Response r2 = new Response(m, "no0000ooo");
+		Response r1 = new Response(m, "noooo", 1);
+		Response r2 = new Response(m, "no0000ooo", 1);
 		expected.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		testPost1.addResponse(r2);
 
