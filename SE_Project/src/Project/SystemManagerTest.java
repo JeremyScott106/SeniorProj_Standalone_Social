@@ -1,7 +1,10 @@
 package Project;
 
+import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
@@ -431,8 +434,8 @@ class SystemManagerTest {
 				
 		membership m = new membership(u5, g1);
 		
-		Post p1 = new Post(m, "dsudgu", "dusdg");
-		Post p2 = new Post(m, "dsudgu", "dusdg");
+		Post p1 = new Post(m, "dsudgu", "dusdg", 1);
+		Post p2 = new Post(m, "dsudgu", "dusdg", 2);
 
 		
 		sm.addCategory(c1);
@@ -461,8 +464,8 @@ class SystemManagerTest {
 				
 		membership m = new membership(u5, g1);
 		
-		Post p1 = new Post(m, "dsudgu", "dusdg");
-		Post p2 = new Post(m, "dsudgu", "dusdg");
+		Post p1 = new Post(m, "dsudgu", "dusdg", 1);
+		Post p2 = new Post(m, "dsudgu", "dusdg", 2);
 
 		
 		sm.addCategory(c1);
@@ -493,10 +496,10 @@ class SystemManagerTest {
 				
 		membership m = new membership(u5, g1);
 		
-		Post p1 = new Post(m, "dsudgu", "dusdg");
-		Post p2 = new Post(m, "dsudgu", "dusdg");
-		Response r1 = new Response(m, "fdihsfi");
-		Response r2 = new Response(m, "fdihsgfgfi");
+		Post p1 = new Post(m, "dsudgu", "dusdg", 1);
+		Post p2 = new Post(m, "dsudgu", "dusdg", 2);
+		Response r1 = new Response(m, "fdihsfi", 1);
+		Response r2 = new Response(m, "fdihsgfgfi", 2);
 
 
 		p1.addResponse(r1);
@@ -715,9 +718,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -743,9 +746,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -771,9 +774,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -799,9 +802,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -825,9 +828,9 @@ class SystemManagerTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I", "This is the message");
-		Response r1 = new Response(m, "n");
-		Response r2 = new Response(m, "n000");
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
 
 		ArrayList<Object> expected = new ArrayList<>();
 		expected.add(r1);
@@ -980,8 +983,10 @@ class SystemManagerTest {
 	void testSystemManager_ReadFileConstructor_Admins() {
 		
 		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Admin.txt";
+		ArrayList<String> fileNames = new ArrayList<>();
+		fileNames.add(fileName);
 		
-		SystemManager manager = new SystemManager(fileName);
+		SystemManager manager = new SystemManager(fileNames);
 		
 		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
 		
@@ -1004,7 +1009,10 @@ class SystemManagerTest {
 	
 	@Test
 	void testWriteManager_Admins() {
-		SystemManager manager = new SystemManager();
+		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins";
+		ArrayList<String> fileNames = new ArrayList<>();
+		fileNames.add(fileName);
+		SystemManager manager = new SystemManager(fileNames);
 		
 		Admin a1 = new Admin("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		Admin a2 = new Admin("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -1018,9 +1026,7 @@ class SystemManagerTest {
 		manager.addAdmin(a4);
 		manager.addAdmin(a5);
 		
-		String fileName = ".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteManager_Test_Admins";
-		
-		boolean actual = manager.writeManager(fileName);
+		boolean actual = manager.writeManager();
 		
 		assertEquals(true, actual);
 		
@@ -1296,7 +1302,7 @@ class SystemManagerTest {
 		membership m = new membership(u1, g1);
 
 		
-		Post p1 = new Post(m, "fun", "dsuagd");
+		Post p1 = new Post(m, "fun", "dsuagd", 1);
 
 		sm.setCurrentPost(p1);	
 
@@ -1644,7 +1650,7 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		sm.flagPost(testPost1);
 		Boolean actual = testPost1.getFlag();
@@ -1660,7 +1666,7 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");
+		Response testResponse1 = new Response(m, "I disagree.", 1);
 
 		sm.flagResponse(testResponse1);
 		Boolean actual = testResponse1.getFlag();
@@ -1676,8 +1682,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1707,7 +1713,7 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1734,8 +1740,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1763,8 +1769,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
-		Post testPost2 = new Post (m, "I'm posting.", "This is the message");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		Post testPost2 = new Post (m, "I'm posting.", "This is the message", 1);
 
 		
 		category c = new category("ds");	
@@ -1795,10 +1801,10 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Response testResponse2 = new Response(m, "I disagree.");		
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Response testResponse2 = new Response(m, "I disagree.", 1);		
 
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1831,8 +1837,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1854,8 +1860,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1877,8 +1883,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1900,8 +1906,8 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		category c = new category("ds");	
 		sm.addCategory(c);
@@ -1923,10 +1929,10 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
-		Post testPost2 = new Post (m, "I'm posting.", "This is the message");
-		Post testPost3 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		Post testPost2 = new Post (m, "I'm posting.", "This is the message", 2);
+		Post testPost3 = new Post (m, "I'm posting.", "This is the message", 3);
 
 		
 		category c = new category("ds");	
@@ -1964,10 +1970,10 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.");		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message");
-		Post testPost2 = new Post (m, "I'm posting.", "This is the message");
-		Post testPost3 = new Post (m, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m, "I disagree.", 1);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		Post testPost2 = new Post (m, "I'm posting.", "This is the message", 2);
+		Post testPost3 = new Post (m, "I'm posting.", "This is the message", 3);
 
 		
 		category c = new category("ds");	
@@ -2013,10 +2019,10 @@ class SystemManagerTest {
 		membership m3 = new membership(testUser3, testGroup);
 
 
-		Response testResponse1 = new Response(m1, "I disagree.");		
-		Post testPost1 = new Post (m1, "I'm posting.", "This is the message");
-		Post testPost2 = new Post (m2, "I'm posting.", "This is the message");
-		Post testPost3 = new Post (m3, "I'm posting.", "This is the message");
+		Response testResponse1 = new Response(m1, "I disagree.", 1);		
+		Post testPost1 = new Post (m1, "I'm posting.", "This is the message", 1);
+		Post testPost2 = new Post (m2, "I'm posting.", "This is the message", 2);
+		Post testPost3 = new Post (m3, "I'm posting.", "This is the message", 3);
 
 		
 		category c = new category("ds");	
@@ -2047,8 +2053,77 @@ class SystemManagerTest {
 		assertEquals(expected, actual);
 	}
 	
+	@Test
+	void testgetSimpleDate_Success() {
+		SystemManager manager = new SystemManager();
+		Date d1 = new Date();
+		
+		String day = d1.toString().substring(8,10);
+		String month = d1.toString().substring(4,7);
+		String year = d1.toString().substring(24);
+	 
+		String expected = day + " " + month + " " + year;
+		
+		String result = manager.getSimpleDate(d1);
+		
+		assertEquals(expected, result);
+	}
 	
-	
+	@Test
+	void testgetSimpleDate_Failure() {
+		SystemManager manager = new SystemManager();
+		Date d1 = new Date();
+		Date d2 = new Date(7/11/1111);
+		String day = d1.toString().substring(8,10);
+		String month = d1.toString().substring(4,7);
+		String year = d1.toString().substring(24);
+	 
+		String expected = day + " " + month + " " + year;
+		
+		String result = manager.getSimpleDate(d2);
+		
+		assertNotSame(expected, result);
+	}
 	
 
+	
+	@Test
+	void testJoinGroup_Fail() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		Group g2 = new Group("Test2");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
+
+		assertEquals(false, manager.isUserOfGroup(u1, g2));
+	}
+	
+	@Test
+	void testLeaveGroup_Success() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		Group g2 = new Group("Test2");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
+		manager.joinGroup(u1, g2);
+		
+		manager.leaveGroup(u1, g1);
+
+		assertEquals(false, manager.isUserOfGroup(u1, g1));
+	}
+	
+	@Test
+	void testLeaveGroup_Fail() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		Group g2 = new Group("Test2");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		manager.joinGroup(u1, g1);
+		manager.joinGroup(u1, g2);
+		
+		manager.leaveGroup(u1, g1);
+
+		assertEquals(true, manager.isUserOfGroup(u1, g2));
+	}
 }
+

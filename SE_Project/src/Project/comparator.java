@@ -8,7 +8,7 @@ class SortCategoriesByName implements Comparator<category> {
 	@Override
 	public int compare(category c1, category c2) {
 
-		return c1.getName().compareTo(c2.getName());
+		return c1.getName().toUpperCase().compareTo(c2.getName().toUpperCase());
 	}
 
 }
@@ -19,7 +19,7 @@ class SortGroupsByName implements Comparator<Group> {
 	@Override
 	public int compare(Group g1, Group g2) {
 
-		return g1.getGroupName().compareTo(g2.getGroupName());
+		return g1.getGroupName().toUpperCase().compareTo(g2.getGroupName().toUpperCase());
 	}
 
 }
@@ -30,7 +30,7 @@ class SortUsersByName implements Comparator<User> {
 	@Override
 	public int compare(User u1, User u2) {
 
-		return u1.getName().compareTo(u2.getName());
+		return u1.getName().toUpperCase().compareTo(u2.getName().toUpperCase());
 	}
 
 }
@@ -47,6 +47,7 @@ class SortUsersByUsername implements Comparator<User> {
 	}
 	
 }
+
 
 class SortSuspensionsByUsername implements Comparator<Suspended> {
     @Override
@@ -77,4 +78,22 @@ class SortBannedByUsername implements Comparator<Banned> {
 
     	return u1.getName().compareTo(u2.getName());
     }
+}
+
+//FIXME : Add Unit Tests
+class SortPostsByDate implements Comparator<Post> {
+	@Override
+	public int compare(Post p1, Post p2) {
+		return p2.getTime().compareTo(p1.getTime());
+	}
+}
+
+class SortObjectsByDate implements Comparator<Object> {
+	@Override
+	public int compare(Object o1, Object o2) {
+		Post p2 = (Post) o2;
+		Post p1 = (Post) o1;
+
+		return p2.getTime().compareTo(p1.getTime());
+	}
 }

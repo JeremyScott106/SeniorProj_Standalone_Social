@@ -1,7 +1,9 @@
 package application;
-import Project.ReadFile;
+
 import Project.SystemManager;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -9,8 +11,8 @@ public class Main extends JFrame {
 	
 	private static JMenuBar topBar;
 	private static SystemManager manager;
-	private String fileName = ".\\SE_Project\\src\\LoadThisFile.txt";
 	private JFrame currentFrame;
+	private ArrayList<String> fileNames = new ArrayList<String>();
 	
 	public Main() {
 	}
@@ -21,7 +23,7 @@ public class Main extends JFrame {
 		JMenuBar menus = new JMenuBar();
 				//Menus//
 		JMenu file = new JMenu("File");
-		JMenu refresh = new JMenu("Refresh");
+//		JMenu refresh = new JMenu("Refresh");
 				//Sub-menus//
 		JMenuItem login = new JMenuItem("Login");
 		JMenuItem logout = new JMenuItem("Logout");
@@ -91,7 +93,27 @@ public class Main extends JFrame {
 	
 	private void startMemory() {
 		
-		manager = new SystemManager(fileName);
+		/*
+		 * Files need to be read/added in a specific order:
+		 * 1. Admins
+		 * 2. Users
+		 * 3. Categories
+		 * 4. Groups
+		 * 5. Memberships
+		 * 6. Posts
+		 * 7. Responses
+		 */
+		
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Admins.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Users.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Categories.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Groups.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Memberships.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Posts.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Responses.txt");
+		
+		
+		manager = new SystemManager(fileNames);
 		topBar = createMenus();
 		currentFrame = new JFrame();
 		currentFrame.setSize(800,800);

@@ -6,14 +6,12 @@ import Project.User;
 import Project.category;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("serial")
 public class ProfileView extends JFrame {
@@ -22,6 +20,43 @@ public class ProfileView extends JFrame {
 	private SystemManager manager;
 	private JFrame currentFrame;
 	private User displayedUser;
+	private JTextArea aboutMe;
+	
+	public ProfileView() {
+		
+		int gridYLoc = 10;
+		int padding = 10;
+		
+		JPanel panel = new JPanel();
+		panel.setSize(300, 400);
+		panel.setLayout(null);
+		
+		JLabel lblGroups = new JLabel(displayedUser.getId() + "'s Groups");
+		lblGroups.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblGroups.setBounds(10, gridYLoc, lblGroups.getPreferredSize().width + padding, 25);
+		gridYLoc += lblGroups.getSize().height + padding;
+		panel.add(lblGroups);
+		
+		for (Group g: manager.getGroupsByUser(displayedUser)) {
+			JLabel lblGroupToAdd = new JLabel(g.getGroupName());
+			lblGroupToAdd.setBounds(30, gridYLoc, lblGroupToAdd.getPreferredSize().width + 10, 14);
+			gridYLoc += lblGroupToAdd.getSize().height + padding;
+			lblGroupToAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
+			lblGroupToAdd.setForeground(Color.BLUE.darker());
+			lblGroupToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			lblGroupToAdd.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+	            	onViewChangeClick();
+	            	manager.setCurrentCategory(manager.getCategoryByGroup(g));
+	            	manager.setCurrentGroup(g);
+	            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+	            }
+	        });
+			
+			panel.add(lblGroupToAdd);
+		}
+	}
 	
 		// If no user is pushed, get currently logged in user and push it to form (null checks in place) //
 	@SuppressWarnings("exports")
@@ -36,6 +71,7 @@ public class ProfileView extends JFrame {
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
 		this.displayedUser = u;
+		this.aboutMe = new JTextArea();
 		displayGUI();
 	}
 	
@@ -71,31 +107,48 @@ public class ProfileView extends JFrame {
             }
         });
 		titlePanel.add(lblHome);
-		
-		JLabel lblMyGroups = new JLabel("My Groups");
-		lblMyGroups.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblMyGroups.setForeground(Color.BLUE.darker());
-		lblMyGroups.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblMyGroups.setBounds(gridx, 10, lblMyGroups.getPreferredSize().width + padding, 25);
-		gridx += lblMyGroups.getWidth() + padding;
-		lblMyGroups.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-            	onViewChangeClick();
-            	category c = new category("My Groups");
-            	ArrayList<Group> myGroups = manager.getGroupsByUser(manager.getCurrentUser());
-            	for (Group g : myGroups) {
-            		c.addGroup(g);
-            	}
-            	manager.setCurrentCategory(c);
-            	manager.setCurrentGroup(null);
-            	new CategoryView(manager, topBar, currentFrame, currentFrame.getSize());
-            }
-        });
-		titlePanel.add(lblMyGroups);
 
 		return titlePanel;
 		
+	}
+	
+	private JPanel createGroupsJPanel() {
+		
+		int gridYLoc = 10;
+		int padding = 10;
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		panel.setSize(350, 400);
+		panel.setLayout(null);
+		
+		JLabel lblGroups = new JLabel(displayedUser.getId() + "'s Groups");
+		lblGroups.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblGroups.setBounds(10, gridYLoc, lblGroups.getPreferredSize().width + padding, 25);
+		gridYLoc += lblGroups.getSize().height + padding;
+		panel.add(lblGroups);
+		
+		for (Group g: manager.getGroupsByUser(displayedUser)) {
+			JLabel lblGroupToAdd = new JLabel(manager.getCategoryByGroup(g).getName() + " - "+ g.getGroupName());
+			lblGroupToAdd.setBounds(30, gridYLoc, lblGroupToAdd.getPreferredSize().width + 10, 14);
+			gridYLoc += lblGroupToAdd.getSize().height + padding;
+			lblGroupToAdd.setFont(new Font("Tahoma", Font.BOLD, 10));
+			lblGroupToAdd.setForeground(Color.BLUE.darker());
+			lblGroupToAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			lblGroupToAdd.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+	            	onViewChangeClick();
+	            	manager.setCurrentCategory(manager.getCategoryByGroup(g));
+	            	manager.setCurrentGroup(g);
+	            	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+	            }
+	        });
+			
+			panel.add(lblGroupToAdd);
+		}
+		
+		return panel;
 	}
 	
 	private JPanel createForm() {
@@ -103,59 +156,107 @@ public class ProfileView extends JFrame {
 		
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Profile");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setBounds(10, 10, 82, 25);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel);
+		JLabel lblProfileLabel = new JLabel("Profile");
+		lblProfileLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblProfileLabel.setBounds(10, 10, 82, 25);
+		lblProfileLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblProfileLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("User ID:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(35, 45, 110, 26);
-		panel.add(lblNewLabel_1);
+		JLabel lblUserIDLabel = new JLabel("User ID:");
+		lblUserIDLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblUserIDLabel.setBounds(35, 45, 110, 26);
+		panel.add(lblUserIDLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Name:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(35, 81, 110, 26);
-		panel.add(lblNewLabel_2);
+		JLabel lblNameLabel = new JLabel("Name:");
+		lblNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNameLabel.setBounds(35, 81, 110, 26);
+		panel.add(lblNameLabel);
 		
-		JLabel lblNewLabel_3 = new JLabel("Birthday:");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(35, 153, 110, 26);
-		panel.add(lblNewLabel_3);
+		JLabel lblCityStateLabel = new JLabel("City/State:");
+		lblCityStateLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCityStateLabel.setBounds(35, 117, 110, 26);
+		panel.add(lblCityStateLabel);		
 		
-		JLabel lblNewLabel_4 = new JLabel("City/State:");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_4.setBounds(35, 117, 110, 26);
-		panel.add(lblNewLabel_4);
+		JLabel lblBirthdayLabel = new JLabel("Birthday:");
+		lblBirthdayLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblBirthdayLabel.setBounds(35, 153, 110, 26);
+		panel.add(lblBirthdayLabel);
+		
+//		JLabel lblAboutMeLabel = new JLabel("About Me:");
+//		lblAboutMeLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+//		lblAboutMeLabel.setBounds(35, 189, 110, 26);
+//		panel.add(lblAboutMeLabel);
+		
 		
 		// Check to see if user exist in call, if so, print user information into form //
 		if (displayedUser != null) {
 			if (displayedUser instanceof Admin) {
-				JLabel lblNewLabel_5 = new JLabel("(ADMIN) " + displayedUser.getId());
-				lblNewLabel_5.setBounds(137, 45, 207, 26);
-				panel.add(lblNewLabel_5);
+				JLabel lblAdminMark = new JLabel("(ADMIN) " + displayedUser.getId());
+				lblAdminMark.setBounds(137, 45, 207, 26);
+				panel.add(lblAdminMark);
 			}
 			else {
-				JLabel lblNewLabel_5 = new JLabel(displayedUser.getId());
-				lblNewLabel_5.setBounds(137, 45, 207, 26);
-				panel.add(lblNewLabel_5);
+				JLabel lblUserId = new JLabel(displayedUser.getId());
+				lblUserId.setBounds(137, 45, 207, 26);
+				panel.add(lblUserId);
 			}
 			
-			JLabel lblNewLabel_5_1 = new JLabel(displayedUser.getName());
-			lblNewLabel_5_1.setBounds(137, 81, 207, 26);
-			panel.add(lblNewLabel_5_1);
+			JLabel lblUserName = new JLabel(displayedUser.getName());
+			lblUserName.setBounds(137, 81, 207, 26);
+			panel.add(lblUserName);
 			
-			JLabel lblNewLabel_5_2 = new JLabel(displayedUser.getCity() + ", " + displayedUser.getState());
-			lblNewLabel_5_2.setBounds(137, 117, 207, 26);
-			panel.add(lblNewLabel_5_2);
+			JLabel lblUserCity = new JLabel(displayedUser.getCity() + ", " + displayedUser.getState());
+			lblUserCity.setBounds(137, 117, 207, 26);
+			panel.add(lblUserCity);
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-			String bday = formatter.format(displayedUser.getBirthday());
-			JLabel lblNewLabel_5_3 = new JLabel(bday);
-			lblNewLabel_5_3.setBounds(137, 153, 207, 26);
-			panel.add(lblNewLabel_5_3);
+			JLabel lblUserBDay = new JLabel(manager.getSimpleDate(displayedUser.getBirthday()));
+			lblUserBDay.setBounds(137, 153, 207, 26);
+			panel.add(lblUserBDay);
+			
+//					// May Add an About Me section to the profile.  Commented out for now. //
+//			JTextArea txaAboutMe = aboutMe;
+//			txaAboutMe.setLineWrap(true);
+//			txaAboutMe.setFocusable(false);
+//			txaAboutMe.setOpaque(false);
+//			txaAboutMe.setFont(new Font("Tahoma", Font.PLAIN, 15));
+//			txaAboutMe.setBounds(35, 225, 350, 200);
+//			panel.add(txaAboutMe);
+//			
+//			if (manager.getCurrentUser() == displayedUser) {
+//				JButton btnEditAboutMe = new JButton("Edit");
+//				btnEditAboutMe.setBounds(160, 189, 70, 26);
+//				btnEditAboutMe.addActionListener(new ActionListener() {
+//		            public void actionPerformed(ActionEvent e) {
+//		      
+//						txaAboutMe.setFocusable(true);
+//						txaAboutMe.setOpaque(true);
+//						JButton btnSave = new JButton("Save");
+//						btnSave.setBounds(240, 189, 70, 26);
+//						btnSave.addActionListener(new ActionListener() {
+//				            public void actionPerformed(ActionEvent e) {
+//				            	
+//								txaAboutMe.setFocusable(false);
+//								txaAboutMe.setOpaque(false);
+//								
+//									// FIXME: Code to save data //
+//								
+//								panel.remove(btnSave);
+//								
+//								currentFrame.repaint();
+//							}
+//						});
+//						
+//						panel.add(btnSave);
+//						currentFrame.repaint();
+//					}
+//				});
+//				panel.add(btnEditAboutMe);
+//			}
 		}
+		JPanel usersGroups = createGroupsJPanel();
+		usersGroups.setBounds(400, 0, usersGroups.getSize().width, usersGroups.getSize().height);
+		panel.add(usersGroups);
+		
 		
 		
 		return panel;
@@ -163,8 +264,8 @@ public class ProfileView extends JFrame {
 	
 		// Build The GUI //
 	private void displayGUI() {
-		currentFrame.setLayout(new BorderLayout(0, 0));
-		currentFrame.add(topBar, BorderLayout.NORTH);
+		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
 		currentFrame.setTitle("This is the Profile view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

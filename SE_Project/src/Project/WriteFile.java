@@ -10,34 +10,48 @@ import java.util.ArrayList;
 public class WriteFile {
 	
 	
-	public static void writeFile(SystemManager manager, String fileName) throws IOException {
+	public static void writeFile(SystemManager manager, ArrayList<String> fileNames) throws IOException {
 		
-		try {
+		
+		for (String fileName : fileNames) {
 			
-			File dataFile = new File(fileName);
+			try {
 			
-			if (!dataFile.exists()) {
-				dataFile.createNewFile();
+				File dataFile = new File(fileName);
+				
+				if (!dataFile.exists()) {
+					dataFile.createNewFile();
+				}
+				
+				FileWriter writer = new FileWriter(fileName);
+				
+				if (fileName.contains("Admin")) {
+					writeAdmins(manager, writer);
+				}
+				else if (fileName.contains("User")) {
+					writeUsers(manager, writer);
+				}
+				else if (fileName.contains("Categor")) {
+					writeCategories(manager, writer);
+				}
+				else if (fileName.contains("Group")) {
+					writeGroups(manager, writer);
+				}
+				else if (fileName.contains("Membership")) {
+					writeMemberships(manager, writer);
+				}
+				else if (fileName.contains("Post")) {
+					writePosts(manager, writer);
+				}
+				
+				
+				writer.close();
+			
 			}
-			
-			FileWriter writer = new FileWriter(fileName);
-			
-			writeAdmins(manager, writer);
-			
-			writeUsers(manager, writer);
-			
-			writeCategories(manager, writer);
-			
-			writeGroups(manager, writer);
-			
-			writer.write("\n\n\n");
-			
-			writer.close();
-			
-		} catch (IOException e) {
-			throw new IOException();
+			catch (IOException e) {
+				throw new IOException();
+			}
 		}
-		
 	}
 	
 	//test:1
@@ -103,6 +117,34 @@ public class WriteFile {
 	}
 	
 	//test:1
+	private static void writeMemberships(SystemManager manager, FileWriter writer) throws IOException {
+
+		ArrayList<membership> memberships = manager.getAllMemberships();
+
+		for (membership m : memberships) {
+
+			String memberData = m.getMembershipWriteData();
+
+			writer.write(memberData);
+
+		}
+
+	}
+
+	private static void writePosts(SystemManager manager, FileWriter writer) throws IOException {
+
+		ArrayList<Post> posts = manager.getAllPost();
+
+		for (Post p : posts) {
+
+			String postData = p.getPostWriteData();
+
+			writer.write(postData);
+
+		}
+
+	}
+	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
 		try {
@@ -204,11 +246,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			
@@ -238,11 +280,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			
@@ -272,11 +314,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			
@@ -306,11 +348,11 @@ public class WriteFile {
 			String s = "";
 			String totalStr = "";
 			
-			BufferedReader br = new BufferedReader(reader);
-			
-			while ((s = br.readLine()) != null) {
-	            totalStr += s + "\n";
-	        }
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
 			
 			totalStr = totalStr.replaceAll(find, replace);
 			

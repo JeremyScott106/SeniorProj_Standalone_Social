@@ -22,18 +22,6 @@ class categoryTest {
 	void testGetName() {
 		category c = new category("test");
 
-		Group g1 = new Group("Hockey");
-		Group g2 = new Group("Soccer");
-		Group g3 = new Group("Football");
-		Group g4 = new Group("Basketball");
-		Group g5 = new Group("Tennis");
-
-		c.addGroup(g1);
-		c.addGroup(g2);
-		c.addGroup(g3);
-		c.addGroup(g4);
-		c.addGroup(g5);
-
 		String actual = c.getName();
 
 		String expected = "test";

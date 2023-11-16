@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class SystemManager {
 
@@ -18,6 +20,7 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
+	private ArrayList<String> fileNames;
 
 	public SystemManager() {
 		userSignedIn = false;
@@ -30,33 +33,33 @@ public class SystemManager {
 	
     //test:1
 	//Constructor that will read given file
-	public SystemManager(String filename) {
-		userSignedIn = false;
-		adminSignedIn = false;
-		users = new ArrayList<User>();
-		admins = new ArrayList<Admin>();
-		categories = new ArrayList<category>();
+	public SystemManager(ArrayList<String> fileNames) {
+		this.userSignedIn = false;
+		this.adminSignedIn = false;
+		this.users = new ArrayList<User>();
+		this.admins = new ArrayList<Admin>();
+		this.categories = new ArrayList<category>();
+		this.fileNames = fileNames;
 		
 		try {
-			ReadFile.readFile(this, filename);
-		} catch (FileNotFoundException | IncorrectFileFormatException e) {
-			// TODO Auto-generated catch block
+			ReadFile.readFile(this, fileNames);
+		} 
+		catch (FileNotFoundException | IncorrectFileFormatException e) {
 			e.printStackTrace();
 		}		
 	}
 	
     //test:1
 	//writes the manager
-	public boolean writeManager(String fileName) {
+	public boolean writeManager() {
 		
 		try {
-			WriteFile.writeFile(this, fileName);
+			WriteFile.writeFile(this, fileNames);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
-		
-		return true;
 	}
 	
     //test:2
@@ -110,6 +113,12 @@ public class SystemManager {
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
 		return (group.addMember(m));
+	}
+	
+	// allows a user to leave a group
+	public boolean leaveGroup(User user, Group group) {
+		membership m = group.getMembership(user.getId());
+		return (group.removeMember(m));
 	}
 
     //test:2
@@ -188,9 +197,11 @@ public class SystemManager {
 	}
 	//test:1
 	// allows a post to be created
+	//FIXME : Add Unit Tests
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
-		Post p = new Post(m, postTitle, postBody);
+		int id = group.getPostId();
+		Post p = new Post(m, postTitle, postBody, id);
 		return(group.addPost(p));
 	}
 	
@@ -220,6 +231,13 @@ public class SystemManager {
 
 	//test:1
 	// gets the membership of the group and user inputted
+	public boolean createNewResponse(Group group, String responseBody, Post post) {
+		membership m = getMembership(group, currentUser);
+		Response r = new Response(m, responseBody, post.getId());
+		return (currentPost.addResponse(r));		
+	}
+	
+	// gets the membership of the group and user inputed
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
 		for (membership m : memberships) {
@@ -268,20 +286,42 @@ public class SystemManager {
 		return users;
 	}
 	
+
 	//test:1
+	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
+		
+		ArrayList<Post> alPosts = g.getPost();
+		
+		Collections.sort(alPosts, new SortPostsByDate());
+		
+		return alPosts;
+		
+	}
+
 	// returns the status if the user is logged in
+	//FIXME : Add Unit Tests
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
 	//test:1
 	//returns the status of the admin
+	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
 	
 	//test:1
+	public boolean isUserAdmin(User u) {
+		if (u instanceof Admin) {
+			return true;
+		}
+		
+		return false;
+	}
+
 	// gets current user
+	//FIXME : Add Unit Tests
 	public User getCurrentUser() {
 		return currentUser;
 	}
@@ -299,13 +339,12 @@ public class SystemManager {
 	}
 
 	//test:1
-	// gets the current group
 	public Group getCurrentGroup() {
 		return currentGroup;
 	}
 
 	//test:1
-  // sets the current group
+ 	// sets the current group
 	public void setCurrentGroup(Group currentGroup) {
 		this.currentGroup = currentGroup;
 	}
@@ -314,6 +353,7 @@ public class SystemManager {
 	public Post getCurrentPost() {
 		return currentPost;
 	}
+
 
 	//test:1
 	public void setCurrentPost(Post currentPost) {
@@ -372,6 +412,18 @@ public class SystemManager {
 		 }
 		 return userInGroup;
 	 }
+	 
+	 	//FIXME: Add Unit Tests
+	 public category getCategoryByGroup(Group group) {
+		 for (category c : this.getCategories_Alphabetically()) {
+			 for (Group g : c.getGroups()) {
+				 if (g == group) {
+					 return c;
+				 }
+			 }
+		 }
+		 return null;
+	 }
 	
 	 //test:1
 	 //returns an arraylist of all the groups in category alphabetically
@@ -382,12 +434,10 @@ public class SystemManager {
 	 
 	//test:3
 	//helper method, returns a list of all posts.
+	//FIXME : Add Unit Tests
 	public ArrayList<Post> getAllPost(){
-		ArrayList<Group> groups = new ArrayList<>();
+		ArrayList<Group> groups = getAllGroups_Alphabetically();
 		ArrayList<Post> posts = new ArrayList<>();
-		for(category c : categories) {
-			groups.addAll(c.getGroupsAlphabetically());
-		}
 		for(Group g: groups) {
 			posts.addAll(g.getPost());
 		}
@@ -395,23 +445,41 @@ public class SystemManager {
 	}
 	
 	//test:1
+	public ArrayList<Response> viewAllPostResponses (Post p) {
+		
+		ArrayList<Response> alResponses = p.getResponse();
+			
+		Collections.sort(alResponses, new SortPostsByDate());
+		
+		return alResponses;
+  }
+
+	public ArrayList<Response> viewAllPostResponses () {
+		if (currentPost != null) {
+			return currentPost.getResponse();
+		}
+		return null;
+	}
+	 
 	//User story 22
 	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
 	 public ArrayList<Object> viewUsersPostsResponses(User user) {
-		 ArrayList<Object> results = new ArrayList<>();
-		 ArrayList<Post> posts = getAllPost();
+		 ArrayList<Object> results = new ArrayList<Object>();
+		 ArrayList<Post> posts = new ArrayList<>();
+		 posts.addAll(getAllPost());
 		 for(Post p : posts) {
 			 if(user == p.getUser()) {
 				  results.add(p);
 			 }
 			 ArrayList<Response> r = p.getResponse();
 			 for (Response r1 : r){
-				 membership m = r1.getMember();
-				 if(user == m.getUser()){
+				 User u = r1.getUser();
+				 if(user == u){
 					  results.add(r1);
 				 }	
 			 }
 		 }
+		 Collections.sort(results, new SortObjectsByDate());
 		 return results;
 	 }
 	 
@@ -428,8 +496,8 @@ public class SystemManager {
 				 }
 				 ArrayList<Response> r = p.getResponse();
 				 for (Response r1 : r){
-					 membership m = r1.getMember();
-					 if(user == m.getUser()){
+					 User u = r1.getUser();
+					 if(user == u){
 						 results.add(r1);
 					 }	
 				 }
@@ -438,7 +506,7 @@ public class SystemManager {
 		 return results;
 	 }
 
-     //test:1
+   //test:1
 	 //User story 24
 	 //loops through the post arrayList and records all the posts and responses of a given group
 	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
@@ -456,14 +524,14 @@ public class SystemManager {
 		 return results;
 	}
 	 
-     //test:1
+   //test:1
 	 //loops through the post arrayList and records all the posts of a given group
 	 public ArrayList<Post> viewPostsInGroup(Group group) {
 		 ArrayList<Post> posts = group.getPost();
 		 return posts;
 	}
 	 
-     //test:1
+   //test:1
 	 //User story 25
 	 //checks if the post has the user if so it gets the responses from the post and returns an arraylist of responses.
 	 public ArrayList<Object> viewMyResponses(User user, Post post) {
@@ -484,7 +552,7 @@ public class SystemManager {
 		 return Validator.getCategoryFromName(categories, catName);
 	 }
 	 
-     //test:1
+   //test:1
 	 // returns the users alphabetically by the username
 	 public ArrayList<User> getUsers_Alphabetically_ByUsername(){
 		 Collections.sort(users, new SortUsersByUsername());
@@ -492,7 +560,7 @@ public class SystemManager {
 		 return users;
 	 }
 	 
-     //test:1
+   //test:1
 	 // returns the admins alphabetically by the username
 	 public ArrayList<Admin> getAdmins_Alphabetically_ByUsername() {
 		 Collections.sort(admins, new SortUsersByUsername());
@@ -528,22 +596,54 @@ public class SystemManager {
 	 //test:1
 	 // return a list of names of members
 	 //US29 - Administrator can view a list of Users and the corresponding group(s) they are suspendend from
-	public ArrayList<Suspended> getAllSuspensions(){
+	 public ArrayList<Suspended> getAllSuspensions(){
 		ArrayList<Group> groups = getAllGroups();
 		ArrayList<Suspended> suspensions = new ArrayList<>();
 		for(Group g : groups) {
 			suspensions.addAll(g.getSuspended());
 		}
 		return suspensions;
-	}
+	 }
 	
-	//test:1
-	// return a list of suspensions sorted by username
-	public ArrayList<Suspended> getAllSuspensions_ByUsername(){
-		ArrayList<Suspended> suspensions = getAllSuspensions();
-		Collections.sort(suspensions, new SortSuspensionsByUsername());
-		return suspensions;
+	 //test:1
+	 // return a list of suspensions sorted by username
+	 public ArrayList<Suspended> getAllSuspensions_ByUsername(){
+		 ArrayList<Suspended> suspensions = getAllSuspensions();
+		 Collections.sort(suspensions, new SortSuspensionsByUsername());
+		 return suspensions;
+	 }
+
+	 //FIXME: add tests
+	 public Post getPostByGroupId(Group g, int id) {
+		 return Validator.getPostFromId(g.getPost(), id);
+	 }
+
+	 public String getSimpleDate(Date date) {
+			String pattern = "dd MMM yyyy";
+			SimpleDateFormat df = new SimpleDateFormat(pattern);
+			return df.format(date);
+	 }
+	 
+	 //FIXME: Add unit tests
+	 public String getSimpleTime(Date date) {
+			String pattern = "h:mm a";
+			SimpleDateFormat df = new SimpleDateFormat(pattern);
+			return df.format(date);
+	 }
+	 
+	//FIXME: add test methods
+	public ArrayList<membership> getAllMemberships() {
+		 ArrayList<membership> memberships = new ArrayList<membership>();
+
+		 for (Group g : this.getAllGroups_Alphabetically()) {
+
+			 memberships.addAll(g.getMembers());
+
+		 }
+
+		 return memberships;
 	}
+
 
 	//test:1
 	//US30 - Administrator can reinstate a suspended user to good standing in a group

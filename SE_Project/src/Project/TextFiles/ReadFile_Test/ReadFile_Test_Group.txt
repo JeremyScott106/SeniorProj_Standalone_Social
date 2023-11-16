@@ -21,4 +21,3 @@
 @CATEGORY=Sports
 @END
 
-@ENDFILE

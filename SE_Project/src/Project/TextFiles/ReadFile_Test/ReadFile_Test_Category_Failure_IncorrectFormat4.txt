@@ -18,4 +18,3 @@
 @NAME=Memes
 @END
 
-@ENDFILE
