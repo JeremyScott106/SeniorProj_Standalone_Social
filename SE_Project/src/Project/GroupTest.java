@@ -301,11 +301,11 @@ public class GroupTest {
 		membership m4 = new membership(u4, testGroup1);
 		membership m5 = new membership(u5, testGroup1);
 		
-		Post p1 = new Post(m1, "goofy goober", "YEAHHH");
-		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM");
-		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane");
-		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME");
-		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again");
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM", 2);
+		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane", 3);
+		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
+		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
 		
 		testGroup1.addPost(p1);
 		testGroup1.addPost(p2);
@@ -343,11 +343,11 @@ public class GroupTest {
 		membership m4 = new membership(u4, testGroup1);
 		membership m5 = new membership(u5, testGroup1);
 		
-		Post p1 = new Post(m1, "goofy goober", "YEAHHH");
-		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM");
-		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane");
-		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME");
-		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again");
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM", 2);
+		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane", 3);
+		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
+		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
 		
 		testGroup1.addPost(p1);
 		testGroup1.addPost(p2);
@@ -386,11 +386,11 @@ public class GroupTest {
 		membership m4 = new membership(u4, testGroup1);
 		membership m5 = new membership(u5, testGroup1);
 		
-		Post p1 = new Post(m1, "goofy goober", "YEAHHH");
-		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM");
-		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane");
-		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME");
-		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again");
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM", 2);
+		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane", 3);
+		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
+		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
 		
 		testGroup1.addPost(p1);
 		testGroup1.addPost(p2);
