@@ -23,7 +23,7 @@ public class LoginPopUp extends JDialog {
 			login = new JFrame();
 		
 			login.setDefaultCloseOperation(HIDE_ON_CLOSE);
-			login.setSize(300, 200);
+			login.setSize(300, 150);
 			login.setLayout(new BorderLayout(10,5)); 				//Figure out getLayout!!!//
 			login.setLocationRelativeTo(null);
 			login.add(makeButtons(), BorderLayout.SOUTH);

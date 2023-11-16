@@ -30,7 +30,7 @@ class SortUsersByName implements Comparator<User> {
 	@Override
 	public int compare(User u1, User u2) {
 
-		return u1.getName().compareTo(u2.getName());
+		return u1.getName().toUpperCase().compareTo(u2.getName().toUpperCase());
 	}
 
 }
@@ -52,6 +52,16 @@ class SortUsersByUsername implements Comparator<User> {
 class SortPostsByDate implements Comparator<Post> {
 	@Override
 	public int compare(Post p1, Post p2) {
+		return p2.getTime().compareTo(p1.getTime());
+	}
+}
+
+class SortObjectsByDate implements Comparator<Object> {
+	@Override
+	public int compare(Object o1, Object o2) {
+		Post p2 = (Post) o2;
+		Post p1 = (Post) o1;
+
 		return p2.getTime().compareTo(p1.getTime());
 	}
 }

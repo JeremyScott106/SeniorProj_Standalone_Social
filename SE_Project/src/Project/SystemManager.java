@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -398,6 +399,18 @@ public class SystemManager {
 		 }
 		 return userInGroup;
 	 }
+	 
+	 	//FIXME: Add Unit Tests
+	 public category getCategoryByGroup(Group group) {
+		 for (category c : this.getCategories_Alphabetically()) {
+			 for (Group g : c.getGroups()) {
+				 if (g == group) {
+					 return c;
+				 }
+			 }
+		 }
+		 return null;
+	 }
 	
 	 //test:1
 	 //returns an arraylist of all the groups in category alphabetically
@@ -409,11 +422,8 @@ public class SystemManager {
 	//helper method, returns a list of all posts.
 	//FIXME : Add Unit Tests
 	public ArrayList<Post> getAllPost(){
-		ArrayList<Group> groups = new ArrayList<>();
+		ArrayList<Group> groups = getAllGroups_Alphabetically();
 		ArrayList<Post> posts = new ArrayList<>();
-		for(category c : categories) {
-			groups.addAll(c.getGroupsAlphabetically());
-		}
 		for(Group g: groups) {
 			posts.addAll(g.getPost());
 		}
@@ -441,7 +451,7 @@ public class SystemManager {
 	//User story 22
 	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
 	 public ArrayList<Object> viewUsersPostsResponses(User user) {
-		 ArrayList<Object> results = new ArrayList<>();
+		 ArrayList<Object> results = new ArrayList<Object>();
 		 ArrayList<Post> posts = new ArrayList<>();
 		 posts.addAll(getAllPost());
 		 for(Post p : posts) {
@@ -457,6 +467,7 @@ public class SystemManager {
 				 }	
 			 }
 		 }
+		 Collections.sort(results, new SortObjectsByDate());
 		 return results;
 	 }
 	 
@@ -567,7 +578,7 @@ public class SystemManager {
 	 //FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
-	}
+	 }
 
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
