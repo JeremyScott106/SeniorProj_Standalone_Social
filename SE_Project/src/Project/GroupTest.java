@@ -870,10 +870,4 @@ public class GroupTest {
 		assertEquals(null, actual);
 	}
 
-	@Test
-	void getPostsTest() {
-													// FIXME :: Post Class Needs Added First //
-	}
-
-
 }
