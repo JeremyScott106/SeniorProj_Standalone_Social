@@ -869,4 +869,88 @@ class WriteFileTest {
 		assertEquals(expected, actual);
 		
 	}
+	
+	
+	
+	@Test
+	void testUpdatePostInFile() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g2);
+		membership m5 = new membership(u5, g2);
+
+		Post p1 = new Post(m1, "Test#1", "testing", 0);
+		Post p2 = new Post(m2, "Test#2", "testing", 1);
+		Post p3 = new Post(m3, "Test#3", "testing", 2);
+		Post p4 = new Post(m4, "Test#4", "testing", 3);
+		Post p5 = new Post(m5, "Test#5", "testing", 4);
+
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g1.addMember(m3);
+		g2.addMember(m4);
+		g2.addMember(m5);
+
+		g1.addPost(p1);
+		g1.addPost(p2);
+		g1.addPost(p3);
+		g2.addPost(p4);
+		g2.addPost(p5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_UpdatePost.txt");
+
+		try {
+
+			WriteFile.writeFile(manager, fileNames);
+			
+			String find = p2.getPostWriteData();
+			p2.addScore();
+			String replace = p2.getPostWriteData();
+			WriteFile.updatePostInFile(find, replace, fileNames.get(0));
+
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (Post p : manager.getAllPost()) {
+
+			expected += p.getPostWriteData();
+
+		}
+
+		assertEquals(expected, actual);
+		
+	}
 }
