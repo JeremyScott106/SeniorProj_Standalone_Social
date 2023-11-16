@@ -8,7 +8,7 @@ class SortCategoriesByName implements Comparator<category> {
 	@Override
 	public int compare(category c1, category c2) {
 
-		return c1.getName().compareTo(c2.getName());
+		return c1.getName().toUpperCase().compareTo(c2.getName().toUpperCase());
 	}
 
 }
@@ -19,7 +19,7 @@ class SortGroupsByName implements Comparator<Group> {
 	@Override
 	public int compare(Group g1, Group g2) {
 
-		return g1.getGroupName().compareTo(g2.getGroupName());
+		return g1.getGroupName().toUpperCase().compareTo(g2.getGroupName().toUpperCase());
 	}
 
 }
@@ -46,4 +46,12 @@ class SortUsersByUsername implements Comparator<User> {
 //		return u1.getId().compareTo(u2.getId());
 	}
 	
+}
+
+//FIXME : Add Unit Tests
+class SortPostsByDate implements Comparator<Post> {
+	@Override
+	public int compare(Post p1, Post p2) {
+		return p2.getTime().compareTo(p1.getTime());
+	}
 }

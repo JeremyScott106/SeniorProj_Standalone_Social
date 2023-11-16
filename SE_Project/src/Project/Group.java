@@ -1,6 +1,5 @@
 package Project;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -13,13 +12,27 @@ public class Group implements Comparable<Group> {
     private ArrayList<Post> posts;
     private ArrayList<Banned> bans;
     private ArrayList<Suspended> suspensions;
-    
+    private int postId;
+
     public Group (String groupName) {
         this.groupName = groupName;
         this.memberships = new ArrayList<>();
         this.posts = new ArrayList<>();
         this.bans = new ArrayList<>();
         this.suspensions = new ArrayList<>();
+        this.postId = 0;
+    }
+    
+    public Group (String groupName, int postId) {
+    	this.groupName = groupName;
+        this.memberships = new ArrayList<>();
+        this.posts = new ArrayList<>();
+        this.postId = postId;
+    }
+    
+    //FIXME: add tests
+    public int getPostId() {
+    	return postId;
     }
 
     //Gets the name of the groups that are created
@@ -42,7 +55,8 @@ public class Group implements Comparable<Group> {
     }
     
     //Removes members into groups
-	//test:2
+	  //test:2
+    //FIXME: Add Unit Tests; Remove information from saved file
     public boolean removeMember(membership m) {
 
         if (Validator.validateMemberExistsInGroup(m, memberships)) {
@@ -53,7 +67,6 @@ public class Group implements Comparable<Group> {
         	return false;
         }
     }
-
 
     //Gets the list of member in the group
 	//test:2
@@ -110,6 +123,7 @@ public class Group implements Comparable<Group> {
         }
         if (!isMember) {
             posts.add(p);
+            postId++;
             return true;
         }
         return false;
@@ -146,7 +160,8 @@ public class Group implements Comparable<Group> {
     	String groupData = "@START\n" + 
     						"@GROUP\n" + 
     						"@NAME=" + groupName + "\n" + 
-    						"@CATEGORY=" + catName + "\n" + 
+    						"@CATEGORY=" + catName + "\n" +
+    						"@POSTID=" + postId + "\n" + 
     						"@END\n\n";
     	
     	return groupData;

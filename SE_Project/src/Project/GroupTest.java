@@ -415,6 +415,7 @@ public class GroupTest {
 							"@GROUP\n" + 
 							"@NAME=Football\n" + 
 							"@CATEGORY=Sports\n" + 
+							"@POSTID=0\n" + 
 							"@END\n\n";
 		
 		assertEquals(expected, actual);

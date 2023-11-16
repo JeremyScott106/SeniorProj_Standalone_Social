@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
@@ -12,13 +13,15 @@ class ReadWriteTest {
 
 	@Test
 	void testReadWrite_Admins() {
-		String fileName = ".\\SE_Project\\src\\project\\TextFiles\\ReadWriteFile_Test\\ReadWriteFile_Test_Admins.txt";
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\project\\TextFiles\\ReadWriteFile_Test\\ReadWriteFile_Test_Admins.txt");
 		
 		SystemManager manager = new SystemManager();
 		
 		try {
 			
-			ReadFile.readFile(manager, fileName);
+			ReadFile.readFile(manager, fileNames);
 			
 			int numAdmins = manager.getAdmins_Alphabetically().size();
 			
@@ -34,7 +37,7 @@ class ReadWriteTest {
 			}
 			else {
 				
-				WriteFile.writeFile(manager, fileName);
+				WriteFile.writeFile(manager, fileNames);
 				
 			}
 			

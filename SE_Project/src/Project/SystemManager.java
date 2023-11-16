@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class SystemManager {
 
@@ -18,6 +19,7 @@ public class SystemManager {
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
 	private ArrayList<category> categories;
+	private ArrayList<String> fileNames;
 
 	public SystemManager() {
 		userSignedIn = false;
@@ -30,33 +32,33 @@ public class SystemManager {
 	
     //test:1
 	//Constructor that will read given file
-	public SystemManager(String filename) {
-		userSignedIn = false;
-		adminSignedIn = false;
-		users = new ArrayList<User>();
-		admins = new ArrayList<Admin>();
-		categories = new ArrayList<category>();
+	public SystemManager(ArrayList<String> fileNames) {
+		this.userSignedIn = false;
+		this.adminSignedIn = false;
+		this.users = new ArrayList<User>();
+		this.admins = new ArrayList<Admin>();
+		this.categories = new ArrayList<category>();
+		this.fileNames = fileNames;
 		
 		try {
-			ReadFile.readFile(this, filename);
-		} catch (FileNotFoundException | IncorrectFileFormatException e) {
-			// TODO Auto-generated catch block
+			ReadFile.readFile(this, fileNames);
+		} 
+		catch (FileNotFoundException | IncorrectFileFormatException e) {
 			e.printStackTrace();
 		}		
 	}
 	
     //test:1
 	//writes the manager
-	public boolean writeManager(String fileName) {
+	public boolean writeManager() {
 		
 		try {
-			WriteFile.writeFile(this, fileName);
+			WriteFile.writeFile(this, fileNames);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
-		
-		return true;
 	}
 	
     //test:2
@@ -109,6 +111,12 @@ public class SystemManager {
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
 		return (group.addMember(m));
+	}
+	
+	// allows a user to leave a group
+	public boolean leaveGroup(User user, Group group) {
+		membership m = group.getMembership(user.getId());
+		return (group.removeMember(m));
 	}
 
     //test:2
@@ -195,14 +203,26 @@ public class SystemManager {
 	
 
 	// allows a post to be created
+	//FIXME : Add Unit Tests
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		membership m = getMembership(group, currentUser);
-		Post p = new Post(m, postTitle, postBody);
+		int id = group.getPostId();
+		Post p = new Post(m, postTitle, postBody, id);
 		return(group.addPost(p));
 	}
 	
 
-	// gets the membership of the group and user inputted
+	//FIXME : Add Unit Tests
+
+	public boolean createNewResponse(Group group, String responseBody, Post post) {
+		membership m = getMembership(group, currentUser);
+		Response r = new Response(m, responseBody, post.getId());
+		return (currentPost.addResponse(r));		
+	}
+	
+
+	// gets the membership of the group and user inputed
+	//FIXME : Add Unit Tests
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
 		for (membership m : memberships) {
@@ -251,52 +271,81 @@ public class SystemManager {
 		return users;
 	}
 	
+	//FIXME : Add Unit Tests
+	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
+		
+		ArrayList<Post> alPosts = g.getPost();
+		
+		Collections.sort(alPosts, new SortPostsByDate());
+		
+		return alPosts;
+		
+	}
+	
 	// returns the status if the user is logged in
+	//FIXME : Add Unit Tests
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
 	//returns the status of the admin
+	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
 	
+	public boolean isUserAdmin(User u) {
+		if (u instanceof Admin) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	// gets current user
+	//FIXME : Add Unit Tests
 	public User getCurrentUser() {
 		return currentUser;
 	}
 	
 
 	// gets current category
+	//FIXME : Add Unit Tests
 	public category getCurrentCategory() {
 		return currentCategory;
 	}
 
 
 	// sets the current category
+	//FIXME : Add Unit Tests
 	public void setCurrentCategory(category currentCategory) {
 		this.currentCategory = currentCategory;
 	}
 
 	// gets the current group
+	//FIXME : Add Unit Tests
 	public Group getCurrentGroup() {
 		return currentGroup;
 	}
 
 
   // sets the current group
+	//FIXME : Add Unit Tests
 	public void setCurrentGroup(Group currentGroup) {
 		this.currentGroup = currentGroup;
 	}
 	
+	//FIXME : Add Unit Tests
 	public Post getCurrentPost() {
 		return currentPost;
 	}
 
+	//FIXME : Add Unit Tests
 	public void setCurrentPost(Post currentPost) {
 		this.currentPost = currentPost;
 	}
 
+	//FIXME : Add Unit Tests
 	// allows a user to logout
 	public void logout() {
 		currentUser = null;
@@ -358,6 +407,7 @@ public class SystemManager {
 	}
 	 
 	//helper method, returns a list of all posts.
+	//FIXME : Add Unit Tests
 	public ArrayList<Post> getAllPost(){
 		ArrayList<Group> groups = new ArrayList<>();
 		ArrayList<Post> posts = new ArrayList<>();
@@ -371,6 +421,23 @@ public class SystemManager {
 	}
 	
 	//test:1
+	//FIXME : Add Unit Tests
+	public ArrayList<Response> viewAllPostResponses (Post p) {
+		
+		ArrayList<Response> alResponses = p.getResponse();
+			
+		Collections.sort(alResponses, new SortPostsByDate());
+		
+		return alResponses;
+  }
+
+	public ArrayList<Response> viewAllPostResponses () {
+		if (currentPost != null) {
+			return currentPost.getResponse();
+		}
+		return null;
+	}
+	 
 	//User story 22
 	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
 	 public ArrayList<Object> viewUsersPostsResponses(User user) {
@@ -384,8 +451,8 @@ public class SystemManager {
 			 ArrayList<Response> r = new ArrayList<>();
 			 r.addAll(p.getResponse());
 			 for (Response r1 : r){
-				 membership m = r1.getMember();
-				 if(user == m.getUser()){
+				 User u = r1.getUser();
+				 if(user == u){
 					  results.add(r1);
 				 }	
 			 }
@@ -408,8 +475,8 @@ public class SystemManager {
 				 ArrayList<Response> r = new ArrayList<>();
 				 r.addAll(p.getResponse());
 				 for (Response r1 : r){
-					 membership m = r1.getMember();
-					 if(user == m.getUser()){
+					 User u = r1.getUser();
+					 if(user == u){
 						 results.add(r1);
 					 }	
 				 }
@@ -418,7 +485,7 @@ public class SystemManager {
 		 return results;
 	 }
 
-     //test:1
+   //test:1
 	 //User story 24
 	 //loops through the post arrayList and records all the posts and responses of a given group
 	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
@@ -438,7 +505,7 @@ public class SystemManager {
 		 return results;
 	}
 	 
-     //test:1
+   //test:1
 	 //loops through the post arrayList and records all the posts of a given group
 	 public ArrayList<Post> viewPostsInGroup(Group group) {
 		 ArrayList<Post> posts = new ArrayList<>();
@@ -446,7 +513,7 @@ public class SystemManager {
 		 return posts;
 	}
 	 
-     //test:1
+   //test:1
 	 //User story 25
 	 //checks if the post has the user if so it gets the responses from the post and returns an arraylist of responses.
 	 public ArrayList<Object> viewMyResponses(User user, Post post) {
@@ -467,7 +534,7 @@ public class SystemManager {
 		 return Validator.getCategoryFromName(categories, catName);
 	 }
 	 
-     //test:1
+   //test:1
 	 // returns the users alphabetically by the username
 	 public ArrayList<User> getUsers_Alphabetically_ByUsername(){
 		 Collections.sort(users, new SortUsersByUsername());
@@ -475,7 +542,7 @@ public class SystemManager {
 		 return users;
 	 }
 	 
-     //test:1
+   //test:1
 	 // returns the admins alphabetically by the username
 	 public ArrayList<Admin> getAdmins_Alphabetically_ByUsername() {
 		 Collections.sort(admins, new SortUsersByUsername());
@@ -483,7 +550,7 @@ public class SystemManager {
 		 return admins;
 	 }
 	 
-     //test:2
+   //test:2
 	 // uses the validator class to get the group by name
 	 public Group getGroupByName(String name) {
 		 ArrayList<Group> allGroups = this.getAllGroups();
@@ -491,10 +558,41 @@ public class SystemManager {
 		 return Validator.getGroupFromName(allGroups, name);
 	 }
 	 
-     //test:2
+   //test:2
 	 // uses the Validator class to sort the user by username
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
 	 }
+
+	 //FIXME: add tests
+	 public Post getPostByGroupId(Group g, int id) {
+		 return Validator.getPostFromId(g.getPost(), id);
+	}
+
+	 public String getSimpleDate(Date date) {
+			String pattern = "dd MMM yyyy";
+			SimpleDateFormat df = new SimpleDateFormat(pattern);
+			return df.format(date);
+	 }
+	 
+	 //FIXME: Add unit tests
+	 public String getSimpleTime(Date date) {
+			String pattern = "h:mm a";
+			SimpleDateFormat df = new SimpleDateFormat(pattern);
+			return df.format(date);
+	 }
+	 
+	//FIXME: add test methods
+	public ArrayList<membership> getAllMemberships() {
+		 ArrayList<membership> memberships = new ArrayList<membership>();
+
+		 for (Group g : this.getAllGroups_Alphabetically()) {
+
+			 memberships.addAll(g.getMembers());
+
+		 }
+
+		 return memberships;
+	}
 }
 
