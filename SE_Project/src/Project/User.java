@@ -19,7 +19,7 @@ public class User implements Comparable<User> {
 	protected Date registeredDate;
 	protected Map<String, Integer> groupMemberships;
 
-	
+	//test:1
 	//Constructor is intended to be used for adding new Users
 	public User(String name, String id, String password, String birthdate, String city, String state) {
 		this.name = name;
@@ -38,6 +38,7 @@ public class User implements Comparable<User> {
         groupMemberships = new HashMap<>();
 	}
 	
+	//test:1
 	//Constructor is intended to be used for adding an Existing User read from the disk
 	public User(String name, String id, String password, String birthdate, String city, String state, String registeredDate) {
 		this.name = name;
@@ -66,35 +67,41 @@ public class User implements Comparable<User> {
 		this.id = id;
 	}
 
-
+	//test:1
 	public String getId() {
 		return id;
 	}
 
+	//test:1
 	public String getPassword() {
 		return password;
 	}
 
+	//test:1
 	public String getName() {
 		return name;
 	}
 
+	//test:1
 	public Date getBirthday(){
 		return birthdate;
 	}
 
+	//test:1
 	public String getCity() {
 		return city;
 	}
 
+	//test:1
 	public String getState() {
 		return state;
 	}
 
+	//test:1
 	public Date getRegisteredDate() {
 		return registeredDate;
 	}
-
+	//test:3 need to update this!!!!!!!!!!!!!!!
     public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
         return groupMemberships.get(groupName);
     }
@@ -115,6 +122,8 @@ public class User implements Comparable<User> {
 	 * @END
      *  
      */
+    
+	//test:1
     public String getUserWriteData() {
     	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     	String bday = df.format(birthdate);
@@ -134,7 +143,7 @@ public class User implements Comparable<User> {
     	return userData;
     }
 
-    
+	//test:2
 	@Override
 	public int compareTo(User u) {
 		if (u.getId().equals(id)) {
@@ -143,7 +152,7 @@ public class User implements Comparable<User> {
 		return 0;
 	}
 	
-	
+	//test:2
 	public boolean compareId(String other) {
 		if (other.equals(id)) {
 			return true;
@@ -153,6 +162,7 @@ public class User implements Comparable<User> {
 		}
 	}
 	
+	//test:2
 	public boolean comparePassword(String other) {
 		if (other.equals(password)) {
 			return true;

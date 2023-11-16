@@ -54,6 +54,7 @@ public class WriteFile {
 		}
 	}
 	
+	//test:1
 	private static void writeAdmins(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<Admin> admins = manager.getAdmins_Alphabetically_ByUsername();
@@ -66,7 +67,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	private static void writeUsers(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<User> users = manager.getUsers_Alphabetically_ByUsername();
@@ -79,7 +80,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	private static void writeCategories(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<category> categories = manager.getCategories_Alphabetically();
@@ -92,6 +93,7 @@ public class WriteFile {
 		
 	}
 	
+	//test:1
 	private static void writeGroups(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<category> categories = manager.getCategories_Alphabetically();
@@ -114,6 +116,7 @@ public class WriteFile {
 		
 	}
 	
+	//test:1
 	private static void writeMemberships(SystemManager manager, FileWriter writer) throws IOException {
 
 		ArrayList<membership> memberships = manager.getAllMemberships();
@@ -142,8 +145,6 @@ public class WriteFile {
 
 	}
 	
-	
-	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
 		try {
@@ -165,7 +166,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	public static void addUserToFile(User u, String fileName) throws IOException {
 		
 		try {
@@ -187,7 +188,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	public static void addCategoryToFile(category c, String fileName) throws IOException {
 		
 		try {
@@ -207,7 +208,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	public static void addGroupToFile(Group g, String fileName, String catName) throws IOException {
 		
 		try {
@@ -231,7 +232,7 @@ public class WriteFile {
 	}
 	
 	
-	
+	//test:1
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
 		
 		String find = a.getAdminWriteData();
@@ -265,7 +266,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	public static void removeUserFromFile(User u, String fileName) throws IOException {
 		
 		String find = u.getUserWriteData();
@@ -299,7 +300,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	public static void removeCategoryFromFile(category c, String fileName) throws IOException {
 		
 		String find = c.getCategoryWriteData();
@@ -333,7 +334,7 @@ public class WriteFile {
 		
 	}
 	
-	
+	//test:1
 	public static void removeGroupFromFile(Group g, String fileName, String catName) throws IOException {
 		
 		String find = g.getGroupWriteData(catName);

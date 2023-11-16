@@ -5,12 +5,14 @@ import java.text.SimpleDateFormat;
 
 public class Admin extends User {
 
+	//test:1
 	//For adding New Admins
 	public Admin(String name, String id, String password, String birthdate, 
 					String city, String state) {
 		super(name, id, password, birthdate, city, state);
 	}
 	
+	//test:1
 	//For adding Existing Admins read from the disk
 	public Admin(String name, String id, String password, String birthdate, 
 					String city, String state, String registeredDate) {
@@ -35,6 +37,8 @@ public class Admin extends User {
 	 * @END
      *  
      */
+	
+	//test:1
     public String getAdminWriteData() {
     	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
     	String bday = df.format(birthdate);
@@ -55,7 +59,7 @@ public class Admin extends User {
     }
     
     
-    
+	//test:4
     public int compareTo(Admin a) {
     	if (a.getId().equals(id)) {
     		return 1;
