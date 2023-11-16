@@ -800,12 +800,12 @@ class ReadFileTest {
 		Group g1 = new Group("Football");
 		Group g2 = new Group("Soccer");
 		//Create Posts
-		Post p1 = new Post(u1, g1, "10/10/2008 4:27 AM", "P1", "P1 Body", 1);
-		Post p2 = new Post(u2, g1, "10/10/2008 4:27 AM", "P2", "P2 Body", 2);
-		Post p3 = new Post(u3, g1, "10/10/2008 4:27 AM", "P3", "P3 Body", 3);
-		Post p4 = new Post(u2, g2, "10/10/2008 4:27 AM", "P4", "P4 Body", 4);
-		Post p5 = new Post(u4, g2, "10/10/2008 4:27 AM", "P5", "P5 Body", 5);
-		Post p6 = new Post(u5, g2, "10/10/2008 4:27 AM", "P6", "P6 Body", 6);
+		Post p1 = new Post(u1, g1, "10/10/2008 4:27 AM", "P1", "P1 Body", 1, 666);
+		Post p2 = new Post(u2, g1, "10/10/2008 4:27 AM", "P2", "P2 Body", 2, 245);
+		Post p3 = new Post(u3, g1, "10/10/2008 4:27 AM", "P3", "P3 Body", 3, -5);
+		Post p4 = new Post(u2, g2, "10/10/2008 4:27 AM", "P4", "P4 Body", 4, 0);
+		Post p5 = new Post(u4, g2, "10/10/2008 4:27 AM", "P5", "P5 Body", 5, -1200000);
+		Post p6 = new Post(u5, g2, "10/10/2008 4:27 AM", "P6", "P6 Body", 6, 17171717);
 		//Create List of Posts
 		ArrayList<Post> expected = new ArrayList<Post>();
 		//Add Posts in Order
@@ -861,10 +861,10 @@ class ReadFileTest {
 		//Create Groups
 		Group g = new Group("Football");
 		//Create Responses
-		Response r1 = new Response(u1, g, "10/10/2009 4:27 AM", "R1 Body", 1);
-		Response r2 = new Response(u1, g, "10/10/2009 4:27 AM", "R2 Body", 2);
-		Response r3 = new Response(u2, g, "10/10/2009 4:27 AM", "R3 Body", 1);
-		Response r4 = new Response(u2, g, "10/10/2009 4:27 AM", "R4 Body", 2);
+		Response r1 = new Response(u1, g, "10/10/2009 4:27 AM", "R1 Body", 1, 1500);
+		Response r2 = new Response(u1, g, "10/10/2009 4:27 AM", "R2 Body", 2, -1211);
+		Response r3 = new Response(u2, g, "10/10/2009 4:27 AM", "R3 Body", 1, 0);
+		Response r4 = new Response(u2, g, "10/10/2009 4:27 AM", "R4 Body", 2, 47);
 
 		//Create List of Responses
 		ArrayList<Response> expected = new ArrayList<Response>();
