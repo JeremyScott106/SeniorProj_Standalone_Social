@@ -330,7 +330,7 @@ class ValidatorTest {
 	}
 	
 	@Test
-	void testValidateCategoryExists_Failure() {
+	void testValidateGroupExists_Failure() {
 		category c1 = new category("Sports");
 		category c2 = new category("Foods");
 		

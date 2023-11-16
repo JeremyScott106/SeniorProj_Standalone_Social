@@ -16,6 +16,7 @@ public class Post implements Comparable<Post> {
 	private ArrayList<Response> responses;
 	protected Date dateTime;
     private int score;
+    private boolean flag;
     private int id;
     
     public Post (membership memberships, String postTitle, String postBody, int Id) {
@@ -26,6 +27,7 @@ public class Post implements Comparable<Post> {
     	this.responses = new ArrayList<>();
     	this.dateTime = new Date();
     	this.score = 0;
+    	this.flag = false;
     	this.id = Id;
     }
 	
@@ -43,6 +45,7 @@ public class Post implements Comparable<Post> {
 			e.printStackTrace();
 		}
     	this.score = 0;
+    	this.flag = false;
     	this.id = id;
     }
     
@@ -80,10 +83,31 @@ public class Post implements Comparable<Post> {
     public boolean addResponse(Response r) {
         return(responses.add(r));
     }
+    
+    //test:1
+    //removes responses into responses
+    public void removeResponse(Response r) {
+        responses.remove(r);
+    }
 	
 	//test:1
 	public int getScore() {
 		return score;
+	}
+	
+	//test:1
+	public boolean getFlag() {
+		return flag;
+	}
+	
+	//test:1
+	public void setFlagTrue() {
+		flag = true;
+	}
+	
+	//test:1
+	public void setFlagFalse() {
+		flag = false;
 	}
 	
 	//test:1
@@ -121,6 +145,14 @@ public class Post implements Comparable<Post> {
     						"@END\n\n";
     	
     	return userData;
+    }
+	
+    public int getTotalScore() {
+        int totalScore = this.score;
+        for (Response response : responses) {
+            totalScore += response.getScore();
+        }
+        return totalScore;
     }
 
 	//FIXME: add tests

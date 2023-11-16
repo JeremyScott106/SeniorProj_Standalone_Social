@@ -48,6 +48,38 @@ class SortUsersByUsername implements Comparator<User> {
 	
 }
 
+
+class SortSuspensionsByUsername implements Comparator<Suspended> {
+    @Override
+    public int compare(Suspended s1, Suspended s2) {
+    	User u1 = s1.getUser();
+    	User u2 = s2.getUser();
+
+    	return u1.getName().compareTo(u2.getName());
+    }
+}
+
+class SortPostsByCombinedScore implements Comparator<Post> {
+    @Override
+    public int compare(Post p1, Post p2) {
+        int totalScoreP1 = p1.getTotalScore();
+        int totalScoreP2 = p2.getTotalScore();
+
+        // Sort in descending order based on total score
+        return Integer.compare(totalScoreP2, totalScoreP1);
+    }
+}
+
+class SortBannedByUsername implements Comparator<Banned> {
+    @Override
+    public int compare(Banned b1, Banned b2) {
+    	User u1 = b1.getUser();
+    	User u2 = b2.getUser();
+
+    	return u1.getName().compareTo(u2.getName());
+    }
+}
+
 //FIXME : Add Unit Tests
 class SortPostsByDate implements Comparator<Post> {
 	@Override
