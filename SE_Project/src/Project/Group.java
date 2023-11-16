@@ -42,15 +42,15 @@ public class Group implements Comparable<Group> {
     }
     
     //Removes members into groups
-	//test:1
+	//test:2
     public boolean removeMember(membership m) {
 
         if (Validator.validateMemberExistsInGroup(m, memberships)) {
         	memberships.remove(m);
-        	return false;
+        	return true;
         }
         else {
-        	return true;
+        	return false;
         }
     }
 
@@ -74,7 +74,7 @@ public class Group implements Comparable<Group> {
     }
     
   //Find memberships using their userID
-	//test:1
+	//test:2
     public membership getMembership (String userId) {
         for(membership m : memberships) {
         	User u = m.getUser();
@@ -86,7 +86,7 @@ public class Group implements Comparable<Group> {
     }
 
     //Checks to see if a member is already a part of a group
-	//test:1
+	//test:2
     public boolean isMemberInGroupInMembership (String memberId) {
         for(membership m : memberships) {
         	User u = m.getUser();
@@ -116,7 +116,7 @@ public class Group implements Comparable<Group> {
     }
     
     //removes a post from the group
-	//test:1
+	//test:2
     public boolean removePost(Post p) {
         Iterator<Post> iterator = posts.iterator();
         boolean isMember = false;
@@ -174,7 +174,7 @@ public class Group implements Comparable<Group> {
 		
 	}
 	
-	//test:1
+	//test:2
     //Adds banned
     public boolean addBanned(Banned b) {
 
@@ -193,7 +193,7 @@ public class Group implements Comparable<Group> {
         return bans;
     }
 
-	//test:1
+	//test:2
     //Find banned using their userID
     public User getUserInBanned (String userId) {
         for(Banned b : bans) {
@@ -205,7 +205,7 @@ public class Group implements Comparable<Group> {
         return null;
     }
     
-    ///test:1
+    ///test:2
     //Find banned using their userID
     public Banned getMemberInBanned (String userId) {
         for(Banned b : bans) {
@@ -223,7 +223,7 @@ public class Group implements Comparable<Group> {
         return suspensions;
     }
     
-	//test:1
+	//test:2
     //Find users Suspended using their userID
     public User getUserInSuspended (String userId) {
         for(Suspended s : suspensions) {
@@ -235,7 +235,7 @@ public class Group implements Comparable<Group> {
         return null;
     }
     
-    //test:1
+    //test:2
     //Find membership Suspended using their userID
     public Suspended getMemberInSuspended (String userId) {
         for(Suspended s : suspensions) {
@@ -247,7 +247,7 @@ public class Group implements Comparable<Group> {
         return null;
     }
     
-	//test:1
+	//test:2
     //Adds members into suspensions
     public boolean addSuspended(Suspended s) {
 
@@ -260,16 +260,16 @@ public class Group implements Comparable<Group> {
         }
     }
     
-	//test:1
+	//test:2
     //Removes members into groups
     public boolean removeSuspended(Suspended s) {
 
         if (Validator.validateSuspendedExistsInGroup(s, suspensions)) {
         	suspensions.remove(s);
-        	return false;
+        	return true;
         }
         else {
-        	return true;
+        	return false;
         }
     }
 
