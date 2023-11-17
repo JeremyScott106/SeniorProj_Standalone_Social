@@ -73,7 +73,7 @@ public class ReadFile {
 				throw new FileNotFoundException();
 			} catch (IncorrectFileFormatException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw e;
 			}
 		
 		}

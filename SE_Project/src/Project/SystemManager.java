@@ -172,17 +172,25 @@ public class SystemManager {
 			return false;				//return false
 		}
 		else {							//If validator returned a category
-			c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
-			if (writable) {					//If there is a file to write to
-				Group g = Validator.getGroupFromName(c.getGroupsAlphabetically(), groupName);	//Get the group
-				try {							//Try adding the group to the file
-					WriteFile.addGroupToFile(g, fileNames.get(3), categoryName);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			
+			if (!Validator.validateGroupNameExists(c.getGroupsAlphabetically(), groupName)) {
+			
+				c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
+				if (writable) {					//If there is a file to write to
+					Group g = Validator.getGroupFromName(c.getGroupsAlphabetically(), groupName);	//Get the group
+					try {							//Try adding the group to the file
+						WriteFile.addGroupToFile(g, fileNames.get(3), categoryName);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				return true;
+				
 			}
-			return true;
+			else {
+				return false;
+			}
 		}
 	}
 	// allows the user to login
