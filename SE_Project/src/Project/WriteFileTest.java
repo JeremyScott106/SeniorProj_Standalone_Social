@@ -380,6 +380,74 @@ class WriteFileTest {
 	}
 	
 	
+	@Test
+	void testWriteFile_Banned() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		Banned m1 = new Banned(u1, g1);
+		Banned m2 = new Banned(u2, g1);
+		Banned m3 = new Banned(u3, g1);
+		Banned m4 = new Banned(u4, g2);
+		Banned m5 = new Banned(u5, g2);
+
+		g1.addBanned(m1);
+		g1.addBanned(m2);
+		g1.addBanned(m3);
+		g2.addBanned(m4);
+		g2.addBanned(m5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Banned.txt");
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+		
+		String expected = "";
+		
+		for (Banned b : manager.getAllBans_ByUsername()) {
+			
+			expected += b.getBannedWriteData();
+			
+		}
+		
+		assertEquals(expected, actual);
+		
+		
+	}
+	
+	
 	
 	
 	
