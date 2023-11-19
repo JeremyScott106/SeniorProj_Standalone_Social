@@ -251,6 +251,27 @@ public class WriteFile {
 		
 	}
 	
+	public static void addBannedToFile(Banned b, String filename) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(filename);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = b.getBannedWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
 	
 	//test:1
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
