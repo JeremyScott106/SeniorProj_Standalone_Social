@@ -124,18 +124,18 @@ public class PostTest {
 		assertEquals(0, testPost1.getScore());
 	}
 	
+	
 	//Not totally sure how to check this without having us physically just check the time printed, test should always fail because they are different times
 	@Ignore		//FIXME: Change to compare less specific strings //
 	void getTimeTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
-		
 		Date timeTest = new Date();
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
 		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
-		
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+
 		String actual = df.format(testPost1.getTime());
 		String expected = df.format(timeTest);
 		
@@ -171,6 +171,106 @@ public class PostTest {
 		testPost1.subScore();
 		
 		assertEquals(-1, testPost1.getScore());
+	}
+	
+	//Testing addResponse//
+	@Test
+	void addResponseTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> expected = new ArrayList<>();
+		membership m = new membership(testUser, testGroup);
+
+//		Response r1 = new Response(m, "noooo", 1);
+		Response r2 = new Response(m, "no0000ooo", 1);
+		expected.add(r2);
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		
+		testPost1.addResponse(r2);
+
+		assertEquals(expected, testPost1.getResponse());
+	}
+	
+	//Testing addResponse//
+	@Test
+	void removeResponseTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		ArrayList<Response> expected = new ArrayList<>();
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo", 1);
+		Response r2 = new Response(m, "no0000ooo", 1);
+		expected.add(r2);
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
+		
+		testPost1.removeResponse(r1);
+
+		assertEquals(expected, testPost1.getResponse());
+	}
+	
+	//Testing getFlag//
+	@Test
+	void getFlagTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		
+		Boolean actual = testPost1.getFlag();
+		
+		assertEquals(false, actual);
+	}
+	
+	//Testing setFlag//
+	@Test
+	void setFlagTrueTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		
+		testPost1.setFlagTrue();
+		Boolean actual = testPost1.getFlag();
+		
+		assertEquals(true, actual);
+	}
+	
+	//Testing setFlag//
+	@Test
+	void setFlagFalseTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		
+		testPost1.setFlagFalse();
+		Boolean actual = testPost1.getFlag();
+		
+		assertEquals(false, actual);
+	}
+	
+	//Tests adding total score
+	@Test
+	void getTotalScoreTest() {
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response r1 = new Response(m, "noooo", 1);
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		r1.addScore();
+		testPost1.addResponse(r1);
+		testPost1.addScore();
+		testPost1.addScore();
+		
+		assertEquals(3, testPost1.getTotalScore());
 	}
 	
 }

@@ -22,7 +22,7 @@ public class Response extends Post{
 		return parentalId;
 	}
 	
-	
+
 	
 	public String getResponseWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
@@ -39,7 +39,6 @@ public class Response extends Post{
 		
 		return responseData;
 	}
-	
 	
 	public int compareTo(Response r) {
 		if (user.compareTo(r.getUser()) == 1 && group.compareTo(r.getGroup()) == 1 &&

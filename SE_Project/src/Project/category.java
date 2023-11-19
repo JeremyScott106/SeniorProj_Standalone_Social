@@ -14,11 +14,12 @@ public class category implements Comparable<category> {
 		this.groups = new ArrayList<Group>();
 	}
 
-
+	//test:1
 	public String getName() {
 		return name;
 	}
-
+	
+	//test:2
 	// adds a group if the group name doesn't exist
 	public boolean addGroup(Group g) {
 		if (Validator.validateGroupNameExists(groups, g.getGroupName())) {	//If the name of group g already exists within the list of Groups
@@ -30,6 +31,7 @@ public class category implements Comparable<category> {
 		}
 	}
 
+	//test:2
 	// create group if the group name doesn't exist
 	public boolean createGroup(String name) {
 		if(Validator.validateGroupNameExists(groups, name)) {	//If there exists a group with the given name
@@ -42,7 +44,7 @@ public class category implements Comparable<category> {
 		}
 	}
 
-
+	//test:1
 	// returns all groups alphabetically
 	public ArrayList<Group> getGroupsAlphabetically() {
 		Collections.sort(groups, new SortGroupsByName());
@@ -50,6 +52,7 @@ public class category implements Comparable<category> {
 		return groups;
 	}
 	
+	//test:1
     //Checks to see if a Group is already a part of a category
     public boolean isGroupInCategory (String groupName) {
         for(Group g : groups) {
@@ -67,7 +70,7 @@ public class category implements Comparable<category> {
 	}
 
 
-
+	//test:1
 	public ArrayList<Group> getGroups() {
 		return groups;
 	}
@@ -86,6 +89,7 @@ public class category implements Comparable<category> {
 	 * @END
 	 * 
 	 */
+	//test:1
 	public String getCategoryWriteData() {
 		String categoryData = "@START\n" + 
 								"@CATEGORY\n" + 
@@ -95,7 +99,7 @@ public class category implements Comparable<category> {
 		return categoryData;
 	}
 
-
+	//test:2
 	@Override
 	public int compareTo(category c) {
 		if (c.getName().equals(name)) {
@@ -104,7 +108,7 @@ public class category implements Comparable<category> {
 		return 0;
 	}
 	
-	
+	//test:2
 	public boolean compareName(String other) {
 		if (other.equals(name)) {
 			return true;

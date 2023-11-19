@@ -105,7 +105,7 @@ public class AdminTools extends JFrame {
 				}
 			}
 		});
-		btnCreateCategory.setBounds(20, 47, 89, 40);
+		btnCreateCategory.setBounds(20, 47, 100, 40);
 		panel.add(btnCreateCategory);
 		
 		newCategoryTextField = new JTextField();
@@ -123,7 +123,7 @@ public class AdminTools extends JFrame {
 		panel.add(comboBoxCategories);
 		
 		JButton btnViewAllCategories = new JButton("<html><center>View All Categories</center></html>");
-		btnViewAllCategories.setBounds(20, 93, 89, 40);
+		btnViewAllCategories.setBounds(20, 93, 100, 40);
 		btnViewAllCategories.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String msgAllCategories = "";
@@ -157,7 +157,7 @@ public class AdminTools extends JFrame {
 				}
 			}
 		});
-		btnCreateGroup.setBounds(20, 145, 89, 40);
+		btnCreateGroup.setBounds(20, 145, 100, 40);
 		panel.add(btnCreateGroup);
 		
 		JButton btnViewAllGroups = new JButton("<html><center>View All Groups</center></html>");
@@ -170,7 +170,7 @@ public class AdminTools extends JFrame {
 				JOptionPane.showMessageDialog(null, msgAllGroups);
 			}
 		});
-		btnViewAllGroups.setBounds(20, 191, 89, 40);
+		btnViewAllGroups.setBounds(20, 191, 100, 40);
 		panel.add(btnViewAllGroups);
 		
 		JButton btnViewAllGroupsByCategory = new JButton("<html><center>View All Groups In Selected Category</center></html>");
@@ -186,6 +186,15 @@ public class AdminTools extends JFrame {
 		btnViewAllGroupsByCategory.setBounds(137, 191, 154, 40);
 		panel.add(btnViewAllGroupsByCategory);
 		
+		JButton btnViewAllUsers = new JButton("<html><center>View All Users</center></html>");
+		btnViewAllUsers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		btnViewAllUsers.setBounds(20, 237, 100, 40);
+		panel.add(btnViewAllUsers);
 		
 		return panel;
 	}
