@@ -937,11 +937,11 @@ class ReadFileTest {
 		
 		ArrayList<Banned> expected = new ArrayList<Banned>();
 		
+		expected.add(b5);
 		expected.add(b1);
+		expected.add(b4);
 		expected.add(b2);
 		expected.add(b3);
-		expected.add(b4);
-		expected.add(b5);
 		
 		
 		ArrayList<String> fileNames = new ArrayList<String>();
@@ -954,7 +954,21 @@ class ReadFileTest {
 			
 			ReadFile.readFile(manager, fileNames);
 			
-			assertEquals(true, true);
+			ArrayList<Banned> actual = manager.getAllBans_ByUsername();
+			
+			boolean namesMatch = true;
+			
+			for (int i = 0; i < actual.size() ; i++) {
+				
+				if (expected.get(i).compareTo(actual.get(i)) == 0) {
+					
+					namesMatch = false;
+					
+				}
+								
+			}
+			
+			assertEquals(true, namesMatch);
 			
 		} 
 		catch (FileNotFoundException | IncorrectFileFormatException e) {
