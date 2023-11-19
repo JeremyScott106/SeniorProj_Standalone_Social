@@ -134,6 +134,7 @@ public class WriteFile {
 
 	}
 
+	//test:1
 	private static void writePosts(SystemManager manager, FileWriter writer) throws IOException {
 
 		ArrayList<Post> posts = manager.getAllPost();
@@ -148,6 +149,7 @@ public class WriteFile {
 
 	}
 	
+	//test:1
 	private static void writeBanned(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<Banned> bans = manager.getAllBans_ByUsername();
@@ -164,7 +166,7 @@ public class WriteFile {
 	
 	
 	
-	
+	//test:1
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
 		try {
@@ -251,6 +253,7 @@ public class WriteFile {
 		
 	}
 	
+	//test:1
 	public static void addBannedToFile(Banned b, String filename) throws IOException {
 		
 		try {
@@ -271,6 +274,8 @@ public class WriteFile {
 		}
 		
 	}
+	
+	
 	
 	
 	//test:1
@@ -384,6 +389,40 @@ public class WriteFile {
 		try {
 			
 			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	//test:1
+	public static void removeBannedFromFile(Banned b, String filename) throws IOException {
+		
+		String find = b.getBannedWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(filename);
 			FileReader reader = new FileReader(dataFile);
 			
 			String s = "";
