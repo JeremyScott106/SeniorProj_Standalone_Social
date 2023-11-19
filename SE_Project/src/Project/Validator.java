@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Validator {
 
-
+	//test:2
 	//returns a User from given list if there exists a User with the inputed username, returns null otherwise
 	public static User validUserName_Users(ArrayList<User> users, String username) {
 		User u = null;	//Null User
@@ -19,6 +19,7 @@ public class Validator {
 		return u;	//Return Null/User
 	}
 
+	//test:2
 	//returns a Admin from given list if there exists a Admin with the inputed username, returns null otherwise
 	public static User validUserName_Admins(ArrayList<Admin> admins, String username) {
 		User u = null;	//Null Admin
@@ -33,9 +34,8 @@ public class Validator {
 		return u;	//Return Null/Admin
 	}
 
-
+	//test:2
 	//returns true if the password of the given User matches the inputed password, returns false otherwise
-
 	public static boolean validPassword(User u, String password) {
 		if (u.comparePassword(password)) {		//Compare Passwords
 			return true;
@@ -45,6 +45,7 @@ public class Validator {
 		}
 	}
 
+	//test:2
 	//returns true if there exists a category name from the given list that matches the given name, returns false otherwise
 	public static boolean validateCategoryNameExists(ArrayList<category> categories, String name) {
 		for (category cat : categories) {	//Loop through categories
@@ -55,7 +56,8 @@ public class Validator {
 
 		return false;	//return false otherwise
 	}
-
+	
+	//test:2
 	//returns a category that has a matching name as given if it exists, returns null otherwise
 	public static category getCategoryFromName(ArrayList<category> categories, String name) {
 		for (category cat : categories) {	//Loop through categories
@@ -68,7 +70,7 @@ public class Validator {
 	}
 
 
-
+	//test:2
 	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise
 	public static boolean validateGroupNameExists(ArrayList<Group> groups, String name) {
 
@@ -82,11 +84,11 @@ public class Validator {
 	}
 	//returns true if there exists a group name from the given list that matches the given name, returns false otherwise
 
-	
+	//test:2
 	//returns true if there exists a group that matches the given user, returns false otherwise
 	public static boolean validateUserInGroup(Group g, User user) {
 
-		if (g.isMemberInGroup(user.getId())) {	//Check if user is in group
+		if (g.isMemberInGroupInMembership(user.getId())) {	//Check if user is in group
 			return true;	//return true if user is in group
 		}
 
@@ -94,7 +96,7 @@ public class Validator {
 	}
 	//returns true if there exists a user is in a group, returns false otherwise
 	
-	
+	//test:2
 	// returns true if the admin exists and returns false otherwise
 	public static boolean validateAdminExists(Admin a, ArrayList<Admin> admins) {
 		
@@ -107,6 +109,7 @@ public class Validator {
 		
 	}
 	
+	//test:2
 	// returns true if the category exists and returns false otherwise
 	public static boolean validateCategoryExists(category c, ArrayList<category> categories) {
 		
@@ -118,6 +121,7 @@ public class Validator {
 		return false;
 	}
 	
+	//test:2
 	// returns true if the user exists and returns false otherwise
 	public static boolean validateUserExists(User u, ArrayList<User> users) {
 		
@@ -129,6 +133,7 @@ public class Validator {
 		return false;
 	}
 	
+	//test:2
 	// returns the group from the name provided
 	public static Group getGroupFromName(ArrayList<Group> groups, String name) {
 		
@@ -144,6 +149,7 @@ public class Validator {
 		return g;
 	}
 	
+	//test:2
 	// returns the user from the username provided
 	public static User getUserFromUsername(ArrayList<User> users, String username) {
 		
@@ -158,6 +164,7 @@ public class Validator {
 		return u;
 	}
 	
+	//test:2
 	// returns true if the membership exists and returns false otherwise
 	public static boolean validateMemberExistsInGroup(membership m, ArrayList<membership> memberships) {
 		
@@ -171,6 +178,33 @@ public class Validator {
 		
 	}
 	
+	//test:2
+	// returns true if the banned exists and returns false otherwise
+	public static boolean validateBannedExistsInGroup(Banned b, ArrayList<Banned> bans) {
+		
+		for (Banned b1 : bans) {
+			
+			if (b.compareTo(b1) == 1) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	//test:2
+	// returns true if the membership exists and returns false otherwise
+	public static boolean validateSuspendedExistsInGroup(Suspended s, ArrayList<Suspended> suspensions) {
+		
+		for (Suspended s1 : suspensions) {
+			
+			if (s.compareTo(s1) == 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	//FIXME: add tests
 	public static Post getPostFromId(ArrayList<Post> posts, int id) {
 		

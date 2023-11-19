@@ -2,6 +2,7 @@ package Project;
 
 import java.util.Comparator;
 
+//test:1
 class SortCategoriesByName implements Comparator<category> {
 
 	@Override
@@ -12,7 +13,7 @@ class SortCategoriesByName implements Comparator<category> {
 
 }
 
-
+//test:1
 class SortGroupsByName implements Comparator<Group> {
 
 	@Override
@@ -23,18 +24,18 @@ class SortGroupsByName implements Comparator<Group> {
 
 }
 
-
+//test:1
 class SortUsersByName implements Comparator<User> {
 
 	@Override
 	public int compare(User u1, User u2) {
 
-		return u1.getName().compareTo(u2.getName());
+		return u1.getName().toUpperCase().compareTo(u2.getName().toUpperCase());
 	}
 
 }
 
-
+//test:1
 class SortUsersByUsername implements Comparator<User> {
 	
 	@Override
@@ -47,10 +48,52 @@ class SortUsersByUsername implements Comparator<User> {
 	
 }
 
+
+class SortSuspensionsByUsername implements Comparator<Suspended> {
+    @Override
+    public int compare(Suspended s1, Suspended s2) {
+    	User u1 = s1.getUser();
+    	User u2 = s2.getUser();
+
+    	return u1.getName().compareTo(u2.getName());
+    }
+}
+
+class SortPostsByCombinedScore implements Comparator<Post> {
+    @Override
+    public int compare(Post p1, Post p2) {
+        int totalScoreP1 = p1.getTotalScore();
+        int totalScoreP2 = p2.getTotalScore();
+
+        // Sort in descending order based on total score
+        return Integer.compare(totalScoreP2, totalScoreP1);
+    }
+}
+
+class SortBannedByUsername implements Comparator<Banned> {
+    @Override
+    public int compare(Banned b1, Banned b2) {
+    	User u1 = b1.getUser();
+    	User u2 = b2.getUser();
+
+    	return u1.getName().compareTo(u2.getName());
+    }
+}
+
 //FIXME : Add Unit Tests
 class SortPostsByDate implements Comparator<Post> {
 	@Override
 	public int compare(Post p1, Post p2) {
+		return p2.getTime().compareTo(p1.getTime());
+	}
+}
+
+class SortObjectsByDate implements Comparator<Object> {
+	@Override
+	public int compare(Object o1, Object o2) {
+		Post p2 = (Post) o2;
+		Post p1 = (Post) o1;
+
 		return p2.getTime().compareTo(p1.getTime());
 	}
 }
