@@ -43,6 +43,9 @@ public class WriteFile {
 				else if (fileName.contains("Post")) {
 					writePosts(manager, writer);
 				}
+				else if (fileName.contains("Suspended")) {
+					writeSuspended(manager, writer);
+				}
 				
 				
 				writer.close();
@@ -144,6 +147,21 @@ public class WriteFile {
 		}
 
 	}
+	
+	private static void writeSuspended(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Suspended> suspensions = manager.getAllSuspensions_ByUsername();
+		
+		for (Suspended s : suspensions) {
+			
+			String susData = s.getSuspendedWriteData();
+			
+			writer.write(susData);
+			
+		}
+		
+	}
+	
 	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
