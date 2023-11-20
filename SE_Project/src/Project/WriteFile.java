@@ -148,6 +148,7 @@ public class WriteFile {
 
 	}
 	
+	//test:1
 	private static void writeSuspended(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<Suspended> suspensions = manager.getAllSuspensions_ByUsername();
@@ -250,6 +251,7 @@ public class WriteFile {
 	}
 	
 	
+	//test:1
 	public static void addSuspendedToFile(Suspended s, String fileName) throws IOException {
 		
 		try {
@@ -391,6 +393,40 @@ public class WriteFile {
 			try (BufferedReader br = new BufferedReader(reader)) {
 				while ((s = br.readLine()) != null) {
 				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	//test:1
+	public static void removeSuspendedFromFile(Suspended s, String fileName) throws IOException {
+		
+		String find = s.getSuspendedWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String st = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((st = br.readLine()) != null) {
+				    totalStr += st + "\n";
 				}
 			}
 			
