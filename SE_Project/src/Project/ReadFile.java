@@ -482,66 +482,66 @@ public class ReadFile {
 			String sub = "";
 			
 			try {
-				sub = line.substring(0, 5);
+				sub = line.substring(0, 5);			//Attempt to get the 1st 5 characters from the line and save to sub
 			}
-			catch (StringIndexOutOfBoundsException e) {
-				throw new IncorrectFileFormatException();
+			catch (StringIndexOutOfBoundsException e) {		//If not possible
+				throw new IncorrectFileFormatException();		//Throw exception
 			}
 			
-			if (sub.equals("@USER")) {
-				 if (gotUserName) {
-					 throw new IncorrectFileFormatException();
+			if (sub.equals("@USER")) {							//If sub rules the current line contains the User ID 
+				 if (gotUserName) {									//If the User ID has already been Read
+					 throw new IncorrectFileFormatException();			//Throw Exception
 				 }
-				 else {
-					 userName = line.substring(6);
-					 gotUserName = true;
-					 continue;
+				 else {												//Otherwise
+					 userName = line.substring(6);						//Get User ID from the current line
+					 gotUserName = true;								//Set gotUserName to true
+					 continue;											//continue to the next line
 				 }
 			}
-			else if (sub.equals("@GROU")) {
-				if (gotGroupName) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@GROU")) {						//If sub rules the current line contains the Group Name
+				if (gotGroupName) {									//If the Group Name has already been Read
+					throw new IncorrectFileFormatException();			//Throw Exception
 				}
-				else {
-					groupName = line.substring(7);
-					gotGroupName = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@REGI")) {
-				if (gotRegDate) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					regDate = line.substring(16);
-					gotRegDate = true;
-					continue;
+				else {												//Otherwise
+					groupName = line.substring(7);						//Get Group Name from the current line
+					gotGroupName = true;								//Set gotGroupName to true
+					continue;											//continue to the next line
 				}
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else if (sub.equals("@REGI")) {						//If sub rules the current line contains the Registration Date
+				if (gotRegDate) {									//If the Registration Date has already been Read
+					throw new IncorrectFileFormatException();			//Throw Exception
+				}
+				else {												//Otherwise
+					regDate = line.substring(16);						//Get the Registration Date from the current line
+					gotRegDate = true;									//Set gotRegDate to true
+					continue;											//continue to the next line
+				}
+			}
+			else {												//If anything else was encountered in sub
+				throw new IncorrectFileFormatException();			//Throw exception
 			}
 			
 		}
 		
-		if (gotUserName && gotGroupName && gotRegDate) {
+		if (gotUserName && gotGroupName && gotRegDate) {	//If the User ID, Group Name, and Registration Date was Read
 			
-			User u = manager.getUserByUsername(userName);
-			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);		//Get the User from the Manager
+			Group g = manager.getGroupByName(groupName);		//Get the Group from the Manager
 			
-			if (!(u == null) && !(g == null)) {
-				
-				membership m = new membership(u, g, regDate);
-				g.addMember(m);
+			if (!(u == null) && !(g == null)) {					//If both the USer and Group Exists
+			
+				membership m = new membership(u, g, regDate);		//Create the Membership
+				g.addMember(m);										//Add Membership to Group
 				
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else {												//If either the User or Group doesn't exist
+				throw new IncorrectFileFormatException();			//Throw exception
 			}
 			
 		}
-		else {
-			throw new IncorrectFileFormatException();
+		else {												//If any of User ID, Group Name, or Registration Date was not read
+			throw new IncorrectFileFormatException();			//Throw exception
 		}
 		
 	}
