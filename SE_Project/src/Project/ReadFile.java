@@ -47,14 +47,14 @@ public class ReadFile {
 					else if(line.equals("@GROUP") && currentlyReadingData) {	//If current line rules next data set to be a Group
 						readGroup(manager, reader);									//go read the data in the Group
 					}
-					else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {
-						readMembership(manager, reader);
+					else if(line.equals("@MEMBERSHIP") && currentlyReadingData) {//If current line rules next data set to be a Membership
+						readMembership(manager, reader);							//go read the data in the Membership
 					}
-					else if(line.equals("@POST") && currentlyReadingData) {
-						readPost(manager, reader);
+					else if(line.equals("@POST") && currentlyReadingData) {		//If current line rules next data set to be a Post
+						readPost(manager, reader);									//go read the data in the Post
 					}
-					else if (line.equals("@RESPONSE") && currentlyReadingData) {
-						readResponse(manager, reader);
+					else if (line.equals("@RESPONSE") && currentlyReadingData) {//If current line rules next data set to be a Response
+						readResponse(manager, reader);								//go read the data in the Response
 					}
 					else if (line.equals("")) {									//If the current line is empty
 						continue;													//continue to next line
@@ -215,19 +215,19 @@ public class ReadFile {
 	//test:6
 	private static void readUser(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		String name = "";				//Name of the User
-		boolean gotName = false;
+		boolean gotName = false;			//Set to true once the name has been read
 		String bday = "";				//Bday of the User
-		boolean gotBday = false;
+		boolean gotBday = false;			//Set to true once the birthday has been read
 		String city = "";				//City of the User
-		boolean gotCity = false;
+		boolean gotCity = false;			//Set to true once the city has been read
 		String state = "";				//State of the User
-		boolean gotState = false;
+		boolean gotState = false;			//Set to true once the state has been read
 		String username = "";			//Username of the User
-		boolean gotUsername = false;
+		boolean gotUsername = false;		//Set to true once the username has been read
 		String password = "";			//Password of the User
-		boolean gotPassword = false;
+		boolean gotPassword = false;		//Set to true once the password has been read
 		String regDate = "";			//RegDate of the User
-		boolean gotRegDate = false;
+		boolean gotRegDate = false;			//Set to true once the register date has been read
 		
 		while(currentlyReadingData) {		//While current data sat is being read
 			
@@ -394,88 +394,89 @@ public class ReadFile {
 	//test:1
 	private static void readGroup(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
-		String name = "";
-		boolean gotName = false;
-		String catName = "";
-		boolean gotCatName = false;
+		String name = "";				//Name of the Group
+		boolean gotName = false;			//Set to true once the Name has been read
+		String catName = "";			//Name of the Category the Group is under
+		boolean gotCatName = false;			//Set to true once the Category Name has been read
 		
-		while (currentlyReadingData) {
+		while (currentlyReadingData) {			//While their is still more data to be read
 			
-			String line = reader.nextLine();
+			String line = reader.nextLine();		//Read the next line
 			
-			if (line.equals("@END")) {
-				currentlyReadingData = false;
-				break;
+			if (line.equals("@END")) {				//If the current line rules the end of the data set
+				currentlyReadingData = false;			//Set currentlyReadingData to false
+				break;									//Break the loop
 			}
 			
 			String sub = "";
 			
 			try {
-				sub = line.substring(0, 5);
+				sub = line.substring(0, 5);					//Attempt to get the 1st 5 characters of the current line and save in sub
 			}
 			catch (StringIndexOutOfBoundsException e) {
-				throw new IncorrectFileFormatException();
+				throw new IncorrectFileFormatException();		//Throw exception if current line is not long enough
 			}
 			
-			if (sub.equals("@NAME")) {
-				if (gotName) {
-					throw new IncorrectFileFormatException();
+			if (sub.equals("@NAME")) {							//If sub rules that the data contains the Name
+				if (gotName) {										//If the Name has already been read
+					throw new IncorrectFileFormatException();			//Throw exception
 				}
-				else {
-					name = line.substring(6);
-					gotName = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@CATE")) {
-				if (gotCatName) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					catName = line.substring(10);
-					gotCatName = true;
-					continue;
+				else {												//Otherwise
+					name = line.substring(6);							//Read the Name from the line
+					gotName = true;										//Set gotName to true
+					continue;											//Continue to the next line
 				}
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else if (sub.equals("@CATE")) {						//If sub rules that the data contains the Category Name
+				if (gotCatName) {									//If the Category Name has already been Read
+					throw new IncorrectFileFormatException();			//Throw exception
+				}
+				else {												//Otherwise
+					catName = line.substring(10);						//Read the Category Name from the line
+					gotCatName = true;									//Set gotCatName to true
+					continue;											//Continue to the next line
+				}
 			}
+				else {											//If anything else was encountered in sub
+					throw new IncorrectFileFormatException();		//Throw Exception
+				}
 			
 		}
 		
-		if (gotName && gotCatName) {
+		if (gotName && gotCatName) {		//If both the Group Name and Category Name was Read
 			
-			category c = manager.getCategoryByName(catName);
+			category c = manager.getCategoryByName(catName);	//Get the Cateogry from the Manager
 			
-			if (!(c==null)) {
+			if (c != null) {					//If the Category exists
 				
-				Group g = new Group(name);
-				
-				c.addGroup(g);
+				Group g = new Group(name);			//Create the Group
+				c.addGroup(g);						//Add the Group to the Category
 				
 			}
-			
+		}
+		else {								//If either the Group Name or Category Name was not Read
+			throw new IncorrectFileFormatException();	//Throw Exception
 		}
 		
 	}
 	
-	//FIXME: add test methods
+	//test:1
 	private static void readMembership(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
-		String userName = "";
-		boolean gotUserName = false;
-		String groupName = "";
-		boolean gotGroupName = false;
-		String regDate = "";
-		boolean gotRegDate = false;
+		String userName = "";			//ID of the User
+		boolean gotUserName = false;		//Set to true when ID is Read
+		String groupName = "";			//Name of the Group
+		boolean gotGroupName = false;		//Set to true when the Group Name is Read
+		String regDate = "";			//Registration Date of Membership
+		boolean gotRegDate = false;			//Set to true when Registration Date is Read
 		
-		while (currentlyReadingData) {
+		while (currentlyReadingData) {			//While the current data set is being Read
 			
-			String line = reader.nextLine();
+			String line = reader.nextLine();		//Get the next Line
 			
-			if (line.equals("@END")) {
-				currentlyReadingData = false;
-				 break;
+			if (line.equals("@END")) {				//If the current line rules the end of the Data Set
+				currentlyReadingData = false;			//Set currentlyReadingData to false
+				break;									//Break the loop
 			}
 			
 			String sub = "";
