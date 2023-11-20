@@ -250,6 +250,28 @@ public class WriteFile {
 	}
 	
 	
+	public static void addSuspendedToFile(Suspended s, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = s.getSuspendedWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
 	//test:1
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
 		
