@@ -2,7 +2,6 @@ package Project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -55,6 +54,9 @@ public class ReadFile {
 					}
 					else if (line.equals("@RESPONSE") && currentlyReadingData) {
 						readResponse(manager, reader);
+					}
+					else if (line.equals("@SUSPENDED")) {
+						readSuspended(manager, reader);
 					}
 					else if (line.equals("")) {									//If the current line is empty
 						continue;													//continue to next line
@@ -763,6 +765,101 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 				p.addResponse(r);
 				
 			}
+		}
+		else {
+			throw new IncorrectFileFormatException();
+		}
+		
+	}
+
+
+	//test:1
+	private static void readSuspended(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String userId = "";
+		boolean gotUserId = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String susDate = "";
+		boolean gotSusDate = false;
+		String expDate = "";
+		boolean gotExpDate = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = "";
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				if (gotUserId) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					userId = line.substring(6);
+					gotUserId = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@SUSP")) {
+				if (gotSusDate) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					susDate = line.substring(15);
+					gotSusDate = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@EXPI")) {
+				if (gotExpDate) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					expDate = line.substring(13);
+					gotExpDate = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		
+		
+		if (gotUserId && gotGroupName && gotSusDate && gotExpDate) {
+			
+			User u = manager.getUserByUsername(userId);
+			Group g = manager.getGroupByName(groupName);
+			
+			if (u != null && g != null) {
+				Suspended s = new Suspended(u, g, susDate, expDate);
+				g.addSuspended(s);
+			}
+			
 		}
 		else {
 			throw new IncorrectFileFormatException();
