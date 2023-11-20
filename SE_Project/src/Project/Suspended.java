@@ -24,25 +24,12 @@ public class Suspended implements Comparable<Suspended> {
 		try {
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 			this.suspensionDate = df.parse(suspensionDate);
+			this.expiredSuspensionDate = df.parse(expiredSuspensionDate);
 		} 
 		catch (ParseException e) {
 			e.printStackTrace();
 		}
-		try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
-			Date parsedExpiredDate = df.parse(expiredSuspensionDate);
-
-            // Adding 5 minutes to the expiredSuspensionDate
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(parsedExpiredDate);
-            cal.add(Calendar.MINUTE, 5);
-
-            this.expiredSuspensionDate = cal.getTime();
-
-            }
-		catch (ParseException e) {
-            	e.printStackTrace();
-        }
+		
 	}
 	
 	//test:1

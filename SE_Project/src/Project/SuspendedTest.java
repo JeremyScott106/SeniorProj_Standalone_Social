@@ -79,7 +79,7 @@ public class SuspendedTest {
 		String actual = df.format(s.getExpiredDate());
 		
         
-        String expected = "01/13/2012 8:25 PM";
+        String expected = "01/13/2012 8:20 PM";
 		
 		assertEquals(expected, actual);
 	}	
@@ -98,7 +98,7 @@ public class SuspendedTest {
 							"@USER=jackster3\n" + 
 							"@GROUP=Standard Name\n" + 
 							"@SUSPENDEDDATE=01/12/2012 8:20 PM\n" + 
-							"@EXPIREDDATE=01/13/2012 8:25 PM\n" +
+							"@EXPIREDDATE=01/13/2012 8:20 PM\n" +
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
