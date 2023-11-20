@@ -17,7 +17,7 @@ public class User implements Comparable<User> {
 	protected String state;
 	protected String password;
 	protected Date registeredDate;
-	protected Map<String, Integer> groupMemberships;
+	protected ArrayList<Voted> votes;
 
 	//test:1
 	//Constructor is intended to be used for adding new Users
@@ -35,7 +35,7 @@ public class User implements Comparable<User> {
 		this.city = city;
 		this.state = state;
 		registeredDate = new Date();
-        groupMemberships = new HashMap<>();
+		this.votes = new ArrayList<>();
 	}
 	
 	//test:1
@@ -59,7 +59,7 @@ public class User implements Comparable<User> {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-        groupMemberships = new HashMap<>();
+		this.votes = new ArrayList<>();
 	}
 
 
@@ -101,10 +101,27 @@ public class User implements Comparable<User> {
 	public Date getRegisteredDate() {
 		return registeredDate;
 	}
-	//test:3 need to update this!!!!!!!!!!!!!!!
-    public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
-        return groupMemberships.get(groupName);
-    }
+	
+	public ArrayList<Voted> getVotedList(){
+		return votes;
+	}
+	
+	//Adds a new post to the group
+	//test:1
+	public boolean addVoted(Voted v) {
+		boolean isMember = false;
+		for (Voted v1 : votes) {
+			if (v1.equals(v)) {
+				isMember = true;
+	            break;
+	        }
+	   }
+	   if (!isMember) {
+		   votes.add(v);
+	       return true;
+	   }
+	   return false;
+	}
     
     /*
      * Formats User data to be written
