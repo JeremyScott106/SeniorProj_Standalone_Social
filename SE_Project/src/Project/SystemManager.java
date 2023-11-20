@@ -756,20 +756,45 @@ public class SystemManager {
 	// US40 - User can up-vote or down-vote a post or response other than my own
 	// when upvotes are stored update FIXME
 	// add a validator
-	public void upVotePost(Post P) {
-		P.addScore();
+	public ArrayList<Voted> getAllVotes(){
+		ArrayList<Voted> votes = new ArrayList<>();
+		for(User u : users) {
+			votes.addAll(u.getVotedList());
+		}
+		return votes;
+	}
+	
+	//implement a comparable under voted and a validator if it exists
+	 public boolean upvote(Voted v) {
+		 for (User u : users) {
+			 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
+				 return false;
+			 }
+			 else {
+				 v.up();
+				 u.addVoted(v);
+				 v.getPost().addScore();
+				 return true;
+			 }
+		 
+		 }
+		 return false;
 	}
 	 
-	public void upVoteResponse(Response R) {
-		R.addScore();
-	}
-	 
-	public void downVotePost(Post P) {
-		P.subScore();
-	}
-	 
-	public void downVoteResponse(Response R) {
-		R.subScore();
+	 public boolean downvote(Voted v) {
+		 for (User u : users) {
+			 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
+				 return false;
+			 }
+			 else {
+				 v.up();
+				 u.getVotedList().add(v);
+				 v.getPost().subScore();
+				 return true;
+			 }
+		 
+		 }
+		 return false;
 	}
 	
 	//test:2
