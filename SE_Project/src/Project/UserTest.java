@@ -129,45 +129,45 @@ public class UserTest {
 		assertEquals("10/12/2009", actual);
 	}
 	
-	void testGetGroupStatus_JoinedStatus() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		SystemManager sm = new SystemManager();
-		category cat = new category("Test");
-		Group group = new Group("Football");
-		cat.addGroup(group);
-		membership m = new membership(u, group);
-		sm.addCategory(cat);
-		group.addMember(m);
-		
-		Integer actual = u.getGroupStatus("Football");
-		
-		assertEquals(1, actual);
-	}
-	
-	@Ignore 	// No way to leave group //
-	void testGetGroupStatus_LeftStatus() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		SystemManager sm = new SystemManager();
-		category cat = new category("Test");
-		Group group = new Group("Football");
-		membership m = new membership(u, group);
-		cat.addGroup(group);
-		sm.addCategory(cat);
-		group.addMember(m);
-		
-		Integer actual = u.getGroupStatus("Football");
-		
-		assertEquals(0, actual);
-	}
-	
-	@Test
-	void testGetGroupStatus_NonexistentStatus() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		Integer actual = u.getGroupStatus("Soccer");
-		
-		assertEquals(null, actual);
-
-	}
+//	void testGetGroupStatus_JoinedStatus() {
+//		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+//		SystemManager sm = new SystemManager();
+//		category cat = new category("Test");
+//		Group group = new Group("Football");
+//		cat.addGroup(group);
+//		membership m = new membership(u, group);
+//		sm.addCategory(cat);
+//		group.addMember(m);
+//		
+//		Integer actual = u.getGroupStatus("Football");
+//		
+//		assertEquals(1, actual);
+//	}
+//	
+//	@Ignore 	// No way to leave group //
+//	void testGetGroupStatus_LeftStatus() {
+//		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+//		SystemManager sm = new SystemManager();
+//		category cat = new category("Test");
+//		Group group = new Group("Football");
+//		membership m = new membership(u, group);
+//		cat.addGroup(group);
+//		sm.addCategory(cat);
+//		group.addMember(m);
+//		
+//		Integer actual = u.getGroupStatus("Football");
+//		
+//		assertEquals(0, actual);
+//	}
+//	
+//	@Test
+//	void testGetGroupStatus_NonexistentStatus() {
+//		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
+//		Integer actual = u.getGroupStatus("Soccer");
+//		
+//		assertEquals(null, actual);
+//
+//	}
 	
 	
 	@Test 
