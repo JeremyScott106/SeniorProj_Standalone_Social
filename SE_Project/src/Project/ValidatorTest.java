@@ -653,6 +653,71 @@ class ValidatorTest {
 		assertEquals(false, actual);
 		
 	}
+	
+	@Test
+	void testValidateVotedExists_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		membership m1 = new membership(u1, g1);
+		
+		Post testPost1 = new Post (m1, "I'm posting.", "This is the message", 1);
+		
+		Voted v1 = new Voted(u5, testPost1);
+		Voted v2 = new Voted(u1, testPost1);
+		Voted v3 = new Voted(u2, testPost1);
+		Voted v4 = new Voted(u3, testPost1);
+		Voted v5 = new Voted(u4, testPost1);
+
+		u1.addVoted(v1);
+		u1.addVoted(v2);
+		u1.addVoted(v3);
+		u1.addVoted(v4);
+		
+		boolean actual = u1.addVoted(v5);
+		
+		assertEquals(true, actual);
+		
+	}
+	
+	@Test
+	void testValidateVotedExists_Failure() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		Group g1 = new Group("Hockey");
+		
+		membership m1 = new membership(u1, g1);
+		
+		Post testPost1 = new Post (m1, "I'm posting.", "This is the message", 1);
+		
+		Voted v1 = new Voted(u5, testPost1);
+		Voted v2 = new Voted(u1, testPost1);
+		Voted v3 = new Voted(u2, testPost1);
+		Voted v4 = new Voted(u3, testPost1);
+		Voted v5 = new Voted(u4, testPost1);
+
+		u1.addVoted(v1);
+		u1.addVoted(v2);
+		u1.addVoted(v3);
+		u1.addVoted(v4);
+		u1.addVoted(v5);
+		
+		boolean actual = u1.addVoted(v5);
+		
+		assertEquals(false, actual);
+		
+	}
 
 
 }
