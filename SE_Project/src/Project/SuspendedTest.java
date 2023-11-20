@@ -54,14 +54,13 @@ public class SuspendedTest {
 		
 
 		// Create a Date object for the registration date.
-		Suspended m = new Suspended(u, testGroup1);
+		Suspended s = new Suspended(u, testGroup1, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		String actual = df.format(m.getDate());
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		String actual = df.format(s.getDate());
 		
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        String expected = currentDate.format(formatter);
+        
+        String expected = "01/12/2012 8:20 PM";
 		
 		assertEquals(expected, actual);
 	}	
@@ -74,14 +73,13 @@ public class SuspendedTest {
 		
 
 		// Create a Date object for the registration date.
-		Suspended m = new Suspended(u, testGroup1);
+		Suspended s = new Suspended(u, testGroup1, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		String actual = df.format(m.getExpiredDate());
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		String actual = df.format(s.getExpiredDate());
 		
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        String expected = currentDate.format(formatter);
+        
+        String expected = "01/13/2012 8:25 PM";
 		
 		assertEquals(expected, actual);
 	}	
@@ -91,7 +89,7 @@ public class SuspendedTest {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s = new Suspended(u, testGroup1, "01/12/2012 20:20", "01/13/2012 20:20");
+		Suspended s = new Suspended(u, testGroup1, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 				
 		String actual = s.getSuspendedWriteData();
 		
@@ -99,7 +97,8 @@ public class SuspendedTest {
 							"@SUSPENDED\n" +
 							"@USER=jackster3\n" + 
 							"@GROUP=Standard Name\n" + 
-							"@REGISTEREDDATE=01/12/2012\n" + 
+							"@SUSPENDEDDATE=01/12/2012 8:20 PM\n" + 
+							"@EXPIREDDATE=01/13/2012 8:25 PM\n" +
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
@@ -112,12 +111,12 @@ public class SuspendedTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/13/2012  20:20");
+		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 am", "01/13/2012  8:20 pm");
 		
 		User u2 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup2 = new Group("Standard Name");
 		
-		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 20:20", "01/13/2012 20:20");
+		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 
 			
 		int actual = s1.compareTo(s2);
@@ -131,12 +130,12 @@ public class SuspendedTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/13/2012  20:20");
+		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm", "01/13/2012  8:20 pm");
 		
 		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup2 = new Group("Standard Name");
 		
-		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 20:20", "01/13/2012 20:20");
+		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 		
 		int actual = s1.compareTo(s2);
 		
@@ -149,12 +148,12 @@ public class SuspendedTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/13/2012 20:20");
+		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 		
 		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup2 = new Group("Test");
 		
-		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 20:20", "01/13/2012 20:20");
+		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 8:20 pm", "01/13/2012 8:20 pm");
 		
 		int actual = s1.compareTo(s2);
 		

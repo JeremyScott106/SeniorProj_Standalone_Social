@@ -22,13 +22,14 @@ public class Suspended implements Comparable<Suspended> {
         this.group = group;
         
 		try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 			this.suspensionDate = df.parse(suspensionDate);
-		} catch (ParseException e) {
+		} 
+		catch (ParseException e) {
 			e.printStackTrace();
 		}
 		try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 			Date parsedExpiredDate = df.parse(expiredSuspensionDate);
 
             // Adding 5 minutes to the expiredSuspensionDate
@@ -38,9 +39,10 @@ public class Suspended implements Comparable<Suspended> {
 
             this.expiredSuspensionDate = cal.getTime();
 
-            }catch (ParseException e) {
-            	e.printStackTrace();
             }
+		catch (ParseException e) {
+            	e.printStackTrace();
+        }
 	}
 	
 	//test:1
@@ -79,14 +81,16 @@ public class Suspended implements Comparable<Suspended> {
 	
 	//test:1
 	public String getSuspendedWriteData() {
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		String regDate = df.format(suspensionDate);
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		String susDate = df.format(suspensionDate);
+		String expDate = df.format(expiredSuspensionDate);
 		
 		String suspendedData = "@START\n" + 
 								"@SUSPENDED\n" + 
 								"@USER=" + user.getId() + "\n" + 
 								"@GROUP=" + group.getGroupName() + "\n" +
-								"@REGISTEREDDATE=" + regDate + "\n" + 
+								"@SUSPENDEDDATE=" + susDate + "\n" + 
+								"@EXPIREDDATE=" + expDate + "\n" + 
 								"@END\n\n";
 		return suspendedData;
 	}
