@@ -232,6 +232,55 @@ public class WriteFile {
 	}
 	
 	
+
+	public static void addMembershipToFile(membership m, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = m.getMembershipWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
+		}
+		
+	}
+	
+	
+	public static void addPostToFile(Post p, String fileName) throws IOException {
+		
+try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = p.getPostWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
+		}
+		
+	}
+	
+	
+	
+
 	//test:1
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
 		
@@ -339,6 +388,40 @@ public class WriteFile {
 		
 		String find = g.getGroupWriteData(catName);
 		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	
+	
+	
+	public static void updateGroupinFile(String find, String replace, String fileName) throws IOException {
 		
 		try {
 			

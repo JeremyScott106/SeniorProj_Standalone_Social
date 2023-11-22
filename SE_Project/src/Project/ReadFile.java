@@ -73,7 +73,7 @@ public class ReadFile {
 				throw new FileNotFoundException();
 			} catch (IncorrectFileFormatException e) {
 				// TODO Auto-generated catch block
-				throw new IncorrectFileFormatException();
+				throw e;
 			}
 		
 		}
@@ -398,6 +398,8 @@ public class ReadFile {
 		boolean gotName = false;
 		String catName = "";
 		boolean gotCatName = false;
+		String postId = "";
+		boolean gotPostId = false;
 		
 		while (currentlyReadingData) {
 			
@@ -437,6 +439,16 @@ public class ReadFile {
 					continue;
 				}
 			}
+			else if (sub.equals("@POST")) {
+				if (gotPostId) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postId = line.substring(8);
+					gotPostId = true;
+					continue;
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();
 			}
@@ -446,10 +458,11 @@ public class ReadFile {
 		if (gotName && gotCatName) {
 			
 			category c = manager.getCategoryByName(catName);
+			int ID = Integer.parseInt(postId);
 			
 			if (!(c==null)) {
 				
-				Group g = new Group(name);
+				Group g = new Group(name, ID);
 				
 				c.addGroup(g);
 				
@@ -652,7 +665,7 @@ public class ReadFile {
 			int id = Integer.parseInt(postId);
 			if (g != null && u != null) {
 				Post p=new Post(u, g, dateTime, postTitle, postBody, id);
-				manager.getGroupByName(groupName).addPost(p);
+				manager.getGroupByName(groupName).addExistingPost(p);
 			}
 		}
 		else {

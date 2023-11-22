@@ -139,7 +139,7 @@ public class Post implements Comparable<Post> {
     						"@USERNAME=" + getUser().getId() + "\n" + 
     						"@GNAME=" + getGroup().getGroupName() + "\n" + 
     						"@DATETIME=" + date + "\n" + 
-    						"@TITLE=" + postTitle + "n" +
+    						"@TITLE=" + postTitle + "\n" +
     						"@BODY=" + postBody + "\n" + 
     						"@PSTID=" + id + "\n" + 
     						"@END\n\n";
