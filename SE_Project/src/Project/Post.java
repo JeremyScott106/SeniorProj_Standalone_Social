@@ -74,6 +74,7 @@ public class Post implements Comparable<Post> {
 		return id;
 	}
 	
+	//test:1
 	public ArrayList<Response> getResponse() {
 		return responses;
 	}
@@ -147,6 +148,7 @@ public class Post implements Comparable<Post> {
     	return userData;
     }
 	
+	//test:2
     public int getTotalScore() {
         int totalScore = this.score;
         for (Response response : responses) {
@@ -155,7 +157,7 @@ public class Post implements Comparable<Post> {
         return totalScore;
     }
 
-	//FIXME: add tests
+    //test:2
 	@Override
 	public int compareTo(Post p) {
 		
