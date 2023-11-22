@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class User implements Comparable<User> {
@@ -102,12 +103,13 @@ public class User implements Comparable<User> {
 		return registeredDate;
 	}
 	
+	//test:1
 	public ArrayList<Voted> getVotedList(){
 		return votes;
 	}
 	
-	//Adds a new post to the group
-	//test:1
+	//Adds a new Voted to the group
+	//test:2
 	public boolean addVoted(Voted v) {
 		boolean isMember = false;
 		for (Voted v1 : votes) {
@@ -122,6 +124,23 @@ public class User implements Comparable<User> {
 	   }
 	   return false;
 	}
+	
+	//Removes a Voted to the group
+	//test:2
+    public boolean removeVoted(Voted v) {
+        Iterator<Voted> iterator = votes.iterator();
+        boolean isMember = false;
+
+        while (iterator.hasNext()) {
+            Voted v1 = iterator.next();
+            if (v1.equals(v)) {
+                iterator.remove(); // Safely removes the current element from the list
+                isMember = true;
+            }
+        }
+
+        return isMember;
+    }
     
     /*
      * Formats User data to be written
