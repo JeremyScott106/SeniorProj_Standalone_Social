@@ -205,7 +205,7 @@ public class Validator {
 		return false;
 	}
 
-	//FIXME: add tests
+	//test:2
 	public static Post getPostFromId(ArrayList<Post> posts, int id) {
 		
 		for (Post p : posts) {
