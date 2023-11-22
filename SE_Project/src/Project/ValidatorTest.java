@@ -655,6 +655,48 @@ class ValidatorTest {
 	}
 	
 	@Test
+	void testGetPostFromId_Success() {
+		
+		SystemManager sm = new SystemManager();
+		
+		category c = new category("dshgds");
+		
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, testGroup1);
+
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+		
+		sm.addCategory(c);
+		c.addGroup(testGroup1);
+		testGroup1.addPost(p1);
+		
+		assertEquals(p1, sm.getPostByGroupId(testGroup1, 1));
+	}
+	
+	@Test
+	void testGetPostFromId_Failure() {
+		SystemManager sm = new SystemManager();
+		
+		category c = new category("dshgds");
+		
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, testGroup1);
+
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+		
+		sm.addCategory(c);
+		c.addGroup(testGroup1);
+		
+		assertEquals(null, sm.getPostByGroupId(testGroup1, 1));
+	}
+	
+	@Test
 	void testValidateVotedExists_Success() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
