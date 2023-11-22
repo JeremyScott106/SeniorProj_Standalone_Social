@@ -144,7 +144,7 @@ public class SuspendedTest {
 	}
 	
 	@Test
-	void testCompareTo_Failure_DifferentGruopNames() {
+	void testCompareTo_Failure_DifferentGroupNames() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
