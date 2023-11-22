@@ -52,7 +52,7 @@ public class category implements Comparable<category> {
 		return groups;
 	}
 	
-	//test:1
+	//test:2
     //Checks to see if a Group is already a part of a category
     public boolean isGroupInCategory (String groupName) {
         for(Group g : groups) {
