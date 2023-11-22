@@ -237,6 +237,7 @@ public class SystemManager {
 		return (currentPost.addResponse(r));		
 	}
 	
+	//test:1
 	// gets the membership of the group and user inputed
 	public membership getMembership(Group group, User user) {
 		ArrayList<membership> memberships = group.getMembers();
@@ -298,6 +299,7 @@ public class SystemManager {
 		
 	}
 
+	//test:1
 	// returns the status if the user is logged in
 	//FIXME : Add Unit Tests
 	public boolean isLoggedIn() {
@@ -320,6 +322,7 @@ public class SystemManager {
 		return false;
 	}
 
+	//test:1
 	// gets current user
 	//FIXME : Add Unit Tests
 	public User getCurrentUser() {
@@ -413,7 +416,8 @@ public class SystemManager {
 		 return userInGroup;
 	 }
 	 
-	 	//FIXME: Add Unit Tests
+	 //test:1
+	 //FIXME: Add Unit Tests
 	 public category getCategoryByGroup(Group group) {
 		 for (category c : this.getCategories_Alphabetically()) {
 			 for (Group g : c.getGroups()) {
@@ -454,13 +458,15 @@ public class SystemManager {
 		return alResponses;
   }
 
+	//test:1
 	public ArrayList<Response> viewAllPostResponses () {
 		if (currentPost != null) {
 			return currentPost.getResponse();
 		}
 		return null;
 	}
-	 
+	
+	//test:1
 	//User story 22
 	//takes in a user and loops through all the posts. If a post was created by the user it records the postBody. Also checks each post for Responces. if the users are the same records ResponceBody to the string.
 	 public ArrayList<Object> viewUsersPostsResponses(User user) {
@@ -506,7 +512,7 @@ public class SystemManager {
 		 return results;
 	 }
 
-   //test:1
+     //test:1
 	 //User story 24
 	 //loops through the post arrayList and records all the posts and responses of a given group
 	 public ArrayList<Object> viewPostsResponsesInGroup(Group group) {
@@ -524,14 +530,14 @@ public class SystemManager {
 		 return results;
 	}
 	 
-   //test:1
+     //test:1
 	 //loops through the post arrayList and records all the posts of a given group
 	 public ArrayList<Post> viewPostsInGroup(Group group) {
 		 ArrayList<Post> posts = group.getPost();
 		 return posts;
 	}
 	 
-   //test:1
+     //test:1
 	 //User story 25
 	 //checks if the post has the user if so it gets the responses from the post and returns an arraylist of responses.
 	 public ArrayList<Object> viewMyResponses(User user, Post post) {
@@ -552,7 +558,7 @@ public class SystemManager {
 		 return Validator.getCategoryFromName(categories, catName);
 	 }
 	 
-   //test:1
+     //test:1
 	 // returns the users alphabetically by the username
 	 public ArrayList<User> getUsers_Alphabetically_ByUsername(){
 		 Collections.sort(users, new SortUsersByUsername());
@@ -560,7 +566,7 @@ public class SystemManager {
 		 return users;
 	 }
 	 
-   //test:1
+     //test:1
 	 // returns the admins alphabetically by the username
 	 public ArrayList<Admin> getAdmins_Alphabetically_ByUsername() {
 		 Collections.sort(admins, new SortUsersByUsername());
@@ -612,18 +618,21 @@ public class SystemManager {
 		 Collections.sort(suspensions, new SortSuspensionsByUsername());
 		 return suspensions;
 	 }
-
+	 
+	 //test:1
 	 //FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
 	 }
-
+	 
+	 //test:1
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
 			return df.format(date);
 	 }
 	 
+	 //test:1	 
 	 //FIXME: Add unit tests
 	 public String getSimpleTime(Date date) {
 			String pattern = "h:mm a";
@@ -631,6 +640,7 @@ public class SystemManager {
 			return df.format(date);
 	 }
 	 
+	//test:1
 	//FIXME: add test methods
 	public ArrayList<membership> getAllMemberships() {
 		 ArrayList<membership> memberships = new ArrayList<membership>();
@@ -754,7 +764,6 @@ public class SystemManager {
 	
 	//test:4
 	// US40 - User can up-vote or down-vote a post or response other than my own
-	// when upvotes are stored update FIXME
 	// add a validator
 	public ArrayList<Voted> getAllVotes(){
 		ArrayList<Voted> votes = new ArrayList<>();
@@ -764,37 +773,30 @@ public class SystemManager {
 		return votes;
 	}
 	
-	//implement a comparable under voted and a validator if it exists
+	//test:2
 	 public boolean upvote(Voted v) {
-		 for (User u : users) {
-			 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
-				 return false;
-			 }
-			 else {
+		 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
+			 return false;
+		 }
+		 else {
 				 v.up();
-				 u.addVoted(v);
+				 v.getUser().addVoted(v);
 				 v.getPost().addScore();
 				 return true;
-			 }
-		 
 		 }
-		 return false;
 	}
 	 
+	 //test:2
 	 public boolean downvote(Voted v) {
-		 for (User u : users) {
-			 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
-				 return false;
-			 }
-			 else {
-				 v.up();
-				 u.getVotedList().add(v);
+		 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
+			 return false;
+		 }
+		 else {
+				 v.down();
+				 v.getUser().addVoted(v);
 				 v.getPost().subScore();
 				 return true;
-			 }
-		 
 		 }
-		 return false;
 	}
 	
 	//test:2
@@ -806,17 +808,10 @@ public class SystemManager {
 		return posts;
 	}
 	
-    // returns the posts with the largest up votes this includes responses
-	public ArrayList<Post> getLargestUpVotes(){
-		ArrayList<Post> posts = getPosts_ByScore();
-		return posts;
-		 
-	}
-	
 	//test:1
 	// US42 - User can view a list of most up-voted Users
 	public ArrayList<User> viewMostUpVotedUsers(){
-		ArrayList<Post> posts = getLargestUpVotes();
+		ArrayList<Post> posts = getPosts_ByScore();
 		ArrayList<User> users = new ArrayList<>();
 		for(Post p: posts) {
 			users.add(p.getUser());
