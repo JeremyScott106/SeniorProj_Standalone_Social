@@ -573,6 +573,8 @@ public class ReadFile {
 		boolean gotPostBody = false;
 		String postId = "";
 		boolean gotPostId = false;
+		String scoreStr = "";
+		boolean gotScore = false;
 		
 		while (currentlyReadingData) {
 			
@@ -652,20 +654,36 @@ public class ReadFile {
 					continue;
 				}
 			}
+			else if (sub.equals("@SCOR")) {
+				if (gotScore) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					scoreStr = line.substring(7);
+					gotScore = true;
+					continue;
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();
 			}
 			
 		}
 		
-		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId) {
+		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore) {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
 			int id = Integer.parseInt(postId);
+			int score = Integer.parseInt(scoreStr);
 			if (g != null && u != null) {
+
+				Post p=new Post(u, g, dateTime, postTitle, postBody, id, score);
+				manager.getGroupByName(groupName).addPost(p);
+
 				Post p=new Post(u, g, dateTime, postTitle, postBody, id);
 				manager.getGroupByName(groupName).addExistingPost(p);
+
 			}
 		}
 		else {
@@ -687,6 +705,8 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 		boolean gotResponseBody = false;
 		String parentalId = "";
 		boolean gotParentalId = false;
+		String scoreStr = "";
+		boolean gotScore = false;
 		
 		while (currentlyReadingData) {
 			
@@ -756,6 +776,16 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 					continue;
 				}
 			}
+			else if (sub.equals("@SCOR")) {
+				if (gotScore) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					scoreStr = line.substring(7);
+					gotScore = true;
+					continue;
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();
 			}
@@ -764,15 +794,16 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 		
 		
 		
-		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId) {
+		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore) {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
 			int id = Integer.parseInt(parentalId);
+			int score = Integer.parseInt(scoreStr);
 			Post p = manager.getPostByGroupId(g, id);
 			if (g != null && u != null && p != null) {
 				
-				Response r = new Response(u, g, dateTime, responseBody, id);
+				Response r = new Response(u, g, dateTime, responseBody, id, score);
 				p.addResponse(r);
 				
 			}

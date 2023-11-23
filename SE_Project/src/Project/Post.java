@@ -15,9 +15,11 @@ public class Post implements Comparable<Post> {
 	protected String postBody;
 	private ArrayList<Response> responses;
 	protected Date dateTime;
-    private int score;
+    protected int score;
     private boolean flag;
     private int id;
+    
+    
     
     public Post (membership memberships, String postTitle, String postBody, int Id) {
     	this.user = memberships.getUser();
@@ -32,19 +34,20 @@ public class Post implements Comparable<Post> {
     }
 	
     
-	public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id) {
+	public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id, int score) {
     	this.user = u;
     	this.group = g;
     	this.postTitle = postTitle;
     	this.postBody = postBody;
     	this.responses = new ArrayList<>();
     	try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 			this.dateTime = df.parse(dateTime);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-    	this.score = 0;
+    	
+    	this.score = score;
     	this.flag = false;
     	this.id = id;
     }
@@ -131,7 +134,7 @@ public class Post implements Comparable<Post> {
 	//test:1
 	public String getPostWriteData() {
 		
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
     	
     	String userData = "@START\n" + 
@@ -142,6 +145,7 @@ public class Post implements Comparable<Post> {
     						"@TITLE=" + postTitle + "\n" +
     						"@BODY=" + postBody + "\n" + 
     						"@PSTID=" + id + "\n" + 
+    						"@SCORE=" + score + "\n" + 
     						"@END\n\n";
     	
     	return userData;
