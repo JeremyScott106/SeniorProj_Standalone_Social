@@ -62,12 +62,14 @@
 @GROUP
 @NAME=Football
 @CATEGORY=Sports
+@POSTID=0
 @END
 
 @START
 @GROUP
 @NAME=Soccer
 @CATEGORY=Sports
+@POSTID=0
 @END
 
 @START

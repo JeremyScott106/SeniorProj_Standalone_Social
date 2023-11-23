@@ -232,6 +232,55 @@ public class WriteFile {
 	}
 	
 	
+
+	public static void addMembershipToFile(membership m, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = m.getMembershipWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
+		}
+		
+	}
+	
+	
+	public static void addPostToFile(Post p, String fileName) throws IOException {
+		
+try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = p.getPostWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+
+		}
+		
+	}
+	
+	
+	
+
 	//test:1
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
 		
@@ -369,6 +418,7 @@ public class WriteFile {
 	}
 	
 	
+
 	public static void removePostFromFile(Post p, String fileName) throws IOException {
 		
 		String find = p.getPostWriteData();
@@ -404,6 +454,12 @@ public class WriteFile {
 	
 	
 	public static void updatePostInFile(String find, String replace, String fileName) throws IOException {
+
+	
+	
+	
+	public static void updateGroupinFile(String find, String replace, String fileName) throws IOException {
+
 		
 		try {
 			
@@ -415,7 +471,11 @@ public class WriteFile {
 			
 			try (BufferedReader br = new BufferedReader(reader)) {
 				while ((s = br.readLine()) != null) {
+
 					totalStr += s + "\n";
+
+				    totalStr += s + "\n";
+
 				}
 			}
 			
@@ -426,14 +486,17 @@ public class WriteFile {
 			writer.write(totalStr);
 			writer.close();
 			
+
 			reader.close();
 			
+
+
 		}
 		catch (IOException e) {
 			throw e;
 		}
 		
 	}
-	
+
 
 }

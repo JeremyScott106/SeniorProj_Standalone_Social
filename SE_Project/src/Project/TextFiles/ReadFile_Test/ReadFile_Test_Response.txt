@@ -30,6 +30,7 @@
 @GROUP
 @NAME=Football
 @CATEGORY=Sports
+@POSTID=0
 @END
 
 
