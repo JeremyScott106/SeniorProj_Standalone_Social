@@ -625,7 +625,7 @@ public class ReadFile {
 				}
 			}
 			else if (sub.equals("@TITL")) {
-				if (gotPostBody) {
+				if (gotPostTitle) {
 					throw new IncorrectFileFormatException();
 				}
 				else {
@@ -677,17 +677,12 @@ public class ReadFile {
 			int id = Integer.parseInt(postId);
 			int score = Integer.parseInt(scoreStr);
 			if (g != null && u != null) {
-
+				
 				Post p=new Post(u, g, dateTime, postTitle, postBody, id, score);
-				manager.getGroupByName(groupName).addPost(p);
 
-				Post p=new Post(u, g, dateTime, postTitle, postBody, id);
 				manager.getGroupByName(groupName).addExistingPost(p);
 
 			}
-		}
-		else {
-			throw new IncorrectFileFormatException();
 		}
 		
 	}
@@ -807,9 +802,6 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 				p.addResponse(r);
 				
 			}
-		}
-		else {
-			throw new IncorrectFileFormatException();
 		}
 		
 	}

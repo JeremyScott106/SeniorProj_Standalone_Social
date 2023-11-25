@@ -453,9 +453,6 @@ try {
 	}
 	
 	
-	public static void updatePostInFile(String find, String replace, String fileName) throws IOException {
-
-	
 	
 	
 	public static void updateGroupinFile(String find, String replace, String fileName) throws IOException {
