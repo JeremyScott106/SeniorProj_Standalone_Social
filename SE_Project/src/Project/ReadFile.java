@@ -441,18 +441,18 @@ public class ReadFile {
 					continue;											//Continue to the next line
 				}
 			}
-			else if (sub.equals("@POST")) {
-				if (gotPostId) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@POST")) {						//If sub rule that the data contains the PostID
+				if (gotPostId) {									//If the PostID has already been Read
+					throw new IncorrectFileFormatException();			//Throw exception
 				}
-				else {
-					postId = line.substring(8);
-					gotPostId = true;
-					continue;
+				else {												//Otherwise 
+					postId = line.substring(8);							//Read the PostID from the line
+					gotPostId = true;									//Set gotPostId to true
+					continue;											//Continue to the next line
 				}
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else {												//If anything else is encountered in the Line
+				throw new IncorrectFileFormatException();			//Throw exception
 			}
 			
 		}
@@ -460,15 +460,15 @@ public class ReadFile {
 		if (gotName && gotCatName) {		//If both the Group Name and Category Name was Read
 			
 
-			category c = manager.getCategoryByName(catName);
-			int ID = Integer.parseInt(postId);
+			category c = manager.getCategoryByName(catName);	//Get the Category by Name
+			int ID = Integer.parseInt(postId);					//Parse the PostID
 			
 			if (c != null) {					//If the Category exists
 				
 
-				Group g = new Group(name, ID);
+				Group g = new Group(name, ID);		//Create the Group
 				
-				c.addGroup(g);
+				c.addGroup(g);						//Save the group to the Category
 				
 			}
 		}
@@ -567,128 +567,138 @@ public class ReadFile {
 	
 	private static void readPost(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
-		String userName = "";
-		boolean gotUserName = false;
-		String groupName = "";
-		boolean gotGroupName = false;
-		String dateTime = "";
-		boolean gotDateTime = false;
-		String postTitle = "";
-		boolean gotPostTitle = false;
-		String postBody = "";
-		boolean gotPostBody = false;
-		String postId = "";
-		boolean gotPostId = false;
-		String scoreStr = "";
-		boolean gotScore = false;
+		String userName = "";			//username of the User
+		boolean gotUserName = false;		//Set gotUsername to true once it has been Read
+		String groupName = "";			//Name of the Group
+		boolean gotGroupName = false;		//Set gotGroupName to true once it has been Read
+		String dateTime = "";			//DateTime the Post was made
+		boolean gotDateTime = false;		//Set gotDateTime to true once it has been Read
+		String postTitle = "";			//Title of the Post
+		boolean gotPostTitle = false;		//Set gotPostTitle to true once it has been Read
+		String postBody = "";			//Body of the Post
+		boolean gotPostBody = false;		//Set gotPostBody to true once it has been Read
+		String postId = "";				//ID of the Post
+		boolean gotPostId = false;			//Set gotPostId to true once it has been Read
+		String scoreStr = "";			//Score of the Post
+		boolean gotScore = false;			//Set gotScore to true once it has been Read
 		
-		while (currentlyReadingData) {
+		
+		
+		while (currentlyReadingData) {			//While the current data set is being Read
 			
-			String line = reader.nextLine();
+			String line = reader.nextLine();		//Get the next line
 			
-			if (line.equals("@END")) {
-				currentlyReadingData = false;
-				 break;
+			if (line.equals("@END")) {				//If the current line is the end of the data set
+				currentlyReadingData = false;			//Set currentlyReadingData to false
+				 break;									//break the loop
 			}
 			
 			String sub = "";
 			
 			try {
-				sub = line.substring(0, 5);
+				sub = line.substring(0, 5);			//try getting the 1st few characters of the line to identify what data is currently being Read
 			}
 			catch (StringIndexOutOfBoundsException e) {
 				throw new IncorrectFileFormatException();
 			}
 			
-			if (sub.equals("@USER")) {
-				 if (gotUserName) {
-					 throw new IncorrectFileFormatException();
+			if (sub.equals("@USER")) {								//If sub rules the current line contains the username
+				 if (gotUserName) {										//If the username has already been Read
+					 throw new IncorrectFileFormatException();				//throw exception
 				 }
-				 else {
-					 userName = line.substring(10);
-					 gotUserName = true;
-					 continue;
+				 else {													//Otherwise
+					 userName = line.substring(10);							//Get the username from the line
+					 gotUserName = true;									//Set gotUserName to true
+					 continue;												//Continue to the next line
 				 }
 			}
-			else if (sub.equals("@GNAM")) {
-				if (gotGroupName) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@GNAM")) {							//If sub rules the current line contains the Group Name
+				if (gotGroupName) {										//If the Group Name has already been Read
+					throw new IncorrectFileFormatException();				//Throw exception
 				}
-				else {
-					groupName = line.substring(7);
-					gotGroupName = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@DATE")) {
-				if (gotDateTime) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					dateTime = line.substring(10);
-					gotDateTime = true;
-					continue;
+				else {													//Otherwise
+					groupName = line.substring(7);							//Get the Group Name from the line
+					gotGroupName = true;									//Set gotGroupName to true
+					continue;												//continue to the next line
 				}
 			}
-			else if (sub.equals("@TITL")) {
-				if (gotPostTitle) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@DATE")) {							//If sub rules the current line contains the DateTime
+				if (gotDateTime) {										//If the DateTime has already been Read
+					throw new IncorrectFileFormatException();				//Throw exception
 				}
-				else {
-					postTitle = line.substring(7);
-					gotPostTitle = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@BODY")) {
-				if (gotPostBody) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					postBody = line.substring(6);
-					gotPostBody = true;
-					continue;
+				else {													//Otherwise
+					dateTime = line.substring(10);							//Get the DateTime from the line
+					gotDateTime = true;										//Set gotDateTime to true
+					continue;												//continue to the next line
 				}
 			}
-			else if (sub.equals("@PSTI")) {
-				if (gotPostId) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@TITL")) {							//If sub rules the current line contains the Post Title
+				if (gotPostTitle) {										//If the Post Title has already been Read
+					throw new IncorrectFileFormatException();				//Throw exception
 				}
-				else {
-					postId = line.substring(7);
-					gotPostId = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@SCOR")) {
-				if (gotScore) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					scoreStr = line.substring(7);
-					gotScore = true;
-					continue;
+				else {													//Otherwise
+					postTitle = line.substring(7);							//Get the Post Title from the line
+					gotPostTitle = true;									//Set gotPostTitle to true
+					continue;												//continue to the next line
 				}
 			}
-			else {
-				throw new IncorrectFileFormatException();
+			else if (sub.equals("@BODY")) {							//If sub rules the current line contains the Post Body
+				if (gotPostBody) {										//If the Post Body has already been Read
+					throw new IncorrectFileFormatException();				//Throw exception
+				}
+				else {													//Otherwise
+					postBody = line.substring(6);							//Get the Post Body from the line
+					gotPostBody = true;										//Set gotPostBody to true
+					continue;												//continue to the next line
+				}
+			}
+			else if (sub.equals("@PSTI")) {						//If sub rules the current line contains the PostID
+				if (gotPostId) {										//If the PostID has already been Read
+					throw new IncorrectFileFormatException();				//Throw exception
+				}
+				else {													//Otherwise
+					postId = line.substring(7);								//Get the PostID from the line
+					gotPostId = true;										//Set gotPostID to true
+					continue;												//continue to the next line
+				}
+			}
+			else if (sub.equals("@SCOR")) {						//If sub rules the current line contains the Score
+				if (gotScore) {										//If the Score has already been Read
+					throw new IncorrectFileFormatException();				//Throw exception
+				}
+				else {													//Otherwise
+					scoreStr = line.substring(7);							//Get the Score from the line
+					gotScore = true;										//Set gotScore to true
+					continue;												//continue to the next line
+				}
+			}
+			else {												//If anything else is encountered
+				throw new IncorrectFileFormatException();			//Throw exception
 			}
 			
 		}
 		
+		//If all the needed Data was Read
 		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore) {
 			
-			Group g = manager.getGroupByName(groupName);
-			User u = manager.getUserByUsername(userName);
-			int id = Integer.parseInt(postId);
-			int score = Integer.parseInt(scoreStr);
-			if (g != null && u != null) {
+			Group g = manager.getGroupByName(groupName);	//Get the Group by Name
+			User u = manager.getUserByUsername(userName);	//Get the User by username
+			int id = Integer.parseInt(postId);				//Parse the PostID
+			int score = Integer.parseInt(scoreStr);			//Parse the Score
+			
+			if (g != null && u != null) {						//If the Group and User both Exist
 				
-				Post p=new Post(u, g, dateTime, postTitle, postBody, id, score);
+				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score);	//Create the Post
 
-				manager.getGroupByName(groupName).addExistingPost(p);
+				g.addExistingPost(p);	//Add the Post to the Group
 
 			}
+			else {		//If either the Group or User does not Exist
+				throw new IncorrectFileFormatException();	//Throw Exception
+			}
+		}
+		else {			//If any bit of the needed data was not Read
+			throw new IncorrectFileFormatException();	//Throw Exception
 		}
 		
 	}
@@ -696,118 +706,127 @@ public class ReadFile {
 	
 private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
-		String userName = "";
-		boolean gotUserName = false;
-		String groupName = "";
-		boolean gotGroupName = false;
-		String dateTime = "";
-		boolean gotDateTime = false;
-		String responseBody = "";
-		boolean gotResponseBody = false;
-		String parentalId = "";
-		boolean gotParentalId = false;
-		String scoreStr = "";
-		boolean gotScore = false;
+		String userName = "";				//username of the User
+		boolean gotUserName = false;			//Set to true once username has been Read
+		String groupName = "";				//Name of the Group
+		boolean gotGroupName = false;			//Set to true once Group Name has been Read
+		String dateTime = "";				//DateTime the Response was made
+		boolean gotDateTime = false;			//Set to true once DateTime has been Read
+		String responseBody = "";			//Body of the Response
+		boolean gotResponseBody = false;		//Set to true once Response Body has been Read
+		String parentalId = "";				//ID of the Post this Response is under
+		boolean gotParentalId = false;			//Set to true once ParentalID has been Read
+		String scoreStr = "";				//Score of the Response
+		boolean gotScore = false;				//Set to true once Score has been Read
 		
-		while (currentlyReadingData) {
+		
+		
+		while (currentlyReadingData) {			//While the current data set is being Read
 			
-			String line = reader.nextLine();
+			String line = reader.nextLine();		//Get the next Line
 			
-			if (line.equals("@END")) {
-				currentlyReadingData = false;
-				break;
+			if (line.equals("@END")) {				//If the line rules the end of the data set
+				currentlyReadingData = false;			//Set currentlyReadingData to false
+				break;									//Break the Loop
 			}
 			
 			String sub = "";
 			
 			try {
-				sub = line.substring(0, 5);
+				sub = line.substring(0, 5);			//try to get the 1st few characters of the line
 			}
 			catch (StringIndexOutOfBoundsException e) {
 				throw new IncorrectFileFormatException();
 			}
 			
-			if (sub.equals("@USER")) {
-				 if (gotUserName) {
-					 throw new IncorrectFileFormatException();
+			if (sub.equals("@USER")) {					//If sub rule the current line contains the username
+				 if (gotUserName) {							//If the username has already been read
+					 throw new IncorrectFileFormatException();	//Throw exception
 				 }
-				 else {
-					 userName = line.substring(10);
-					 gotUserName = true;
-					 continue;
+				 else {										//Otherwise
+					 userName = line.substring(10);				//Get the username from the line
+					 gotUserName = true;						//Set gotUserName to true
+					 continue;									//Continue to the next line
 				 }
 			}
-			else if (sub.equals("@GNAM")) {
-				if (gotGroupName) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@GNAM")) {				//If sub rule the current line contains the Group Name
+				if (gotGroupName) {							//If the Group Name has already been read
+					throw new IncorrectFileFormatException();	//Throw exception
 				}
-				else {
-					groupName = line.substring(7);
-					gotGroupName = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@DATE")) {
-				if (gotDateTime) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					dateTime = line.substring(10);
-					gotDateTime = true;
-					continue;
+				else {										//Otherwise
+					groupName = line.substring(7);				//Get the Group Name from the line
+					gotGroupName = true;						//Set gotGroupName to true
+					continue;									//Continue to the next line
 				}
 			}
-			else if (sub.equals("@BODY")) {
-				if (gotResponseBody) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@DATE")) {				//If sub rule the current line contains the DateTime
+				if (gotDateTime) {							//If the DateTime has already been read
+					throw new IncorrectFileFormatException();	//Throw exception
 				}
-				else {
-					responseBody = line.substring(6);
-					gotResponseBody = true;
-					continue;
-				}
-			}
-			else if (sub.equals("@PARE")) {
-				if (gotParentalId) {
-					throw new IncorrectFileFormatException();
-				}
-				else {
-					parentalId = line.substring(12);
-					gotParentalId = true;
-					continue;
+				else {										//Otherwise
+					dateTime = line.substring(10);				//Get the DateTime from the line
+					gotDateTime = true;							//Set gotDateTime to true
+					continue;									//Continue to the next line
 				}
 			}
-			else if (sub.equals("@SCOR")) {
-				if (gotScore) {
-					throw new IncorrectFileFormatException();
+			else if (sub.equals("@BODY")) {				//If sub rule the current line contains the Response Body
+				if (gotResponseBody) {							//If the ResponseBody has already been read
+					throw new IncorrectFileFormatException();	//Throw exception
 				}
-				else {
-					scoreStr = line.substring(7);
-					gotScore = true;
-					continue;
+				else {										//Otherwise
+					responseBody = line.substring(6);			//Get the Response Body from the line
+					gotResponseBody = true;						//Set gotResponseBody to true
+					continue;									//Continue to the next line
+				}
+			}
+			else if (sub.equals("@PARE")) {				//If sub rule the current line contains the ParentalID
+				if (gotParentalId) {						//If the ParentalID has already been read
+					throw new IncorrectFileFormatException();	//Throw exception
+				}
+				else {										//Otherwise
+					parentalId = line.substring(12);			//Get the ParentalID from the line
+					gotParentalId = true;						//Set gotParentalId to true
+					continue;									//Continue to the next line
+				}
+			}
+			else if (sub.equals("@SCOR")) {				//If sub rule the current line contains the Score
+				if (gotScore) {								//If the Score has already been read
+					throw new IncorrectFileFormatException();	//Throw exception
+				}
+				else {										//Otherwise
+					scoreStr = line.substring(7);				//Get the Score from the line
+					gotScore = true;							//Set gotScore to true
+					continue;									//Continue to the next line
 				}
 			}
 			else {
-				throw new IncorrectFileFormatException();
+				throw new IncorrectFileFormatException();	//Throw exception
 			}
 			
 		}
 		
 		
-		
+		//If all the needed data was Read
 		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore) {
 			
-			Group g = manager.getGroupByName(groupName);
-			User u = manager.getUserByUsername(userName);
-			int id = Integer.parseInt(parentalId);
-			int score = Integer.parseInt(scoreStr);
-			Post p = manager.getPostByGroupId(g, id);
-			if (g != null && u != null && p != null) {
+			Group g = manager.getGroupByName(groupName);	//Get the Group by Name
+			User u = manager.getUserByUsername(userName);	//get the User by username
+			int id = Integer.parseInt(parentalId);			//Parse the parentalID
+			int score = Integer.parseInt(scoreStr);			//Parse the Score
+			Post p = manager.getPostByGroupId(g, id);		//Get the Post by ID from the Group
+			
+			if (g != null && u != null && p != null) {		//If the Group, User, and Post all Exist
 				
-				Response r = new Response(u, g, dateTime, responseBody, id, score);
-				p.addResponse(r);
+				Response r = new Response(u, g, dateTime, responseBody, id, score);	//Create the Response
+				p.addResponse(r);													//Add the Response to the Post
 				
 			}
+			else {			//If either the USer, Group, or Post does not Exist
+				throw new IncorrectFileFormatException();	//Throw exception
+			}
+		}
+		else {				//If any bit of data was not Read
+			throw new IncorrectFileFormatException();	//Throw exception
 		}
 		
 	}
