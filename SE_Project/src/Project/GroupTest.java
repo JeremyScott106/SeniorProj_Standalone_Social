@@ -286,7 +286,7 @@ public class GroupTest {
 	
 	// also tests getPost()
 	@Test
-	void addPostTest(){
+	void addNewPostTest(){
 		Group testGroup1 = new Group("MembersTest");
 		
 		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
@@ -307,11 +307,11 @@ public class GroupTest {
 		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
 		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
 		
-		testGroup1.addPost(p1);
-		testGroup1.addPost(p2);
-		testGroup1.addPost(p3);
-		testGroup1.addPost(p4);
-		testGroup1.addPost(p5);
+		testGroup1.addNewPost(p1);
+		testGroup1.addNewPost(p2);
+		testGroup1.addNewPost(p3);
+		testGroup1.addNewPost(p4);
+		testGroup1.addNewPost(p5);
 		
 		ArrayList<Post> actual = new ArrayList<>();
 		actual.addAll(testGroup1.getPost());
@@ -349,11 +349,11 @@ public class GroupTest {
 		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
 		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
 		
-		testGroup1.addPost(p1);
-		testGroup1.addPost(p2);
-		testGroup1.addPost(p3);
-		testGroup1.addPost(p4);
-		testGroup1.addPost(p5);
+		testGroup1.addNewPost(p1);
+		testGroup1.addNewPost(p2);
+		testGroup1.addNewPost(p3);
+		testGroup1.addNewPost(p4);
+		testGroup1.addNewPost(p5);
 		testGroup1.removePost(p5);
 
 		
@@ -392,10 +392,10 @@ public class GroupTest {
 		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
 		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
 		
-		testGroup1.addPost(p1);
-		testGroup1.addPost(p2);
-		testGroup1.addPost(p3);
-		testGroup1.addPost(p4);
+		testGroup1.addNewPost(p1);
+		testGroup1.addNewPost(p2);
+		testGroup1.addNewPost(p3);
+		testGroup1.addNewPost(p4);
 		Boolean actual = testGroup1.removePost(p5);
 
 		

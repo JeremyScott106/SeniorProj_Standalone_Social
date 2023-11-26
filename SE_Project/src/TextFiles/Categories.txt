@@ -49,3 +49,8 @@
 @END
 
 
+@START
+@CATEGORY
+@NAME=TestNewCategory
+@END
+
