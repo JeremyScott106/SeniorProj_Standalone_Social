@@ -43,6 +43,9 @@ public class WriteFile {
 				else if (fileName.contains("Post")) {
 					writePosts(manager, writer);
 				}
+				else if (fileName.contains("Response")) {
+					writeResponses(manager, writer);
+				}
 				
 				
 				writer.close();
@@ -144,6 +147,27 @@ public class WriteFile {
 		}
 
 	}
+	
+	private static void writeResponses(SystemManager manager, FileWriter writer) throws IOException {
+		
+		for (Post p : manager.getAllPost()) {
+			
+			ArrayList<Response> responses = p.getResponse();
+			
+			for (Response r : responses) {
+				
+				String responseData = r.getResponseWriteData();
+				
+				writer.write(responseData);
+				
+			}
+			
+		}
+		
+	}
+	
+	
+	
 	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
