@@ -125,7 +125,20 @@ public class SystemManager {
 	// allows a user to join a group
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
-		return (group.addMember(m));
+		boolean joined = group.addMember(m);
+		
+		if (writable && joined) {
+			try {
+				WriteFile.addMembershipToFile(m, fileNames.get(4));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	// allows a user to leave a group
