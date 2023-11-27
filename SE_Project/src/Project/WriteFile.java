@@ -471,8 +471,6 @@ try {
 
 					totalStr += s + "\n";
 
-				    totalStr += s + "\n";
-
 				}
 			}
 			
