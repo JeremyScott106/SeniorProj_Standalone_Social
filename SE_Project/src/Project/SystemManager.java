@@ -130,8 +130,8 @@ public class SystemManager {
 		if (writable && joined) {
 			try {
 				WriteFile.addMembershipToFile(m, fileNames.get(4));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			return true;
@@ -144,7 +144,20 @@ public class SystemManager {
 	// allows a user to leave a group
 	public boolean leaveGroup(User user, Group group) {
 		membership m = group.getMembership(user.getId());
-		return (group.removeMember(m));
+		boolean left = group.removeMember(m);
+		
+		if (writable && left) {
+			try {
+				WriteFile.removeMembershipFromFile(m, fileNames.get(4));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
     //test:2
