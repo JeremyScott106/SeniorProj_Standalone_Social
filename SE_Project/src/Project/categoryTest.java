@@ -170,7 +170,7 @@ class categoryTest {
 	}
 	
 	@Test
-	void testIsGroupInCategory() {
+	void testIsGroupInCategory_Success() {
 		category c1 = new category("test");
 		category c2 = new category("yoooo");
 
@@ -180,7 +180,7 @@ class categoryTest {
 		Group g4 = new Group("Basketball");
 		Group g5 = new Group("Tennis");
   	
-    c1.addGroup(g1);
+		c1.addGroup(g1);
 		c1.addGroup(g2);
 		c2.addGroup(g3);
 		c2.addGroup(g4);
@@ -189,6 +189,27 @@ class categoryTest {
 		Boolean actual = c1.isGroupInCategory(g1.getGroupName());
 
 		assertEquals(true, actual);
+	}
+	
+	@Test
+	void testIsGroupInCategory_Failure() {
+		category c1 = new category("test");
+		category c2 = new category("yoooo");
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+  	
+		c1.addGroup(g2);
+		c2.addGroup(g3);
+		c2.addGroup(g4);
+		c2.addGroup(g5);
+
+		Boolean actual = c1.isGroupInCategory(g1.getGroupName());
+
+		assertEquals(false, actual);
 	}
 
   @Test

@@ -48,7 +48,7 @@ class SortUsersByUsername implements Comparator<User> {
 	
 }
 
-
+//test:1
 class SortSuspensionsByUsername implements Comparator<Suspended> {
     @Override
     public int compare(Suspended s1, Suspended s2) {
@@ -59,6 +59,7 @@ class SortSuspensionsByUsername implements Comparator<Suspended> {
     }
 }
 
+//test:1
 class SortPostsByCombinedScore implements Comparator<Post> {
     @Override
     public int compare(Post p1, Post p2) {
@@ -70,6 +71,7 @@ class SortPostsByCombinedScore implements Comparator<Post> {
     }
 }
 
+//test:1
 class SortBannedByUsername implements Comparator<Banned> {
     @Override
     public int compare(Banned b1, Banned b2) {

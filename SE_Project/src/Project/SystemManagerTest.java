@@ -2,6 +2,8 @@ package Project;
 
 import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -247,6 +249,54 @@ class SystemManagerTest {
 
 
 		assertEquals(m1, actual);
+	}
+	
+	@Test
+	void testGetSimpleDate() {
+		SystemManager sm = new SystemManager();
+		Date testDate = new Date();
+		String formattedDate = sm.getSimpleDate(testDate);
+		
+		SimpleDateFormat expectedDateFormat = new SimpleDateFormat("dd MMM yyyy");
+        String expectedDate = expectedDateFormat.format(testDate);
+		
+        assertEquals(expectedDate, formattedDate);
+	}
+	
+    @Test
+    public void testGetSimpleTime() {
+		SystemManager sm = new SystemManager();
+        Date testDate = new Date();
+        String formattedTime = sm.getSimpleTime(testDate);
+
+        SimpleDateFormat expectedTimeFormat = new SimpleDateFormat("h:mm a");
+        String expectedTime = expectedTimeFormat.format(testDate);
+
+        assertEquals(expectedTime, formattedTime);
+    }
+	
+	@Test
+	void testGetAllMemberships() {
+
+		SystemManager sm = new SystemManager();
+		
+		category c = new category("dsjg");
+		
+		Group g = new Group("gfun");
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, g);
+		sm.addCategory(c);
+		c.addGroup(g);
+		g.addMember(m1);
+		
+		ArrayList<membership> actual = sm.getAllMemberships();
+		
+		ArrayList<membership> expected = new ArrayList<>();
+		expected.add(m1);
+
+		assertEquals(expected, actual);
 	}
 	
 	@Test
@@ -712,6 +762,34 @@ class SystemManagerTest {
 	}
 	
 	@Test
+	void testViewAllPostResponses() {
+		SystemManager sm = new SystemManager();
+		category c = new category("fun");
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+		Post testPost1 = new Post (m, "I", "This is the message", 1);
+		Response r1 = new Response(m, "n", 1);
+		Response r2 = new Response(m, "n000", 1);
+
+		ArrayList<Response> expected = new ArrayList<>();
+		expected.add(r1);
+		expected.add(r2);
+		
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addMember(m);
+		testGroup.addPost(testPost1);
+		sm.addUser(testUser);
+		sm.setCurrentPost(testPost1);
+		
+		testPost1.addResponse(r1);
+		testPost1.addResponse(r2);
+		
+		assertEquals(expected, sm.viewAllPostResponses());
+	}
+	
+	@Test
 	void testViewUsersPostsResponses() {
 		SystemManager sm = new SystemManager();
 		category c = new category("fun");
@@ -1042,6 +1120,20 @@ class SystemManagerTest {
 		sm.setCurrentCategory(c1);	
 
 		assertEquals(c1, sm.getCategoryByName("fun"));
+	}
+	
+	@Test
+	void testGetCategoryByGroup() {
+
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+		Group g1 = new Group("funny", 0);
+		sm.addCategory(c1);
+		sm.setCurrentCategory(c1);	
+		c1.addGroup(g1);
+
+		assertEquals(c1, sm.getCategoryByGroup(g1));
 	}	
 	
 	@Test
@@ -1705,6 +1797,29 @@ class SystemManagerTest {
 	}
 	
 	@Test
+	void testGetPostByGroupId() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 0);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addPost(testPost1);
+		
+		sm.flagPost(testPost1);
+		
+		Post actual = sm.getPostByGroupId(testGroup, 0);
+
+		assertEquals(testPost1, actual);
+	}
+	
+	@Test
 	void testGetAllFlaggedPost() {
 
 		SystemManager sm = new SystemManager();
@@ -1837,16 +1952,18 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.", 1);		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
+		Response testResponse1 = new Response(m, "I disagree.", 1);	
 		
+		Voted v = new Voted(testUser, testPost1);
+				
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
-		sm.upVotePost(testPost1);
+		sm.upvote(v);
 
 		assertEquals(1, testPost1.getScore());
 	}
@@ -1863,13 +1980,15 @@ class SystemManagerTest {
 		Response testResponse1 = new Response(m, "I disagree.", 1);		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
+		Voted v = new Voted(testUser, testResponse1);
+		
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
-		sm.upVotePost(testResponse1);
+		sm.upvote(v);
 
 		assertEquals(1, testResponse1.getScore());
 	}
@@ -1886,13 +2005,15 @@ class SystemManagerTest {
 		Response testResponse1 = new Response(m, "I disagree.", 1);		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
+		Voted v = new Voted(testUser, testPost1);
+		
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
-		sm.downVotePost(testPost1);
+		sm.downvote(v);
 
 		assertEquals(-1, testPost1.getScore());
 	}
@@ -1909,13 +2030,15 @@ class SystemManagerTest {
 		Response testResponse1 = new Response(m, "I disagree.", 1);		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
+		Voted v = new Voted(testUser, testResponse1);
+		
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
-		sm.downVoteResponse(testResponse1);
+		sm.downvote(v);
 
 		assertEquals(-1, testResponse1.getScore());
 	}
@@ -1944,62 +2067,28 @@ class SystemManagerTest {
 
 		testPost1.addResponse(testResponse1);
 		
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost1);
+		Voted v1 = new Voted(testUser, testPost1);
+		Voted v2 = new Voted(testUser, testPost1);
+		Voted v3 = new Voted(testUser, testPost1);
+		Voted v4 = new Voted(testUser, testPost2);
+		Voted v5 = new Voted(testUser, testPost2);
+		Voted v6 = new Voted(testUser, testPost3);
+		
+
+		sm.upvote(v1);
+		sm.upvote(v2);
+		sm.upvote(v3);
+		sm.upvote(v4);
+		sm.upvote(v5);
+		sm.upvote(v6);
+
 
 		ArrayList<Post> expected = new ArrayList<>();
-		expected.add(testPost3);
-		expected.add(testPost2);
 		expected.add(testPost1);
+		expected.add(testPost2);
+		expected.add(testPost3);
 
 		ArrayList<Post> actual = sm.getPosts_ByScore();
-	
-		assertEquals(expected, actual);
-	}
-	
-	@Test
-	void testGetLargestUpVotes() {
-
-		SystemManager sm = new SystemManager();
-
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		membership m = new membership(testUser, testGroup);
-
-		Response testResponse1 = new Response(m, "I disagree.", 1);		
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
-		Post testPost2 = new Post (m, "I'm posting.", "This is the message", 2);
-		Post testPost3 = new Post (m, "I'm posting.", "This is the message", 3);
-
-		
-		category c = new category("ds");	
-		sm.addCategory(c);
-		c.addGroup(testGroup);
-		testGroup.addNewPost(testPost1);
-		testGroup.addNewPost(testPost2);
-		testGroup.addNewPost(testPost3);
-
-		testPost2.addResponse(testResponse1);
-		
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost1);
-		sm.upVoteResponse(testResponse1);
-
-		ArrayList<Post> expected = new ArrayList<>();
-		expected.add(testPost2);
-		expected.add(testPost3);
-		expected.add(testPost1);
-
-		ArrayList<Post> actual = sm.getLargestUpVotes();
 	
 		assertEquals(expected, actual);
 	}
@@ -2023,8 +2112,14 @@ class SystemManagerTest {
 		Post testPost1 = new Post (m1, "I'm posting.", "This is the message", 1);
 		Post testPost2 = new Post (m2, "I'm posting.", "This is the message", 2);
 		Post testPost3 = new Post (m3, "I'm posting.", "This is the message", 3);
-
 		
+		Voted v1 = new Voted(testUser1, testPost1);
+		Voted v2 = new Voted(testUser1, testPost1);
+		Voted v3 = new Voted(testUser1, testPost1);
+		Voted v4 = new Voted(testUser2, testPost2);
+		Voted v5 = new Voted(testUser2, testPost2);
+		Voted v6 = new Voted(testUser3, testPost3);
+
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
@@ -2034,19 +2129,17 @@ class SystemManagerTest {
 
 		testPost2.addResponse(testResponse1);
 		
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost3);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost2);
-		sm.upVotePost(testPost1);
-		sm.upVoteResponse(testResponse1);
+		sm.upvote(v1);
+		sm.upvote(v2);
+		sm.upvote(v3);
+		sm.upvote(v4);
+		sm.upvote(v5);
+		sm.upvote(v6);
 
 		ArrayList<User> expected = new ArrayList<>();
+		expected.add(testUser1);
 		expected.add(testUser2);
 		expected.add(testUser3);
-		expected.add(testUser1);
 
 		ArrayList<User> actual = sm.viewMostUpVotedUsers();
 	

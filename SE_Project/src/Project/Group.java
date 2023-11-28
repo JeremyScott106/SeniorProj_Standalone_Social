@@ -44,7 +44,7 @@ public class Group implements Comparable<Group> {
     }
 
     //Adds members into groups
-	//test:1
+	//test:2
     public boolean addMember(membership m) {
 
         if (Validator.validateMemberExistsInGroup(m, memberships)) {
@@ -77,7 +77,7 @@ public class Group implements Comparable<Group> {
     }
 
     //Find members using their userID
-	//test:1
+	//test:2
     public User getUserInMembership (String userId) {
         for(membership m : memberships) {
         	User u = m.getUser();
@@ -112,6 +112,7 @@ public class Group implements Comparable<Group> {
         return false;
 
     }
+
 
     //Adds a new post to the group
     public boolean addExistingPost(Post p) {

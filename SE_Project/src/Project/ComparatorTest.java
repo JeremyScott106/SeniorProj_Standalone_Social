@@ -11,7 +11,7 @@ class ComparatorTest {
 
 	
 	@Test
-	void testSortCategoriesByName() {
+	void testSortCategoriesByName_Success() {
 		
 		category c1 = new category("Sports");
 		category c2 = new category("Games");
@@ -43,11 +43,10 @@ class ComparatorTest {
 		
 		assertEquals(true, namesMatch);
 		
-	}
-	
+	}	
 	
 	@Test
-	void testSortGroupsByName() {
+	void testSortGroupsByName_Success() {
 		
 		Group g1 = new Group("Sports");
 		Group g2 = new Group("Games");
@@ -79,11 +78,10 @@ class ComparatorTest {
 		
 		assertEquals(true, namesMatch);
 		
-	}
-	
+	}	
 	
 	@Test
-	void testSortUsersByName() {
+	void testSortUsersByName_Success() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -117,9 +115,8 @@ class ComparatorTest {
 		
 	}
 	
-	
 	@Test
-	void testSortUsersByUsername() {
+	void testSortUsersByUsername_Success() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
