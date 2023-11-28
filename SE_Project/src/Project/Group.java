@@ -28,8 +28,6 @@ public class Group implements Comparable<Group> {
         this.memberships = new ArrayList<>();
         this.posts = new ArrayList<>();
         this.postId = postId;
-        this.bans = new ArrayList<Banned>();
-        this.suspensions = new ArrayList<Suspended>();
     }
     
     //FIXME: add tests

@@ -1452,11 +1452,11 @@ class SystemManagerTest {
 		
 		ArrayList<Suspended> expected = new ArrayList<>();
 		
+		expected.add(s3);
+		expected.add(s2);
+		expected.add(s4);
 		expected.add(s5);
 		expected.add(s1);
-		expected.add(s4);
-		expected.add(s2);
-		expected.add(s3);
 
 		ArrayList<Suspended> actual = sm.getAllSuspensions_ByUsername();
 
@@ -1630,11 +1630,11 @@ class SystemManagerTest {
 		
 		ArrayList<Banned> expected = new ArrayList<>();
 		
+		expected.add(s3);
+		expected.add(s2);
+		expected.add(s4);
 		expected.add(s5);
 		expected.add(s1);
-		expected.add(s4);
-		expected.add(s2);
-		expected.add(s3);
 
 		ArrayList<Banned> actual = sm.getAllBans_ByUsername();
 
