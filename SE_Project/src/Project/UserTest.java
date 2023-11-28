@@ -129,46 +129,103 @@ public class UserTest {
 		assertEquals("10/12/2009", actual);
 	}
 	
-	void testGetGroupStatus_JoinedStatus() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		SystemManager sm = new SystemManager();
-		category cat = new category("Test");
-		Group group = new Group("Football");
-		cat.addGroup(group);
-		membership m = new membership(u, group);
-		sm.addCategory(cat);
-		group.addMember(m);
+	@Test
+	void addVotedTest_Success(){
+		Group testGroup1 = new Group("MembersTest");
 		
-		Integer actual = u.getGroupStatus("Football");
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
 		
-		assertEquals(1, actual);
-	}
-	
-	@Ignore 	// No way to leave group //
-	void testGetGroupStatus_LeftStatus() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		SystemManager sm = new SystemManager();
-		category cat = new category("Test");
-		Group group = new Group("Football");
-		membership m = new membership(u, group);
-		cat.addGroup(group);
-		sm.addCategory(cat);
-		group.addMember(m);
+		membership m1 = new membership(u1, testGroup1);
+
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
 		
-		Integer actual = u.getGroupStatus("Football");
+		Voted v1 = new Voted(u1, p1);
 		
-		assertEquals(0, actual);
+		testGroup1.addNewPost(p1);
+		boolean actual = u1.addVoted(v1);
+
+		assertEquals(true, actual);
 	}
 	
 	@Test
-	void testGetGroupStatus_NonexistentStatus() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
-		Integer actual = u.getGroupStatus("Soccer");
+	void addVotedTest_Failure(){
+		Group testGroup1 = new Group("MembersTest");
 		
-		assertEquals(null, actual);
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, testGroup1);
 
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+
+		Voted v1 = new Voted(u1, p1);
+		
+		testGroup1.addNewPost(p1);
+		u1.addVoted(v1);
+		boolean actual = u1.addVoted(v1);
+
+		assertEquals(false, actual);
 	}
 	
+	// also tests getPost()
+	@Test
+	void removeVotedTest_Success(){
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, testGroup1);
+
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+
+		Voted v1 = new Voted(u1, p1);
+		
+		testGroup1.addNewPost(p1);
+		u1.addVoted(v1);
+		boolean actual = u1.removeVoted(v1);
+
+		assertEquals(true, actual);
+	}
+	
+	// also tests getPost()
+	@Test
+	void removeVotedTest_Failure(){
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, testGroup1);
+
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+
+		Voted v1 = new Voted(u1, p1);
+		
+		testGroup1.addNewPost(p1);
+		boolean actual = u1.removeVoted(v1);
+
+		assertEquals(false, actual);
+	}
+	
+	@Test
+	void getVotedTest_Success(){
+		Group testGroup1 = new Group("MembersTest");
+		
+		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, testGroup1);
+
+		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
+
+		
+		Voted v1 = new Voted(u1, p1);
+		
+		testGroup1.addNewPost(p1);
+		u1.addVoted(v1);
+		
+		ArrayList<Voted> expected = new ArrayList<>();
+		expected.add(v1);
+
+		assertEquals(expected, u1.getVotedList());
+	}
 	
 	@Test 
 	void testCompareTo_Success() {
