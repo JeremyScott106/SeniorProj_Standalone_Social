@@ -299,6 +299,15 @@ public class SystemManager {
 	public void removeResponseToPost(Post p, Response r) {
 		if(p.getResponse().contains(r)){
 			p.removeResponse(r);
+			
+			if (writable) {
+				try {
+					WriteFile.removeResponseFromFile(r, fileNames.get(6));
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
