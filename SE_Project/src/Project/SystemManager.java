@@ -89,7 +89,7 @@ public class SystemManager {
 		}
 	}
 
-	//test:2
+    //test:2
 	// allows the user to be registered
 	public boolean registerUser(String name, String bday, String city,
 								String state, String username, String password) {
@@ -104,6 +104,14 @@ public class SystemManager {
 
 				u = new User(name, username, password, bday, city, state);	//create new User	NOTICE: this will have to be updated once User class is updated
 				users.add(u);			//add new user
+				if (writable) {			//If there is a file to write to
+					try {					//Try adding the user to the UserFile
+						WriteFile.addUserToFile(u, fileNames.get(1));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 
 			return true;				//return true
 			}
