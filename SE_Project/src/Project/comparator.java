@@ -24,7 +24,7 @@ class SortGroupsByName implements Comparator<Group> {
 
 }
 
-//test:2
+//test:1
 class SortUsersByName implements Comparator<User> {
 
 	@Override
@@ -35,7 +35,7 @@ class SortUsersByName implements Comparator<User> {
 
 }
 
-//test:2
+//test:1
 class SortUsersByUsername implements Comparator<User> {
 	
 	@Override
