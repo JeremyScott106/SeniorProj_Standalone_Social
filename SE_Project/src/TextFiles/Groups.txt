@@ -2,14 +2,14 @@
 @GROUP
 @NAME=Football
 @CATEGORY=Sports
-@POSTID=1
+@POSTID=8
 @END
 
 @START
 @GROUP
 @NAME=Soccer
 @CATEGORY=Sports
-@POSTID=0
+@POSTID=7
 @END
 
 @START
@@ -37,14 +37,14 @@
 @GROUP
 @NAME=Comics
 @CATEGORY=Interest
-@POSTID=2
+@POSTID=3
 @END
 
 @START
 @GROUP
 @NAME=Photography
 @CATEGORY=Create
-@POSTID=0
+@POSTID=1
 @END
 
 @START
@@ -93,7 +93,7 @@
 @GROUP
 @NAME=Tires Are The Enemy
 @CATEGORY=Auto
-@POSTID=1
+@POSTID=2
 @END
 
 @START

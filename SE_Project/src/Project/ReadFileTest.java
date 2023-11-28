@@ -914,6 +914,7 @@ class ReadFileTest {
 	}
 	
 	
+
 	
 	@Test
 	void testReadFile_Membership_Success() {
@@ -980,6 +981,68 @@ class ReadFileTest {
 			fail();
 		}
 		catch (IncorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
+
+
+	@Test
+	void testReadFile_Banned_Success() {
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		//Create Groups
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+		//Create Banned
+		Banned b1 = new Banned(u1, g1);
+		Banned b2 = new Banned(u2, g1);
+		Banned b3 = new Banned(u3, g1);
+		Banned b4 = new Banned(u4, g2);
+		Banned b5 = new Banned(u5, g2);
+		
+		ArrayList<Banned> expected = new ArrayList<Banned>();
+		
+		expected.add(b5);
+		expected.add(b1);
+		expected.add(b4);
+		expected.add(b2);
+		expected.add(b3);
+		
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_Banned.txt");
+		
+		SystemManager manager = new SystemManager();
+		
+		
+		try {
+			
+			ReadFile.readFile(manager, fileNames);
+			
+			ArrayList<Banned> actual = manager.getAllBans_ByUsername();
+			
+			boolean namesMatch = true;
+			
+			for (int i = 0; i < actual.size() ; i++) {
+				
+				if (expected.get(i).compareTo(actual.get(i)) == 0) {
+					System.out.println(expected.get(i).getUser().getId() + ", " + actual.get(i).getUser().getId());
+					namesMatch = false;
+					
+				}
+								
+			}
+			
+			assertEquals(true, namesMatch);
+			
+		} 
+		catch (FileNotFoundException | IncorrectFileFormatException e) {
 			e.printStackTrace();
 			fail();
 		}
