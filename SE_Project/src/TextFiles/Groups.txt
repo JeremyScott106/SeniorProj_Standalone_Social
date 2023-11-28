@@ -2,14 +2,14 @@
 @GROUP
 @NAME=Football
 @CATEGORY=Sports
-@POSTID=1
+@POSTID=6
 @END
 
 @START
 @GROUP
 @NAME=Soccer
 @CATEGORY=Sports
-@POSTID=0
+@POSTID=7
 @END
 
 @START

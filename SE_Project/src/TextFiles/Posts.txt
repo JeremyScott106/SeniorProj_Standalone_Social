@@ -98,3 +98,25 @@
 @SCORE=0
 @END
 
+@START
+@POST
+@USERNAME=test
+@GNAME=Football
+@DATETIME=11/28/2023 11:21 AM
+@TITLE=post test
+@BODY=testing
+@PSTID=4
+@SCORE=0
+@END
+
+@START
+@POST
+@USERNAME=unth!nk@b1e
+@GNAME=Football
+@DATETIME=11/28/2023 11:23 AM
+@TITLE=Test
+@BODY=Testing test
+@PSTID=5
+@SCORE=0
+@END
+

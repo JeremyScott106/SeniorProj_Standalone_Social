@@ -68,18 +68,6 @@ public class SystemManager {
 	}
 	
     //test:2
-	// add an user
-	public boolean addUser(User u) {
-		if (Validator.validateUserExists(u, users)) {
-			return false;
-		}
-		else {
-			users.add(u);
-			return true;
-		}
-	}
-
-    //test:2
 	// adds an admin
 	public boolean addAdmin(Admin a) {	
 		if (Validator.validateAdminExists(a, admins)) {
@@ -92,6 +80,18 @@ public class SystemManager {
 	}
 
 	//test:2
+	// add an user
+	public boolean addUser(User u) {
+		if (Validator.validateUserExists(u, users)) {
+			return false;
+		}
+		else {
+			users.add(u);
+			return true;
+		}
+	}
+
+    //test:2
 	// allows the user to be registered
 	public boolean registerUser(String name, String bday, String city,
 								String state, String username, String password) {
@@ -662,6 +662,11 @@ public class SystemManager {
 	 // uses the Validator class to sort the user by username
 	 public User getUserByUsername(String username) {
 		 return Validator.getUserFromUsername(users, username);
+	 }
+	 
+	 //FIXME: needs tests
+	 public User getAdminByUsername(String username) {
+		 return Validator.getAdminFromUsername(admins, username);
 	 }
 	 
 	 //test:1

@@ -539,6 +539,9 @@ public class ReadFile {
 		if (gotUserName && gotGroupName && gotRegDate) {
 			
 			User u = manager.getUserByUsername(userName);
+			if (u == null) {
+				u = manager.getAdminByUsername(userName);
+			}
 			Group g = manager.getGroupByName(groupName);
 			
 			if (!(u == null) && !(g == null)) {
