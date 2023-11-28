@@ -56,6 +56,9 @@ public class ReadFile {
 					else if (line.equals("@RESPONSE") && currentlyReadingData) {//If current line rules next data set to be a Response
 						readResponse(manager, reader);								//go read the data in the Response
 					}
+					else if (line.equals("@BANNED") && currentlyReadingData) {
+						readBanned(manager, reader);
+					}
 					else if (line.equals("")) {									//If the current line is empty
 						continue;													//continue to next line
 					}
@@ -712,7 +715,7 @@ public class ReadFile {
 	}
 	
 	
-private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+	private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String userName = "";				//username of the User
 		boolean gotUserName = false;			//Set to true once username has been Read
@@ -841,6 +844,77 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 		
 	}
 	
+
+
+	private static void readBanned(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String userName = "";
+		boolean gotUserName = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			
+			if (sub.equals("@USER")) {
+				if (gotUserName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					userName = line.substring(6);
+					gotUserName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		
+		if (gotUserName && gotGroupName) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			
+			if (!(g == null) && !(u == null)) {
+				
+				Banned b = new Banned(u, g);
+				g.addBanned(b);
+				
+			}
+			
+		}
+		
+		
+	}
 	
 }
 
