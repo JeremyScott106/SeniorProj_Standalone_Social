@@ -775,7 +775,7 @@ public class SystemManager {
 	
 	//test:2
 	 public boolean upvote(Voted v) {
-		 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
+		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 return false;
 		 }
 		 else {
@@ -788,7 +788,7 @@ public class SystemManager {
 	 
 	 //test:2
 	 public boolean downvote(Voted v) {
-		 if (Validator.validateVotedExists(v, getAllVotes()) == true) {
+		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 return false;
 		 }
 		 else {
