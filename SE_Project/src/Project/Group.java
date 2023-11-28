@@ -28,6 +28,8 @@ public class Group implements Comparable<Group> {
         this.memberships = new ArrayList<>();
         this.posts = new ArrayList<>();
         this.postId = postId;
+        this.bans = new ArrayList<Banned>();
+        this.suspensions = new ArrayList<Suspended>();
     }
     
     //FIXME: add tests
@@ -111,9 +113,23 @@ public class Group implements Comparable<Group> {
 
     }
 
+
     //Adds a new post to the group
-	//test:2
-    public boolean addPost(Post p) {
+    public boolean addExistingPost(Post p) {
+        
+    	if (p.getId() >= this.postId) {
+    		return false;
+    	}
+    	else {
+    		this.posts.add(p);
+    		return true;
+    	}
+    	
+    }
+    
+  //Adds a new post to the group
+    public boolean addNewPost(Post p) {
+
         boolean isMember = false;
         for (Post p1 : posts) {
             if (p1.equals(p)) {

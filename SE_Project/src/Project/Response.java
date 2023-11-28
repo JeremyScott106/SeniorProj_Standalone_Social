@@ -12,8 +12,8 @@ public class Response extends Post{
 		this.parentalId = parentalId;
 	}
 	
-	public Response(User u, Group g, String date, String responseBody, int parentalId) {
-		super(u, g, date, "", responseBody, parentalId);
+	public Response(User u, Group g, String date, String responseBody, int parentalId, int score) {
+		super(u, g, date, "", responseBody, parentalId, score);
 		this.parentalId = parentalId;
 	}
 	
@@ -25,7 +25,7 @@ public class Response extends Post{
 
 	
 	public String getResponseWriteData() {
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
 		
 		String responseData = "@START\n" + 
@@ -35,6 +35,7 @@ public class Response extends Post{
 				"@DATETIME=" + date + "\n" + 
 				"@BODY=" + postBody + "\n" + 
 				"@PARENTALID=" + parentalId + "\n" +
+				"@SCORE=" + score + "\n" +
 				"@END\n\n";
 		
 		return responseData;

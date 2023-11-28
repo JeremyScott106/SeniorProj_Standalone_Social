@@ -169,11 +169,11 @@ class ComparatorTest {
 
 		ArrayList<Suspended> expected = new ArrayList<Suspended>();
 		
-		expected.add(s3);
-		expected.add(s2);
-		expected.add(s4);
 		expected.add(s5);
 		expected.add(s1);
+		expected.add(s4);
+		expected.add(s2);
+		expected.add(s3);
 		
 		ArrayList<Suspended> actual = new ArrayList<Suspended>();
 		actual.add(s1);
@@ -239,11 +239,12 @@ class ComparatorTest {
 
 		ArrayList<Banned> expected = new ArrayList<Banned>();
 		
-		expected.add(b3);
-		expected.add(b2);
-		expected.add(b4);
 		expected.add(b5);
 		expected.add(b1);
+		expected.add(b4);
+		expected.add(b2);
+		expected.add(b3);
+		
 		
 		ArrayList<Banned> actual = new ArrayList<Banned>();
 		actual.add(b1);

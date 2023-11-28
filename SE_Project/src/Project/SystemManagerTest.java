@@ -492,8 +492,8 @@ class SystemManagerTest {
 		sm.addUser(u5);
 		c1.addGroup(g1);
 		g1.addMember(m);
-		g1.addPost(p1);
-		g1.addPost(p2);
+		g1.addNewPost(p1);
+		g1.addNewPost(p2);
 		
 		ArrayList<Post> actual = g1.getPost();
 		
@@ -522,8 +522,8 @@ class SystemManagerTest {
 		sm.addUser(u5);
 		c1.addGroup(g1);
 		g1.addMember(m);
-		g1.addPost(p1);
-		g1.addPost(p2);
+		g1.addNewPost(p1);
+		g1.addNewPost(p2);
 		sm.deleteNewPost(p1);
 
 				
@@ -557,8 +557,8 @@ class SystemManagerTest {
 		sm.addCategory(c1);
 		c1.addGroup(g1);
 		g1.addMember(m);
-		g1.addPost(p1);
-		g1.addPost(p2);
+		g1.addNewPost(p1);
+		g1.addNewPost(p2);
 		sm.removeResponseToPost(p1, r1);
 
 				
@@ -808,7 +808,7 @@ class SystemManagerTest {
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addMember(m);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		sm.addUser(testUser);
 		
 		testPost1.addResponse(r1);
@@ -836,7 +836,7 @@ class SystemManagerTest {
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addMember(m);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		sm.addUser(testUser);
 		
 		testPost1.addResponse(r1);
@@ -864,7 +864,7 @@ class SystemManagerTest {
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addMember(m);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		sm.addUser(testUser);	
 		
 		testPost1.addResponse(r1);
@@ -890,7 +890,7 @@ class SystemManagerTest {
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addMember(m);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		sm.addUser(testUser);	
 		
 		testPost1.addResponse(r1);
@@ -917,7 +917,7 @@ class SystemManagerTest {
 		sm.addCategory(c);
 		c.addGroup(testGroup);
 		testGroup.addMember(m);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		sm.addUser(testUser);
 		
 		testPost1.addResponse(r1);
@@ -1544,11 +1544,11 @@ class SystemManagerTest {
 		
 		ArrayList<Suspended> expected = new ArrayList<>();
 		
-		expected.add(s3);
-		expected.add(s2);
-		expected.add(s4);
 		expected.add(s5);
 		expected.add(s1);
+		expected.add(s4);
+		expected.add(s2);
+		expected.add(s3);
 
 		ArrayList<Suspended> actual = sm.getAllSuspensions_ByUsername();
 
@@ -1722,11 +1722,11 @@ class SystemManagerTest {
 		
 		ArrayList<Banned> expected = new ArrayList<>();
 		
-		expected.add(s3);
-		expected.add(s2);
-		expected.add(s4);
 		expected.add(s5);
 		expected.add(s1);
+		expected.add(s4);
+		expected.add(s2);
+		expected.add(s3);
 
 		ArrayList<Banned> actual = sm.getAllBans_ByUsername();
 
@@ -1780,7 +1780,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
 		sm.flagResponse(testResponse1);
@@ -1833,7 +1833,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		
 		sm.flagPost(testPost1);
 		
@@ -1861,7 +1861,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
 		sm.flagResponse(testResponse1);
@@ -1891,8 +1891,8 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
-		testGroup.addPost(testPost2);
+		testGroup.addNewPost(testPost1);
+		testGroup.addNewPost(testPost2);
 		
 		sm.flagPost(testPost1);
 		sm.flagPost(testPost2);
@@ -1924,7 +1924,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		testPost1.addResponse(testResponse2);
 
@@ -1960,7 +1960,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
 		sm.upvote(v);
@@ -1985,7 +1985,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
 		sm.upvote(v);
@@ -2010,7 +2010,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
 		sm.downvote(v);
@@ -2035,7 +2035,7 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
+		testGroup.addNewPost(testPost1);
 		testPost1.addResponse(testResponse1);
 		
 		sm.downvote(v);
@@ -2061,9 +2061,9 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
-		testGroup.addPost(testPost2);
-		testGroup.addPost(testPost3);
+		testGroup.addNewPost(testPost1);
+		testGroup.addNewPost(testPost2);
+		testGroup.addNewPost(testPost3);
 
 		testPost1.addResponse(testResponse1);
 		
@@ -2074,12 +2074,14 @@ class SystemManagerTest {
 		Voted v5 = new Voted(testUser, testPost2);
 		Voted v6 = new Voted(testUser, testPost3);
 		
+
 		sm.upvote(v1);
 		sm.upvote(v2);
 		sm.upvote(v3);
 		sm.upvote(v4);
 		sm.upvote(v5);
 		sm.upvote(v6);
+
 
 		ArrayList<Post> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -2121,9 +2123,9 @@ class SystemManagerTest {
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
-		testGroup.addPost(testPost1);
-		testGroup.addPost(testPost2);
-		testGroup.addPost(testPost3);
+		testGroup.addNewPost(testPost1);
+		testGroup.addNewPost(testPost2);
+		testGroup.addNewPost(testPost3);
 
 		testPost2.addResponse(testResponse1);
 		

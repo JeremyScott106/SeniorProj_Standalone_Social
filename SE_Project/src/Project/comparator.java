@@ -55,7 +55,7 @@ class SortSuspensionsByUsername implements Comparator<Suspended> {
     	User u1 = s1.getUser();
     	User u2 = s2.getUser();
 
-    	return u1.getName().compareTo(u2.getName());
+    	return u1.getId().toUpperCase().compareTo(u2.getId().toUpperCase());
     }
 }
 
@@ -78,7 +78,7 @@ class SortBannedByUsername implements Comparator<Banned> {
     	User u1 = b1.getUser();
     	User u2 = b2.getUser();
 
-    	return u1.getName().compareTo(u2.getName());
+    	return u1.getId().toUpperCase().compareTo(u2.getId().toUpperCase());
     }
 }
 

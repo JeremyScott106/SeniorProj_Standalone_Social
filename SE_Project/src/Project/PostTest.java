@@ -18,13 +18,8 @@ public class PostTest {
 	void getGroupTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 
 		assertEquals(testGroup, testPost1.getGroup());
@@ -35,13 +30,8 @@ public class PostTest {
 	void getUserTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		assertEquals(testUser, testPost1.getUser());
@@ -52,13 +42,8 @@ public class PostTest {
 	void getPostBodyTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 
 
@@ -70,13 +55,8 @@ public class PostTest {
 	void getPostTitleTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 
 
@@ -154,13 +134,8 @@ public class PostTest {
 	void getScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
 		assertEquals(0, testPost1.getScore());
@@ -202,19 +177,43 @@ public class PostTest {
 	void subScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		testPost1.subScore();
 		
 		assertEquals(-1, testPost1.getScore());
 	}
 	
+
+	
+	
+	@Test
+	void testGetPostWriteData() {
+		
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+
+		Post testPost1 = new Post (testUser, testGroup, "10/10/2022 12:27 PM", "I'm posting.", "This is the message", 1, 2);
+		
+		String actual = testPost1.getPostWriteData();
+		
+		String expected = "@START\n" + 
+							"@POST\n" + 
+							"@USERNAME=ID\n" + 
+							"@GNAME=Standard Name\n" + 
+							"@DATETIME=10/10/2022 12:27 PM\n" + 
+							"@TITLE=I'm posting.\n" + 
+							"@BODY=This is the message\n" + 
+							"@PSTID=1\n" + 
+							"@SCORE=2\n" + 
+							"@END\n\n";
+		
+		assertEquals(expected, actual);
+		
+	}
+	
+
 	//Testing addResponse//
 	@Test
 	void addResponseTest() {
@@ -313,6 +312,7 @@ public class PostTest {
 		testPost1.addScore();
 		
 		assertEquals(3, testPost1.getTotalScore());
+
 	}
 	
 	@Test

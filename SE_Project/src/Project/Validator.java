@@ -164,6 +164,20 @@ public class Validator {
 		return u;
 	}
 	
+	//FIXME: needs tests
+	public static User getAdminFromUsername(ArrayList<Admin> admins, String username) {
+		
+		Admin a = null;
+		
+		for (Admin a1 : admins) {
+			
+			if (a1.compareId(username)) {
+				a = a1;
+			}
+		}
+		return a;
+	}
+	
 	//test:2
 	// returns true if the membership exists and returns false otherwise
 	public static boolean validateMemberExistsInGroup(membership m, ArrayList<membership> memberships) {
