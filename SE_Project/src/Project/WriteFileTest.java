@@ -470,6 +470,72 @@ class WriteFileTest {
 		assertEquals(expected, actual);
 
 	}
+	void testWriteFile_Banned() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		Banned b1 = new Banned(u1, g1);
+		Banned b2 = new Banned(u2, g1);
+		Banned b3 = new Banned(u3, g1);
+		Banned b4 = new Banned(u4, g2);
+		Banned b5 = new Banned(u5, g2);
+
+		g1.addBanned(b1);
+		g1.addBanned(b2);
+		g1.addBanned(b3);
+		g2.addBanned(b4);
+		g2.addBanned(b5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Banned.txt");
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+		
+		String expected = "";
+		
+		for (Banned b : manager.getAllBans_ByUsername()) {
+			
+			expected += b.getBannedWriteData();
+			
+		}
+		
+		assertEquals(expected, actual);
+		
+		
+
+	}
 	
 	
 	
@@ -934,6 +1000,77 @@ class WriteFileTest {
 	}
 	
 	
+	@Test
+	void testAddBannedToFile() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		Banned b1 = new Banned(u1, g1);
+		Banned b2 = new Banned(u2, g1);
+		Banned b3 = new Banned(u3, g1);
+		Banned b4 = new Banned(u4, g2);
+		Banned b5 = new Banned(u5, g2);
+
+		g1.addBanned(b1);
+		g1.addBanned(b2);
+		g1.addBanned(b3);
+		g2.addBanned(b4);
+		g2.addBanned(b5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddBanned.txt");
+		
+		Banned test = new Banned(u1, g2);
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+			WriteFile.addBannedToFile(test, fileNames.get(0));
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+		
+		String expected = "";
+		
+		for (Banned b : manager.getAllBans_ByUsername()) {
+			
+			expected += b.getBannedWriteData();
+			
+		}
+		expected += test.getBannedWriteData();
+		
+		assertEquals(expected, actual);
+	}
+	
+	
 	
 	
 	@Test
@@ -1232,7 +1369,150 @@ class WriteFileTest {
 	
 	
 	@Test
+	void testRemoveMembershipFromFile() {
+		
+		SystemManager manager = new SystemManager();
 
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g2);
+		membership m5 = new membership(u5, g2);
+
+		g1.addMember(m1);
+		g1.addMember(m2);
+		g1.addMember(m3);
+		g2.addMember(m4);
+		g2.addMember(m5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_RemoveMembership.txt");
+		
+
+		try {
+
+			WriteFile.writeFile(manager, fileNames);
+			
+			WriteFile.removeMembershipFromFile(m4, fileNames.get(0));
+			manager.leaveGroup(u4, g2);
+
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+
+		String expected = "";
+
+		for (membership m : manager.getAllMemberships()) {
+
+			expected += m.getMembershipWriteData();
+
+		}
+
+		assertEquals(expected, actual);
+
+	}
+	
+	
+	@Test
+	void testRemoveBannedFromFile() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		Banned b1 = new Banned(u1, g1);
+		Banned b2 = new Banned(u2, g1);
+		Banned b3 = new Banned(u3, g1);
+		Banned b4 = new Banned(u4, g2);
+		Banned b5 = new Banned(u5, g2);
+
+		g1.addBanned(b1);
+		g1.addBanned(b2);
+		g1.addBanned(b3);
+		g2.addBanned(b4);
+		g2.addBanned(b5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_AddBanned.txt");
+		
+		
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+			WriteFile.removeBannedFromFile(b5, fileNames.get(0));
+			g2.getBanned().remove(b5);
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+		
+		String expected = "";
+		
+		for (Banned b : manager.getAllBans_ByUsername()) {
+			
+			expected += b.getBannedWriteData();
+			
+		}
+		
+		assertEquals(expected, actual);
+		
+		
+	}
+	
+	
+	
+	
+	@Test
 	void testUpdateGroupInFile() {
 
 		
@@ -1266,6 +1546,12 @@ class WriteFileTest {
 		g1.addMember(m3);
 		g2.addMember(m4);
 		g2.addMember(m5);
+		
+		g1.addNewPost(p1);
+		g1.addNewPost(p2);
+		g1.addNewPost(p3);
+		g2.addNewPost(p4);
+		g2.addNewPost(p5);
 
 		c1.addGroup(g1);
 		c1.addGroup(g2);

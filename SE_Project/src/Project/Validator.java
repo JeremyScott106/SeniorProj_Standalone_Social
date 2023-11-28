@@ -164,6 +164,20 @@ public class Validator {
 		return u;
 	}
 	
+	//FIXME: needs tests
+	public static User getAdminFromUsername(ArrayList<Admin> admins, String username) {
+		
+		Admin a = null;
+		
+		for (Admin a1 : admins) {
+			
+			if (a1.compareId(username)) {
+				a = a1;
+			}
+		}
+		return a;
+	}
+	
 	//test:2
 	// returns true if the membership exists and returns false otherwise
 	public static boolean validateMemberExistsInGroup(membership m, ArrayList<membership> memberships) {
@@ -205,7 +219,7 @@ public class Validator {
 		return false;
 	}
 
-	//FIXME: add tests
+	//test:2
 	public static Post getPostFromId(ArrayList<Post> posts, int id) {
 		
 		for (Post p : posts) {
@@ -215,6 +229,16 @@ public class Validator {
 		}
 		return null;
 		
+	}
+	
+	//test:2
+	public static boolean validateVotedExists(Voted v, ArrayList<Voted> votes) {
+		for (Voted v1 : votes) {
+			if (v.compareTo(v1) == true) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

@@ -46,6 +46,9 @@ public class WriteFile {
 				else if (fileName.contains("Response")) {
 					writeResponses(manager, writer);
 				}
+				else if (fileName.contains("Ban")) {
+					writeBanned(manager, writer);
+				}
 				
 				
 				writer.close();
@@ -148,6 +151,7 @@ public class WriteFile {
 
 	}
 	
+
 	private static void writeResponses(SystemManager manager, FileWriter writer) throws IOException {
 		
 		for (Post p : manager.getAllPost()) {
@@ -168,6 +172,23 @@ public class WriteFile {
 	
 	
 	
+
+	//test:1
+	private static void writeBanned(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Banned> bans = manager.getAllBans_ByUsername();
+		
+		for (Banned b : bans) {
+			
+			String banData = b.getBannedWriteData();
+			
+			writer.write(banData);
+			
+		}
+		
+	}
+		
+		
 	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
@@ -320,7 +341,27 @@ public class WriteFile {
 		}
 		catch (IOException e) {
 			throw e;
+		}
+	}
 
+	//test:1
+	public static void addBannedToFile(Banned b, String filename) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(filename);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = b.getBannedWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
 		}
 		
 	}
@@ -465,6 +506,41 @@ public class WriteFile {
 	}
 	
 	
+	
+	public static void removeMembershipFromFile(membership m, String fileName) throws IOException {
+		
+		String find = m.getMembershipWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
 
 	public static void removePostFromFile(Post p, String fileName) throws IOException {
 		
@@ -534,6 +610,41 @@ public class WriteFile {
 	}
 	
 	
+	//test:1
+	public static void removeBannedFromFile(Banned b, String filename) throws IOException {
+		
+		String find = b.getBannedWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(filename);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
 	
 	
 	public static void updateGroupinFile(String find, String replace, String fileName) throws IOException {
@@ -551,8 +662,6 @@ public class WriteFile {
 				while ((s = br.readLine()) != null) {
 
 					totalStr += s + "\n";
-
-				    totalStr += s + "\n";
 
 				}
 			}
