@@ -120,3 +120,25 @@
 @SCORE=0
 @END
 
+@START
+@POST
+@USERNAME=unth!nk@b1e
+@GNAME=Football
+@DATETIME=11/28/2023 11:39 AM
+@TITLE=test2
+@BODY=tests
+@PSTID=6
+@SCORE=0
+@END
+
+@START
+@POST
+@USERNAME=unth!nk@b1e
+@GNAME=Football
+@DATETIME=11/28/2023 11:39 AM
+@TITLE=test3
+@BODY=testtest
+@PSTID=7
+@SCORE=0
+@END
+

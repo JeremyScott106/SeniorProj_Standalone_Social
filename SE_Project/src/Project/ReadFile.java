@@ -677,6 +677,9 @@ public class ReadFile {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
+			if (u == null) {
+				u = manager.getAdminByUsername(userName);
+			}
 			int id = Integer.parseInt(postId);
 			int score = Integer.parseInt(scoreStr);
 			if (g != null && u != null) {
@@ -796,6 +799,9 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
+			if (u == null) {
+				u = manager.getAdminByUsername(userName);
+			}
 			int id = Integer.parseInt(parentalId);
 			int score = Integer.parseInt(scoreStr);
 			Post p = manager.getPostByGroupId(g, id);
