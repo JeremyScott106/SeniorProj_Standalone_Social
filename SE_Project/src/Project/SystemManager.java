@@ -16,6 +16,8 @@ public class SystemManager {
 	private category currentCategory;
 	private Group currentGroup;
 	private Post currentPost;
+	
+	private boolean writable;
 
 	private ArrayList<User> users;
 	private ArrayList<Admin> admins;
@@ -28,7 +30,7 @@ public class SystemManager {
 		users = new ArrayList<User>();
 		admins = new ArrayList<Admin>();		
 		categories = new ArrayList<category>();
-
+		this.writable = false;
 	}
 	
     //test:1
@@ -40,6 +42,7 @@ public class SystemManager {
 		this.admins = new ArrayList<Admin>();
 		this.categories = new ArrayList<category>();
 		this.fileNames = fileNames;
+		this.writable = true;
 		
 		try {
 			ReadFile.readFile(this, fileNames);
@@ -112,13 +115,39 @@ public class SystemManager {
 	// allows a user to join a group
 	public boolean joinGroup(User user, Group group) {
 		membership m = new membership(user, group);
-		return (group.addMember(m));
+		boolean joined = group.addMember(m);
+		
+		if (writable && joined) {
+			try {
+				WriteFile.addMembershipToFile(m, fileNames.get(4));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	// allows a user to leave a group
 	public boolean leaveGroup(User user, Group group) {
 		membership m = group.getMembership(user.getId());
-		return (group.removeMember(m));
+		boolean left = group.removeMember(m);
+		
+		if (writable && left) {
+			try {
+				WriteFile.removeMembershipFromFile(m, fileNames.get(4));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
     //test:2
@@ -142,6 +171,14 @@ public class SystemManager {
 		else {
 			category c = new category(name);	//else, create new category	NOTICE: This may require more variables as the Category class is updated
 			categories.add(c);			//add category
+			if (writable) {		//If there is a file to write to
+				try {				//Try adding the new category
+					WriteFile.addCategoryToFile(c, fileNames.get(2));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			return true;				//return true
 		}
 	}
@@ -154,7 +191,25 @@ public class SystemManager {
 			return false;				//return false
 		}
 		else {							//If validator returned a category
-			return c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
+			
+			if (!Validator.validateGroupNameExists(c.getGroupsAlphabetically(), groupName)) {
+			
+				c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
+				if (writable) {					//If there is a file to write to
+					Group g = Validator.getGroupFromName(c.getGroupsAlphabetically(), groupName);	//Get the group
+					try {							//Try adding the group to the file
+						WriteFile.addGroupToFile(g, fileNames.get(3), categoryName);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return true;
+				
+			}
+			else {
+				return false;
+			}
 		}
 	}
 	
@@ -197,12 +252,29 @@ public class SystemManager {
 	}
 	//test:1
 	// allows a post to be created
-	//FIXME : Add Unit Tests
+	//FIXME : Add Unit Tests, needs to verify membership exists between User and Group
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
+		String find = group.getGroupWriteData(currentCategory.getName());
+		
 		membership m = getMembership(group, currentUser);
 		int id = group.getPostId();
 		Post p = new Post(m, postTitle, postBody, id);
-		return(group.addNewPost(p));
+		group.addNewPost(p);
+		
+		if (writable) {
+			try {
+				WriteFile.addPostToFile(p, fileNames.get(5));
+				
+				String replace = group.getGroupWriteData(currentCategory.getName());
+				WriteFile.updateGroupinFile(find, replace, fileNames.get(3));
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
 	}
 	
 	//test:1
