@@ -91,7 +91,7 @@ public class SuspendedTest {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s = new Suspended(u, testGroup1, "01/12/2012");
+		Suspended s = new Suspended(u, testGroup1, "01/12/2012 8:20 pm");
 				
 		String actual = s.getSuspendedWriteData();
 		
@@ -112,12 +112,12 @@ public class SuspendedTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 20:20");
+		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
 		
 		User u2 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup2 = new Group("Standard Name");
 		
-		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 20:20");
+		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 8:20 pm");
 
 			
 		int actual = s1.compareTo(s2);
@@ -131,12 +131,12 @@ public class SuspendedTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 20:20");
+		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
 		
 		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup2 = new Group("Standard Name");
 		
-		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 20:20");
+		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 8:20 pm");
 		
 		int actual = s1.compareTo(s2);
 		
@@ -149,12 +149,12 @@ public class SuspendedTest {
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup1 = new Group("Standard Name");
 		
-		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 20:20");
-		
+		Suspended s1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
+
 		User u2 = new User("Jack", "test", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
 		Group testGroup2 = new Group("Test");
 		
-		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 20:20");
+		Suspended s2 = new Suspended(u2, testGroup2, "01/12/2012 8:20 pm");
 		
 		int actual = s1.compareTo(s2);
 		
