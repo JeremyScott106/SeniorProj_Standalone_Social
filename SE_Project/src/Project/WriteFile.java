@@ -418,6 +418,41 @@ try {
 	}
 	
 	
+	
+	public static void removeMembershipFromFile(membership m, String fileName) throws IOException {
+		
+		String find = m.getMembershipWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
 
 	public static void removePostFromFile(Post p, String fileName) throws IOException {
 		
@@ -470,8 +505,6 @@ try {
 				while ((s = br.readLine()) != null) {
 
 					totalStr += s + "\n";
-
-				    totalStr += s + "\n";
 
 				}
 			}

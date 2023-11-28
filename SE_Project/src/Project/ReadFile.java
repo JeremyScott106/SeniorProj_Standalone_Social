@@ -544,8 +544,13 @@ public class ReadFile {
 		
 		if (gotUserName && gotGroupName && gotRegDate) {	//If the User ID, Group Name, and Registration Date was Read
 			
-			User u = manager.getUserByUsername(userName);		//Get the User from the Manager
-			Group g = manager.getGroupByName(groupName);		//Get the Group from the Manager
+
+			User u = manager.getUserByUsername(userName);
+			if (u == null) {
+				u = manager.getAdminByUsername(userName);
+			}
+			Group g = manager.getGroupByName(groupName);
+
 			
 			if (!(u == null) && !(g == null)) {					//If both the USer and Group Exists
 			
@@ -681,12 +686,15 @@ public class ReadFile {
 		//If all the needed Data was Read
 		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore) {
 			
-			Group g = manager.getGroupByName(groupName);	//Get the Group by Name
-			User u = manager.getUserByUsername(userName);	//Get the User by username
-			int id = Integer.parseInt(postId);				//Parse the PostID
-			int score = Integer.parseInt(scoreStr);			//Parse the Score
-			
-			if (g != null && u != null) {						//If the Group and User both Exist
+
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			if (u == null) {
+				u = manager.getAdminByUsername(userName);
+			}
+			int id = Integer.parseInt(postId);
+			int score = Integer.parseInt(scoreStr);
+			if (g != null && u != null) {
 				
 				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score);	//Create the Post
 
@@ -809,13 +817,15 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 		//If all the needed data was Read
 		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore) {
 			
-			Group g = manager.getGroupByName(groupName);	//Get the Group by Name
-			User u = manager.getUserByUsername(userName);	//get the User by username
-			int id = Integer.parseInt(parentalId);			//Parse the parentalID
-			int score = Integer.parseInt(scoreStr);			//Parse the Score
-			Post p = manager.getPostByGroupId(g, id);		//Get the Post by ID from the Group
-			
-			if (g != null && u != null && p != null) {		//If the Group, User, and Post all Exist
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			if (u == null) {
+				u = manager.getAdminByUsername(userName);
+			}
+			int id = Integer.parseInt(parentalId);
+			int score = Integer.parseInt(scoreStr);
+			Post p = manager.getPostByGroupId(g, id);
+			if (g != null && u != null && p != null) {
 				
 				Response r = new Response(u, g, dateTime, responseBody, id, score);	//Create the Response
 				p.addResponse(r);													//Add the Response to the Post
