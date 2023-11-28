@@ -17,19 +17,19 @@ public class Suspended implements Comparable<Suspended> {
 	private Date expiredSuspensionDate;
 
 	//test:1
-    public Suspended(User user, Group group, String suspensionDate) {
+    public Suspended(User user, Group group, String suspensionDate, String expiredSuspensionDate) {
         this.user = user;
         this.group = group;
         
 		try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 			this.suspensionDate = df.parse(suspensionDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		try {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
-			Date parsedExpiredDate = df.parse(suspensionDate);
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+			Date parsedExpiredDate = df.parse(expiredSuspensionDate);
 
             // Adding 5 minutes to the expiredSuspensionDate
             Calendar cal = Calendar.getInstance();

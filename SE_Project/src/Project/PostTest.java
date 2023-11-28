@@ -63,48 +63,6 @@ public class PostTest {
 		assertEquals("I'm posting.", testPost1.getPostTitle());
 	}
 	
-	//Test to getting the original Post Title
-	@Test
-	void getPostIdTest() {
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		membership m = new membership(testUser, testGroup);
-
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
-
-
-		assertEquals(1, testPost1.getId());
-	}
-	
-	//Test to getting the original Post Title
-	@Test
-	void getResponseTest() {
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		ArrayList<Response> r = new ArrayList<>();
-		membership m = new membership(testUser, testGroup);
-
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
-		r.add(r1);
-		r.add(r2);
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
-		
-		testPost1.addResponse(r1);
-		testPost1.addResponse(r2);
-		
-		ArrayList<Response> expected = new ArrayList<>();
-		expected.add(r1);
-		expected.add(r2);
-
-		assertEquals(expected, testPost1.getResponse());
-	}
-	
 	//Tests getting the response
 	@Test
 	void getResponse() {
@@ -299,7 +257,7 @@ public class PostTest {
 	
 	//Tests adding total score
 	@Test
-	void getTotalScoreTest_Success() {
+	void getTotalScoreTest() {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
@@ -313,28 +271,6 @@ public class PostTest {
 		
 		assertEquals(3, testPost1.getTotalScore());
 
-	}
-	
-	@Test
-	void compareToTest_Success() {
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		membership m = new membership(testUser, testGroup);
-
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
-		
-		assertEquals(1,  testPost1.compareTo(testPost1));
-	}
-	
-	@Test
-	void compareToTest_Failure() {
-		Group testGroup = new Group("Standard Name");
-		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		membership m = new membership(testUser, testGroup);
-		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
-		Post testPost2 = new Post (m, "I'm postjhhging.", "This is the message", 2);
-		
-		assertEquals(0, testPost1.compareTo(testPost2));
 	}
 	
 }

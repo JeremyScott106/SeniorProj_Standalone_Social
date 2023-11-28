@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class User implements Comparable<User> {
@@ -18,7 +17,7 @@ public class User implements Comparable<User> {
 	protected String state;
 	protected String password;
 	protected Date registeredDate;
-	protected ArrayList<Voted> votes;
+	protected Map<String, Integer> groupMemberships;
 
 	//test:1
 	//Constructor is intended to be used for adding new Users
@@ -36,7 +35,7 @@ public class User implements Comparable<User> {
 		this.city = city;
 		this.state = state;
 		registeredDate = new Date();
-		this.votes = new ArrayList<>();
+        groupMemberships = new HashMap<>();
 	}
 	
 	//test:1
@@ -60,7 +59,7 @@ public class User implements Comparable<User> {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		this.votes = new ArrayList<>();
+        groupMemberships = new HashMap<>();
 	}
 
 
@@ -102,44 +101,9 @@ public class User implements Comparable<User> {
 	public Date getRegisteredDate() {
 		return registeredDate;
 	}
-	
-	//test:1
-	public ArrayList<Voted> getVotedList(){
-		return votes;
-	}
-	
-	//Adds a new Voted to the group
-	//test:2
-	public boolean addVoted(Voted v) {
-		boolean isMember = false;
-		for (Voted v1 : votes) {
-			if (v1.equals(v)) {
-				isMember = true;
-	            break;
-	        }
-	   }
-	   if (!isMember) {
-		   votes.add(v);
-	       return true;
-	   }
-	   return false;
-	}
-	
-	//Removes a Voted to the group
-	//test:2
-    public boolean removeVoted(Voted v) {
-        Iterator<Voted> iterator = votes.iterator();
-        boolean isMember = false;
-
-        while (iterator.hasNext()) {
-            Voted v1 = iterator.next();
-            if (v1.equals(v)) {
-                iterator.remove(); // Safely removes the current element from the list
-                isMember = true;
-            }
-        }
-
-        return isMember;
+	//test:3 need to update this!!!!!!!!!!!!!!!
+    public Integer getGroupStatus(String groupName) {	//In the event the given Group is not in the Map, 0 should be returned instead of null
+        return groupMemberships.get(groupName);
     }
     
     /*

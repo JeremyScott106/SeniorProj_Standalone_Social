@@ -11,7 +11,7 @@ class ComparatorTest {
 
 	
 	@Test
-	void testSortCategoriesByName_Success() {
+	void testSortCategoriesByName() {
 		
 		category c1 = new category("Sports");
 		category c2 = new category("Games");
@@ -43,10 +43,11 @@ class ComparatorTest {
 		
 		assertEquals(true, namesMatch);
 		
-	}	
+	}
+	
 	
 	@Test
-	void testSortGroupsByName_Success() {
+	void testSortGroupsByName() {
 		
 		Group g1 = new Group("Sports");
 		Group g2 = new Group("Games");
@@ -78,10 +79,11 @@ class ComparatorTest {
 		
 		assertEquals(true, namesMatch);
 		
-	}	
+	}
+	
 	
 	@Test
-	void testSortUsersByName_Success() {
+	void testSortUsersByName() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -115,8 +117,9 @@ class ComparatorTest {
 		
 	}
 	
+	
 	@Test
-	void testSortUsersByUsername_Success() {
+	void testSortUsersByUsername() {
 		
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -169,11 +172,11 @@ class ComparatorTest {
 
 		ArrayList<Suspended> expected = new ArrayList<Suspended>();
 		
+		expected.add(s3);
+		expected.add(s2);
+		expected.add(s4);
 		expected.add(s5);
 		expected.add(s1);
-		expected.add(s4);
-		expected.add(s2);
-		expected.add(s3);
 		
 		ArrayList<Suspended> actual = new ArrayList<Suspended>();
 		actual.add(s1);
@@ -239,12 +242,11 @@ class ComparatorTest {
 
 		ArrayList<Banned> expected = new ArrayList<Banned>();
 		
+		expected.add(b3);
+		expected.add(b2);
+		expected.add(b4);
 		expected.add(b5);
 		expected.add(b1);
-		expected.add(b4);
-		expected.add(b2);
-		expected.add(b3);
-		
 		
 		ArrayList<Banned> actual = new ArrayList<Banned>();
 		actual.add(b1);
