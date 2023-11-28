@@ -17,7 +17,7 @@ public class Response extends Post{
 		this.parentalId = parentalId;
 	}
 	
-	//test:1
+	//FIXME: add tests
 	public int getParentalId() {
 		return parentalId;
 	}
@@ -41,7 +41,6 @@ public class Response extends Post{
 		return responseData;
 	}
 	
-	//test:2
 	public int compareTo(Response r) {
 		if (user.compareTo(r.getUser()) == 1 && group.compareTo(r.getGroup()) == 1 &&
 				parentalId == r.getParentalId()) {

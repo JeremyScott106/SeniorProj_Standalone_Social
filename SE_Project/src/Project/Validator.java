@@ -219,7 +219,7 @@ public class Validator {
 		return false;
 	}
 
-	//test:2
+	//FIXME: add tests
 	public static Post getPostFromId(ArrayList<Post> posts, int id) {
 		
 		for (Post p : posts) {
@@ -229,16 +229,6 @@ public class Validator {
 		}
 		return null;
 		
-	}
-	
-	//test:2
-	public static boolean validateVotedExists(Voted v, ArrayList<Voted> votes) {
-		for (Voted v1 : votes) {
-			if (v.compareTo(v1) == true) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

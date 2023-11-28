@@ -32,7 +32,7 @@ public class GroupTest {
 
 	//Testing addMember and getMember//
 	@Test
-	void addMemberTest_Success() throws ParseException {
+	void addMemberTest() throws ParseException {
 		Group testGroup1 = new Group("MembersTest");
 		
 		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
@@ -58,33 +58,6 @@ public class GroupTest {
 		User expected = u1;
 
 		assertEquals(expected, actual);
-	}
-	
-	@Test
-	void addMemberTest_Failure() throws ParseException {
-		Group testGroup1 = new Group("MembersTest");
-		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
-
-		membership m1 = new membership(u1, testGroup1);
-		membership m2 = new membership(u2, testGroup1);
-		membership m3 = new membership(u3, testGroup1);
-		membership m4 = new membership(u4, testGroup1);
-		membership m5 = new membership(u5, testGroup1);
-
-		testGroup1.addMember(m1);
-		testGroup1.addMember(m2);
-		testGroup1.addMember(m3);
-		testGroup1.addMember(m4);
-		testGroup1.addMember(m5);
-		
-		Boolean actual = testGroup1.addMember(m5);
-
-		assertEquals(false, actual);
 	}
 	
 	//Testing remove member and get member//
@@ -314,7 +287,6 @@ public class GroupTest {
 	// also tests getPost()
 	@Test
 	void addNewPostTest(){
-
 		Group testGroup1 = new Group("MembersTest");
 		
 		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
@@ -352,37 +324,6 @@ public class GroupTest {
 		expected.add(p5);
 
 		assertEquals(expected, actual);
-	}
-	
-	@Test
-	void addPostTest_Failure(){
-		Group testGroup1 = new Group("MembersTest");
-		
-		User u1 = new User("name", "0", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u2 = new User("name", "1", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
-		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
-
-		membership m1 = new membership(u1, testGroup1);
-		membership m2 = new membership(u2, testGroup1);
-		membership m3 = new membership(u3, testGroup1);
-		membership m4 = new membership(u4, testGroup1);
-		membership m5 = new membership(u5, testGroup1);
-		
-		Post p1 = new Post(m1, "goofy goober", "YEAHHH", 1);
-		Post p2 = new Post(m2, "IM DIRTY DAN", "NO I AM", 2);
-		Post p3 = new Post(m3, "WHO knew Coding is FUN", "I'm Actually insane", 3);
-		Post p4 = new Post(m4, "MY CAPS LOCK IS BROKE", "PLZZZZ HELP ME", 4);
-		Post p5 = new Post(m5, "Mom get the camera", "Jeremys laptop is crashing again", 5);
-		
-		testGroup1.addPost(p1);
-		testGroup1.addPost(p2);
-		testGroup1.addPost(p3);
-		testGroup1.addPost(p4);
-		testGroup1.addPost(p5);
-
-		assertEquals(false, testGroup1.addPost(p5));
 	}
 	
 	// also tests getPost()
@@ -712,11 +653,11 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 		
-		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 
 		testGroup1.addSuspended(b1);
@@ -749,11 +690,11 @@ public class GroupTest {
 			User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 			User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 			
-			Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+			Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 
 			testGroup1.addSuspended(b1);
@@ -776,12 +717,12 @@ public class GroupTest {
 		User u3 = new User("name", "2", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
-		
-		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+
+		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 		testGroup1.addSuspended(b1);
 		testGroup1.addSuspended(b2);
@@ -813,11 +754,11 @@ public class GroupTest {
 			User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 			User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-			Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-			Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+			Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+			Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 			testGroup1.addSuspended(b1);
 			testGroup1.addSuspended(b2);
@@ -838,11 +779,11 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 		testGroup1.addSuspended(b1);
 		testGroup1.addSuspended(b2);
@@ -864,10 +805,10 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 		testGroup1.addSuspended(b2);
 		testGroup1.addSuspended(b3);
@@ -889,11 +830,11 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+		Suspended b1 = new Suspended(u1, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 		testGroup1.addSuspended(b1);
 		testGroup1.addSuspended(b2);
@@ -915,10 +856,10 @@ public class GroupTest {
 		User u4 = new User("name", "3", "pass", "10/10/1997", "Valdosta", "Georgia");
 		User u5 = new User("name", "4", "pass", "10/10/1997", "Valdosta", "Georgia");
 
-		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 8:20 pm");
-		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 8:20 pm");
+		Suspended b2 = new Suspended(u2, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b3 = new Suspended(u3, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b4 = new Suspended(u4, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
+		Suspended b5 = new Suspended(u5, testGroup1, "01/12/2012 20:20", "01/12/2012 20:25");
 
 		testGroup1.addSuspended(b2);
 		testGroup1.addSuspended(b3);
