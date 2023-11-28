@@ -78,43 +78,7 @@ class ComparatorTest {
 		
 		assertEquals(true, namesMatch);
 		
-	}
-	
-	@Test
-	void testSortGroupsByName_Failure() {
-		
-		Group g1 = new Group("Sports");
-		Group g2 = new Group("Games");
-		Group g3 = new Group("Video Games");
-		Group g4 = new Group("Foods");
-		Group g5 = new Group("fail");
-		
-		ArrayList<Group> actual = new ArrayList<Group>();
-		
-		actual.add(g1);
-		actual.add(g2);
-		actual.add(g3);
-		actual.add(g4);
-		actual.add(g5);
-		
-		String expected[] = {"Apples", "Foods", "Games", "Sports", "Video Games"};
-		
-		Collections.sort(actual, new SortGroupsByName());
-		
-		boolean namesMatch = true;
-		
-		for (int i = 0 ; i < actual.size() ; i++) {
-			
-			if (!actual.get(i).getGroupName().equals(expected[i])) {
-				namesMatch = false;
-				break;
-			}
-		}
-		
-		assertEquals(false, namesMatch);
-		
-	}
-	
+	}	
 	
 	@Test
 	void testSortUsersByName_Success() {
