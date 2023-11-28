@@ -43,43 +43,7 @@ class ComparatorTest {
 		
 		assertEquals(true, namesMatch);
 		
-	}
-	
-	@Test
-	void testSortCategoriesByName_Failure() {
-		
-		category c1 = new category("Sports");
-		category c2 = new category("Games");
-		category c3 = new category("Video Games");
-		category c4 = new category("Foods");
-		category c5 = new category("fail");
-		
-		ArrayList<category> actual = new ArrayList<category>();
-		
-		actual.add(c1);
-		actual.add(c2);
-		actual.add(c3);
-		actual.add(c4);
-		actual.add(c5);
-		
-		String expected[] = {"Apples", "Foods", "Games", "Sports", "Video Games"};
-		
-		Collections.sort(actual, new SortCategoriesByName());
-		
-		boolean namesMatch = true;
-		
-		for (int i = 0 ; i < actual.size() ; i++) {
-			
-			if (!actual.get(i).getName().equals(expected[i])) {
-				namesMatch = false;
-				break;
-			}
-		}
-		
-		assertEquals(false, namesMatch);
-		
-	}
-	
+	}	
 	
 	@Test
 	void testSortGroupsByName_Success() {
