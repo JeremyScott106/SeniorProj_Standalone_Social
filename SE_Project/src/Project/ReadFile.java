@@ -589,6 +589,8 @@ public class ReadFile {
 		boolean gotPostId = false;			//Set gotPostId to true once it has been Read
 		String scoreStr = "";			//Score of the Post
 		boolean gotScore = false;			//Set gotScore to true once it has been Read
+		String responseID = "";
+		boolean gotResponseID = false;
 		
 		
 		
@@ -680,6 +682,16 @@ public class ReadFile {
 					continue;												//continue to the next line
 				}
 			}
+			else if (sub.equals("@RESP")) {	
+				if (gotResponseID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {	
+					responseID = line.substring(12);
+					gotResponseID = true;		
+					continue;	
+				}
+			}
 			else {												//If anything else is encountered
 				throw new IncorrectFileFormatException();			//Throw exception
 			}
@@ -687,7 +699,7 @@ public class ReadFile {
 		}
 		
 		//If all the needed Data was Read
-		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore) {
+		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore && gotResponseID) {
 			
 
 			Group g = manager.getGroupByName(groupName);
@@ -697,9 +709,10 @@ public class ReadFile {
 			}
 			int id = Integer.parseInt(postId);
 			int score = Integer.parseInt(scoreStr);
+			int rID = Integer.parseInt(responseID);
 			if (g != null && u != null) {
 				
-				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score);	//Create the Post
+				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score, rID);	//Create the Post
 
 				g.addExistingPost(p);	//Add the Post to the Group
 
@@ -715,7 +728,7 @@ public class ReadFile {
 	}
 	
 	
-private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+	private static void readResponse(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
 		String userName = "";				//username of the User
 		boolean gotUserName = false;			//Set to true once username has been Read
@@ -729,6 +742,8 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 		boolean gotParentalId = false;			//Set to true once ParentalID has been Read
 		String scoreStr = "";				//Score of the Response
 		boolean gotScore = false;				//Set to true once Score has been Read
+		String responseID = "";
+		boolean gotResponseID = false;
 		
 		
 		
@@ -810,6 +825,16 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 					continue;									//Continue to the next line
 				}
 			}
+			else if (sub.equals("@RESP")) {	
+				if (gotResponseID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {	
+					responseID = line.substring(12);
+					gotResponseID = true;		
+					continue;	
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();	//Throw exception
 			}
@@ -818,7 +843,7 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 		
 		
 		//If all the needed data was Read
-		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore) {
+		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore && gotResponseID) {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
@@ -827,11 +852,12 @@ private static void readResponse(SystemManager manager, Scanner reader) throws I
 			}
 			int id = Integer.parseInt(parentalId);
 			int score = Integer.parseInt(scoreStr);
+			int rID = Integer.parseInt(responseID);
 			Post p = manager.getPostByGroupId(g, id);
 			if (g != null && u != null && p != null) {
 				
-				Response r = new Response(u, g, dateTime, responseBody, id, score);	//Create the Response
-				p.addResponse(r);													//Add the Response to the Post
+				Response r = new Response(u, g, dateTime, responseBody, id, score, rID);	//Create the Response
+				p.addExistingResponse(r);													//Add the Response to the Post
 				
 			}
 			else {			//If either the USer, Group, or Post does not Exist

@@ -60,4 +60,37 @@ public class Voted {
 		return false;
 	}
 	
+	
+	
+	public String getVotedWriteData() {
+		
+		String msg = "@START\n" + 
+						"@VOTED\n" + 
+						"@USER=" + user.getId() + "\n" + 
+						"@GROUP=" + post.getGroup().getGroupName() + "\n" +
+						"@POSTID=" + post.getId() + "\n";
+		
+		if (post instanceof Response) {
+			
+			msg += "@RESPONSEID=" + post.getResponseID() + "\n";
+			
+		}
+		
+		
+		if (hasUpvoted) {
+			msg += "@UPVOTE\n";
+		}
+		else if (hasDownvoted) {
+			msg += "@DOWNVOTE\n";
+		}
+		else {
+			return "";
+		}
+		
+		msg += "@END\n\n";
+		
+		return msg;
+		
+	}
+	
 }

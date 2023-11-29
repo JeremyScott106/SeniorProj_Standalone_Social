@@ -313,8 +313,8 @@ public class SystemManager {
 	// gets the membership of the group and user inputted
 	public boolean createNewResponse(Group group, String responseBody, Post post) {
 		membership m = getMembership(group, currentUser);
-		Response r = new Response(m, responseBody, post.getId());
-		return (currentPost.addResponse(r));		
+		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
+		return (currentPost.addNewResponse(r));		
 	}
 	
 	//test:1

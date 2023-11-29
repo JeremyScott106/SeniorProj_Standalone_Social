@@ -7,6 +7,7 @@
 @BODY=P1 Body
 @PSTID=1
 @SCORE=719
+@RESPONSEID=4
 @END
 
 @START
@@ -18,6 +19,7 @@
 @BODY=P2 Body
 @PSTID=2
 @SCORE=831
+@RESPONSEID=0
 @END
 
 @START
@@ -29,6 +31,7 @@
 @BODY=P3 Body
 @PSTID=3
 @SCORE=400
+@RESPONSEID=0
 @END
 
 @START
@@ -40,6 +43,7 @@
 @BODY=P4 Body
 @PSTID=4
 @SCORE=-12
+@RESPONSEID=0
 @END
 
 @START
@@ -51,6 +55,7 @@
 @BODY=P5 Body
 @PSTID=5
 @SCORE=1010
+@RESPONSEID=0
 @END
 
 @START
@@ -62,6 +67,7 @@
 @BODY=P6 Body
 @PSTID=6
 @SCORE=-1832
+@RESPONSEID=0
 @END
 
 
@@ -74,6 +80,7 @@
 @BODY=testing
 @PSTID=1
 @SCORE=0
+@RESPONSEID=0
 @END
 
 @START
@@ -85,6 +92,7 @@
 @BODY=test testing
 @PSTID=0
 @SCORE=0
+@RESPONSEID=0
 @END
 
 @START
@@ -96,6 +104,7 @@
 @BODY=testing testing testing
 @PSTID=2
 @SCORE=0
+@RESPONSEID=0
 @END
 
 @START
@@ -107,6 +116,7 @@
 @BODY=testing
 @PSTID=4
 @SCORE=0
+@RESPONSEID=0
 @END
 
 @START
@@ -118,6 +128,7 @@
 @BODY=Testing test
 @PSTID=5
 @SCORE=0
+@RESPONSEID=0
 @END
 
 @START
@@ -129,6 +140,7 @@
 @BODY=tests
 @PSTID=6
 @SCORE=0
+@RESPONSEID=0
 @END
 
 @START
@@ -140,5 +152,6 @@
 @BODY=testtest
 @PSTID=7
 @SCORE=0
+@RESPONSEID=0
 @END
 
