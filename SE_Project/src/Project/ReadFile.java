@@ -59,6 +59,9 @@ public class ReadFile {
 					else if (line.equals("@BANNED") && currentlyReadingData) {
 						readBanned(manager, reader);
 					}
+					else if (line.equals("@VOTED") && currentlyReadingData) {
+						readVoted(manager, reader);
+					}
 					else if (line.equals("")) {									//If the current line is empty
 						continue;													//continue to next line
 					}
@@ -870,75 +873,215 @@ public class ReadFile {
 		
 	}
 
-private static void readBanned(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
-	
-	String userName = "";
-	boolean gotUserName = false;
-	String groupName = "";
-	boolean gotGroupName = false;
-	
-	while (currentlyReadingData) {
+	private static void readBanned(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 		
-		String line = reader.nextLine();
+		String userName = "";
+		boolean gotUserName = false;
+		String groupName = "";
+		boolean gotGroupName = false;
 		
-		if (line.equals("@END")) {
-			currentlyReadingData = false;
-			break;
-		}
-		
-		String sub = "";
-		
-		try {
-			sub = line.substring(0, 5);
-		}
-		catch (StringIndexOutOfBoundsException e) {
-			throw new IncorrectFileFormatException();
-		}
-		
-		
-		if (sub.equals("@USER")) {
-			if (gotUserName) {
-				throw new IncorrectFileFormatException();
-			}
-			else {
-				userName = line.substring(6);
-				gotUserName = true;
-				continue;
-			}
-		}
-		else if (sub.equals("@GROU")) {
-			if (gotGroupName) {
-				throw new IncorrectFileFormatException();
-			}
-			else {
-				groupName = line.substring(7);
-				gotGroupName = true;
-				continue;
-			}
-		}
-		else {
-			throw new IncorrectFileFormatException();
-		}
-		
-	}
-	
-	
-	if (gotUserName && gotGroupName) {
-		
-		Group g = manager.getGroupByName(groupName);
-		User u = manager.getUserByUsername(userName);
-		
-		if (!(g == null) && !(u == null)) {
+		while (currentlyReadingData) {
 			
-			Banned b = new Banned(u, g);
-			g.addBanned(b);
+			String line = reader.nextLine();
+			
+			if (line.equals("@END")) {
+				currentlyReadingData = false;
+				break;
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			
+			if (sub.equals("@USER")) {
+				if (gotUserName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					userName = line.substring(6);
+					gotUserName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
 			
 		}
 		
+		
+		if (gotUserName && gotGroupName) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			
+			if (!(g == null) && !(u == null)) {
+				
+				Banned b = new Banned(u, g);
+				g.addBanned(b);
+				
+			}
+			
+		}
+	
+	
 	}
 	
 	
-}
+	
+	private static void readVoted(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String username = "";
+		boolean gotUsername = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String postID = "";
+		boolean gotPostID = false;
+		String responseID = "";
+		boolean gotResponseID = false;
+		boolean upvote = false;
+		boolean downvote = false;
+		
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();		//Get the next line
+			
+			if (line.equals("@END")) {				//If the current line is the end of the data set
+				currentlyReadingData = false;			//Set currentlyReadingData to false
+				 break;									//break the loop
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);			//try getting the 1st few characters of the line to identify what data is currently being Read
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				if (gotUsername) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					username = line.substring(6);
+					gotUsername = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@POST")) {
+				if (gotPostID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postID = line.substring(8);
+					gotPostID = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@RESP")) {
+				if (gotResponseID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					responseID = line.substring(12);
+					gotResponseID = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@UPVO")) {
+				if (upvote) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					upvote = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@DOWN")) {
+				if (downvote) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					downvote = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		
+		if (gotUsername && gotGroupName && gotPostID && (upvote || downvote)) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(username);
+			if (u == null) {
+				u = manager.getAdminByUsername(username);
+			}
+			int pID = Integer.parseInt(postID);
+			Post p = manager.getPostByGroupId(g, pID);
+			
+			if (u != null && g != null && p != null) {
+				
+				if (gotResponseID) {
+					
+					int rID = Integer.parseInt(responseID);
+					Response r = manager.getResponseByPostAndID(p, rID);
+					
+					if (r != null) {
+						Voted v = new Voted(u, r);
+						u.addVoted(v);
+					}
+					else {
+						throw new IncorrectFileFormatException();
+					}
+					
+				}
+				else {
+					Voted v = new Voted(u, p);
+					p.addScore();
+					u.addVoted(v);
+				}
+			
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+		}
+		
+		
+	}
 	
 	
 }

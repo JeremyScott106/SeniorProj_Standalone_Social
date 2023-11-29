@@ -240,5 +240,17 @@ public class Validator {
 		}
 		return false;
 	}
+	
+	//FIXME: add tests
+	public static Response getResponseFromId(ArrayList<Response> responses, int id) {
+		
+		for (Response r : responses) {
+			if (r.getResponseID() == id) {
+				return r;
+			}
+		}
+		return null;
+		
+	}
 
 }

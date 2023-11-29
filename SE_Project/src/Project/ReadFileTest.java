@@ -976,6 +976,78 @@ class ReadFileTest {
 		}
 		
 	}
+	
+	
+	
+	@Test
+	void testReadFile_Voted_UpvotedPost_Success() {
+		
+		//Create Users
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		//Create Groups
+		Group g1 = new Group("Football");
+		//Create Posts
+		Post p1 = new Post(u1, g1, "10/10/2008 4:27 AM", "P1", "P1 Body", 1, 666, 0);
+		
+		Voted v1 = new Voted(u1, p1);
+		Voted v2 = new Voted(u2, p1);
+		Voted v3 = new Voted(u3, p1);
+		Voted v4 = new Voted(u4, p1);
+		Voted v5 = new Voted(u5, p1);
+		
+		u1.addVoted(v1);
+		u2.addVoted(v2);
+		u3.addVoted(v3);
+		u4.addVoted(v4);
+		u5.addVoted(v5);
+		//Create List of Posts
+		ArrayList<Voted> expected = new ArrayList<Voted>();
+		//Add Posts in Order
+		expected.add(v1);
+		expected.add(v2);
+		expected.add(v3);
+		expected.add(v4);
+		expected.add(v5);
+		
+		
+		
+		SystemManager manager = new SystemManager();
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_UpvotedPost.txt");
+		
+		try {
+			
+			ReadFile.readFile(manager, fileNames);
+			
+			ArrayList<Voted> actual = manager.getAllVotes();
+			boolean pass = true;
+			
+			for (int i = 0 ; i < actual.size(); i++) {
+				
+				if (actual.get(i).compareTo(expected.get(i))) {
+					pass = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, pass);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (IncorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
 		
 	
 	

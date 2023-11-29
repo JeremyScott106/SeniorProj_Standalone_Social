@@ -710,6 +710,11 @@ public class SystemManager {
 		 return Validator.getPostFromId(g.getPost(), id);
 	 }
 	 
+	 //FIXME: add tests
+	 public Response getResponseByPostAndID(Post p, int id) {
+		 return Validator.getResponseFromId(p.getResponse(), id);
+	 }
+	 
 	 //test:1
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
