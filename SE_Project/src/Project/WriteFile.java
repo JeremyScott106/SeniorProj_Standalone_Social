@@ -646,7 +646,7 @@ public class WriteFile {
 	
 	
 	
-	
+	//tests:1
 	public static void updateGroupinFile(String find, String replace, String fileName) throws IOException {
 
 		
@@ -686,6 +686,44 @@ public class WriteFile {
 	}
 	
 	
+	public static void updatePostInFile(String find, String replace, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+
+					totalStr += s + "\n";
+
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+
+			reader.close();
+			
+
+
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	//tests:1
 	public static void updateResponseInFile(String find, String replace, String fileName) throws IOException {
 		
 		try {
