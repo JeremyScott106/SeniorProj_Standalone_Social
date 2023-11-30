@@ -45,6 +45,8 @@ public class WriteFile {
 				}
 				else if (fileName.contains("Response")) {
 					writeResponses(manager, writer);
+				else if (fileName.contains("Suspended")) {
+					writeSuspended(manager, writer);
 				}
 				else if (fileName.contains("Ban")) {
 					writeBanned(manager, writer);
@@ -174,6 +176,20 @@ public class WriteFile {
 	
 
 	//test:1
+	private static void writeSuspended(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Suspended> suspensions = manager.getAllSuspensions_ByUsername();
+		
+		for (Suspended s : suspensions) {
+			
+			String susData = s.getSuspendedWriteData();
+			
+			writer.write(susData);
+			
+		}
+		
+	}
+	
 	private static void writeBanned(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<Banned> bans = manager.getAllBans_ByUsername();
@@ -188,7 +204,7 @@ public class WriteFile {
 		
 	}
 		
-		
+
 	
 	public static void addAdminToFile(Admin a, String fileName) throws IOException {
 		
@@ -370,6 +386,29 @@ public class WriteFile {
 	
 
 	//test:1
+	public static void addSuspendedToFile(Suspended s, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = s.getSuspendedWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	//test:1
 	public static void removeAdminFromFile(Admin a, String fileName) throws IOException {
 		
 		String find = a.getAdminWriteData();
@@ -505,6 +544,41 @@ public class WriteFile {
 		
 	}
 	
+
+	//test:1
+	public static void removeSuspendedFromFile(Suspended s, String fileName) throws IOException {
+		
+		String find = s.getSuspendedWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String st = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((st = br.readLine()) != null) {
+				    totalStr += st + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+
 	
 	
 	public static void removeMembershipFromFile(membership m, String fileName) throws IOException {
@@ -758,6 +832,7 @@ public class WriteFile {
 		}
 		
 	}
+
 
 
 }

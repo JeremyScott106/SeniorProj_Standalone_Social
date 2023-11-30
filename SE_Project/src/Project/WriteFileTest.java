@@ -445,9 +445,7 @@ class WriteFileTest {
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_Responses.txt");
 
 		try {
-
 			WriteFile.writeFile(manager, fileNames);
-
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -470,6 +468,68 @@ class WriteFileTest {
 		assertEquals(expected, actual);
 
 	}
+
+  @Test
+  void testWriteFile_Suspended() {
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+  	Suspended s1 = new Suspended(u1, g1);
+		Suspended s2 = new Suspended(u2, g1);
+		Suspended s3 = new Suspended(u3, g1);
+		Suspended s4 = new Suspended(u4, g2);
+		Suspended s5 = new Suspended(u5, g2);
+
+		g1.addSuspended(s1);
+		g1.addSuspended(s2);
+		g1.addSuspended(s3);
+		g2.addSuspended(s4);
+		g2.addSuspended(s5);
+ 
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+  
+  	ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\textFiles\\WriteFile_Test\\WriteFile_Test_Suspended.txt");
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+  
+		String actual = getFileData(fileNames);
+  	String expected = "";
+		
+		for (Suspended s : manager.getAllSuspensions_ByUsername()) {
+			
+			expected += s.getSuspendedWriteData();
+			
+		}
+		
+		assertEquals(expected, actual);
+	}
+  
+  
+  
 	void testWriteFile_Banned() {
 		
 		SystemManager manager = new SystemManager();
@@ -750,6 +810,76 @@ class WriteFileTest {
 	
 	
 	@Test
+	void testAddSuspendedToFile() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		Suspended s1 = new Suspended(u1, g1);
+		Suspended s2 = new Suspended(u2, g1);
+		Suspended s3 = new Suspended(u3, g1);
+		Suspended s4 = new Suspended(u4, g2);
+		Suspended s5 = new Suspended(u5, g2);
+
+		g1.addSuspended(s1);
+		g1.addSuspended(s2);
+		g1.addSuspended(s3);
+		g2.addSuspended(s4);
+		g2.addSuspended(s5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+		
+		Suspended test = new Suspended(u1, g2);
+		
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\textFiles\\WriteFile_Test\\WriteFile_Test_AddSuspended.txt");
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+			WriteFile.addSuspendedToFile(test, fileNames.get(0));
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+		
+		String expected = "";
+		
+		for (Suspended s : manager.getAllSuspensions_ByUsername()) {
+			
+			expected += s.getSuspendedWriteData();
+			
+		}
+		expected += test.getSuspendedWriteData();
+		
+		assertEquals(expected, actual);
+		
+	}
+
 	void testAddMembershipToFile() {
 		
 		SystemManager manager = new SystemManager();
@@ -998,7 +1128,7 @@ class WriteFileTest {
 		assertEquals(expected, actual);
 
 	}
-	
+
 	
 	@Test
 	void testAddBannedToFile() {
@@ -1368,6 +1498,80 @@ class WriteFileTest {
 	}
 	
 	
+
+	
+	@Test
+	void testRemoveSuspendedFromFile() {
+		
+		SystemManager manager = new SystemManager();
+
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+
+		category c1 = new category("Sports");
+		Group g1 = new Group("Football");
+		Group g2 = new Group("Soccer");
+
+		Suspended s1 = new Suspended(u1, g1);
+		Suspended s2 = new Suspended(u2, g1);
+		Suspended s3 = new Suspended(u3, g1);
+		Suspended s4 = new Suspended(u4, g2);
+		Suspended s5 = new Suspended(u5, g2);
+
+		g1.addSuspended(s1);
+		g1.addSuspended(s2);
+		g1.addSuspended(s3);
+		g2.addSuspended(s4);
+		g2.addSuspended(s5);
+
+		c1.addGroup(g1);
+		c1.addGroup(g2);
+
+		manager.addUser(u1);
+		manager.addUser(u2);
+		manager.addUser(u3);
+		manager.addUser(u4);
+		manager.addUser(u5);
+		manager.addCategory(c1);
+		
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\textFiles\\WriteFile_Test\\WriteFile_Test_RemoveSuspended.txt");
+		
+		try {
+			
+			WriteFile.writeFile(manager, fileNames);
+			
+			WriteFile.removeSuspendedFromFile(s5, fileNames.get(0));
+			g2.removeSuspended(s5);
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		String actual = getFileData(fileNames);
+		
+		String expected = "";
+		
+		for (Suspended s : manager.getAllSuspensions_ByUsername()) {
+			
+			expected += s.getSuspendedWriteData();
+			
+		}
+		
+		assertEquals(expected, actual);
+		
+	}
+	
+	
+	
+
 	@Test
 	void testRemoveMembershipFromFile() {
 		
@@ -1715,9 +1919,7 @@ class WriteFileTest {
 		assertEquals(expected, actual);
 		
 		}
-	}
-	
-	
+
 	@Test
 	void testUpdatePostInFile() {
 		
@@ -1897,5 +2099,4 @@ class WriteFileTest {
 		assertEquals(expected, actual);
 		
 	}
-	
 }
