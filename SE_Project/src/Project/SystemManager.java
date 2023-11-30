@@ -891,28 +891,288 @@ public class SystemManager {
 	}
 	
 	//test:2
-	 public boolean upvote(Voted v) {
+	 public boolean upvotePost(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
-			 return false;
+			 
+			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
+			 
+			 if (v1.getUp()) {
+				 return false;
+			 }
+			 else if (v1.getDown()) {
+				 String findV = v1.getVotedWriteData();
+				 String findP = v1.getPost().getPostWriteData();
+				 v1.up();
+				 v1.getPost().addScore();
+				 v1.getPost().addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = v1.getPost().getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
+				 return true;
+			 }
+			 else {
+				 String findV = v1.getVotedWriteData();
+				 String findP = v1.getPost().getPostWriteData();
+				 v1.up();
+				 v1.getPost().addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = v1.getPost().getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
 		 }
 		 else {
-				 v.up();
-				 v.getUser().addVoted(v);
-				 v.getPost().addScore();
+			 String findP = v.getPost().getPostWriteData();
+			 v.up();
+			 v.getUser().addVoted(v);
+			 v.getPost().addScore();
+			 String replaceP = v.getPost().getPostWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
+		 }
+	 }
+	 
+	 //FIXME: add tests
+	 public boolean upvoteResponse(Voted v) {
+		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
+			 
+			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
+			 
+			 if (v1.getUp()) {
+				 return false;
+			 }
+			 else if (v1.getDown()) {
+				 Response r = (Response) v1.getPost();
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.up();
+				 v1.getPost().addScore();
+				 v1.getPost().addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
 				 return true;
+			 }
+			 else {
+				 Response r = (Response)v1.getPost();
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.up();
+				 v1.getPost().addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
+		 }
+		 else {
+			 Response r = (Response)v.getPost();
+			 String findP = r.getResponseWriteData();
+			 v.up();
+			 v.getUser().addVoted(v);
+			 v.getPost().addScore();
+			 String replaceP = r.getResponseWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
 		 }
 	}
 	 
 	 //test:2
-	 public boolean downvote(Voted v) {
+	 public boolean downvotePost(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
-			 return false;
+			 
+			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
+			 
+			 if (v1.getDown()) {
+				 return false;
+			 }
+			 else if (v1.getUp()) {
+				 String findV = v1.getVotedWriteData();
+				 String findP = v.getPost().getPostWriteData();
+				 v1.down();
+				 v1.getPost().subScore();
+				 v1.getPost().subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = v.getPost().getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
+				 return true;
+			 }
+			 else {
+				 String findV = v1.getVotedWriteData();
+				 String findP = v.getPost().getPostWriteData();
+				 v1.down();
+				 v1.getPost().subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = v.getPost().getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
 		 }
 		 else {
-				 v.down();
-				 v.getUser().addVoted(v);
-				 v.getPost().subScore();
+			 String findP = v.getPost().getPostWriteData();
+			 v.down();
+			 v.getUser().addVoted(v);
+			 v.getPost().subScore();
+			 String replaceP = v.getPost().getPostWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
+		 }
+	}
+	 
+	 //FIXME: add tests
+	 public boolean downvoteResponse(Voted v) {
+		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
+			 
+			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
+			 
+			 if (v1.getDown()) {
+				 return false;
+			 }
+			 else if (v1.getUp()) {
+				 Response r = (Response)v1.getPost();
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.down();
+				 v1.getPost().subScore();
+				 v1.getPost().subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
 				 return true;
+			 }
+			 else {
+				 Response r = (Response)v1.getPost();
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.down();
+				 v1.getPost().subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
+		 }
+		 else {
+			 Response r = (Response)v.getPost();
+			 String findP = r.getResponseWriteData();
+			 v.down();
+			 v.getUser().addVoted(v);
+			 v.getPost().subScore();
+			 String replaceP = r.getResponseWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
 		 }
 	}
 	

@@ -1963,7 +1963,7 @@ class SystemManagerTest {
 		testGroup.addNewPost(testPost1);
 		testPost1.addNewResponse(testResponse1);
 		
-		sm.upvote(v);
+		sm.upvotePost(v);
 
 		assertEquals(1, testPost1.getScore());
 	}
@@ -1988,7 +1988,7 @@ class SystemManagerTest {
 		testGroup.addNewPost(testPost1);
 		testPost1.addNewResponse(testResponse1);
 		
-		sm.upvote(v);
+		sm.upvotePost(v);
 
 		assertEquals(1, testResponse1.getScore());
 	}
@@ -2013,7 +2013,7 @@ class SystemManagerTest {
 		testGroup.addNewPost(testPost1);
 		testPost1.addNewResponse(testResponse1);
 		
-		sm.downvote(v);
+		sm.downvotePost(v);
 
 		assertEquals(-1, testPost1.getScore());
 	}
@@ -2038,7 +2038,7 @@ class SystemManagerTest {
 		testGroup.addNewPost(testPost1);
 		testPost1.addNewResponse(testResponse1);
 		
-		sm.downvote(v);
+		sm.downvotePost(v);
 
 		assertEquals(-1, testResponse1.getScore());
 	}
@@ -2074,12 +2074,12 @@ class SystemManagerTest {
 		Voted v5 = new Voted(testUser, testPost2);
 		Voted v6 = new Voted(testUser, testPost3);
 		
-		sm.upvote(v1);
-		sm.upvote(v2);
-		sm.upvote(v3);
-		sm.upvote(v4);
-		sm.upvote(v5);
-		sm.upvote(v6);
+		sm.upvotePost(v1);
+		sm.upvotePost(v2);
+		sm.upvotePost(v3);
+		sm.upvotePost(v4);
+		sm.upvotePost(v5);
+		sm.upvotePost(v6);
 
 		ArrayList<Post> expected = new ArrayList<>();
 		expected.add(testPost1);
@@ -2127,12 +2127,12 @@ class SystemManagerTest {
 
 		testPost2.addNewResponse(testResponse1);
 		
-		sm.upvote(v1);
-		sm.upvote(v2);
-		sm.upvote(v3);
-		sm.upvote(v4);
-		sm.upvote(v5);
-		sm.upvote(v6);
+		sm.upvotePost(v1);
+		sm.upvotePost(v2);
+		sm.upvotePost(v3);
+		sm.upvotePost(v4);
+		sm.upvotePost(v5);
+		sm.upvotePost(v6);
 
 		ArrayList<User> expected = new ArrayList<>();
 		expected.add(testUser1);

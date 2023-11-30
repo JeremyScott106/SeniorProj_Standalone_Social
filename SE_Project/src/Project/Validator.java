@@ -252,5 +252,21 @@ public class Validator {
 		return null;
 		
 	}
+	
+	//FIXME: add tests
+	public static Voted getVotedByUserPost(User u, Post p, ArrayList<Voted> voted) {
+		
+		Voted v = null;
+		
+		for (Voted v1 : voted) {
+			if ( (v1.getUser().compareId(u.getId())) && (v1.getPost().compareTo(p) == 1) ) {
+				v = v1;
+				break;
+			}
+		}
+		
+		return v;
+		
+	}
 
 }
