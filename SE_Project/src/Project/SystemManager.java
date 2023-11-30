@@ -372,10 +372,28 @@ public class SystemManager {
 		return groups;
 	}
 	
+	//helper method, returns a list of all RequestedGroups.
+	private ArrayList<Group> getAllRequestedGroups(){
+		ArrayList<Group> groups = new ArrayList<>();
+		for(category c : categories) {
+			groups.addAll(c.getRequestedGroupsAlphabetically());
+		}
+		return groups;
+	}
+	
 	//test:1
 	// returns all groups alphabetically
 	public ArrayList<Group> getAllGroups_Alphabetically() {
 		ArrayList<Group> groups = getAllGroups();
+		Collections.sort(groups, new SortGroupsByName());
+
+		return groups;
+	}
+	
+	//test:1
+	// returns all RequestedGroups alphabetically
+	public ArrayList<Group> getAllRequestedGroups_Alphabetically() {
+		ArrayList<Group> groups = getAllRequestedGroups();
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
@@ -539,6 +557,13 @@ public class SystemManager {
 	 public ArrayList<Group> getGroupsInCategory_Alphabetically(category c) {
 		 
 		 return c.getGroupsAlphabetically();
+	}
+	 
+	 //test:1
+	 //returns an arraylist of all the groups in category alphabetically
+	 public ArrayList<Group> getRequestedGroupsInCategory_Alphabetically(category c) {
+		 
+		 return c.getRequestedGroupsAlphabetically();
 	}
 	 
 	//test:3
