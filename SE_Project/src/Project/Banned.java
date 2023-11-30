@@ -1,14 +1,5 @@
 package Project;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 public class Banned implements Comparable<Banned> {
 	private User user;
 	private Group group;

@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -224,7 +223,7 @@ public class SystemManager {
 	//test:6
 	// allows the user to login
 	public boolean login(String username, String password) {
-		boolean signIn = false;
+		//boolean signIn = false;
 
 		User u = Validator.validUserName_Users(users, username);	//Checks under Users
 

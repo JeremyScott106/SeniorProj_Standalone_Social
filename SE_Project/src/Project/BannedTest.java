@@ -1,16 +1,11 @@
 package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.text.ParseException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.jupiter.api.Test;
 
 public class BannedTest {
 
+	@SuppressWarnings("unused")
 	@Test
 	void testBannedConstructor() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
