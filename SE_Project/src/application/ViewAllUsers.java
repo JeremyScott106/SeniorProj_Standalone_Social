@@ -46,7 +46,7 @@ public class ViewAllUsers extends JFrame {
 		JPanel titlePanel = new JPanel();
 		int gridXLoc = 10;
 		
-		titlePanel.setPreferredSize(new Dimension(0,80));
+		titlePanel.setPreferredSize(new Dimension(0,120));
 		titlePanel.setLayout(null);
 		
 		JLabel lblHome = new JLabel("Home");
@@ -67,10 +67,18 @@ public class ViewAllUsers extends JFrame {
         });
 		titlePanel.add(lblHome);
 		
+		JLabel lblCurrentFilter = new JLabel("Current Filter: ");
+		lblCurrentFilter.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCurrentFilter.setBounds(gridXLoc, 10, lblCurrentFilter.getPreferredSize().width + 10, 25);
+		gridXLoc += lblCurrentFilter.getWidth() + 20;
+		titlePanel.add(lblCurrentFilter);
+		
+		gridXLoc = 10;
+		
 		if (manager.getCurrentUser() instanceof Admin) {
 			JButton adminBtn = new JButton("Admin Tools");
 			adminBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
-			adminBtn.setBounds(274, 45, 152, 25);
+			adminBtn.setBounds(274, 80, 152, 25);
 			titlePanel.add(adminBtn);
 			adminBtn.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -87,7 +95,7 @@ public class ViewAllUsers extends JFrame {
 		}
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBoxCategories = new JComboBox(comboBoxCategoryList);
-		comboBoxCategories.setBounds(gridXLoc, 10, 150, 25);
+		comboBoxCategories.setBounds(gridXLoc, 45, 150, 25);
 		gridXLoc += comboBoxCategories.getWidth() + 20;
 		titlePanel.add(comboBoxCategories);
 		
@@ -98,9 +106,35 @@ public class ViewAllUsers extends JFrame {
 		}
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBoxGroup = new JComboBox(comboBoxGroupList);
-		comboBoxGroup.setBounds(gridXLoc, 10, 150, 25);
+		comboBoxGroup.setBounds(gridXLoc, 45, 150, 25);
 		gridXLoc += comboBoxGroup.getWidth() + 20;
 		titlePanel.add(comboBoxGroup);
+		
+		JButton btnFilterResults = new JButton("Filter Results");
+		btnFilterResults.setBounds(gridXLoc, 45, btnFilterResults.getPreferredSize().width + 10, 25);
+		gridXLoc += btnFilterResults.getWidth() + 20;
+		btnFilterResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+            	currentCategory = manager.getCategoryByName(String.valueOf(comboBoxCategories.getSelectedItem()));
+            	currentGroup = manager.getGroupByName(String.valueOf(comboBoxGroup.getSelectedItem()));
+				onViewChangeClick();
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), recentActivity, currentGroup, currentCategory);
+            }
+        });
+		titlePanel.add(btnFilterResults);
+		
+		
+		
+		JButton btnClearFilters = new JButton("Clear Filters");
+		btnClearFilters.setBounds(gridXLoc, 45, btnClearFilters.getPreferredSize().width + 10, 25);
+		gridXLoc += btnClearFilters.getWidth() + 20;
+		btnClearFilters.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), recentActivity, null, null);
+            }
+        });
+		titlePanel.add(btnClearFilters);
 
 		
 		JButton btnRefreshPage = new JButton("Refresh");
@@ -110,19 +144,19 @@ public class ViewAllUsers extends JFrame {
 				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize());
 			}
 		});
-		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 45, 100, 25);
+		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 80, 100, 25);
 		titlePanel.add(btnRefreshPage);
 		
 		JLabel lblCurrentUser = new JLabel("Current User:");
 		lblCurrentUser.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblCurrentUser.setBounds(10, 45, 122, 25);
+		lblCurrentUser.setBounds(10, 80, 122, 25);
 		titlePanel.add(lblCurrentUser);
 		
 		if (manager.getCurrentUser() != null) {
 			JLabel lblUid = new JLabel(manager.getCurrentUser().getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
 			lblUid.setForeground(Color.BLUE.darker());
-			lblUid.setBounds(135, 45, lblUid.getPreferredSize().width+10, 25);
+			lblUid.setBounds(135, 80, lblUid.getPreferredSize().width+10, 25);
 			lblUid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			lblUid.addMouseListener(new MouseAdapter() {
 			    @Override
@@ -395,7 +429,7 @@ public class ViewAllUsers extends JFrame {
 		currentFrame.getContentPane().add(mainPane, BorderLayout.CENTER);
 		
 		JPanel titlePanel = createTitlePane();
-		titlePanel.setBounds(0, 0, currentFrame.getWidth(), 80);
+		titlePanel.setBounds(0, 0, currentFrame.getWidth(), 120);
 		mainPane.add(titlePanel);
 		
 		JPanel userListPanel = createUserList();		// Create User listing.  Selecting user shows recent activity in JPanel Recent Activity
@@ -404,13 +438,13 @@ public class ViewAllUsers extends JFrame {
 		JScrollPane scrollUserListPanel = new JScrollPane(userListPanel);
 		scrollUserListPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollUserListPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollUserListPanel.setBounds(0, 80, 150, currentFrame.getHeight()-145);
+		scrollUserListPanel.setBounds(0, 120, 150, currentFrame.getHeight()-145);
 		mainPane.add(scrollUserListPanel);
 				
 		JScrollPane scrollRecentActivity = new JScrollPane(recentActivity);
 		scrollRecentActivity.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollRecentActivity.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollRecentActivity.setBounds(150, 80, currentFrame.getWidth() - 165, currentFrame.getHeight() - 145);
+		scrollRecentActivity.setBounds(150, 120, currentFrame.getWidth() - 165, currentFrame.getHeight() - 145);
 		mainPane.add(scrollRecentActivity);
 
 		currentFrame.setVisible(true);
