@@ -4,13 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AdminTest {
-
-	// tests the constructor
-	@Test
-	void testConstructor() {
-		Admin a = new Admin("Billy", "0010", "billyiscool", "10/10/1997", "Valdosta", "Georgia");
-
-	}
 	
 	// Test getting Admin data from disk
 	@Test

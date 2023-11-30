@@ -2,29 +2,11 @@ package Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.text.ParseException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 public class SuspendedTest {
-
-	@Test
-	void testSuspendedConstructor() {
-		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");
-		Group testGroup1 = new Group("Standard Name");
-		Suspended s = new Suspended(u, testGroup1);
-
-		boolean actual = true;
-
-		
-		assertEquals(true, actual);
-	}
 	
 	@Test
 	void testgetUser() {

@@ -118,6 +118,7 @@ public class AdminTools extends JFrame {
 		for (int i = 0; i < categoryArrayList.size(); i++) {
 			comboBoxCategoryList[i] = categoryArrayList.get(i).getName();
 		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBoxCategories = new JComboBox(comboBoxCategoryList);
 		comboBoxCategories.setBounds(322, 155, 154, 22);
 		panel.add(comboBoxCategories);

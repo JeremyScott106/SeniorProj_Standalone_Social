@@ -3,14 +3,13 @@ package Project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Date;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class UserTest {
 	
+	@SuppressWarnings("unused")
 	@Test
 	void testUser_AddingNewUser_Constructor() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia");
@@ -23,6 +22,7 @@ public class UserTest {
 		assertEquals(true, actual);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	void testUser_AddingExistingUser_Constructor() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", 

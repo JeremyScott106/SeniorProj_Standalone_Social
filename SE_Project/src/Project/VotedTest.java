@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class VotedTest {
 
+	@SuppressWarnings("unused")
 	@Test
 	void testVotedConstructor() {
 		User u = new User("Jack", "jackster3", "HKb@wser!", "06/17/2000", "Valdosta", "Georgia", "12/17/2007");

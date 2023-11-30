@@ -2,12 +2,9 @@ package Project;
 
 import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 class SystemManagerTest {
