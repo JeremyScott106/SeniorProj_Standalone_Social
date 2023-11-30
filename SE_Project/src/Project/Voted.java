@@ -27,6 +27,12 @@ public class Voted {
 		hasDownvoted = true;
 	}
 	
+	//FIXME: add tests
+	public void cancelVote() {
+		hasUpvoted = false;
+		hasDownvoted = false;
+	}
+	
 	//test:1
 	public boolean getUp(){
 		return hasUpvoted;

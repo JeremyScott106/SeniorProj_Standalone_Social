@@ -761,6 +761,40 @@ public class WriteFile {
 		
 	}
 	
+	//test:1
+	public static void removeVotedFromFile(Voted v, String fileName) throws IOException {
+		
+		String find = v.getVotedWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
 	
 	
 	//tests:1
