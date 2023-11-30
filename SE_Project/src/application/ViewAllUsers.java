@@ -3,6 +3,8 @@ package application;
 import Project.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -42,6 +44,7 @@ public class ViewAllUsers extends JFrame {
 	private JPanel createTitlePane() {
 		
 		JPanel titlePanel = new JPanel();
+		int gridXLoc = 10;
 		
 		titlePanel.setPreferredSize(new Dimension(0,80));
 		titlePanel.setLayout(null);
@@ -49,7 +52,8 @@ public class ViewAllUsers extends JFrame {
 		JLabel lblHome = new JLabel("Home");
 		lblHome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblHome.setForeground(Color.BLUE.darker());
-		lblHome.setBounds(10, 10, lblHome.getPreferredSize().width + 10, 25);
+		lblHome.setBounds(gridXLoc, 10, lblHome.getPreferredSize().width + 10, 25);
+		gridXLoc += lblHome.getWidth() + 20;
 		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblHome.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -75,6 +79,28 @@ public class ViewAllUsers extends JFrame {
 				}
 			});
 		}
+		
+		ArrayList<category> categoryArrayList = manager.getCategories_Alphabetically();
+		String[] comboBoxCategoryList = new String[categoryArrayList.size()];
+		for (int i = 0; i < categoryArrayList.size(); i++) {
+			comboBoxCategoryList[i] = categoryArrayList.get(i).getName();
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		JComboBox comboBoxCategories = new JComboBox(comboBoxCategoryList);
+		comboBoxCategories.setBounds(gridXLoc, 10, 150, 25);
+		gridXLoc += comboBoxCategories.getWidth() + 20;
+		titlePanel.add(comboBoxCategories);
+		
+		ArrayList<Group> categoryGroupList = manager.getAllGroups_Alphabetically();
+		String[] comboBoxGroupList = new String[categoryGroupList.size()];
+		for (int i = 0; i < categoryGroupList.size(); i++) {
+			comboBoxGroupList[i] = categoryGroupList.get(i).getGroupName();
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		JComboBox comboBoxGroup = new JComboBox(comboBoxGroupList);
+		comboBoxGroup.setBounds(gridXLoc, 10, 150, 25);
+		gridXLoc += comboBoxGroup.getWidth() + 20;
+		titlePanel.add(comboBoxGroup);
 
 		
 		JButton btnRefreshPage = new JButton("Refresh");
