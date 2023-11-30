@@ -45,6 +45,7 @@ public class WriteFile {
 				}
 				else if (fileName.contains("Response")) {
 					writeResponses(manager, writer);
+				}
 				else if (fileName.contains("Suspended")) {
 					writeSuspended(manager, writer);
 				}
