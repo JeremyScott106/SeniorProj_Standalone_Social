@@ -168,6 +168,40 @@ class SystemManagerTest {
 
 	}
 	
+	void testGetRequestedGroupsSortedAlphabetically() {
+
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("fun");
+		
+		sm.addCategory(c1);
+
+		Group g1 = new Group("Sports");
+		Group g2 = new Group("Games");
+		Group g3 = new Group("Video Games");
+		Group g4 = new Group("Foods");
+		Group g5 = new Group("Apples");
+		
+		c1.addRequestedGroup(g1);
+		c1.addRequestedGroup(g2);
+		c1.addRequestedGroup(g3);
+		c1.addRequestedGroup(g4);
+		c1.addRequestedGroup(g5);
+
+		ArrayList<Group> actual = sm.getAllRequestedGroups_Alphabetically();
+
+		ArrayList<Group> expected = new ArrayList<>();
+
+		expected.add(g5);
+		expected.add(g4);
+		expected.add(g2);
+		expected.add(g1);
+		expected.add(g3);
+
+		assertEquals(expected, actual);
+
+	}
+	
 	@Test
 	void testGetUsers_Alphabetically() {
 
@@ -754,6 +788,41 @@ class SystemManagerTest {
 		 
 		ArrayList<Group> actual = new ArrayList<>();
 		actual.addAll(sm.getGroupsInCategory_Alphabetically(c1));
+		assertEquals(expected, actual);
+
+	}
+	
+	@Test
+	void testGetRequestedGroupsInCategory_Alphabetically() {
+		SystemManager sm = new SystemManager();
+		
+		category c1 = new category("test");
+		
+		sm.addCategory(c1);
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+		
+		c1.addRequestedGroup(g1);
+		c1.addRequestedGroup(g2);
+		c1.addRequestedGroup(g3);
+		c1.addRequestedGroup(g4);
+		c1.addRequestedGroup(g5);
+
+
+		ArrayList<Group> expected = new ArrayList<>();
+		expected.add(g4);
+		expected.add(g3);
+		expected.add(g1);
+		expected.add(g2);
+		expected.add(g5);
+		
+		 
+		ArrayList<Group> actual = new ArrayList<>();
+		actual.addAll(sm.getRequestedGroupsInCategory_Alphabetically(c1));
 		assertEquals(expected, actual);
 
 	}
