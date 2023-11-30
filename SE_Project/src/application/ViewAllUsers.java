@@ -4,6 +4,7 @@ import Project.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.*;
 
@@ -399,7 +400,7 @@ public class ViewAllUsers extends JFrame {
 					}
 				}
 					
-				String OPTitle = manager.getPostByGroupId(response.getGroup(), response.getId()).getPostTitle();
+				String OPTitle = manager.getPostByGroupId(response.getGroup(), response.getParentalId()).getPostTitle();
 				if (OPTitle.length() > 15) {
 					OPTitle = OPTitle.substring(0,15) + " ...";
 				}
@@ -475,7 +476,7 @@ public class ViewAllUsers extends JFrame {
 					}
 				}
 					
-				String OPTitle = manager.getPostByGroupId(response.getGroup(), response.getId()).getPostTitle();
+				String OPTitle = manager.getPostByGroupId(response.getGroup(), response.getParentalId()).getPostTitle();
 				if (OPTitle.length() > 15) {
 					OPTitle = OPTitle.substring(0,15) + " ...";
 				}
@@ -531,7 +532,12 @@ public class ViewAllUsers extends JFrame {
 		
 		int gridYLoc = 0;
 		
-		for (User u : manager.getUsers_Alphabetically()) {
+		ArrayList<Object> allUsers = new ArrayList<>();
+		allUsers.addAll(manager.getUsers_Alphabetically());
+		allUsers.addAll(manager.getAdmins_Alphabetically());
+		
+		for (Object user : allUsers) {
+			User u = (User) user;
 			JLabel lblUserName = new JLabel(u.getId());
 			lblUserName.setBounds(10, gridYLoc, 130, 15);
 			gridYLoc += 20;
@@ -585,6 +591,7 @@ public class ViewAllUsers extends JFrame {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			   public void run() { 
 				   scrollRecentActivity.getVerticalScrollBar().setValue(0);
+				   scrollRecentActivity.getVerticalScrollBar().setUnitIncrement(16);
 			   }
 			});
 		mainPane.add(scrollRecentActivity);

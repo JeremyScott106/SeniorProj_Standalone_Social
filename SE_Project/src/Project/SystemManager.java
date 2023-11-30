@@ -380,7 +380,7 @@ public class SystemManager {
 	public ArrayList<User> getUsers_Alphabetically() {
 
 
-		Collections.sort(users, new SortUsersByName());
+		Collections.sort(users, new SortUsersByUsername());
 
 
 		return users;
@@ -467,9 +467,8 @@ public class SystemManager {
 	//test:1
 	// sorts admins alphabetically
 	public ArrayList<Admin> getAdmins_Alphabetically() {
-		Collections.sort(admins, new SortUsersByName());
+		Collections.sort(admins, new SortUsersByUsername());
 		return admins;
-
 	}
 	
 	//test:1
