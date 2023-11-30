@@ -28,6 +28,9 @@ public class ViewAllUsers extends JFrame {
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
+		if (recent == null) {
+			recent = createRecentActivity();
+		}
 		this.recentActivity = recent;
 		this.currentGroup = g;
 		this.currentCategory = c;
@@ -67,11 +70,26 @@ public class ViewAllUsers extends JFrame {
         });
 		titlePanel.add(lblHome);
 		
-		JLabel lblCurrentFilter = new JLabel("Current Filter: ");
+		JLabel lblCurrentFilter = new JLabel("Current Filter:");
 		lblCurrentFilter.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCurrentFilter.setBounds(gridXLoc, 10, lblCurrentFilter.getPreferredSize().width + 10, 25);
 		gridXLoc += lblCurrentFilter.getWidth() + 20;
 		titlePanel.add(lblCurrentFilter);
+		
+		JLabel lblCurrentFilterSeclected;
+		if (currentGroup != null) {
+			lblCurrentFilterSeclected = new JLabel(currentGroup.getGroupName());
+		}
+		else if(currentCategory != null) {
+			lblCurrentFilterSeclected = new JLabel(currentCategory.getName());
+		}
+		else {
+			lblCurrentFilterSeclected = new JLabel("No Filters");
+		}
+		lblCurrentFilterSeclected.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCurrentFilterSeclected.setBounds(gridXLoc, 10, lblCurrentFilterSeclected.getPreferredSize().width + 10, 25);
+		gridXLoc += lblCurrentFilterSeclected.getWidth() + 20;
+		titlePanel.add(lblCurrentFilterSeclected);
 		
 		gridXLoc = 10;
 		
@@ -88,50 +106,72 @@ public class ViewAllUsers extends JFrame {
 			});
 		}
 		
+		JLabel lblFilterBy = new JLabel("Filter By:");
+		lblFilterBy.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblFilterBy.setBounds(gridXLoc, 45, lblFilterBy.getPreferredSize().width + 10, 25);
+		gridXLoc += lblFilterBy.getWidth() + 20;
+		titlePanel.add(lblFilterBy);
+		
+		JLabel lblFilterByCategory = new JLabel("Category");
+		lblFilterByCategory.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblFilterByCategory.setBounds(gridXLoc, 45, lblFilterByCategory.getPreferredSize().width + 10, 25);
+		gridXLoc += lblFilterByCategory.getWidth() + 10;
+		titlePanel.add(lblFilterByCategory);
+		
 		ArrayList<category> categoryArrayList = manager.getCategories_Alphabetically();
-		String[] comboBoxCategoryList = new String[categoryArrayList.size()];
+		String[] comboBoxCategoryList = new String[categoryArrayList.size()+1];
 		for (int i = 0; i < categoryArrayList.size(); i++) {
-			comboBoxCategoryList[i] = categoryArrayList.get(i).getName();
+			comboBoxCategoryList[i+1] = categoryArrayList.get(i).getName();
 		}
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBoxCategories = new JComboBox(comboBoxCategoryList);
 		comboBoxCategories.setBounds(gridXLoc, 45, 150, 25);
 		gridXLoc += comboBoxCategories.getWidth() + 20;
+		comboBoxCategories.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+            	currentCategory = manager.getCategoryByName(String.valueOf(comboBoxCategories.getSelectedItem()));
+            	currentGroup = null;
+            	JPanel update = createRecentActivity();
+				onViewChangeClick();
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), update, currentGroup, currentCategory);
+			}
+		});
 		titlePanel.add(comboBoxCategories);
 		
+		JLabel lblFilterByGroup = new JLabel("Group");
+		lblFilterByGroup.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblFilterByGroup.setBounds(gridXLoc, 45, lblFilterByGroup.getPreferredSize().width + 10, 25);
+		gridXLoc += lblFilterByGroup.getWidth() + 10;
+		titlePanel.add(lblFilterByGroup);
+		
 		ArrayList<Group> categoryGroupList = manager.getAllGroups_Alphabetically();
-		String[] comboBoxGroupList = new String[categoryGroupList.size()];
+		String[] comboBoxGroupList = new String[categoryGroupList.size()+1];
 		for (int i = 0; i < categoryGroupList.size(); i++) {
-			comboBoxGroupList[i] = categoryGroupList.get(i).getGroupName();
+			comboBoxGroupList[i+1] = categoryGroupList.get(i).getGroupName();
 		}
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		JComboBox comboBoxGroup = new JComboBox(comboBoxGroupList);
 		comboBoxGroup.setBounds(gridXLoc, 45, 150, 25);
 		gridXLoc += comboBoxGroup.getWidth() + 20;
-		titlePanel.add(comboBoxGroup);
-		
-		JButton btnFilterResults = new JButton("Filter Results");
-		btnFilterResults.setBounds(gridXLoc, 45, btnFilterResults.getPreferredSize().width + 10, 25);
-		gridXLoc += btnFilterResults.getWidth() + 20;
-		btnFilterResults.addActionListener(new ActionListener() {
+		comboBoxGroup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-            	currentCategory = manager.getCategoryByName(String.valueOf(comboBoxCategories.getSelectedItem()));
+            	currentCategory = null;
             	currentGroup = manager.getGroupByName(String.valueOf(comboBoxGroup.getSelectedItem()));
+            	JPanel update = createRecentActivity();
 				onViewChangeClick();
-				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), recentActivity, currentGroup, currentCategory);
-            }
-        });
-		titlePanel.add(btnFilterResults);
-		
-		
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), update, currentGroup, currentCategory);
+			}
+		});
+		titlePanel.add(comboBoxGroup);
 		
 		JButton btnClearFilters = new JButton("Clear Filters");
 		btnClearFilters.setBounds(gridXLoc, 45, btnClearFilters.getPreferredSize().width + 10, 25);
 		gridXLoc += btnClearFilters.getWidth() + 20;
 		btnClearFilters.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JPanel update = createRecentActivity();
             	onViewChangeClick();
-				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), recentActivity, null, null);
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), update, null, null);
             }
         });
 		titlePanel.add(btnClearFilters);
@@ -141,7 +181,7 @@ public class ViewAllUsers extends JFrame {
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onViewChangeClick();
-				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize());
+				new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), recentActivity, currentGroup, currentCategory);
 			}
 		});
 		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 80, 100, 25);
@@ -224,12 +264,13 @@ public class ViewAllUsers extends JFrame {
 		JLabel lblUserId = new JLabel();
 		if (manager.isUserAdmin(p.getUser())) {
 			lblUserId = new JLabel("(ADMIN) " + p.getUser().getId());
+			lblUserId.setForeground(Color.GREEN.darker().darker());
 		}
 		else {
 			lblUserId = new JLabel(p.getUser().getId());
+			lblUserId.setForeground(Color.BLUE.darker());
 		}
 		lblUserId.setBounds(86, 49, lblUserId.getPreferredSize().width + 10, 13);
-		lblUserId.setForeground(Color.BLUE.darker());
 		lblUserId.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblUserId.addMouseListener(new MouseAdapter() {
 			@Override
@@ -331,6 +372,82 @@ public class ViewAllUsers extends JFrame {
 		return panel;
 	}
 	
+	private JPanel createRecentActivity() {
+		
+		int gridYLoc = 30;
+		int padding = 10;
+		
+		JPanel recentActivity = new JPanel();
+		recentActivity.setLayout(null);
+		
+		JLabel userInfo = new JLabel("All Recent Activity");
+		userInfo.setBounds(10,10, userInfo.getPreferredSize().width + 10, 15);
+		recentActivity.add(userInfo);
+		
+		for (Object p : manager.viewAllUsersPostsResponses()) {
+			
+			if (p instanceof Response) {
+				Response response = (Response) p;
+				if (currentCategory != null) {
+					if (currentCategory != manager.getCategoryByGroup(response.getGroup())) {
+						continue;
+					}
+				}
+				if (currentGroup != null) {
+					if (currentGroup != response.getGroup()) {
+						continue;
+					}
+				}
+					
+				String OPTitle = manager.getPostByGroupId(response.getGroup(), response.getId()).getPostTitle();
+				if (OPTitle.length() > 15) {
+					OPTitle = OPTitle.substring(0,15) + " ...";
+				}
+				JLabel tag = new JLabel("Response to " + OPTitle + " in Group \"" + response.getGroup().getGroupName() + "\"");
+				tag.setBounds(20, gridYLoc, tag.getPreferredSize().width + padding, 15);
+				gridYLoc += tag.getSize().height + padding;
+				recentActivity.add(tag);
+				
+				JPanel jp = createResponseBox((Response) p);
+				jp.setBounds(20, gridYLoc, jp.getSize().width, jp.getSize().height);
+				gridYLoc += jp.getSize().height + padding;
+				recentActivity.add(jp);
+			}
+			
+			else if (p instanceof Post){
+				Post post = (Post) p;
+				if (currentCategory != null) {
+					if (currentCategory != manager.getCategoryByGroup(post.getGroup())) {
+						continue;
+					}
+				}
+				if (currentGroup != null) {
+					if (currentGroup != post.getGroup()) {
+						continue;
+					}
+				}
+				
+				JLabel tag = new JLabel("OP in Group \"" + post.getGroup().getGroupName() + "\"");
+				tag.setBounds(20, gridYLoc, tag.getPreferredSize().width + padding, 15);
+				gridYLoc += tag.getSize().height + padding;
+				recentActivity.add(tag);
+				
+				JPanel jp = createPostBox((Post) p);
+				jp.setBounds(20, gridYLoc, jp.getSize().width, jp.getSize().height);
+				gridYLoc += jp.getSize().height + padding;
+				recentActivity.add(jp);
+			}
+			else {
+				continue;
+			}
+		}
+		
+		recentActivity.setPreferredSize(new Dimension(currentFrame.getWidth()-150, gridYLoc));
+		
+		return recentActivity;
+	}
+	
+	
 	private JPanel createRecentActivity(User u) {
 		
 		int gridYLoc = 30;
@@ -347,11 +464,22 @@ public class ViewAllUsers extends JFrame {
 			
 			if (p instanceof Response) {
 				Response response = (Response) p;
+				if (currentCategory != null) {
+					if (currentCategory != manager.getCategoryByGroup(response.getGroup())) {
+						continue;
+					}
+				}
+				if (currentGroup != null) {
+					if (currentGroup != response.getGroup()) {
+						continue;
+					}
+				}
+					
 				String OPTitle = manager.getPostByGroupId(response.getGroup(), response.getId()).getPostTitle();
 				if (OPTitle.length() > 15) {
 					OPTitle = OPTitle.substring(0,15) + " ...";
 				}
-				JLabel tag = new JLabel("Response to " + OPTitle);
+				JLabel tag = new JLabel("Response to " + OPTitle + " in Group \"" + response.getGroup().getGroupName() + "\"");
 				tag.setBounds(20, gridYLoc, tag.getPreferredSize().width + padding, 15);
 				gridYLoc += tag.getSize().height + padding;
 				recentActivity.add(tag);
@@ -363,7 +491,19 @@ public class ViewAllUsers extends JFrame {
 			}
 			
 			else if (p instanceof Post){
-				JLabel tag = new JLabel("OP");
+				Post post = (Post) p;
+				if (currentCategory != null) {
+					if (currentCategory != manager.getCategoryByGroup(post.getGroup())) {
+						continue;
+					}
+				}
+				if (currentGroup != null) {
+					if (currentGroup != post.getGroup()) {
+						continue;
+					}
+				}
+				
+				JLabel tag = new JLabel("OP in Group \"" + post.getGroup().getGroupName() + "\"");
 				tag.setBounds(20, gridYLoc, tag.getPreferredSize().width + padding, 15);
 				gridYLoc += tag.getSize().height + padding;
 				recentActivity.add(tag);
@@ -387,9 +527,9 @@ public class ViewAllUsers extends JFrame {
 	
 	private JPanel createUserList() {
 		
-		int gridYLoc = 0;
-		
 		JPanel userListPanel = new JPanel();
+		
+		int gridYLoc = 0;
 		
 		for (User u : manager.getUsers_Alphabetically()) {
 			JLabel lblUserName = new JLabel(u.getId());
@@ -404,10 +544,8 @@ public class ViewAllUsers extends JFrame {
 					new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), update, currentGroup, currentCategory);
 				}
 			});
-			
 			userListPanel.add(lblUserName);
 		}
-		
 		userListPanel.setPreferredSize(new Dimension(150, gridYLoc));
 		
 		return userListPanel;
@@ -415,9 +553,7 @@ public class ViewAllUsers extends JFrame {
 
 	
 		// This prints all categories as buttons on the home screen in horizontal fashion //
-
-
-			// Puts the frame together, called in particular order and location, panels in panels in a frame //
+		// Puts the frame together, called in particular order and location, panels in panels in a frame //
 	private void displayGUI() {
 		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
@@ -438,13 +574,19 @@ public class ViewAllUsers extends JFrame {
 		JScrollPane scrollUserListPanel = new JScrollPane(userListPanel);
 		scrollUserListPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollUserListPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollUserListPanel.setBounds(0, 120, 150, currentFrame.getHeight()-145);
+		scrollUserListPanel.setBounds(0, 120, 150, currentFrame.getHeight()-165);
 		mainPane.add(scrollUserListPanel);
 				
 		JScrollPane scrollRecentActivity = new JScrollPane(recentActivity);
 		scrollRecentActivity.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollRecentActivity.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollRecentActivity.setBounds(150, 120, currentFrame.getWidth() - 165, currentFrame.getHeight() - 145);
+		scrollRecentActivity.setBounds(150, 120, currentFrame.getWidth() - 165, currentFrame.getHeight() - 165);
+			// use invokerLater on other scroll bars!!  This fixes location after everything loads //
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			   public void run() { 
+				   scrollRecentActivity.getVerticalScrollBar().setValue(0);
+			   }
+			});
 		mainPane.add(scrollRecentActivity);
 
 		currentFrame.setVisible(true);
