@@ -1,10 +1,6 @@
 package application;
-import Project.Admin;
-import Project.Post;
-import Project.Response;
-import Project.SystemManager;
-import Project.User;
 
+import Project.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -16,41 +12,23 @@ public class ViewAllUsers extends JFrame {
 	private SystemManager manager;
 	private JFrame currentFrame;
 	private JPanel recentActivity;
-	
-			// constructor not needed //
-	public ViewAllUsers() {
-		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 786, 80);
-		panel.add(panel_1);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 78, 150, 606);
-		panel.add(scrollPane);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(147, 78, 639, 606);
-		panel.add(panel_2);
-		
-	}
-	
+	private Group currentGroup;
+	private category currentCategory;
 	
 	@SuppressWarnings("exports")
 	public ViewAllUsers(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
-		this(sm, jmb, frame, dim, null);
+		this(sm, jmb, frame, dim, null, null, null);
 	}
 	
 	@SuppressWarnings("exports")
-	public ViewAllUsers(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, JPanel recent) {
+	public ViewAllUsers(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim, JPanel recent, Group g, category c) {
 		this.topBar = jmb;
 		this.manager = sm;
 		this.currentFrame = frame;
 		this.currentFrame.setSize(dim);
 		this.recentActivity = recent;
+		this.currentGroup = g;
+		this.currentCategory = c;
 		displayGUI();
 	}
 	
@@ -109,7 +87,7 @@ public class ViewAllUsers extends JFrame {
 		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 45, 100, 25);
 		titlePanel.add(btnRefreshPage);
 		
-		JLabel lblCurrentUser = new JLabel("Current Admin: ");
+		JLabel lblCurrentUser = new JLabel("Current User:");
 		lblCurrentUser.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCurrentUser.setBounds(10, 45, 122, 25);
 		titlePanel.add(lblCurrentUser);
@@ -363,7 +341,7 @@ public class ViewAllUsers extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					JPanel update = createRecentActivity(u);
 					onViewChangeClick();
-					new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), update);
+					new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize(), update, currentGroup, currentCategory);
 				}
 			});
 			
