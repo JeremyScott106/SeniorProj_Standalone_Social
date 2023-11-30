@@ -208,6 +208,7 @@ public class WriteFile {
 		
 	}
 	
+	//test:1
 	private static void writeVoted(SystemManager manager, FileWriter writer) throws IOException {
 		
 		ArrayList<Voted> voted = manager.getAllVotes();
@@ -424,6 +425,30 @@ public class WriteFile {
 		}
 		
 	}
+	
+	
+	//test:1
+	public static void addVotedToFile(Voted v, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = v.getVotedWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
 	
 	
 	//test:1
