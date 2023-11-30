@@ -299,6 +299,15 @@ public class SystemManager {
 	public void removeResponseToPost(Post p, Response r) {
 		if(p.getResponse().contains(r)){
 			p.removeResponse(r);
+			
+			if (writable) {
+				try {
+					WriteFile.removeResponseFromFile(r, fileNames.get(6));
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -310,11 +319,28 @@ public class SystemManager {
 	}
 
 	//test:1
-	// gets the membership of the group and user inputted
+	// gets the membership of the group and user inputed
 	public boolean createNewResponse(Group group, String responseBody, Post post) {
 		membership m = getMembership(group, currentUser);
 		Response r = new Response(m, responseBody, post.getId());
-		return (currentPost.addResponse(r));		
+		boolean newResponse = currentPost.addResponse(r);		
+		
+		if (writable && newResponse) {
+			
+			try {
+				WriteFile.addResponseToFile(r, fileNames.get(6));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return true;
+			
+		}
+		else {
+			return newResponse;
+		}
+		
 	}
 	
 	//test:1
