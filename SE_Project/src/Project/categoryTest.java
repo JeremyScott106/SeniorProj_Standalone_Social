@@ -59,6 +59,35 @@ class categoryTest {
 	}
 	
 	@Test
+	void testGetRequestedGroupsAlphabetically() {
+		category c = new category("test");
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+
+		c.addRequestedGroup(g1);
+		c.addRequestedGroup(g2);
+		c.addRequestedGroup(g3);
+		c.addRequestedGroup(g4);
+		c.addRequestedGroup(g5);
+
+		ArrayList<Group> actual = c.getRequestedGroupsAlphabetically();
+
+		ArrayList<Group> expected = new ArrayList<>();
+
+		expected.add(g4);
+		expected.add(g3);
+		expected.add(g1);
+		expected.add(g2);
+		expected.add(g5);
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
 	void testGetGroups() {
 		category c = new category("test");
 
@@ -123,7 +152,7 @@ class categoryTest {
 
 		assertEquals(false, actual);
 	}
-
+	
 	@Test
 	void testAddGroup_Success() {
 		category c = new category("test");
@@ -164,6 +193,51 @@ class categoryTest {
 
 		Group test = new Group("Soccer");
 		Boolean actual = c.addGroup(test);
+
+
+		assertEquals(false, actual);
+	}
+	
+	@Test
+	void testAddRequestedGroup_Success() {
+		category c = new category("test");
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+
+		c.addRequestedGroup(g1);
+		c.addRequestedGroup(g2);
+		c.addRequestedGroup(g3);
+		c.addRequestedGroup(g4);
+		c.addRequestedGroup(g5);
+
+		Group test = new Group("Golf");
+		Boolean actual = c.addRequestedGroup(test);
+
+		assertEquals(true, actual);
+	}
+
+	@Test
+	void testAddRequestedGroup_Failure() {
+		category c = new category("test");
+
+		Group g1 = new Group("Hockey");
+		Group g2 = new Group("Soccer");
+		Group g3 = new Group("Football");
+		Group g4 = new Group("Basketball");
+		Group g5 = new Group("Tennis");
+
+		c.addRequestedGroup(g1);
+		c.addRequestedGroup(g2);
+		c.addRequestedGroup(g3);
+		c.addRequestedGroup(g4);
+		c.addRequestedGroup(g5);
+
+		Group test = new Group("Soccer");
+		Boolean actual = c.addRequestedGroup(test);
 
 
 		assertEquals(false, actual);
