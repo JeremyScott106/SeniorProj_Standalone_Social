@@ -52,6 +52,9 @@ public class WriteFile {
 				else if (fileName.contains("Ban")) {
 					writeBanned(manager, writer);
 				}
+				else if (fileName.contains("Vote")) {
+					writeVoted(manager, writer);
+				}
 				
 				
 				writer.close();
@@ -200,6 +203,20 @@ public class WriteFile {
 			String banData = b.getBannedWriteData();
 			
 			writer.write(banData);
+			
+		}
+		
+	}
+	
+	private static void writeVoted(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Voted> voted = manager.getAllVotes();
+		
+		for (Voted v : voted) {
+			
+			String votedData = v.getVotedWriteData();
+			
+			writer.write(votedData);
 			
 		}
 		

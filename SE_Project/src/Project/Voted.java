@@ -67,12 +67,19 @@ public class Voted {
 		String msg = "@START\n" + 
 						"@VOTED\n" + 
 						"@USER=" + user.getId() + "\n" + 
-						"@GROUP=" + post.getGroup().getGroupName() + "\n" +
-						"@POSTID=" + post.getId() + "\n";
+						"@GROUP=" + post.getGroup().getGroupName() + "\n";
+						
 		
 		if (post instanceof Response) {
 			
+			Response r = (Response) post;
+			msg += "@POSTID=" + r.getParentalId() + "\n";
 			msg += "@RESPONSEID=" + post.getResponseID() + "\n";
+			
+		}
+		else {
+			
+			msg += "@POSTID=" + post.getId() + "\n";
 			
 		}
 		
