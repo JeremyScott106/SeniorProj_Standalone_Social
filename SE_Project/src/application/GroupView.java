@@ -211,6 +211,16 @@ public class GroupView extends JFrame {
 			});
 		}
 		
+		// View all users in the group
+		JButton btnViewAllGroupUsers = new JButton("View Users In Group");
+		btnViewAllGroupUsers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new UsersInGroupPopUp(manager);
+			}
+		});
+		btnViewAllGroupUsers.setBounds(currentFrame.getBounds().width - btnViewAllGroupUsers.getPreferredSize().width - 60, 45, btnViewAllGroupUsers.getPreferredSize().width + 10, 25);
+		titlePanel.add(btnViewAllGroupUsers);
+		
 		return titlePanel;
 		
 	}
@@ -335,8 +345,6 @@ public class GroupView extends JFrame {
 		
 		JPanel centerInsidePanel = createInsidePane();
 		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);	
-
-		mainPanel.add(centerInsidePanel);
 		mainPanel.setSize(getPreferredSize());
 
 		JScrollPane scrollPanel = new JScrollPane(mainPanel);
