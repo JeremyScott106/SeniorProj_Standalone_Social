@@ -239,6 +239,12 @@ public class ViewPostView extends JFrame {
 			upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
+				//FIXME: Add function to affect score in action listener
+			btnUpVote.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	
+				}
+			});
 			panel.add(btnUpVote);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -249,12 +255,57 @@ public class ViewPostView extends JFrame {
 			downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
+				//FIXME: Add function to affect score in action listener
+			btnDownVote.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	manager.getCurrentPost().addScore();
+				}
+			});
 			panel.add(btnDownVote);
 			
 		} catch (Exception e) {
 			System.out.println(e);
 			
 		}
+		
+			// Builds across the bottom of the panel with user and post time information
+		JLabel lblUidLable = new JLabel("By:");
+		lblUidLable.setBounds(60, gridy, 34, 13);
+		panel.add(lblUidLable);
+			
+			// Adjust color of the label based on who the user is.  Admins are dark green
+		JLabel lblUserId = new JLabel();
+		if (manager.isUserAdmin(manager.getCurrentPost().getUser())) {
+			lblUserId = new JLabel("(ADMIN) " + manager.getCurrentPost().getUser().getId());
+			lblUserId.setForeground(Color.GREEN.darker().darker());
+		}
+		else {
+			lblUserId = new JLabel(manager.getCurrentPost().getUser().getId());
+			lblUserId.setForeground(Color.BLUE.darker());
+		}
+		lblUserId.setBounds(86, gridy, lblUserId.getPreferredSize().width + 10, 13);
+		lblUserId.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblUserId.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onViewChangeClick();
+				manager.setCurrentCategory(null);
+				manager.setCurrentGroup(null);
+				new ProfileView(manager, topBar, currentFrame, currentFrame.getSize(), manager.getCurrentPost().getUser());					
+			}
+		});
+		panel.add(lblUserId);
+		
+		JLabel lblPostedLabel = new JLabel("Posted:");
+		lblPostedLabel.setBounds(410, gridy, 45, 13);
+		panel.add(lblPostedLabel);
+		
+		JLabel lblPostedDate = new JLabel(manager.getSimpleDate(manager.getCurrentPost().getTime()) + ", " + manager.getSimpleTime(manager.getCurrentPost().getTime()));
+		lblPostedDate.setBounds(460, gridy, 130, 13);
+		panel.add(lblPostedDate);
+		
+		gridy += 18;
+		
 
 			// if member of the group, show response box
 		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
@@ -335,6 +386,8 @@ public class ViewPostView extends JFrame {
 		    });
 			panel.add(picLabel);
 		}
+		
+
 			// panel size, Not sure how gridy is the height, but it is.
 		panel.setPreferredSize(new Dimension(currentFrame.getWidth(), gridy));
 		
@@ -376,6 +429,12 @@ public class ViewPostView extends JFrame {
 			upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
+			//FIXME: Add function to affect score in action listener
+			btnUpVote.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					manager.getCurrentPost().addScore();
+				}
+			});
 			panel.add(btnUpVote);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -386,6 +445,12 @@ public class ViewPostView extends JFrame {
 			downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
+			//FIXME: Add function to affect score in action listener
+			btnDownVote.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					manager.getCurrentPost().addScore();
+				}
+			});
 			panel.add(btnDownVote);
 				
 		} catch (Exception e) {
