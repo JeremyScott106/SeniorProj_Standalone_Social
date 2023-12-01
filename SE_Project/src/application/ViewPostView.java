@@ -1,5 +1,5 @@
 package application;
-import Project.*;
+import Project.*;	// Needed for instanceof and comparing items
 
 import java.awt.*;
 import java.awt.event.*;
@@ -31,28 +31,30 @@ public class ViewPostView extends JFrame {
 		displayGUI();
 	}
 	
-	// This will clear the current frame, allows for rebuilding the frame //
+		// This will clear the current frame, allows for rebuilding the frame //
 	private void onViewChangeClick() {
 		currentFrame.getContentPane().removeAll();
 		currentFrame.repaint();
 	}
 	
+		// All the information at the top of the screen below the post is shown in the titlepane
 	private JPanel createTitlePane() {
 		
 		JPanel titlePanel = new JPanel();
 
-		int gridx = 20;
-		int padding = 10;
+		int gridx = 20;										// used for determining the left/right orientation
+		int padding = 10;									// Change this to make the gaps between items larger
 		
-		titlePanel.setPreferredSize(new Dimension(0,80));
-		titlePanel.setLayout(null);
+		titlePanel.setPreferredSize(new Dimension(0,80));	// Defaults to correct width, change second number to make title bar taller
+		titlePanel.setLayout(null);							// Allows use of grid points to setup screen
 		
+			// Labels are mostly similar, set label, font, color, location
 		JLabel lblHome = new JLabel("Home");
 		lblHome.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblHome.setForeground(Color.BLUE.darker());
 		lblHome.setBounds(gridx, 10, lblHome.getPreferredSize().width + padding, 25);
 		gridx += lblHome.getWidth() + padding;
-		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));	// creates hand when hovering over item
 		lblHome.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
@@ -60,7 +62,7 @@ public class ViewPostView extends JFrame {
             	new Home(manager, topBar, currentFrame, currentFrame.getSize());
             }
         });
-		titlePanel.add(lblHome);
+		titlePanel.add(lblHome);							// build button before adding it to the Panel
 		
 		JLabel lblSpacer1 = new JLabel("//");
 		lblSpacer1.setBounds(gridx, 10, 10, 25);
@@ -103,8 +105,8 @@ public class ViewPostView extends JFrame {
         });
 		
 		//	SECOND ROW OF LABLES //
-		gridx = 20;
-		
+		gridx = 20;											// resets gridx back to 20
+			// checks if user is logged in, if not, show login, otherwise, give login information
 		if (manager.getCurrentUser() == null){
 
 			JButton btnLogin = new JButton("Login");
@@ -130,7 +132,7 @@ public class ViewPostView extends JFrame {
 			});
 
 		}
-		
+			// Checks if member of group, if not, give option to join group.  Need to add option to look if user is banned or suspended
 		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			
 			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
@@ -160,6 +162,7 @@ public class ViewPostView extends JFrame {
 			titlePanel.add(joinGroup);
 		}
 		
+			// General information
 		else {
 			String mbmSince = "Member Since: " + manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate().toString();
 
@@ -181,7 +184,7 @@ public class ViewPostView extends JFrame {
 		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
 		titlePanel.add(btnRefreshPage);
 		
-
+			// May remove, not really needed anymore, this was an original need with old setup.
 		JButton btnBack = new JButton("Back");
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
 		int x2 = currentFrame.getBounds().width - (btnBack.getPreferredSize().width + padding + 50);
@@ -194,11 +197,11 @@ public class ViewPostView extends JFrame {
 			}
 		});
 	
-		
-		return titlePanel;
+		return titlePanel;									// Panel complete, return
 		
 	}
 	
+		// Main Post Creation at top of screen 
 	private JPanel createPostViewForm() {
 		
 		JPanel panel = new JPanel();
@@ -207,6 +210,7 @@ public class ViewPostView extends JFrame {
 		int gridy = 10;
 		int padding = 10;
 		
+			// fail safe, probably need to add a return statement to this to prevent building further
 		if (manager.getCurrentPost() != null) {
 		
 			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
@@ -223,6 +227,7 @@ public class ViewPostView extends JFrame {
 			panel.add(textArea);
 		}
 
+			// if member of the group, show response box
 		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
 			txfPostBody = new JTextArea();
 			txfPostBody.setColumns(10);
@@ -248,6 +253,7 @@ public class ViewPostView extends JFrame {
 			
 			panel.add(btnRespond);
 				
+				// Probably can remove cancel button, seems pointless to have a back button here
 			JButton btnBack = new JButton("Cancel");
 			btnBack.setBounds(246, gridy, 85, 21);
 			gridy += scrollPane.getHeight() + padding;
@@ -260,8 +266,11 @@ public class ViewPostView extends JFrame {
 			panel.add(btnBack);
 		}
 		
+				// Add Flag to the main post only if user is an admin
+				// Tried to add these two files into the main file so only loads once, but would not appear when I did that
+				//		I suspect this is due to the fact that all labels were technically the same item.
 		if(manager.getCurrentUser() instanceof Admin) {
-			JLabel picLabel = new JLabel();
+			JLabel picLabel = new JLabel();						// Establish button
 			try {
 				if (manager.getCurrentPost().getFlag()) {
 					BufferedImage isFlagPic;
@@ -279,7 +288,7 @@ public class ViewPostView extends JFrame {
 				e.printStackTrace();
 			}
 			
-			picLabel.setBounds(10, 20, 25, 25);
+			picLabel.setBounds(10, 20, 25, 25);			// Location of the flag in the panel
 			picLabel.addMouseListener(new MouseAdapter() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
@@ -297,31 +306,35 @@ public class ViewPostView extends JFrame {
 		    });
 			panel.add(picLabel);
 		}
-	
+			// panel size, Not sure how gridy is the height, but it is.
 		panel.setPreferredSize(new Dimension(currentFrame.getWidth(), gridy));
+		
+		
 		return panel;
 	}
 	
+		// Create an individual box for a response
 	private JPanel createResponseBox(Response r) {
 		JPanel panel = new JPanel();
 		int gridYLoc = 5;
 		
-		panel.setBounds(0, 0, 600, 100); // Needs to be adjusted based on size of text ... 
+		panel.setBounds(0, 0, 600, 100); // Needs to be adjusted based on size of text ... does this at the end of the panel, not sure if this is needed anymore
 		getContentPane().add(panel);
 		panel.setLayout(null);
-		panel.setBorder(BorderFactory.createEtchedBorder());
+		panel.setBorder(BorderFactory.createEtchedBorder());			// Change the type of border for each response here
 		
 		JTextArea txResponseBox = new JTextArea(r.getPostBody());
 		txResponseBox.setWrapStyleWord(true);
 		txResponseBox.setLineWrap(true);
-		txResponseBox.setFocusable(true);
+		txResponseBox.setFocusable(true);								// allows copy/paste
 		txResponseBox.setOpaque(false);
 		txResponseBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txResponseBox.setSize(getPreferredSize());
+		txResponseBox.setSize(getPreferredSize());						// set size first, then setbounds.  otherwise will get wonkey
 		txResponseBox.setBounds(40, gridYLoc, 545, txResponseBox.getPreferredSize().height);
-		gridYLoc += txResponseBox.getHeight() + 20;
+		gridYLoc += txResponseBox.getHeight() + 20;						// moves grid setpoint
 		panel.add(txResponseBox);
-		
+			
+			// Self explanatory on the names of the labels and buttons here
 		JLabel lblScore = new JLabel("" + r.getScore());
 		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
@@ -337,10 +350,12 @@ public class ViewPostView extends JFrame {
 		btnDownVote.setBounds(10, 45, 20, 20);
 		panel.add(btnDownVote);
 		
+			// Builds across the bottom of the panel with user and post time information
 		JLabel lblUidLable = new JLabel("By:");
 		lblUidLable.setBounds(60, gridYLoc, 34, 13);
 		panel.add(lblUidLable);
-		
+			
+			// Adjust color of the label based on who the user is.  Admins are dark green
 		JLabel lblUserId = new JLabel();
 		if (manager.isUserAdmin(r.getUser())) {
 			lblUserId = new JLabel("(ADMIN) " + r.getUser().getId());
@@ -371,19 +386,17 @@ public class ViewPostView extends JFrame {
 		lblPostedDate.setBounds(460, gridYLoc, 130, 13);
 		panel.add(lblPostedDate);
 		
-//		gridYLoc += 18;
-		
-		panel.setBounds(0, 0, 600, Math.max(gridYLoc-10, 40));
+		panel.setBounds(0, 0, 600, Math.max(gridYLoc-10, 40));		// Minimum height of box is 40, that is why this is looking for max between the desired size and 40
 		
 		return panel;
 	}
 	
 	
-	
+		// create the entire pane below the post.  This cycles all responses and adds them to the page.
 	private JPanel createResponsesPane() {
 		
-		int gridLocY = 10;
-		int padding = 30;
+		int gridLocY = 10;										// Used to expand the panel to infinite length
+		int padding = 20;										// change this to change distances between items
 
 		ArrayList<Response> alResponse = manager.viewAllPostResponses(manager.getCurrentPost());
 		JPanel responsePane = new JPanel();
@@ -393,45 +406,46 @@ public class ViewPostView extends JFrame {
 			JPanel responseBox = createResponseBox(r);
 			responseBox.setBounds(40, gridLocY, responseBox.getSize().width + padding, responseBox.getSize().height + padding);
 			
-		if(manager.getCurrentUser() instanceof Admin) {
-			JLabel picLabel = new JLabel();
-			try {
-				if (r.getFlag()) {
-					BufferedImage isFlagPic;
-					isFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmall.png"));
-					JLabel isFlaggedPic = new JLabel(new ImageIcon(isFlagPic));
-					picLabel = isFlaggedPic;
+			// As before, only admins see the flags
+			if(manager.getCurrentUser() instanceof Admin) {
+				JLabel picLabel = new JLabel();
+				try {
+					if (r.getFlag()) {
+						BufferedImage isFlagPic;
+						isFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmall.png"));
+						JLabel isFlaggedPic = new JLabel(new ImageIcon(isFlagPic));
+						picLabel = isFlaggedPic;
+					}
+					else {
+						BufferedImage notFlagPic;
+						notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+						JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+						picLabel = notFlaggedPic;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				else {
-					BufferedImage notFlagPic;
-					notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
-					JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
-					picLabel = notFlaggedPic;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			picLabel.setBounds(10, gridLocY, 25, 25);
-			picLabel.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseClicked(MouseEvent e) {
-			    	if (r.getFlag()) {
-			    		r.setFlagFalse();
-			    		onViewChangeClick();
-			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-			    	}
-			    	else {
-			    		r.setFlagTrue();
-			    		onViewChangeClick();
-			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-			    	}
-			    }
-		    });
-			responsePane.add(picLabel);
-		}
 				
-
+				picLabel.setBounds(10, gridLocY, 25, 25);		// Flag Location
+				
+					// Add ability to change the value of a flag, then refresh the screen
+				picLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				    	if (r.getFlag()) {
+				    		r.setFlagFalse();
+				    		onViewChangeClick();
+				    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				    	}
+				    	else {
+				    		r.setFlagTrue();
+				    		onViewChangeClick();
+				    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				    	}
+				    }
+			    });
+				responsePane.add(picLabel);
+			}
 			gridLocY += responseBox.getHeight() + padding;			
 			responsePane.add(responseBox);
 		}
@@ -439,6 +453,7 @@ public class ViewPostView extends JFrame {
 		return responsePane;
 	}
 	
+		// Main method, build and display gui
 	private void displayGUI() {
 		
 		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -446,18 +461,24 @@ public class ViewPostView extends JFrame {
 		currentFrame.setTitle("This is the Post view");
 		currentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+			// main panel is the entire page
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout(0,0));
 		
+			// topInsidePanel is the very top of the page, the title bar
 		JPanel topInsidePanel = createTitlePane();
 		mainPanel.add(topInsidePanel, BorderLayout.NORTH);
 		
+			// viewPostForm is the post at the top of the screen
 		JPanel viewPostForm = createPostViewForm();
 		mainPanel.add(viewPostForm, BorderLayout.CENTER);
 		
+			// viewResponsePanel is the list of all responses below the post
 		JPanel viewResponsePanel = createResponsesPane();
 		mainPanel.add(viewResponsePanel, BorderLayout.SOUTH);
 		
+			// Runs invokeLater in order to update the scroll bars properly.  Not sure what is
+			// 		making it change after setting it to 0.
 		JScrollPane scrollPanel = new JScrollPane(mainPanel);
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() { 
@@ -469,6 +490,8 @@ public class ViewPostView extends JFrame {
 			}
 		});
 		currentFrame.getContentPane().add(scrollPanel, BorderLayout.CENTER);
+		
+			// Allow user to see the Frame with all attached panels.
 		currentFrame.setVisible(true);
 	}
 }
