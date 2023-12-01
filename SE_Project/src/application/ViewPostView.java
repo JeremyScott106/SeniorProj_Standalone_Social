@@ -215,7 +215,7 @@ public class ViewPostView extends JFrame {
 		
 			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
 			lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
-			lblTitle.setBounds(40, gridy, currentFrame.getBounds().width + 25, lblTitle.getPreferredSize().height + padding);
+			lblTitle.setBounds(40, gridy, 550 , lblTitle.getPreferredSize().height + padding);
 			gridy += lblTitle.getHeight() + padding;
 			panel.add(lblTitle);
 			
@@ -225,6 +225,35 @@ public class ViewPostView extends JFrame {
 			gridy += textArea.getHeight() + padding;
 			textArea.setEditable(false);
 			panel.add(textArea);
+		}
+		
+		JLabel lblScore = new JLabel("" + manager.getCurrentPost().getScore());
+		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScore.setVerticalAlignment(SwingConstants.CENTER);
+		lblScore.setBounds(10, 27, 20, 10);
+		panel.add(lblScore);
+		
+		try {
+			BufferedImage upArrow;
+			upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
+			btnUpVote.setBounds(10, 5, 20, 22);
+			panel.add(btnUpVote);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			BufferedImage downArrow;
+			downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
+			btnDownVote.setBounds(10, 37, 20, 22);
+			panel.add(btnDownVote);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			
 		}
 
 			// if member of the group, show response box
@@ -288,7 +317,7 @@ public class ViewPostView extends JFrame {
 				e.printStackTrace();
 			}
 			
-			picLabel.setBounds(10, 20, 25, 25);			// Location of the flag in the panel
+			picLabel.setBounds(600, 20, 25, 25);			// Location of the flag in the panel
 			picLabel.addMouseListener(new MouseAdapter() {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
@@ -339,17 +368,31 @@ public class ViewPostView extends JFrame {
 		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScore.setVerticalAlignment(SwingConstants.CENTER);
-		lblScore.setBounds(10, 30, 20, 10);
+		lblScore.setBounds(10, 27, 20, 10);
 		panel.add(lblScore);
 		
-		JButton btnUpVote = new JButton("Up");
-		btnUpVote.setBounds(10, 5, 20, 20);
-		panel.add(btnUpVote);
+		try {
+			BufferedImage upArrow;
+			upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
+			btnUpVote.setBounds(10, 5, 20, 22);
+			panel.add(btnUpVote);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
-		JButton btnDownVote = new JButton("Down");
-		btnDownVote.setBounds(10, 45, 20, 20);
-		panel.add(btnDownVote);
-		
+		try {
+			BufferedImage downArrow;
+			downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
+			btnDownVote.setBounds(10, 37, 20, 22);
+			panel.add(btnDownVote);
+				
+		} catch (Exception e) {
+			System.out.println(e);
+			    
+		}
+
 			// Builds across the bottom of the panel with user and post time information
 		JLabel lblUidLable = new JLabel("By:");
 		lblUidLable.setBounds(60, gridYLoc, 34, 13);
