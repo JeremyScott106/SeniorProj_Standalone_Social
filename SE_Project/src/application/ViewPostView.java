@@ -386,7 +386,7 @@ public class ViewPostView extends JFrame {
 		lblPostedDate.setBounds(460, gridYLoc, 130, 13);
 		panel.add(lblPostedDate);
 		
-		panel.setBounds(0, 0, 600, Math.max(gridYLoc-10, 40));		// Minimum height of box is 40, that is why this is looking for max between the desired size and 40
+		panel.setBounds(0, 0, 600, Math.max(gridYLoc, 50));		// Minimum height of box is 50, that is why this is looking for max between the desired size and 40
 		
 		return panel;
 	}
