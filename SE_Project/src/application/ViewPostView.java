@@ -1,10 +1,14 @@
 package application;
-import Project.Response;
-import Project.SystemManager;
+import Project.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -15,6 +19,7 @@ public class ViewPostView extends JFrame {
 	private JFrame currentFrame;
 	private JTextArea txfPostBody;
 	private Dimension dim;
+
 		
 	@SuppressWarnings("exports")
 	public ViewPostView(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
@@ -218,45 +223,161 @@ public class ViewPostView extends JFrame {
 			panel.add(textArea);
 		}
 
+		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
+			txfPostBody = new JTextArea();
+			txfPostBody.setColumns(10);
+			JScrollPane scrollPane= new JScrollPane(txfPostBody);
+			scrollPane.setBounds(60, gridy, 416, 124);
+			gridy += scrollPane.getHeight() + padding;
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			panel.add(scrollPane);		
 				
-		txfPostBody = new JTextArea();
-		txfPostBody.setColumns(10);
-		JScrollPane scrollPane= new JScrollPane(txfPostBody);
-		scrollPane.setBounds(60, gridy, 416, 124);
-		gridy += scrollPane.getHeight() + padding;
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		panel.add(scrollPane);		
+			JButton btnRespond = new JButton("Respond");
+			btnRespond.setBounds(341, gridy, 85, 21);
+			btnRespond.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+			    	if (manager.createNewResponse(manager.getCurrentGroup(), txfPostBody.getText(), manager.getCurrentPost())) {
+			    		onViewChangeClick();
+						new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			        }
+	            	else {
+	            		JOptionPane.showMessageDialog(null, "An error occured");
+	            	}
+				}
+			});
 			
-		JButton btnRespond = new JButton("Respond");
-		btnRespond.setBounds(341, gridy, 85, 21);
-		btnRespond.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-		    	if (manager.createNewResponse(manager.getCurrentGroup(), txfPostBody.getText(), manager.getCurrentPost())) {
-		    		onViewChangeClick();
-					new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-		        }
-            	else {
-            		JOptionPane.showMessageDialog(null, "An error occured");
-            	}
-			}
-		});
+			panel.add(btnRespond);
+				
+			JButton btnBack = new JButton("Cancel");
+			btnBack.setBounds(246, gridy, 85, 21);
+			gridy += scrollPane.getHeight() + padding;
+			btnBack.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			    	onViewChangeClick();
+			    	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+			    }
+			});
+			panel.add(btnBack);
+		}
 		
-		panel.add(btnRespond);
+		if(manager.getCurrentUser() instanceof Admin) {
+			JLabel picLabel = new JLabel();
+			try {
+				if (manager.getCurrentPost().getFlag()) {
+					BufferedImage isFlagPic;
+					isFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmall.png"));
+					JLabel isFlaggedPic = new JLabel(new ImageIcon(isFlagPic));
+					picLabel = isFlaggedPic;
+				}
+				else {
+					BufferedImage notFlagPic;
+					notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+					JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+					picLabel = notFlaggedPic;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
-		JButton btnBack = new JButton("Cancel");
-		btnBack.setBounds(246, gridy, 85, 21);
-		gridy += scrollPane.getHeight() + padding;
-		btnBack.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	onViewChangeClick();
-		    	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-		    }
-		});
-		panel.add(btnBack);
+			picLabel.setBounds(10, 20, 25, 25);
+			picLabel.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	if (manager.getCurrentPost().getFlag()) {
+			    		manager.getCurrentPost().setFlagFalse();
+			    		onViewChangeClick();
+			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			    	}
+			    	else {
+			    		manager.getCurrentPost().setFlagTrue();
+			    		onViewChangeClick();
+			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			    	}
+			    }
+		    });
+			panel.add(picLabel);
+		}
 	
 		panel.setPreferredSize(new Dimension(currentFrame.getWidth(), gridy));
 		return panel;
 	}
+	
+	private JPanel createResponseBox(Response r) {
+		JPanel panel = new JPanel();
+		int gridYLoc = 5;
+		
+		panel.setBounds(0, 0, 600, 100); // Needs to be adjusted based on size of text ... 
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		panel.setBorder(BorderFactory.createEtchedBorder());
+		
+		JTextArea txResponseBox = new JTextArea(r.getPostBody());
+		txResponseBox.setWrapStyleWord(true);
+		txResponseBox.setLineWrap(true);
+		txResponseBox.setFocusable(true);
+		txResponseBox.setOpaque(false);
+		txResponseBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txResponseBox.setSize(getPreferredSize());
+		txResponseBox.setBounds(40, gridYLoc, 545, txResponseBox.getPreferredSize().height);
+		gridYLoc += txResponseBox.getHeight() + 20;
+		panel.add(txResponseBox);
+		
+		JLabel lblScore = new JLabel("" + r.getScore());
+		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScore.setVerticalAlignment(SwingConstants.CENTER);
+		lblScore.setBounds(10, 30, 20, 10);
+		panel.add(lblScore);
+		
+		JButton btnUpVote = new JButton("Up");
+		btnUpVote.setBounds(10, 5, 20, 20);
+		panel.add(btnUpVote);
+		
+		JButton btnDownVote = new JButton("Down");
+		btnDownVote.setBounds(10, 45, 20, 20);
+		panel.add(btnDownVote);
+		
+		JLabel lblUidLable = new JLabel("By:");
+		lblUidLable.setBounds(60, gridYLoc, 34, 13);
+		panel.add(lblUidLable);
+		
+		JLabel lblUserId = new JLabel();
+		if (manager.isUserAdmin(r.getUser())) {
+			lblUserId = new JLabel("(ADMIN) " + r.getUser().getId());
+			lblUserId.setForeground(Color.GREEN.darker().darker());
+		}
+		else {
+			lblUserId = new JLabel(r.getUser().getId());
+			lblUserId.setForeground(Color.BLUE.darker());
+		}
+		lblUserId.setBounds(86, gridYLoc, lblUserId.getPreferredSize().width + 10, 13);
+		lblUserId.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblUserId.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onViewChangeClick();
+				manager.setCurrentCategory(null);
+				manager.setCurrentGroup(null);
+				new ProfileView(manager, topBar, currentFrame, currentFrame.getSize(), r.getUser());					
+			}
+		});
+		panel.add(lblUserId);
+		
+		JLabel lblPostedLabel = new JLabel("Posted:");
+		lblPostedLabel.setBounds(410, gridYLoc, 45, 13);
+		panel.add(lblPostedLabel);
+		
+		JLabel lblPostedDate = new JLabel(manager.getSimpleDate(r.getTime()) + ", " + manager.getSimpleTime(r.getTime()));
+		lblPostedDate.setBounds(460, gridYLoc, 130, 13);
+		panel.add(lblPostedDate);
+		
+//		gridYLoc += 18;
+		
+		panel.setBounds(0, 0, 600, Math.max(gridYLoc-10, 40));
+		
+		return panel;
+	}
+	
 	
 	
 	private JPanel createResponsesPane() {
@@ -269,19 +390,57 @@ public class ViewPostView extends JFrame {
 		responsePane.setLayout(null);
 
 		for (Response r : alResponse) {
+			JPanel responseBox = createResponseBox(r);
+			responseBox.setBounds(40, gridLocY, responseBox.getSize().width + padding, responseBox.getSize().height + padding);
 			
-			JTextArea responseArea = new JTextArea(r.getPostBody());
-			responseArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			responseArea.setBounds(40, gridLocY, 550, responseArea.getPreferredSize().height + padding);
-			gridLocY += responseArea.getHeight() + padding;
-			responseArea.setEditable(false);
-			responsePane.add(responseArea);
+		if(manager.getCurrentUser() instanceof Admin) {
+			JLabel picLabel = new JLabel();
+			try {
+				if (r.getFlag()) {
+					BufferedImage isFlagPic;
+					isFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmall.png"));
+					JLabel isFlaggedPic = new JLabel(new ImageIcon(isFlagPic));
+					picLabel = isFlaggedPic;
+				}
+				else {
+					BufferedImage notFlagPic;
+					notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+					JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+					picLabel = notFlaggedPic;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			picLabel.setBounds(10, gridLocY, 25, 25);
+			picLabel.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			    	if (r.getFlag()) {
+			    		r.setFlagFalse();
+			    		onViewChangeClick();
+			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			    	}
+			    	else {
+			    		r.setFlagTrue();
+			    		onViewChangeClick();
+			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			    	}
+			    }
+		    });
+			responsePane.add(picLabel);
+		}
+				
+
+			gridLocY += responseBox.getHeight() + padding;			
+			responsePane.add(responseBox);
 		}
 		responsePane.setPreferredSize(new Dimension(currentFrame.getWidth(), gridLocY));
 		return responsePane;
 	}
 	
 	private void displayGUI() {
+		
 		currentFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 		currentFrame.getContentPane().add(topBar, BorderLayout.NORTH);
 		currentFrame.setTitle("This is the Post view");
@@ -300,11 +459,16 @@ public class ViewPostView extends JFrame {
 		mainPanel.add(viewResponsePanel, BorderLayout.SOUTH);
 		
 		JScrollPane scrollPanel = new JScrollPane(mainPanel);
-		scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPanel.setSize(dim);
-		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() { 
+			   	scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			   	scrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			   	scrollPanel.setSize((int) dim.getWidth()-15, (int) dim.getHeight()-60);
+			   	scrollPanel.getVerticalScrollBar().setValue(0);
+			   	scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+			}
+		});
 		currentFrame.getContentPane().add(scrollPanel, BorderLayout.CENTER);
-		
 		currentFrame.setVisible(true);
 	}
 }
