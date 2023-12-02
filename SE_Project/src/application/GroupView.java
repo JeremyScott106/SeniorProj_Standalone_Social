@@ -135,6 +135,25 @@ public class GroupView extends JFrame {
 
 		}
 		
+			// prevents banned user from posting
+		else if (manager.isUserBannedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are banned from this group!");
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+		}
+		
+			// prevents suspended user from posting
+		else if (manager.isUserSuspendedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are suspended until " + manager.getSuspensionEndDate(manager.getSuspensions_ByUsernameGroup(manager.getCurrentUser(), manager.getCurrentGroup())));
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+		}
+		
+			// not in group, and not suspended or banned
 		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			
 			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
@@ -165,6 +184,7 @@ public class GroupView extends JFrame {
 			titlePanel.add(joinGroup);
 		}
 		
+			// in group and not in trouble
 		else {
 			JButton newPost = new JButton("Create New Post");
 			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));

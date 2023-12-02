@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class SystemManager {
@@ -758,6 +759,17 @@ public class SystemManager {
 		 g.addSuspended(s);
  	 }
 	 
+	 //US28 - Administrator can suspend a User from a group and they will have a cooling period
+	 // FIXME: Add unit tests
+	 public void suspendUser(User u, Group g, int days) {
+		 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		 Date start = new Date(new Date().getTime());
+		 Date end = new Date(new Date().getTime() + 86400000 * days);
+		 String timeStampStart = sdf.format(start);
+		 String timeStampStop = sdf.format(end);
+		 g.addSuspended(new Suspended(u,g, timeStampStart, timeStampStop));
+ 	 }
+	 
 	 //test:1
 	 // return a list of names of members
 	 //US29 - Administrator can view a list of Users and the corresponding group(s) they are suspendend from
@@ -778,8 +790,20 @@ public class SystemManager {
 		 return suspensions;
 	 }
 	 
+	 // return a suspension for a particular user and group
+	 // FIXME: add unit tests
+	 public Suspended getSuspensions_ByUsernameGroup(User u, Group g){
+		 return g.getMemberInSuspended(u.getId());
+	 }
+	 
+	 // return string of suspension end date / time
+	 // FIXME: add unit tests
+	 public String getSuspensionEndDate(Suspended s) {
+		 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		 return sdf.format(s.getExpiredDate());
+	 }
+	 
 	 //test:1
-	 //FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
 	 }
@@ -821,15 +845,33 @@ public class SystemManager {
 		g.addMember(m);
 		g.removeSuspended(s);
 	}
+	
+	//US30 - Administrator can reinstate a suspended user to good standing in a group
+	// removal and re-adding the membership is not needed, and actually not preferred
+	//FIXME: Add unit tests
+	public void reinstateSuspendedUser(Suspended s) {
+		Group g = s.getGroup();
+		g.removeSuspended(s);
+	}
 
 	//test:1
 	//US31 - Administrator can ban a user from a group
 	public void banUser(Banned b) {
 		 User u = b.getUser();
 		 Group g = b.getGroup();
+		 @SuppressWarnings("unused")
 		 membership m = g.getMembership(u.getId());
-		 g.removeMember(m);
+//		 g.removeMember(m);		// Keep as member
 		 g.addBanned(b);
+	 }
+	
+	//FIXME: Add unit tests
+	public void banUser(User u, Group g) {
+		Banned b = new Banned(u, g);
+		@SuppressWarnings("unused")
+		membership m = g.getMembership(u.getId());
+//		g.removeMember(m);		// Keep as member
+		g.addBanned(b);
 	 }
 	
 	//test:1 

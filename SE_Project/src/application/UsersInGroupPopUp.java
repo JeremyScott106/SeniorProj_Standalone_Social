@@ -14,6 +14,7 @@ public class UsersInGroupPopUp extends JDialog {
 	private SystemManager manager;
 	private JFrame listUsers;
 	private JPanel usersPanel;
+	private JTextField txfSuspendTime;
 
 	public UsersInGroupPopUp(SystemManager manager) {
 		this.manager = manager;
@@ -35,14 +36,41 @@ public class UsersInGroupPopUp extends JDialog {
 			JOptionPane.showMessageDialog(null, "Current Group Is NULL, check backend for issues");
 			return null;
 		}
+		
+		if (manager.getCurrentUser() instanceof Admin) {
+			int gridXLoc = 10;
+			JLabel lblSuspendTime = new JLabel("Amount of days to suspend user for:");
+			lblSuspendTime.setFont(new Font("Tahoma", Font.BOLD, 10));
+			lblSuspendTime.setForeground(Color.BLACK);
+			lblSuspendTime.setBounds(gridXLoc, gridYLoc, lblSuspendTime.getPreferredSize().width+15, 25);
+			usersPanel.add(lblSuspendTime);
+			
+			gridXLoc += lblSuspendTime.getSize().width + 10;
+			
+			txfSuspendTime = new JTextField();
+			txfSuspendTime.setBounds(gridXLoc, gridYLoc, 50, 25);
+			usersPanel.add(txfSuspendTime);
+			
+			gridYLoc += txfSuspendTime.getSize().height + padding;
+		}
 
 		ArrayList<User> alUsers = manager.getUsersInGroup(manager.getCurrentGroup());
 
 			// adds users to panel
 		for (User u : alUsers) {
+			
 				// This section creates the username label, non-clickable because it is in a pop-up
 			JLabel lblUid = new JLabel(u.getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
+			if (manager.isUserBannedFromGroup(u, manager.getCurrentGroup())) {
+				lblUid.setForeground(Color.RED.darker().darker());
+				lblUid.setText(u.getId() + " is banned forever");
+				lblUid.setBounds(10, gridYLoc, lblUid.getPreferredSize().width+10, 25);
+				usersPanel.add(lblUid);
+				gridYLoc += lblUid.getSize().height + padding;	
+				continue;
+			}
+							
 			lblUid.setForeground(Color.BLACK);
 			lblUid.setBounds(10, gridYLoc, lblUid.getPreferredSize().width+10, 25);
 
@@ -52,26 +80,65 @@ public class UsersInGroupPopUp extends JDialog {
 				JButton btnBanUser = new JButton();
 				JButton btnSuspendUser = new JButton();
 				
-				btnBanUser = new JButton("Ban");
-				
-				
-				btnBanUser.setFont(new Font("Tahoma", Font.BOLD, 15));
-				btnBanUser.setBounds(gridXLoc, gridYLoc, btnBanUser.getPreferredSize().width + 10, 25);
-				btnBanUser.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent e) {
-
-					}
-				});
+				if (manager.isUserBannedFromGroup(u, manager.getCurrentGroup())) {
+					btnBanUser = new JButton("User Banned");
+					btnBanUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+					btnBanUser.setBounds(gridXLoc, gridYLoc, btnBanUser.getPreferredSize().width + 10, 25);
+				}
+				else {
+					btnBanUser = new JButton("Ban");
+					btnBanUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+					btnBanUser.setBounds(gridXLoc, gridYLoc, btnBanUser.getPreferredSize().width + 10, 25);
+						// TODO: Need a verification pop-up.  This can not be undone
+					btnBanUser.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent e) {
+			            	manager.banUser(u, manager.getCurrentGroup());
+			            	listUsers.dispose();
+			            	new UsersInGroupPopUp(manager);
+						}
+					});
+				}
 				gridXLoc += btnBanUser.getSize().width + 5;
 				
-				btnSuspendUser = new JButton("Suspend");
-				btnSuspendUser.setFont(new Font("Tahoma", Font.BOLD, 15));
-				btnSuspendUser.setBounds(gridXLoc, gridYLoc, btnSuspendUser.getPreferredSize().width + 10, 25);
-				btnSuspendUser.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent e) {
-
-					}
-				});
+				if (manager.isUserSuspendedFromGroup(u, manager.getCurrentGroup())) {
+					lblUid.setForeground(Color.RED.darker().darker());
+					lblUid.setText(u.getId() + " is suspended until " + manager.getSuspensionEndDate(manager.getSuspensions_ByUsernameGroup(u, manager.getCurrentGroup())));
+					btnSuspendUser = new JButton("Cancel Suspension");
+					btnSuspendUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+					btnSuspendUser.setBounds(gridXLoc, gridYLoc, btnSuspendUser.getPreferredSize().width + 10, 25);
+					btnSuspendUser.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent e) {
+			            	manager.reinstateSuspendedUser(manager.getSuspensions_ByUsernameGroup(u, manager.getCurrentGroup()));
+			            	listUsers.dispose();
+			            	new UsersInGroupPopUp(manager);
+			            }
+					});
+				}
+				else  {
+					btnSuspendUser = new JButton("Suspend");
+					btnSuspendUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+					btnSuspendUser.setBounds(gridXLoc, gridYLoc, btnSuspendUser.getPreferredSize().width + 10, 25);
+					btnSuspendUser.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent e) {
+			            	int days;
+			            	
+			            	if (txfSuspendTime.getText().isBlank()) {
+			            		JOptionPane.showMessageDialog(null, "Please enter the amount of time to suspend the user");
+			            	}
+			            	else {
+				            	try {
+				            		days = Integer.parseInt(txfSuspendTime.getText());
+				            		manager.suspendUser(u, manager.getCurrentGroup(), days);
+				            	} catch (Exception ex){
+				            		JOptionPane.showMessageDialog(null, "Make sure days enter is an integer");
+				            		System.out.print(ex);
+				            	}
+			            	}
+			            	listUsers.dispose();
+			            	new UsersInGroupPopUp(manager);
+						}
+					});
+				}
 				gridXLoc += btnSuspendUser.getSize().width + 5;
 				
 					// move the previous tag over to make space for ban and suspend buttons
@@ -99,8 +166,10 @@ public class UsersInGroupPopUp extends JDialog {
 		listUsers.setLayout(null);
 		listUsers.setLocationRelativeTo(null);
 		listUsers.setSize(350, 500);
-
 		
+		if (manager.getCurrentUser() instanceof Admin) {
+			listUsers.setSize(750, 500);
+		}
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout(0,0));
