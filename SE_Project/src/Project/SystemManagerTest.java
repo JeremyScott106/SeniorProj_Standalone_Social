@@ -295,7 +295,7 @@ class SystemManagerTest {
 	}
 	
     @Test
-    public void testGetSimpleTime() {
+    void testGetSimpleTime() {
 		SystemManager sm = new SystemManager();
         Date testDate = new Date();
         String formattedTime = sm.getSimpleTime(testDate);
@@ -2010,7 +2010,7 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testUpVotePost() {
+	void testUpVotePost_NewUpVote() {
 
 		SystemManager sm = new SystemManager();
 
@@ -2035,7 +2035,7 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testUpVoteResponse() {
+	void testUpVotePost_Existing_RemoveUpVote() {
 
 		SystemManager sm = new SystemManager();
 
@@ -2043,11 +2043,11 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
 		
-		Voted v = new Voted(testUser, testResponse1);
-		
+		Voted v = new Voted(testUser, testPost1);
+				
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
@@ -2055,12 +2055,13 @@ class SystemManagerTest {
 		testPost1.addNewResponse(testResponse1);
 		
 		sm.upvotePost(v);
+		sm.upvotePost(v);
 
-		assertEquals(1, testResponse1.getScore());
+		assertEquals(0, testPost1.getScore());
 	}
 	
 	@Test
-	void testDownVotePost() {
+	void testUpVotePost_Existing_ChangeToUpVote() {
 
 		SystemManager sm = new SystemManager();
 
@@ -2068,11 +2069,64 @@ class SystemManagerTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
 		
 		Voted v = new Voted(testUser, testPost1);
+				
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
 		
+		sm.downvotePost(v);
+		sm.upvotePost(v);
+
+		assertEquals(1, testPost1.getScore());
+	}
+	
+	@Test
+	void testUpVotePost_Existing_NotVoted() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
+		
+		Voted v = new Voted(testUser, testPost1);
+				
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		testUser.addVoted(v);
+		sm.upvotePost(v);
+
+		assertEquals(1, testPost1.getScore());
+	}
+	
+	
+	@Test
+	void testDownVotePost_NewDownVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
+		
+		Voted v = new Voted(testUser, testPost1);
+				
 		category c = new category("ds");	
 		sm.addCategory(c);
 		c.addGroup(testGroup);
@@ -2085,7 +2139,86 @@ class SystemManagerTest {
 	}
 	
 	@Test
-	void testdownVoteResponse() {
+	void testDownVotePost_Existing_RemoveDownVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
+		
+		Voted v = new Voted(testUser, testPost1);
+				
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.downvotePost(v);
+		sm.downvotePost(v);
+
+		assertEquals(0, testPost1.getScore());
+	}
+	
+	@Test
+	void testDownVotePost_Existing_ChangeToDownVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
+		
+		Voted v = new Voted(testUser, testPost1);
+				
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.upvotePost(v);
+		sm.downvotePost(v);
+
+		assertEquals(-1, testPost1.getScore());
+	}
+	
+	@Test
+	void testDownVotePost_Existing_NotVoted() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);	
+		
+		Voted v = new Voted(testUser, testPost1);
+				
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		testUser.addVoted(v);
+		sm.downvotePost(v);
+
+		assertEquals(-1, testPost1.getScore());
+	}
+	
+	
+	@Test
+	void testUpVoteResponse_NewUpVote() {
 
 		SystemManager sm = new SystemManager();
 
@@ -2104,10 +2237,193 @@ class SystemManagerTest {
 		testGroup.addNewPost(testPost1);
 		testPost1.addNewResponse(testResponse1);
 		
-		sm.downvotePost(v);
+		sm.upvoteResponse(v);
+
+		assertEquals(1, testResponse1.getScore());
+	}
+	
+	@Test
+	void testUpVoteResponse_Existing_RemoveUpVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.upvoteResponse(v);
+		sm.upvoteResponse(v);
+
+		assertEquals(0, testResponse1.getScore());
+	}
+	
+	@Test
+	void testUpVoteResponse_Existing_ChangeToUpVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.downvoteResponse(v);
+		sm.upvoteResponse(v);
+
+		assertEquals(1, testResponse1.getScore());
+	}
+	
+	@Test
+	void testUpVoteResponse_Existing_NotVoted() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		testUser.addVoted(v);
+		sm.upvoteResponse(v);
+
+		assertEquals(1, testResponse1.getScore());
+	}
+	
+	
+	@Test
+	void testDownVoteResponse_NewDownVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.downvoteResponse(v);
 
 		assertEquals(-1, testResponse1.getScore());
 	}
+	
+	@Test
+	void testDownVoteResponse_Existing_RemoveDownVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.downvoteResponse(v);
+		sm.downvoteResponse(v);
+
+		assertEquals(0, testResponse1.getScore());
+	}
+	
+	@Test
+	void testDownVoteResponse_Existing_ChangeToDownVote() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		sm.upvoteResponse(v);
+		sm.downvoteResponse(v);
+
+		assertEquals(-1, testResponse1.getScore());
+	}
+	
+	@Test
+	void testDownVoteResponse_Existing_NotVoted() {
+
+		SystemManager sm = new SystemManager();
+
+		Group testGroup = new Group("Standard Name");
+		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
+		membership m = new membership(testUser, testGroup);
+
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);		
+		Post testPost1 = new Post (m, "I'm posting.", "This is the message", testGroup.getPostId());
+		
+		Voted v = new Voted(testUser, testResponse1);
+		
+		category c = new category("ds");	
+		sm.addCategory(c);
+		c.addGroup(testGroup);
+		testGroup.addNewPost(testPost1);
+		testPost1.addNewResponse(testResponse1);
+		
+		testUser.addVoted(v);
+		sm.downvoteResponse(v);
+
+		assertEquals(-1, testResponse1.getScore());
+	}
+
 	
 	@Test
 	void testGetPosts_ByScore() {
@@ -2173,16 +2489,16 @@ class SystemManagerTest {
 
 
 		Response testResponse1 = new Response(m1, "I disagree.", 1, 0);		
-		Post testPost1 = new Post (m1, "I'm posting.", "This is the message", testGroup.getPostId());
-		Post testPost2 = new Post (m2, "I'm posting.", "This is the message", testGroup.getPostId());
-		Post testPost3 = new Post (m3, "I'm posting.", "This is the message", testGroup.getPostId());
+		Post testPost1 = new Post (m1, "I'm posting1.", "This is the message", testGroup.getPostId());
+		Post testPost2 = new Post (m2, "I'm posting2.", "This is the message", testGroup.getPostId());
+		Post testPost3 = new Post (m3, "I'm posting3.", "This is the message", testGroup.getPostId());
 		
 		Voted v1 = new Voted(testUser1, testPost1);
-		Voted v2 = new Voted(testUser1, testPost1);
-		Voted v3 = new Voted(testUser1, testPost1);
-		Voted v4 = new Voted(testUser2, testPost2);
+		Voted v2 = new Voted(testUser2, testPost1);
+		Voted v3 = new Voted(testUser3, testPost1);
+		Voted v4 = new Voted(testUser1, testPost2);
 		Voted v5 = new Voted(testUser2, testPost2);
-		Voted v6 = new Voted(testUser3, testPost3);
+		Voted v6 = new Voted(testUser1, testPost3);
 
 		category c = new category("ds");	
 		sm.addCategory(c);

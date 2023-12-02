@@ -914,14 +914,52 @@ public class SystemManager {
 		return votes;
 	}
 	
-	//test:2
+	
+	/*
+	 * For upvote a Post:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already upvoted
+	 * 			Remove the upvote and subtract from the Post score
+	 * 			Update the Post in Post.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already downvoted
+	 * 			Change to an upvote, adding to the Post score twice
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an upvote, add to the Post score
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to upvote
+	 * 		Add the voted to the User, add to the Post score
+	 * 		Update text files
+	 */
+	
+	//test:4
 	 public boolean upvotePost(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 
 			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
 			 
 			 if (v1.getUp()) {
-				 return false;
+				 
+				 String findP = v1.getPost().getPostWriteData();
+				 v1.cancelVote();
+				 v1.getPost().subScore();
+				 String replaceP = v1.getPost().getPostWriteData();
+				 
+				 if (writable) {
+					 try {
+						 Voted remove = new Voted(v1.getUser(), v1.getPost());
+						 remove.up();
+						 WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						 WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						 e.printStackTrace();
+					}
+				 }
+				 
+				 return true;
+				 
 			 }
 			 else if (v1.getDown()) {
 				 String findV = v1.getVotedWriteData();
@@ -984,14 +1022,34 @@ public class SystemManager {
 		 }
 	 }
 	 
-	 //FIXME: add tests
+	 //tests:4
 	 public boolean upvoteResponse(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 
 			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
 			 
 			 if (v1.getUp()) {
-				 return false;
+				 
+				 Response r = (Response)v1.getPost();
+				 String findP = r.getResponseWriteData();
+				 v1.cancelVote();
+				 r.subScore();
+				 String replaceP = r.getResponseWriteData();
+				 
+				 if (writable) {
+					 
+					 Voted remove = new Voted(v1.getUser(), v1.getPost());
+					 remove.up();
+					 try {
+						WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+				 return true;
+				 
 			 }
 			 else if (v1.getDown()) {
 				 Response r = (Response) v1.getPost();
@@ -1057,14 +1115,33 @@ public class SystemManager {
 		 }
 	}
 	 
-	 //test:2
+	 //tests:4
 	 public boolean downvotePost(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 
 			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
 			 
 			 if (v1.getDown()) {
-				 return false;
+				 
+				 String findP = v1.getPost().getPostWriteData();
+				 v1.cancelVote();
+				 v1.getPost().addScore();
+				 String replaceP = v1.getPost().getPostWriteData();
+				 
+				 if (writable) {
+					 
+					 Voted remove = new Voted(v1.getUser(), v1.getPost());
+					 remove.down();
+					 try {
+						WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+				 return true;
+				 
 			 }
 			 else if (v1.getUp()) {
 				 String findV = v1.getVotedWriteData();
@@ -1127,14 +1204,34 @@ public class SystemManager {
 		 }
 	}
 	 
-	 //FIXME: add tests
+	 //tests:4
 	 public boolean downvoteResponse(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 
 			 Voted v1 = Validator.getVotedByUserPost(v.getUser(), v.getPost(), v.getUser().getVotedList());
 			 
 			 if (v1.getDown()) {
-				 return false;
+
+				 Response r = (Response)v1.getPost();
+				 String findP = r.getResponseWriteData();
+				 v1.cancelVote();
+				 r.addScore();
+				 String replaceP = r.getResponseWriteData();
+				 
+				 if (writable) {
+					 
+					 Voted remove = new Voted(v1.getUser(), v1.getPost());
+					 remove.down();
+					 try {
+						WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+				 return true;
+				 
 			 }
 			 else if (v1.getUp()) {
 				 Response r = (Response)v1.getPost();
