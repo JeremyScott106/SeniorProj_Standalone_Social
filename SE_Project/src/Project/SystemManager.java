@@ -514,6 +514,30 @@ public class SystemManager {
 		return false;
 	}
 	
+	//test:2
+	// returns true if the user is banned from the group
+	public Boolean isUserBannedFromGroup(User u, Group g) {
+		ArrayList<Banned> bannedUsers = g.getBanned();
+		for (Banned b: bannedUsers) {
+			if(b.getUser() == u) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//test:2
+	// returns true if the user is Suspended from the group
+	public Boolean isUserSuspendedFromGroup(User u, Group g) {
+		ArrayList<Suspended> suspendedUsers = g.getSuspended();
+		for (Suspended s: suspendedUsers) {
+			if(s.getUser() == u) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	//test:1
 	// returns an arraylist of groups that a user is in
 	 public ArrayList<Group> getGroupsByUser(User user) {

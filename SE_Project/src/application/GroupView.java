@@ -166,6 +166,19 @@ public class GroupView extends JFrame {
 		}
 		
 		else {
+			JButton newPost = new JButton("Create New Post");
+			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+			newPost.setBounds(gridx, 45, newPost.getPreferredSize().width + padding, 25);
+			titlePanel.add(newPost);
+			newPost.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	onViewChangeClick();
+	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				}
+			});
+			gridx += newPost.getWidth() + padding;
+			
 			String mbrDate = manager.getSimpleDate(manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate());
 			String mbmSince = "Member Since: " + mbrDate;
 
@@ -194,21 +207,6 @@ public class GroupView extends JFrame {
 	            }
 	        });
 			titlePanel.add(leaveGroup);
-		}
-		
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
-			JButton newPost = new JButton("Create New Post");
-			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int x2 = currentFrame.getBounds().width - (newPost.getPreferredSize().width + padding + 50);
-
-			newPost.setBounds(x2, 45, newPost.getPreferredSize().width + padding, 25);
-			titlePanel.add(newPost);
-			newPost.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	onViewChangeClick();
-	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-				}
-			});
 		}
 		
 		// View all users in the group

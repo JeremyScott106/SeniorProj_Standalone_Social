@@ -1,5 +1,6 @@
 package application;
 
+import Project.Admin;
 import Project.SystemManager;
 import Project.User;
 import java.awt.*;
@@ -39,14 +40,50 @@ public class UsersInGroupPopUp extends JDialog {
 
 			// adds users to panel
 		for (User u : alUsers) {
+				// This section creates the username label, non-clickable because it is in a pop-up
 			JLabel lblUid = new JLabel(u.getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
 			lblUid.setForeground(Color.BLACK);
 			lblUid.setBounds(10, gridYLoc, lblUid.getPreferredSize().width+10, 25);
 
-			gridYLoc += lblUid.getSize().height + padding;				// adjust YLoc to next location
+				// This section is for admin tools
+			if (manager.getCurrentUser() instanceof Admin) {
+				int gridXLoc = 10;
+				JButton btnBanUser = new JButton();
+				JButton btnSuspendUser = new JButton();
+				
+				btnBanUser = new JButton("Ban");
+				
+				
+				btnBanUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+				btnBanUser.setBounds(gridXLoc, gridYLoc, btnBanUser.getPreferredSize().width + 10, 25);
+				btnBanUser.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+
+					}
+				});
+				gridXLoc += btnBanUser.getSize().width + 5;
+				
+				btnSuspendUser = new JButton("Suspend");
+				btnSuspendUser.setFont(new Font("Tahoma", Font.BOLD, 15));
+				btnSuspendUser.setBounds(gridXLoc, gridYLoc, btnSuspendUser.getPreferredSize().width + 10, 25);
+				btnSuspendUser.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+
+					}
+				});
+				gridXLoc += btnSuspendUser.getSize().width + 5;
+				
+					// move the previous tag over to make space for ban and suspend buttons
+				lblUid.setBounds(gridXLoc, gridYLoc, lblUid.getPreferredSize().width+10, 25);
+				usersPanel.add(btnBanUser);
+				usersPanel.add(btnSuspendUser);
+				
+			}
 			
 			usersPanel.add(lblUid);
+				// adjust YLoc to next location
+			gridYLoc += lblUid.getSize().height + padding;	
 		}
 		
 		
@@ -62,6 +99,8 @@ public class UsersInGroupPopUp extends JDialog {
 		listUsers.setLayout(null);
 		listUsers.setLocationRelativeTo(null);
 		listUsers.setSize(350, 500);
+
+		
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout(0,0));

@@ -2282,5 +2282,91 @@ class SystemManagerTest {
 
 		assertEquals(true, manager.isUserOfGroup(u1, g2));
 	}
+	
+	@SuppressWarnings("unused")
+	@Test
+	void testIsUserBannedFromGroup_Success() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		membership m = new membership(u1, g1);
+		
+		Banned b = new Banned(u1, g1);
+		manager.banUser(b);
+		
+		boolean result = manager.isUserBannedFromGroup(u1, g1);
+		
+		assertEquals(true, result);
+		
+	}
+	
+	@SuppressWarnings("unused")
+	@Test
+	void testIsUserSuspendedFromGroup_Success() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m = new membership(u1, g1);
+		Suspended s = new Suspended(u1, g1);
+		manager.suspendUser(s);
+		
+		boolean result = manager.isUserSuspendedFromGroup(u1, g1);
+		
+		assertEquals(true, result);
+	}
+	
+	@SuppressWarnings("unused")
+	@Test
+	void testIsUserBannedFromGroup_Fail() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g1);
+		membership m5 = new membership(u5, g1);
+		
+		Banned b = new Banned(u1, g1);
+		manager.banUser(b);
+		
+		boolean result = manager.isUserBannedFromGroup(u2, g1);
+		
+		assertEquals(false, result);
+		
+	}
+	
+	@SuppressWarnings("unused")
+	@Test
+	void testIsUserSuspendedFromGroup_Fail() {
+		SystemManager manager = new SystemManager();
+		Group g1 = new Group("Test1");
+		
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		
+		membership m1 = new membership(u1, g1);
+		membership m2 = new membership(u2, g1);
+		membership m3 = new membership(u3, g1);
+		membership m4 = new membership(u4, g1);
+		membership m5 = new membership(u5, g1);
+		
+		Suspended s = new Suspended(u1, g1);
+		manager.suspendUser(s);
+		
+		boolean result = manager.isUserSuspendedFromGroup(u2, g1);
+		
+		assertEquals(false, result);
+	}
 }
 
