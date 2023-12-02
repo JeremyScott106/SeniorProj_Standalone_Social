@@ -3,13 +3,9 @@ import Project.Admin;
 import Project.Group;
 import Project.SystemManager;
 import Project.User;
-import Project.category;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -20,6 +16,7 @@ public class ProfileView extends JFrame {
 	private SystemManager manager;
 	private JFrame currentFrame;
 	private User displayedUser;
+	@SuppressWarnings("unused")
 	private JTextArea aboutMe;
 	
 	public ProfileView() {

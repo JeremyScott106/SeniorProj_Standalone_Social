@@ -676,6 +676,7 @@ class ValidatorTest {
 		assertEquals(p1, sm.getPostByGroupId(testGroup1, 1));
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	void testGetPostFromId_Failure() {
 		SystemManager sm = new SystemManager();
