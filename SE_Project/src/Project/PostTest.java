@@ -153,6 +153,7 @@ public class PostTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 
 		Post testPost1 = new Post (testUser, testGroup, "10/10/2022 12:27 PM", "I'm posting.", "This is the message", 1, 2, 0);
+		testPost1.setFlagTrue();
 		
 		String actual = testPost1.getPostWriteData();
 		
@@ -162,9 +163,12 @@ public class PostTest {
 							"@GNAME=Standard Name\n" + 
 							"@DATETIME=10/10/2022 12:27 PM\n" + 
 							"@TITLE=I'm posting.\n" + 
-							"@BODY=This is the message\n" + 
+							"@BODYSTART\n" +
+							"This is the message\n" + 
+							"@BODYEND\n" + 
 							"@PSTID=1\n" + 
-							"@SCORE=2\n" + 
+							"@FLAG\n" + 
+							"@SCORE=2\n" +
 							"@RESPONSEID=0\n" +
 							"@END\n\n";
 		

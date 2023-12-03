@@ -37,7 +37,7 @@
 @GROUP
 @NAME=Comics
 @CATEGORY=Interest
-@POSTID=3
+@POSTID=4
 @END
 
 @START

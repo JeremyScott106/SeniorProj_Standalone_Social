@@ -223,11 +223,11 @@ class SystemManagerTest {
 
 		ArrayList<User> expected = new ArrayList<>();
 
-		expected.add(u3);
-		expected.add(u2);
-		expected.add(u4);
 		expected.add(u5);
 		expected.add(u1);
+		expected.add(u4);
+		expected.add(u2);
+		expected.add(u3);
 
 		assertEquals(expected, actual);
 
@@ -646,11 +646,11 @@ class SystemManagerTest {
 		
 		ArrayList<Admin> expected = new ArrayList<Admin>();
 		
-		expected.add(a3);
-		expected.add(a2);
-		expected.add(a4);
 		expected.add(a5);
 		expected.add(a1);
+		expected.add(a4);
+		expected.add(a2);
+		expected.add(a3);
 		
 		assertEquals(expected, actual);
   }
@@ -1134,7 +1134,7 @@ class SystemManagerTest {
 		
 		ArrayList<Admin> actual = manager.getAdmins_Alphabetically();
 		
-		String[] expected = {"Grayson", "Himanshu", "Jeremy", "John", "Ryan"};
+		String[] expected = {"John", "Ryan", "Himanshu", "Grayson", "Jeremy"};
 		
 		boolean namesMatch = true;
 		
@@ -1698,12 +1698,9 @@ class SystemManagerTest {
 
 		testGroup1.addBanned(b5);
 		
-		ArrayList<membership> expected = new ArrayList<>();
+		ArrayList<Banned> expected = new ArrayList<>();
 		
-		expected.add(m1);
-		expected.add(m2);
-		expected.add(m3);
-		expected.add(m4);
+		expected.add(b5);
 
 		sm.addUser(u1);
 		sm.addUser(u2);
@@ -1712,7 +1709,7 @@ class SystemManagerTest {
 		sm.addUser(u5);
 		
 		sm.banUser(b5);
-		ArrayList<membership> actual = testGroup1.getMembers();
+		ArrayList<Banned> actual = testGroup1.getBanned();
 
 		assertEquals(expected, actual);
 	}

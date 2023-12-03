@@ -203,7 +203,7 @@ public class SystemManager {
 		}
 		else {							//If validator returned a category
 			
-			if (!Validator.validateGroupNameExists(c.getGroupsAlphabetically(), groupName)) {
+			if (!Validator.validateGroupNameExists(this.getAllGroups(), groupName)) {
 			
 				c.createGroup(groupName);	//create group within category, returns true/false depending on if group was created	NOTICE: This may require more variables as the Group class is updated
 				if (writable) {					//If there is a file to write to

@@ -594,6 +594,7 @@ public class ReadFile {
 		boolean gotPostId = false;			//Set gotPostId to true once it has been Read
 		String scoreStr = "";			//Score of the Post
 		boolean gotScore = false;			//Set gotScore to true once it has been Read
+		boolean flag = false;
 		String responseID = "";
 		boolean gotResponseID = false;
 		
@@ -662,9 +663,13 @@ public class ReadFile {
 					throw new IncorrectFileFormatException();				//Throw exception
 				}
 				else {													//Otherwise
-					postBody = line.substring(6);							//Get the Post Body from the line
-					gotPostBody = true;										//Set gotPostBody to true
-					continue;												//continue to the next line
+					line = reader.nextLine();								//continue to the next line
+					while (!line.equals("@BODYEND")) {						//Loop through lines until the end of the Post Body
+						postBody += line + "\n";										//Concat lines to Post Body
+						line = reader.nextLine();								//continue to the next line
+					}
+					gotPostBody = true;
+					continue;
 				}
 			}
 			else if (sub.equals("@PSTI")) {						//If sub rules the current line contains the PostID
@@ -685,6 +690,15 @@ public class ReadFile {
 					scoreStr = line.substring(7);							//Get the Score from the line
 					gotScore = true;										//Set gotScore to true
 					continue;												//continue to the next line
+				}
+			}
+			else if (sub.equals("@FLAG")) {
+				if (flag) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					flag = true;
+					continue;
 				}
 			}
 			else if (sub.equals("@RESP")) {	
@@ -720,6 +734,10 @@ public class ReadFile {
 				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score, rID);	//Create the Post
 
 				g.addExistingPost(p);	//Add the Post to the Group
+				
+				if (flag) {
+					p.setFlagTrue();
+				}
 
 			}
 			else {		//If either the Group or User does not Exist
@@ -747,6 +765,7 @@ public class ReadFile {
 		boolean gotParentalId = false;			//Set to true once ParentalID has been Read
 		String scoreStr = "";				//Score of the Response
 		boolean gotScore = false;				//Set to true once Score has been Read
+		boolean flag = false;
 		String responseID = "";
 		boolean gotResponseID = false;
 		
@@ -805,7 +824,11 @@ public class ReadFile {
 					throw new IncorrectFileFormatException();	//Throw exception
 				}
 				else {										//Otherwise
-					responseBody = line.substring(6);			//Get the Response Body from the line
+					line = reader.nextLine();
+					while (!line.equals("@BODYEND")) {
+						responseBody += line + "\n";
+						line = reader.nextLine();
+					}
 					gotResponseBody = true;						//Set gotResponseBody to true
 					continue;									//Continue to the next line
 				}
@@ -828,6 +851,15 @@ public class ReadFile {
 					scoreStr = line.substring(7);				//Get the Score from the line
 					gotScore = true;							//Set gotScore to true
 					continue;									//Continue to the next line
+				}
+			}
+			else if (sub.equals("@FLAG")) {
+				if (flag) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					flag = true;
+					continue;
 				}
 			}
 			else if (sub.equals("@RESP")) {	
@@ -860,8 +892,10 @@ public class ReadFile {
 			int rID = Integer.parseInt(responseID);
 			Post p = manager.getPostByGroupId(g, id);
 			if (g != null && u != null && p != null) {
-				
 				Response r = new Response(u, g, dateTime, responseBody, id, score, rID);	//Create the Response
+				if (flag) {
+					r.setFlagTrue();
+				}
 				p.addExistingResponse(r);													//Add the Response to the Post
 				
 			}
