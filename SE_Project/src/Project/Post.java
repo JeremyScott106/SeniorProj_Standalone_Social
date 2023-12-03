@@ -16,7 +16,7 @@ public class Post implements Comparable<Post> {
 	private ArrayList<Response> responses;
 	protected Date dateTime;
     protected int score;
-    private boolean flag;
+    protected boolean flag;
     private int id;
     
     

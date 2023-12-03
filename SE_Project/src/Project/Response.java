@@ -23,7 +23,7 @@ public class Response extends Post{
 	}
 	
 
-	
+	//FIXME: add tests
 	public String getResponseWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
@@ -35,8 +35,12 @@ public class Response extends Post{
 				"@DATETIME=" + date + "\n" + 
 				"@BODY=" + postBody + "\n" + 
 				"@PARENTALID=" + parentalId + "\n" +
-				"@SCORE=" + score + "\n" +
-				"@END\n\n";
+				"@SCORE=" + score + "\n";
+		
+		if (flag) {
+			responseData += "@FLAG\n";
+		}
+		responseData += "@END\n\n";
 		
 		return responseData;
 	}

@@ -749,6 +749,7 @@ public class ReadFile {
 		boolean gotParentalId = false;			//Set to true once ParentalID has been Read
 		String scoreStr = "";				//Score of the Response
 		boolean gotScore = false;				//Set to true once Score has been Read
+		boolean flag = false;
 		
 		
 		
@@ -830,6 +831,15 @@ public class ReadFile {
 					continue;									//Continue to the next line
 				}
 			}
+			else if (sub.equals("@FLAG")) {
+				if (flag) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					flag = true;
+					continue;
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();	//Throw exception
 			}
@@ -851,6 +861,9 @@ public class ReadFile {
 			if (g != null && u != null && p != null) {
 				
 				Response r = new Response(u, g, dateTime, responseBody, id, score);	//Create the Response
+				if (flag) {
+					r.setFlagTrue();
+				}
 				p.addResponse(r);													//Add the Response to the Post
 				
 			}
