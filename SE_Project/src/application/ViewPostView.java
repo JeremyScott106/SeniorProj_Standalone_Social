@@ -143,7 +143,7 @@ public class ViewPostView extends JFrame {
 			});
 
 		}
-			// Checks if member of group, if not, give option to join group.  Need to add option to look if user is banned or suspended
+			// Checks if member of group, if not, give option to join group
 		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			
 			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
@@ -309,9 +309,25 @@ public class ViewPostView extends JFrame {
 		
 		gridy += 18;
 		
-
-			// if member of the group, show response box
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
+			// prevents banned user from posting
+		if (manager.isUserBannedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are banned from this group!");
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(60, gridy, 416, 124);
+			gridy += memberStatus.getHeight() + padding;
+			panel.add(memberStatus);
+		}
+		
+			// prevents suspended user from posting
+		else if (manager.isUserSuspendedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are suspended until " + manager.getSuspensionEndDate(manager.getSuspensions_ByUsernameGroup(manager.getCurrentUser(), manager.getCurrentGroup())));
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(60, gridy, 416, 124);
+			gridy += memberStatus.getHeight() + padding;
+			panel.add(memberStatus);
+		}
+				// if member of the group, show response box
+		else if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
 			txfPostBody = new JTextArea();
 			txfPostBody.setColumns(10);
 			JScrollPane scrollPane= new JScrollPane(txfPostBody);
@@ -335,18 +351,6 @@ public class ViewPostView extends JFrame {
 			});
 			
 			panel.add(btnRespond);
-				
-				// Probably can remove cancel button, seems pointless to have a back button here
-			JButton btnBack = new JButton("Cancel");
-			btnBack.setBounds(246, gridy, 85, 21);
-			gridy += scrollPane.getHeight() + padding;
-			btnBack.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			    	onViewChangeClick();
-			    	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-			    }
-			});
-			panel.add(btnBack);
 		}
 		
 				// Add Flag to the main post only if user is an admin
