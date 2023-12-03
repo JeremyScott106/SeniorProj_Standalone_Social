@@ -104,6 +104,17 @@ public class ViewPostView extends JFrame {
             }
         });
 		
+		JButton btnRefreshPage = new JButton("Refresh");
+		btnRefreshPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
+		titlePanel.add(btnRefreshPage);
+		
 		//	SECOND ROW OF LABLES //
 		gridx = 20;											// resets gridx back to 20
 			// checks if user is logged in, if not, show login, otherwise, give login information
@@ -157,6 +168,7 @@ public class ViewPostView extends JFrame {
 			    	else {
 			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
 			    	}
+			    	btnRefreshPage.doClick();
 	            }
 	        });
 			titlePanel.add(joinGroup);
@@ -173,16 +185,7 @@ public class ViewPostView extends JFrame {
 			titlePanel.add(memberStatus);
 		}
 		
-		JButton btnRefreshPage = new JButton("Refresh");
-		btnRefreshPage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onViewChangeClick();
-				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-			}
-		});
-		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
-		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
-		titlePanel.add(btnRefreshPage);
+
 		
 			// May remove, not really needed anymore, this was an original need with old setup.
 		JButton btnBack = new JButton("Back");
@@ -387,6 +390,36 @@ public class ViewPostView extends JFrame {
 			panel.add(picLabel);
 		}
 		
+				// Add Flag to the main post only if user
+		if(manager.getCurrentUser() instanceof User) {
+			JLabel picLabel = new JLabel();						// Establish button
+			try {
+				BufferedImage notFlagPic;
+				notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+				JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+				picLabel = notFlaggedPic;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			picLabel.setBounds(600, 20, 25, 25);			// Location of the flag in the panel
+			picLabel.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			        int input = JOptionPane.showConfirmDialog(null, "Do you want flag this post for admin to review?", "Select an Option...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+					
+			        // 0=yes, 1=no
+			        if (input == 0) {
+			        	manager.getCurrentPost().setFlagTrue();
+		    			JOptionPane.showMessageDialog(null, "Message has been flagged for admin to see");
+			        }
+
+			    }
+		    });
+			panel.add(picLabel);
+		}
+		
 
 			// panel size, Not sure how gridy is the height, but it is.
 		panel.setPreferredSize(new Dimension(currentFrame.getWidth(), gridy));
@@ -514,7 +547,7 @@ public class ViewPostView extends JFrame {
 			JPanel responseBox = createResponseBox(r);
 			responseBox.setBounds(40, gridLocY, responseBox.getSize().width + padding, responseBox.getSize().height + padding);
 			
-			// As before, only admins see the flags
+			// As before, only admins edit the flags
 			if(manager.getCurrentUser() instanceof Admin) {
 				JLabel picLabel = new JLabel();
 				try {
@@ -554,6 +587,40 @@ public class ViewPostView extends JFrame {
 			    });
 				responsePane.add(picLabel);
 			}
+			
+			// As before, Users can flag responses, but can not edit the same flags.
+			if(manager.getCurrentUser() instanceof User) {
+				JLabel picLabel = new JLabel();
+				try {
+					BufferedImage notFlagPic;
+					notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+					JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+					picLabel = notFlaggedPic;
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				picLabel.setBounds(10, gridLocY, 25, 25);		// Flag Location
+				
+					// Add ability to change the value of a flag, then refresh the screen
+				picLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int input = JOptionPane.showConfirmDialog(null, "Do you want flag this post for admin to review?", "Select an Option...",
+								JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+						
+				        // 0=yes, 1=no
+				        if (input == 0) {
+				        	r.setFlagTrue();
+			    			JOptionPane.showMessageDialog(null, "Message has been flagged for admin to see");
+				        }
+				    }
+			    });
+				responsePane.add(picLabel);
+			}
+			
+			
 			gridLocY += responseBox.getHeight() + padding;			
 			responsePane.add(responseBox);
 		}
