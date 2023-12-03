@@ -199,11 +199,11 @@ class ComparatorTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
+		Response r1 = new Response(m, "noooo", 1, 0);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		Post testPost2 = new Post (m, "I'm posting.", "This is the message", 2);
 		r1.addScore();
-		testPost1.addResponse(r1);
+		testPost1.addNewResponse(r1);
 		testPost1.addScore();
 		testPost1.addScore();
 		testPost2.addScore();

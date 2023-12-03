@@ -30,6 +30,12 @@ public class Voted {
 	}
 	
 	//Gets to where a vote can be upvoted 
+	//FIXME: add tests
+	public void cancelVote() {
+		hasUpvoted = false;
+		hasDownvoted = false;
+	}
+
 	//test:1
 	public boolean getUp(){
 		return hasUpvoted;
@@ -65,6 +71,46 @@ public class Voted {
 			return false;
 		}
 		return false;
+	}
+	
+	
+	
+	public String getVotedWriteData() {
+		
+		String msg = "@START\n" + 
+						"@VOTED\n" + 
+						"@USER=" + user.getId() + "\n" + 
+						"@GROUP=" + post.getGroup().getGroupName() + "\n";
+						
+		
+		if (post instanceof Response) {
+			
+			Response r = (Response) post;
+			msg += "@POSTID=" + r.getParentalId() + "\n";
+			msg += "@RESPONSEID=" + post.getResponseID() + "\n";
+			
+		}
+		else {
+			
+			msg += "@POSTID=" + post.getId() + "\n";
+			
+		}
+		
+		
+		if (hasUpvoted) {
+			msg += "@UPVOTE\n";
+		}
+		else if (hasDownvoted) {
+			msg += "@DOWNVOTE\n";
+		}
+		else {
+			return "";
+		}
+		
+		msg += "@END\n\n";
+		
+		return msg;
+		
 	}
 	
 }

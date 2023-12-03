@@ -7,11 +7,13 @@ public class category implements Comparable<category> {
 
 	private String name;
 	private ArrayList<Group> groups;
+	private ArrayList<Group> requestedGroups;
 
 	// gives a category a name with an arraylist of groups
 	public category(String name) {
 		this.name = name;
 		this.groups = new ArrayList<Group>();
+		this.requestedGroups = new ArrayList<Group>();
 	}
 
 	//test:1
@@ -27,6 +29,18 @@ public class category implements Comparable<category> {
 		}
 		else {
 			groups.add(g);	//else, add the group	NOTICE: This may require more variables as the Group class is updated
+			return true;	//and return true
+		}
+	}
+	
+	//test:2
+	// adds a group if the group name doesn't exist
+	public boolean addRequestedGroup(Group g) {
+		if (Validator.validateGroupNameExists(requestedGroups, g.getGroupName())) {	//If the name of group g already exists within the list of Groups
+			return false;	//do not add the group and return false
+		}
+		else {
+			requestedGroups.add(g);	//else, add the group	NOTICE: This may require more variables as the Group class is updated
 			return true;	//and return true
 		}
 	}
@@ -50,6 +64,14 @@ public class category implements Comparable<category> {
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
+	}
+	
+	//test:1
+	// returns all groups alphabetically
+	public ArrayList<Group> getRequestedGroupsAlphabetically() {
+		Collections.sort(requestedGroups, new SortGroupsByName());
+
+		return requestedGroups;
 	}
 	
 	//test:1

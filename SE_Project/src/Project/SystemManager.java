@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class SystemManager {
@@ -23,6 +24,8 @@ public class SystemManager {
 	private ArrayList<category> categories;
 	private ArrayList<String> fileNames;
 
+	
+	
 	public SystemManager() {
 		userSignedIn = false;
 		adminSignedIn = false;
@@ -107,7 +110,6 @@ public class SystemManager {
 					try {					//Try adding the user to the UserFile
 						WriteFile.addUserToFile(u, fileNames.get(1));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -184,7 +186,6 @@ public class SystemManager {
 				try {				//Try adding the new category
 					WriteFile.addCategoryToFile(c, fileNames.get(2));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -210,7 +211,6 @@ public class SystemManager {
 					try {							//Try adding the group to the file
 						WriteFile.addGroupToFile(g, fileNames.get(3), categoryName);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -262,7 +262,6 @@ public class SystemManager {
 	}
 	//test:1
 	// allows a post to be created
-	//FIXME : Add Unit Tests, needs to verify membership exists between User and Group
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		String find = group.getGroupWriteData(currentCategory.getName());
 		
@@ -279,7 +278,6 @@ public class SystemManager {
 				WriteFile.updateGroupinFile(find, replace, fileNames.get(3));
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -324,15 +322,18 @@ public class SystemManager {
 	// gets the membership of the group and user inputed
 	public boolean createNewResponse(Group group, String responseBody, Post post) {
 		membership m = getMembership(group, currentUser);
-		Response r = new Response(m, responseBody, post.getId());
-		boolean newResponse = currentPost.addResponse(r);		
+
+		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
+		boolean newResponse = currentPost.addNewResponse(r);		
 		
 		if (writable && newResponse) {
 			
 			try {
 				WriteFile.addResponseToFile(r, fileNames.get(6));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
+			} 
+			catch (IOException e) {
+
 				e.printStackTrace();
 			}
 			
@@ -375,10 +376,28 @@ public class SystemManager {
 		return groups;
 	}
 	
+	//helper method, returns a list of all RequestedGroups.
+	private ArrayList<Group> getAllRequestedGroups(){
+		ArrayList<Group> groups = new ArrayList<>();
+		for(category c : categories) {
+			groups.addAll(c.getRequestedGroupsAlphabetically());
+		}
+		return groups;
+	}
+	
 	//test:1
 	// returns all groups alphabetically
 	public ArrayList<Group> getAllGroups_Alphabetically() {
 		ArrayList<Group> groups = getAllGroups();
+		Collections.sort(groups, new SortGroupsByName());
+
+		return groups;
+	}
+	
+	//test:1
+	// returns all RequestedGroups alphabetically
+	public ArrayList<Group> getAllRequestedGroups_Alphabetically() {
+		ArrayList<Group> groups = getAllRequestedGroups();
 		Collections.sort(groups, new SortGroupsByName());
 
 		return groups;
@@ -389,12 +408,12 @@ public class SystemManager {
 	public ArrayList<User> getUsers_Alphabetically() {
 
 
-		Collections.sort(users, new SortUsersByName());
+		Collections.sort(users, new SortUsersByUsername());
 
 
 		return users;
 	}
-	
+
 	//Gets the list of post by the data and sorts it out
 	//test:1
 	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
@@ -409,14 +428,12 @@ public class SystemManager {
 
 	//test:1
 	// returns the status if the user is logged in
-	//FIXME : Add Unit Tests
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
 	//test:1
 	//returns the status of the Admin
-	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
@@ -433,7 +450,6 @@ public class SystemManager {
 
 	//test:1
 	// gets current user
-	//FIXME : Add Unit Tests
 	public User getCurrentUser() {
 		return currentUser;
 	}
@@ -468,6 +484,7 @@ public class SystemManager {
 		return currentPost;
 	}
 
+
 	//Sets a current post
 	//test:1
 	public void setCurrentPost(Post currentPost) {
@@ -483,9 +500,8 @@ public class SystemManager {
 	//test:1
 	// sorts admins alphabetically
 	public ArrayList<Admin> getAdmins_Alphabetically() {
-		Collections.sort(admins, new SortUsersByName());
+		Collections.sort(admins, new SortUsersByUsername());
 		return admins;
-
 	}
 	
 	//test:1
@@ -498,6 +514,30 @@ public class SystemManager {
 		
 		if(u1 != null) {
 			return true;
+		}
+		return false;
+	}
+	
+	//test:2
+	// returns true if the user is banned from the group
+	public Boolean isUserBannedFromGroup(User u, Group g) {
+		ArrayList<Banned> bannedUsers = g.getBanned();
+		for (Banned b: bannedUsers) {
+			if(b.getUser() == u) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//test:2
+	// returns true if the user is Suspended from the group
+	public Boolean isUserSuspendedFromGroup(User u, Group g) {
+		ArrayList<Suspended> suspendedUsers = g.getSuspended();
+		for (Suspended s: suspendedUsers) {
+			if(s.getUser() == u) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -528,7 +568,6 @@ public class SystemManager {
 	 }
 	 
 	 //test:1
-	 //FIXME: Add Unit Tests
 	 public category getCategoryByGroup(Group group) {
 		 for (category c : this.getCategories_Alphabetically()) {
 			 for (Group g : c.getGroups()) {
@@ -547,15 +586,22 @@ public class SystemManager {
 		 return c.getGroupsAlphabetically();
 	}
 	 
+	 //test:1
+	 //returns an arraylist of all the groups in category alphabetically
+	 public ArrayList<Group> getRequestedGroupsInCategory_Alphabetically(category c) {
+		 
+		 return c.getRequestedGroupsAlphabetically();
+	}
+	 
 	//test:3
 	//helper method, returns a list of all posts.
-	//FIXME : Add Unit Tests
 	public ArrayList<Post> getAllPost(){
 		ArrayList<Group> groups = getAllGroups_Alphabetically();
 		ArrayList<Post> posts = new ArrayList<>();
 		for(Group g: groups) {
 			posts.addAll(g.getPost());
 		}
+		Collections.sort(posts, new SortPostsByDate());
 		return posts;
 	}
 	
@@ -578,6 +624,18 @@ public class SystemManager {
 		}
 		return null;
 	}
+	
+	 //Returns every post or response made
+	 public ArrayList<Object> viewAllUsersPostsResponses() {
+		ArrayList<Object> results = new ArrayList<Object>();
+		ArrayList<Post> posts = getAllPost();
+		for(Post p : posts) {
+			results.add(p);
+			results.addAll(p.getResponse());
+		}
+		 Collections.sort(results, new SortObjectsByDate());
+		 return results;
+	 }
 	
 	//test:1
 	//User story 22
@@ -718,6 +776,17 @@ public class SystemManager {
 		 g.addSuspended(s);
  	 }
 	 
+	 //US28 - Administrator can suspend a User from a group and they will have a cooling period
+	 // FIXME: Add unit tests
+	 public void suspendUser(User u, Group g, int days) {
+		 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		 Date start = new Date(new Date().getTime());
+		 Date end = new Date(new Date().getTime() + 86400000 * days);
+		 String timeStampStart = sdf.format(start);
+		 String timeStampStop = sdf.format(end);
+		 g.addSuspended(new Suspended(u,g, timeStampStart, timeStampStop));
+ 	 }
+	 
 	 //test:1
 	 // return a list of names of members
 	 //US29 - Administrator can view a list of Users and the corresponding group(s) they are suspendend from
@@ -739,13 +808,30 @@ public class SystemManager {
 	 }
 	 
 	 //Gets the a list of post given an id for the post
+	 // return a suspension for a particular user and group
+	 // FIXME: add unit tests
+	 public Suspended getSuspensions_ByUsernameGroup(User u, Group g){
+		 return g.getMemberInSuspended(u.getId());
+	 }
+	 
+	 // return string of suspension end date / time
+	 // FIXME: add unit tests
+	 public String getSuspensionEndDate(Suspended s) {
+		 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		 return sdf.format(s.getExpiredDate());
+	 }
+	 
 	 //test:1
-	 //FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
 	 }
 	 
 	 //Creates a format for the date
+	 //FIXME: add tests
+	 public Response getResponseByPostAndID(Post p, int id) {
+		 return Validator.getResponseFromId(p.getResponse(), id);
+	 }
+
 	 //test:1
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
@@ -755,7 +841,6 @@ public class SystemManager {
 	 
 	 //Gets format for the date
 	 //test:1	 
-	 //FIXME: Add unit tests
 	 public String getSimpleTime(Date date) {
 			String pattern = "h:mm a";
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
@@ -785,15 +870,33 @@ public class SystemManager {
 		g.addMember(m);
 		g.removeSuspended(s);
 	}
+	
+	//US30 - Administrator can reinstate a suspended user to good standing in a group
+	// removal and re-adding the membership is not needed, and actually not preferred
+	//FIXME: Add unit tests
+	public void reinstateSuspendedUser(Suspended s) {
+		Group g = s.getGroup();
+		g.removeSuspended(s);
+	}
 
 	//test:1
 	//US31 - Administrator can ban a user from a group
 	public void banUser(Banned b) {
 		 User u = b.getUser();
 		 Group g = b.getGroup();
+		 @SuppressWarnings("unused")
 		 membership m = g.getMembership(u.getId());
-		 g.removeMember(m);
+//		 g.removeMember(m);		// Keep as member
 		 g.addBanned(b);
+	 }
+	
+	//FIXME: Add unit tests
+	public void banUser(User u, Group g) {
+		Banned b = new Banned(u, g);
+		@SuppressWarnings("unused")
+		membership m = g.getMembership(u.getId());
+//		g.removeMember(m);		// Keep as member
+		g.addBanned(b);
 	 }
 	
 	//test:1 
@@ -896,31 +999,450 @@ public class SystemManager {
 		return votes;
 	}
 	
-	//Checks to see if a post has been upvoted by a user
+	/*
+	 * For upvote a Post:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already upvoted
+	 * 			Remove the upvote and subtract from the Post score
+	 * 			Update the Post in Post.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already downvoted
+	 * 			Change to an upvote, adding to the Post score twice
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an upvote, add to the Post score
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to upvote
+	 * 		Add the voted to the User, add to the Post score
+	 * 		Update text files
+	 */
+	
+	//test:4
+	 public boolean upvotePost(Post p) {
+		 Voted v = new Voted(this.currentUser, p);
+		 
+		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+			 
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList());
+			 
+			 if (v1.getUp()) {
+				 
+				 String findP = p.getPostWriteData();
+				 v1.cancelVote();
+				 p.subScore();
+				 String replaceP = p.getPostWriteData();
+				 
+				 if (writable) {
+					 try {
+						 Voted remove = new Voted(this.currentUser, p);
+						 remove.up();
+						 WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						 WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						 e.printStackTrace();
+					}
+				 }
+				 
+				 return true;
+				 
+			 }
+			 else if (v1.getDown()) {
+				 String findV = v1.getVotedWriteData();
+				 String findP = p.getPostWriteData();
+				 v1.up();
+				 p.addScore();
+				 p.addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = p.getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
+				 return true;
+			 }
+			 else {
+				 String findV = v1.getVotedWriteData();
+				 String findP = p.getPostWriteData();
+				 v1.up();
+				 p.addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = p.getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
+
+  	//Checks to see if a post has been upvoted by a user
 	//test:2
 	 public boolean upvote(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 return false;
 		 }
 		 else {
-				 v.up();
-				 v.getUser().addVoted(v);
-				 v.getPost().addScore();
+			 String findP = p.getPostWriteData();
+			 v.up();
+			 this.currentUser.addVoted(v);
+			 p.addScore();
+			 String replaceP = p.getPostWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
+		 }
+	 }
+	 
+	 /*
+	 * For upvote a Response:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already upvoted
+	 * 			Remove the upvote and subtract from the Response score
+	 * 			Update the Response in Response.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already downvoted
+	 * 			Change to an upvote, adding to the Response score twice
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an upvote, add to the Response score
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to upvote
+	 * 		Add the voted to the User, add to the Response score
+	 * 		Update text files
+	 */
+	 //tests:4
+	 public boolean upvoteResponse(Response r) {
+		 Voted v = new Voted(this.currentUser, r);
+		 
+		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+			 
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+			 
+			 if (v1.getUp()) {
+				 
+				 String findP = r.getResponseWriteData();
+				 v1.cancelVote();
+				 r.subScore();
+				 String replaceP = r.getResponseWriteData();
+				 
+				 if (writable) {
+					 
+					 Voted remove = new Voted(this.currentUser, r);
+					 remove.up();
+					 try {
+						WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
 				 return true;
+				 
+			 }
+			 else if (v1.getDown()) {
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.up();
+				 r.addScore();
+				 r.addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
+				 return true;
+			 }
+			 else {
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.up();
+				 r.addScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
+		 }
+		 else {
+			 String findP = r.getResponseWriteData();
+			 v.up();
+			 this.currentUser.addVoted(v);
+			 r.addScore();
+			 String replaceP = r.getResponseWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
 		 }
 	}
 	 
+
 	 //Checks to see if a post has been downvoted by a user
 	 //test:2
 	 public boolean downvote(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
 			 return false;
+
+	 /*
+	 * For downvote a Post:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already downvoted
+	 * 			Remove the downvote and add to Post score
+	 * 			Update the Post in Post.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already upvoted
+	 * 			Change to an downvote, subtracting from the Post score twice
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an downvote, subtract from the Post score
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to downvote
+	 * 		Add the voted to the User, subtract from the Post score
+	 * 		Update text files
+	 */
+	 //tests:4
+	 public boolean downvotePost(Post p) {
+		 Voted v = new Voted(this.currentUser, p);
+		 
+		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+			 
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList());
+			 
+			 if (v1.getDown()) {
+				 
+				 String findP = p.getPostWriteData();
+				 v1.cancelVote();
+				 p.addScore();
+				 String replaceP = p.getPostWriteData();
+				 
+				 if (writable) {
+					 
+					 Voted remove = new Voted(this.currentUser, p);
+					 remove.down();
+					 try {
+						WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
+				 return true;
+				 
+			 }
+			 else if (v1.getUp()) {
+				 String findV = v1.getVotedWriteData();
+				 String findP = p.getPostWriteData();
+				 v1.down();
+				 p.subScore();
+				 p.subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = p.getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
+				 return true;
+			 }
+			 else {
+				 String findV = v1.getVotedWriteData();
+				 String findP = p.getPostWriteData();
+				 v1.down();
+				 p.subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = p.getPostWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
+
 		 }
 		 else {
-				 v.down();
-				 v.getUser().addVoted(v);
-				 v.getPost().subScore();
+			 String findP = p.getPostWriteData();
+			 v.down();
+			 this.currentUser.addVoted(v);
+			 p.subScore();
+			 String replaceP = p.getPostWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
+		 }
+	}
+	 
+	 /*
+	 * For downvote a Response:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already downvoted
+	 * 			Remove the downvote and add to Response score
+	 * 			Update the Response in Response.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already upvoted
+	 * 			Change to an downvote, subtracting from the Response score twice
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an downvote, subtract from the Response score
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to downvote
+	 * 		Add the voted to the User, subtract from the Response score
+	 * 		Update text files
+	 */
+	 //tests:4
+	 public boolean downvoteResponse(Response r) {
+		 Voted v = new Voted(this.currentUser, r);
+		 
+		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+			 
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+			 
+			 if (v1.getDown()) {
+
+				 String findP = r.getResponseWriteData();
+				 v1.cancelVote();
+				 r.addScore();
+				 String replaceP = r.getResponseWriteData();
+				 
+				 if (writable) {
+					 
+					 Voted remove = new Voted(this.currentUser, r);
+					 remove.down();
+					 try {
+						WriteFile.removeVotedFromFile(remove, fileNames.get(7));
+						WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+					} 
+					 catch (IOException e) {
+						e.printStackTrace();
+					}
+				 }
 				 return true;
+				 
+			 }
+			 else if (v1.getUp()) {
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.down();
+				 r.subScore();
+				 r.subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 
+				 return true;
+			 }
+			 else {
+				 String findV = v1.getVotedWriteData();
+				 String findP = r.getResponseWriteData();
+				 v1.down();
+				 r.subScore();
+				 String replaceV = v1.getVotedWriteData();
+				 String replaceP = r.getResponseWriteData();
+				 if (writable) {
+					 try {
+							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+						} 
+						 catch (IOException e) {
+							e.printStackTrace();
+						} 
+				 }
+				 return true;
+			 }
+			 
+		 }
+		 else {
+			 String findP = r.getResponseWriteData();
+			 v.down();
+			 this.currentUser.addVoted(v);
+			 r.subScore();
+			 String replaceP = r.getResponseWriteData();
+			 
+			 if (writable) {
+				 try {
+					WriteFile.addVotedToFile(v, fileNames.get(7));
+					WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
+				} 
+				 catch (IOException e) {
+					e.printStackTrace();
+				}
+			 }
+			 
+			 return true;
 		 }
 	}
 	
