@@ -775,6 +775,15 @@ public class SystemManager {
 		 membership m = g.getMembership(u.getId());
 		 g.removeMember(m);
 		 g.addSuspended(s);
+		 
+		 if (writable) {
+			 try {
+				WriteFile.addSuspendedToFile(s, fileNames.get(8));
+			} 
+			 catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
  	 }
 	 
 	 //US28 - Administrator can suspend a User from a group and they will have a cooling period
@@ -785,7 +794,17 @@ public class SystemManager {
 		 Date end = new Date(new Date().getTime() + 86400000 * days);
 		 String timeStampStart = sdf.format(start);
 		 String timeStampStop = sdf.format(end);
-		 g.addSuspended(new Suspended(u,g, timeStampStart, timeStampStop));
+		 Suspended s = new Suspended(u,g, timeStampStart, timeStampStop);
+		 g.addSuspended(s);
+		 
+		 if (writable) {
+			 try {
+				WriteFile.addSuspendedToFile(s, fileNames.get(8));
+			} 
+			 catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
  	 }
 	 
 	 //test:1
@@ -870,6 +889,15 @@ public class SystemManager {
 		Group g = s.getGroup();
 		g.addMember(m);
 		g.removeSuspended(s);
+		
+		if (writable) {
+			try {
+				WriteFile.removeSuspendedFromFile(s, fileNames.get(8));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//US30 - Administrator can reinstate a suspended user to good standing in a group
@@ -878,6 +906,15 @@ public class SystemManager {
 	public void reinstateSuspendedUser(Suspended s) {
 		Group g = s.getGroup();
 		g.removeSuspended(s);
+		
+		if (writable) {
+			try {
+				WriteFile.removeSuspendedFromFile(s, fileNames.get(8));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	//test:1
