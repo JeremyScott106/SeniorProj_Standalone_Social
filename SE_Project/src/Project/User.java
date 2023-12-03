@@ -61,46 +61,54 @@ public class User implements Comparable<User> {
 		this.votes = new ArrayList<>();
 	}
 
-
+	//Gets a list of users
 	public User(String id) {
 		this.id = id;
 	}
-
+	
+	//Gets the ids for the user
 	//test:1
 	public String getId() {
 		return id;
 	}
 
+	//Gets the password associated to the user
 	//test:1
 	public String getPassword() {
 		return password;
 	}
 
+	//Gets the name that belongs to the user
 	//test:1
 	public String getName() {
 		return name;
 	}
 
+	//Gets the birthday for the user
 	//test:1
 	public Date getBirthday(){
 		return birthdate;
 	}
 
+	//Gets the city a user is from
 	//test:1
 	public String getCity() {
 		return city;
 	}
 
+	//Gets the state a users is from
 	//test:1
 	public String getState() {
 		return state;
 	}
 
+	//Gets the data a user registered for the account
 	//test:1
 	public Date getRegisteredDate() {
 		return registeredDate;
 	}
 	
+	//Gets a list of votes a users might have recived
 	//test:1
 	public ArrayList<Voted> getVotedList(){
 		return votes;
@@ -157,6 +165,7 @@ public class User implements Comparable<User> {
      *  
      */
     
+    //Writes the data for the user
 	//test:1
     public String getUserWriteData() {
     	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -177,6 +186,7 @@ public class User implements Comparable<User> {
     	return userData;
     }
 
+    //Test to see if a user with the same id is already there
 	//test:2
 	@Override
 	public int compareTo(User u) {
@@ -186,6 +196,7 @@ public class User implements Comparable<User> {
 		return 0;
 	}
 	
+	//Compares the ids for the users incase we have a identical one
 	//test:2
 	public boolean compareId(String other) {
 		if (other.equals(id)) {
@@ -196,6 +207,7 @@ public class User implements Comparable<User> {
 		}
 	}
 	
+	//Compares the password to make sure the passwords match when creating a account
 	//test:2
 	public boolean comparePassword(String other) {
 		if (other.equals(password)) {

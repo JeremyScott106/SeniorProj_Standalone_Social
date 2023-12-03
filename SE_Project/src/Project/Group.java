@@ -30,6 +30,7 @@ public class Group implements Comparable<Group> {
         this.suspensions = new ArrayList<Suspended>();
     }
     
+    //Gets a id of a post
     //FIXME: add tests
     public int getPostId() {
     	return postId;
@@ -181,6 +182,7 @@ public class Group implements Comparable<Group> {
     	
     }
     
+    //Compares to see if a group already exists
 	//test:2
 	@Override
 	public int compareTo(Group g) {
@@ -190,6 +192,7 @@ public class Group implements Comparable<Group> {
 		return 0;
 	}
 	
+	//Compares to see if a group name already exists
 	//test:2
 	public boolean compareName(String other) {
 		

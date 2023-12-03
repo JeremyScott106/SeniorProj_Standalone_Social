@@ -25,7 +25,7 @@ public class Response extends Post{
 	}
 	
 
-	
+	//Gets the response and writes the data 
 	public String getResponseWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
@@ -44,6 +44,7 @@ public class Response extends Post{
 		return responseData;
 	}
 	
+	//Compare to see if the users has made an identical response to the group of a post 
 	public int compareTo(Response r) {
 		if (user.compareTo(r.getUser()) == 1 && group.compareTo(r.getGroup()) == 1 &&
 				parentalId == r.getParentalId()) {

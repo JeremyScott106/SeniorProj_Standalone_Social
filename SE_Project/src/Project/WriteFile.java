@@ -66,6 +66,7 @@ public class WriteFile {
 		}
 	}
 	
+	//Gets a list of admins and writes them onto the file
 	//test:1
 	private static void writeAdmins(SystemManager manager, FileWriter writer) throws IOException {
 		
@@ -79,6 +80,7 @@ public class WriteFile {
 		
 	}
 	
+	//Gets a list of users and write them onto the file
 	//test:1
 	private static void writeUsers(SystemManager manager, FileWriter writer) throws IOException {
 		
@@ -92,6 +94,7 @@ public class WriteFile {
 		
 	}
 	
+	//Writes the categories on the system manager
 	//test:1
 	private static void writeCategories(SystemManager manager, FileWriter writer) throws IOException {
 		
