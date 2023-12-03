@@ -23,6 +23,8 @@ public class SystemManager {
 	private ArrayList<category> categories;
 	private ArrayList<String> fileNames;
 
+	
+	
 	public SystemManager() {
 		userSignedIn = false;
 		adminSignedIn = false;
@@ -329,8 +331,8 @@ public class SystemManager {
 			
 			try {
 				WriteFile.addResponseToFile(r, fileNames.get(6));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			
