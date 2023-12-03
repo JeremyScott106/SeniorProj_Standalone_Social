@@ -51,27 +51,31 @@ public class Post implements Comparable<Post> {
     	this.flag = false;
     	this.id = id;
     }
-    
+    //Gets the users
 	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//Gets the group
 	//test:1
 	public Group getGroup() {
 		return group;
 	}
 	
+	//Gets the the title of the post
 	//test:1
 	public String getPostTitle() {
 		return postTitle;
 	}
-
+	
+	//Gets the body of the post
 	//test:1
 	public String getPostBody() {
 		return postBody;
 	}
 	
+	//Gets the ID of the post
 	//test:1
 	public int getId() {
 		return id;
@@ -93,21 +97,25 @@ public class Post implements Comparable<Post> {
         responses.remove(r);
     }
 	
+    //Gets the score
 	//test:1
 	public int getScore() {
 		return score;
 	}
 	
+	//Gets the flag
 	//test:1
 	public boolean getFlag() {
 		return flag;
 	}
 	
+	//Flagging the post
 	//test:1
 	public void setFlagTrue() {
 		flag = true;
 	}
 	
+	//Unflagging a post
 	//test:1
 	public void setFlagFalse() {
 		flag = false;
@@ -131,6 +139,7 @@ public class Post implements Comparable<Post> {
 		score--;
 	}
 	
+	//Wirets the post with the data
 	//test:1
 	public String getPostWriteData() {
 		
@@ -151,6 +160,7 @@ public class Post implements Comparable<Post> {
     	return userData;
     }
 	
+	//Gete a total score of the post
     public int getTotalScore() {
         int totalScore = this.score;
         for (Response response : responses) {
@@ -159,6 +169,7 @@ public class Post implements Comparable<Post> {
         return totalScore;
     }
 
+    //Compares to see if a users has already made an identical post in the group
 	//FIXME: add tests
 	@Override
 	public int compareTo(Post p) {

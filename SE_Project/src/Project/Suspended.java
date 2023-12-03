@@ -42,26 +42,31 @@ public class Suspended implements Comparable<Suspended> {
         expiredSuspensionDate = cal.getTime();
 	}
 	
+	//Gets the users that are suspended
 	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//Gets the group that the users are suspended from
 	//test:1
 	public Group getGroup() {
 		return group;
 	}
 	
+	//Gets the date of when the user was suspended
 	//test:1
 	public Date getDate() {
 		return suspensionDate;
 	}
 	
+	//Gets the date of when the users is no longer suspended
 	//test:1
 	public Date getExpiredDate() {
 		return expiredSuspensionDate;
 	}
 	
+	//Gets the suspended data and writes it on the the suspendedData
 	//test:1
 	public String getSuspendedWriteData() {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
@@ -78,6 +83,7 @@ public class Suspended implements Comparable<Suspended> {
 		return suspendedData;
 	}
 	
+	//Compares to see if a users has already been suspended in a group
 	//test:3
 	public int compareTo(Suspended s) {
 		

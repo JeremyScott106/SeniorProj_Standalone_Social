@@ -38,6 +38,7 @@ public class Admin extends User {
      *  
      */
 	
+	//Collects the data and writes properties that an admin needs 
 	//test:1
     public String getAdminWriteData() {
     	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -58,7 +59,7 @@ public class Admin extends User {
     	return adminData;
     }
     
-    
+    //Compares to see if two Admin id are similar 
 	//test:4
     public int compareTo(Admin a) {
     	if (a.getId().equals(id)) {

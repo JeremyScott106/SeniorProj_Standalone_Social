@@ -164,6 +164,7 @@ public class Validator {
 		return u;
 	}
 	
+	
 	//FIXME: needs tests
 	public static User getAdminFromUsername(ArrayList<Admin> admins, String username) {
 		
@@ -219,6 +220,7 @@ public class Validator {
 		return false;
 	}
 
+	//Gets the ids of the post 
 	//test:2
 	public static Post getPostFromId(ArrayList<Post> posts, int id) {
 		
@@ -231,6 +233,7 @@ public class Validator {
 		
 	}
 	
+	//Checks to see if there has been a vote on a post, if so it will return true, otherwise false
 	//test:2
 	public static boolean validateVotedExists(Voted v, ArrayList<Voted> votes) {
 		for (Voted v1 : votes) {

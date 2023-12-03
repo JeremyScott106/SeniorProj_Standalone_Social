@@ -157,6 +157,7 @@ public class SystemManager {
 		}
 	}
 
+	//Adds a category 
     //test:2
 	public boolean addCategory(category c) {
 		
@@ -170,6 +171,7 @@ public class SystemManager {
 		
 	}
 
+	//Allows an admin to create category
 	//test:2
 	public boolean createCategory(String name) {
 		if (Validator.validateCategoryNameExists(categories, name)) {	//If there exists a category with given name
@@ -189,7 +191,8 @@ public class SystemManager {
 			return true;				//return true
 		}
 	}
-
+	
+	//Admins create group
 	//test:3									//Assumes GUI will send over just category name, not category object
 	public boolean createGroup(String groupName, String categoryName) {
 		category c = Validator.getCategoryFromName(categories, categoryName);	//Get category with given name if there exists one, null otherwise
@@ -392,7 +395,7 @@ public class SystemManager {
 		return users;
 	}
 	
-
+	//Gets the list of post by the data and sorts it out
 	//test:1
 	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
 		
@@ -412,12 +415,13 @@ public class SystemManager {
 	}
 	
 	//test:1
-	//returns the status of the admin
+	//returns the status of the Admin
 	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
 	
+	//Checks to see if a users is an Admin
 	//test:1
 	public boolean isUserAdmin(User u) {
 		if (u instanceof Admin) {
@@ -446,6 +450,7 @@ public class SystemManager {
 		this.currentCategory = currentCategory;
 	}
 
+	//Gets the current group a users belongs in
 	//test:1
 	public Group getCurrentGroup() {
 		return currentGroup;
@@ -457,12 +462,13 @@ public class SystemManager {
 		this.currentGroup = currentGroup;
 	}
 	
+	//Gets the current post
 	//test:1
 	public Post getCurrentPost() {
 		return currentPost;
 	}
 
-
+	//Sets a current post
 	//test:1
 	public void setCurrentPost(Post currentPost) {
 		this.currentPost = currentPost;
@@ -553,6 +559,7 @@ public class SystemManager {
 		return posts;
 	}
 	
+	//Gets a list of all the responses made to a given post
 	//test:1
 	public ArrayList<Response> viewAllPostResponses (Post p) {
 		
@@ -563,6 +570,7 @@ public class SystemManager {
 		return alResponses;
   }
 
+	//Gets a list of all the responses made within all the post
 	//test:1
 	public ArrayList<Response> viewAllPostResponses () {
 		if (currentPost != null) {
@@ -693,6 +701,7 @@ public class SystemManager {
 		 return Validator.getUserFromUsername(users, username);
 	 }
 	 
+	 //Gets the username of the admin
 	 //FIXME: needs tests
 	 public User getAdminByUsername(String username) {
 		 return Validator.getAdminFromUsername(admins, username);
@@ -729,12 +738,14 @@ public class SystemManager {
 		 return suspensions;
 	 }
 	 
+	 //Gets the a list of post given an id for the post
 	 //test:1
 	 //FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
 	 }
 	 
+	 //Creates a format for the date
 	 //test:1
 	 public String getSimpleDate(Date date) {
 			String pattern = "dd MMM yyyy";
@@ -742,6 +753,7 @@ public class SystemManager {
 			return df.format(date);
 	 }
 	 
+	 //Gets format for the date
 	 //test:1	 
 	 //FIXME: Add unit tests
 	 public String getSimpleTime(Date date) {
@@ -751,6 +763,7 @@ public class SystemManager {
 	 }
 	 
 	//test:1
+	 //Gets a list of all the groups in an alphabetically sorted method
 	//FIXME: add test methods
 	public ArrayList<membership> getAllMemberships() {
 		 ArrayList<membership> memberships = new ArrayList<membership>();
@@ -883,6 +896,7 @@ public class SystemManager {
 		return votes;
 	}
 	
+	//Checks to see if a post has been upvoted by a user
 	//test:2
 	 public boolean upvote(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
@@ -896,6 +910,7 @@ public class SystemManager {
 		 }
 	}
 	 
+	 //Checks to see if a post has been downvoted by a user
 	 //test:2
 	 public boolean downvote(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
