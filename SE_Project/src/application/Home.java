@@ -17,11 +17,6 @@ public class Home extends JFrame {
 	private JFrame currentFrame;
 	private final int maxHeight = 10;
 	
-			// constructor not needed //
-	public Home() {
-	}
-	
-	
 	@SuppressWarnings("exports")
 	public Home(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
@@ -42,9 +37,10 @@ public class Home extends JFrame {
 		
 		JPanel titlePanel = new JPanel();
 		
-		titlePanel.setPreferredSize(new Dimension(0,50));
+		titlePanel.setPreferredSize(new Dimension(0,80));
 		titlePanel.setLayout(null);
 		
+			// Admin tools button needs to ensure only admin can get to the page
 		if (manager.getCurrentUser() instanceof Admin) {
 			JButton adminBtn = new JButton("Admin Tools");
 			adminBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -58,6 +54,7 @@ public class Home extends JFrame {
 			});
 		}
 		
+			// Option to add a login button if not already logged in
 		if (manager.getCurrentUser() == null) {
 			JButton btnLogin = new JButton("Login");
 			btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -71,7 +68,6 @@ public class Home extends JFrame {
 		}
 		
 		if (manager.getCurrentUser() == null) {
-			titlePanel.setPreferredSize(new Dimension(0,80));
 			JButton btnNewUser = new JButton("Register New Account");
 			btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 15));
 			btnNewUser.setBounds(10, 45, 250, 25);
@@ -82,7 +78,18 @@ public class Home extends JFrame {
 				}
 			});
 		}
+			// View all groups in the system
+		JButton btnViewAllGroups = new JButton("View All Groups");
+		btnViewAllGroups.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new ViewAllGroupsView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		btnViewAllGroups.setBounds(currentFrame.getBounds().width - btnViewAllGroups.getPreferredSize().width - 25, 45, btnViewAllGroups.getPreferredSize().width, 25);
+		titlePanel.add(btnViewAllGroups);
 		
+			// Used to update screen after login change
 		JButton btnRefreshPage = new JButton("Refresh");
 		btnRefreshPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,19 +98,33 @@ public class Home extends JFrame {
 			}
 		});
 		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
-			// FIXME: BUG -> Refresh button disappears if frame shrinks.
 		titlePanel.add(btnRefreshPage);
+		
+
+			// Display Labels ... 
+		if (manager.getCurrentUser() != null) {
+			JButton btnViewAllUsers = new JButton("View All Users");
+			btnViewAllUsers.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					onViewChangeClick();
+					new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize());
+				}
+			});
+			btnViewAllUsers.setBounds(currentFrame.getBounds().width - btnViewAllUsers.getPreferredSize().width - 140, 10, btnViewAllUsers.getPreferredSize().width + 10, 25);
+			titlePanel.add(btnViewAllUsers);
+		}
 		
 		JLabel lblCurrentUser = new JLabel("Current User: ");
 		lblCurrentUser.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCurrentUser.setBounds(10, 10, 122, 25);
 		titlePanel.add(lblCurrentUser);
 		
+			// Displays current user as well as the ability to go to user profile
 		if (manager.getCurrentUser() != null) {
 			JLabel lblUid = new JLabel(manager.getCurrentUser().getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
 			lblUid.setForeground(Color.BLUE.darker());
-			lblUid.setBounds(129, 10, lblUid.getPreferredSize().width+10, 25);
+			lblUid.setBounds(129, 10, lblUid.getPreferredSize().width + 10, 25);
 			lblUid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			lblUid.addMouseListener(new MouseAdapter() {
 			    @Override
@@ -116,6 +137,7 @@ public class Home extends JFrame {
 			titlePanel.add(lblUid);
 		}
 		
+			// return completed panel
 		return titlePanel;
 	}
 	
