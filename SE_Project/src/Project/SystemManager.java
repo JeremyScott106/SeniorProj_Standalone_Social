@@ -1022,6 +1022,23 @@ public class SystemManager {
 		 }
 	 }
 	 
+	 /*
+	 * For upvote a Response:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already upvoted
+	 * 			Remove the upvote and subtract from the Response score
+	 * 			Update the Response in Response.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already downvoted
+	 * 			Change to an upvote, adding to the Response score twice
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an upvote, add to the Response score
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to upvote
+	 * 		Add the voted to the User, add to the Response score
+	 * 		Update text files
+	 */
 	 //tests:4
 	 public boolean upvoteResponse(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
@@ -1115,6 +1132,23 @@ public class SystemManager {
 		 }
 	}
 	 
+	 /*
+	 * For downvote a Post:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already downvoted
+	 * 			Remove the downvote and add to Post score
+	 * 			Update the Post in Post.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already upvoted
+	 * 			Change to an downvote, subtracting from the Post score twice
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an downvote, subtract from the Post score
+	 * 			Update the Post and Voted in Post.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to downvote
+	 * 		Add the voted to the User, subtract from the Post score
+	 * 		Update text files
+	 */
 	 //tests:4
 	 public boolean downvotePost(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
@@ -1204,6 +1238,23 @@ public class SystemManager {
 		 }
 	}
 	 
+	 /*
+	 * For downvote a Response:
+	 * If a Voted object already exists:
+	 * 		If the Voted was already downvoted
+	 * 			Remove the downvote and add to Response score
+	 * 			Update the Response in Response.txt, remove the Voted in Voted.txt
+	 * 		If the Voted was already upvoted
+	 * 			Change to an downvote, subtracting from the Response score twice
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * 		If the Voted existed but was neither upvoted or downvoted
+	 * 			Change to an downvote, subtract from the Response score
+	 * 			Update the Response and Voted in Response.txt and Voted.txt
+	 * If a Voted does not already exist:
+	 * 		Change the voted to downvote
+	 * 		Add the voted to the User, subtract from the Response score
+	 * 		Update text files
+	 */
 	 //tests:4
 	 public boolean downvoteResponse(Voted v) {
 		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
