@@ -185,7 +185,8 @@ public class Post implements Comparable<Post> {
 	/*
 	 * When the PostBody is Read from the system,
 	 * a newline is automatically put at the end of the PostBody,
-	 * so putting a newline after OPstBody here will only cause each POstBody to get longer and longer
+	 * so putting a newline after PostBody here will only cause each PostBody to get longer and longer,
+	 * or cause them to not get updated/removed when needed
 	 */
 	public String getPostWriteData(boolean ignore) {
 		

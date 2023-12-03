@@ -1135,10 +1135,10 @@ public class SystemManager {
 			 
 			 if (v1.getUp()) {
 				 
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.cancelVote();
 				 r.subScore();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 
 				 if (writable) {
 					 
@@ -1157,12 +1157,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getDown()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.up();
 				 r.addScore();
 				 r.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1177,11 +1177,11 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.up();
 				 r.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1196,11 +1196,11 @@ public class SystemManager {
 			 
 		 }
 		 else {
-			 String findP = r.getResponseWriteData();
+			 String findP = r.getResponseWriteData(true);
 			 v.up();
 			 this.currentUser.addVoted(v);
 			 r.addScore();
-			 String replaceP = r.getResponseWriteData();
+			 String replaceP = r.getResponseWriteData(true);
 			 
 			 if (writable) {
 				 try {
@@ -1352,10 +1352,10 @@ public class SystemManager {
 			 
 			 if (v1.getDown()) {
 
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.cancelVote();
 				 r.addScore();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 
 				 if (writable) {
 					 
@@ -1374,12 +1374,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getUp()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.down();
 				 r.subScore();
 				 r.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1394,11 +1394,11 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.down();
 				 r.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1413,11 +1413,11 @@ public class SystemManager {
 			 
 		 }
 		 else {
-			 String findP = r.getResponseWriteData();
+			 String findP = r.getResponseWriteData(true);
 			 v.down();
 			 this.currentUser.addVoted(v);
 			 r.subScore();
-			 String replaceP = r.getResponseWriteData();
+			 String replaceP = r.getResponseWriteData(true);
 			 
 			 if (writable) {
 				 try {
