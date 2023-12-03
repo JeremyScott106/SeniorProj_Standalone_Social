@@ -143,7 +143,9 @@ public class Post implements Comparable<Post> {
     						"@GNAME=" + getGroup().getGroupName() + "\n" + 
     						"@DATETIME=" + date + "\n" + 
     						"@TITLE=" + postTitle + "\n" +
-    						"@BODY=" + postBody + "\n" + 
+    						"@BODYSTART\n" + 
+    						postBody + "\n" + 
+    						"@BODYEND\n" + 
     						"@PSTID=" + id + "\n" + 
     						"@SCORE=" + score + "\n";
     	if (flag) {

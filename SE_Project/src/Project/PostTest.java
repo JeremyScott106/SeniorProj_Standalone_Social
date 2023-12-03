@@ -163,7 +163,9 @@ public class PostTest {
 							"@GNAME=Standard Name\n" + 
 							"@DATETIME=10/10/2022 12:27 PM\n" + 
 							"@TITLE=I'm posting.\n" + 
-							"@BODY=This is the message\n" + 
+							"@BODYSTART\n" +
+							"This is the message\n" + 
+							"@BODYEND\n" + 
 							"@PSTID=1\n" + 
 							"@SCORE=2\n" + 
 							"@FLAG\n" + 

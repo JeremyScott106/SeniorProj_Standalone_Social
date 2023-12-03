@@ -658,9 +658,13 @@ public class ReadFile {
 					throw new IncorrectFileFormatException();				//Throw exception
 				}
 				else {													//Otherwise
-					postBody = line.substring(6);							//Get the Post Body from the line
-					gotPostBody = true;										//Set gotPostBody to true
-					continue;												//continue to the next line
+					line = reader.nextLine();								//continue to the next line
+					while (!line.equals("@BODYEND")) {						//Loop through lines until the end of the Post Body
+						postBody += line + "\n";										//Concat lines to Post Body
+						line = reader.nextLine();								//continue to the next line
+					}
+					gotPostBody = true;
+					continue;
 				}
 			}
 			else if (sub.equals("@PSTI")) {						//If sub rules the current line contains the PostID
