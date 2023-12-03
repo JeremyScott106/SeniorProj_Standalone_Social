@@ -1085,13 +1085,6 @@ public class SystemManager {
 				 }
 				 return true;
 			 }
-			 
-
-  	//Checks to see if a post has been upvoted by a user
-	//test:2
-	 public boolean upvote(Voted v) {
-		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
-			 return false;
 		 }
 		 else {
 			 String findP = p.getPostWriteData();
@@ -1222,13 +1215,6 @@ public class SystemManager {
 		 }
 	}
 	 
-
-	 //Checks to see if a post has been downvoted by a user
-	 //test:2
-	 public boolean downvote(Voted v) {
-		 if (Validator.validateVotedExists(v, v.getUser().getVotedList()) == true) {
-			 return false;
-
 	 /*
 	 * For downvote a Post:
 	 * If a Voted object already exists:
