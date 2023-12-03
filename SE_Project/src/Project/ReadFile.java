@@ -591,6 +591,7 @@ public class ReadFile {
 		boolean gotPostId = false;			//Set gotPostId to true once it has been Read
 		String scoreStr = "";			//Score of the Post
 		boolean gotScore = false;			//Set gotScore to true once it has been Read
+		boolean flag = false;
 		
 		
 		
@@ -682,6 +683,15 @@ public class ReadFile {
 					continue;												//continue to the next line
 				}
 			}
+			else if (sub.equals("@FLAG")) {
+				if (flag) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					flag = true;
+					continue;
+				}
+			}
 			else {												//If anything else is encountered
 				throw new IncorrectFileFormatException();			//Throw exception
 			}
@@ -704,6 +714,10 @@ public class ReadFile {
 				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score);	//Create the Post
 
 				g.addExistingPost(p);	//Add the Post to the Group
+				
+				if (flag) {
+					p.setFlagTrue();
+				}
 
 			}
 			else {		//If either the Group or User does not Exist

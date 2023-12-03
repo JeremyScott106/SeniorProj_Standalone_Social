@@ -137,7 +137,7 @@ public class Post implements Comparable<Post> {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
     	
-    	String userData = "@START\n" + 
+    	String postData = "@START\n" + 
     						"@POST\n" + 
     						"@USERNAME=" + getUser().getId() + "\n" + 
     						"@GNAME=" + getGroup().getGroupName() + "\n" + 
@@ -145,10 +145,13 @@ public class Post implements Comparable<Post> {
     						"@TITLE=" + postTitle + "\n" +
     						"@BODY=" + postBody + "\n" + 
     						"@PSTID=" + id + "\n" + 
-    						"@SCORE=" + score + "\n" + 
-    						"@END\n\n";
+    						"@SCORE=" + score + "\n";
+    	if (flag) {
+    		postData += "@FLAG" + "\n";
+    	}
+    	postData += "@END\n\n";
     	
-    	return userData;
+    	return postData;
     }
 	
     public int getTotalScore() {

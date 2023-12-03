@@ -153,6 +153,7 @@ public class PostTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 
 		Post testPost1 = new Post (testUser, testGroup, "10/10/2022 12:27 PM", "I'm posting.", "This is the message", 1, 2);
+		testPost1.setFlagTrue();
 		
 		String actual = testPost1.getPostWriteData();
 		
@@ -165,6 +166,7 @@ public class PostTest {
 							"@BODY=This is the message\n" + 
 							"@PSTID=1\n" + 
 							"@SCORE=2\n" + 
+							"@FLAG\n" + 
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
