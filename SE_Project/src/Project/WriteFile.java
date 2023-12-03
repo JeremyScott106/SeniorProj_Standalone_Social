@@ -52,6 +52,9 @@ public class WriteFile {
 				else if (fileName.contains("Ban")) {
 					writeBanned(manager, writer);
 				}
+				else if (fileName.contains("Vote")) {
+					writeVoted(manager, writer);
+				}
 				
 				
 				writer.close();
@@ -200,6 +203,21 @@ public class WriteFile {
 			String banData = b.getBannedWriteData();
 			
 			writer.write(banData);
+			
+		}
+		
+	}
+	
+	//test:1
+	private static void writeVoted(SystemManager manager, FileWriter writer) throws IOException {
+		
+		ArrayList<Voted> voted = manager.getAllVotes();
+		
+		for (Voted v : voted) {
+			
+			String votedData = v.getVotedWriteData();
+			
+			writer.write(votedData);
 			
 		}
 		
@@ -407,6 +425,30 @@ public class WriteFile {
 		}
 		
 	}
+	
+	
+	//test:1
+	public static void addVotedToFile(Voted v, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			
+			FileWriter writer = new FileWriter(dataFile, true);
+			
+			String msg = v.getVotedWriteData();
+			
+			writer.write(msg);
+			
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
 	
 	
 	//test:1
@@ -719,6 +761,40 @@ public class WriteFile {
 		
 	}
 	
+	//test:1
+	public static void removeVotedFromFile(Voted v, String fileName) throws IOException {
+		
+		String find = v.getVotedWriteData();
+		String replace = "";
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
 	
 	
 	//tests:1
@@ -826,6 +902,38 @@ public class WriteFile {
 			
 
 			reader.close();
+			
+		}
+		catch (IOException e) {
+			throw e;
+		}
+		
+	}
+	
+	
+	//test:1
+	public static void updateVotedInFile(String find, String replace, String fileName) throws IOException {
+		
+		try {
+			
+			File dataFile = new File(fileName);
+			FileReader reader = new FileReader(dataFile);
+			
+			String s = "";
+			String totalStr = "";
+			
+			try (BufferedReader br = new BufferedReader(reader)) {
+				while ((s = br.readLine()) != null) {
+				    totalStr += s + "\n";
+				}
+			}
+			
+			totalStr = totalStr.replaceAll(find, replace);
+			
+			FileWriter writer = new FileWriter(dataFile);
+			
+			writer.write(totalStr);
+			writer.close();
 			
 		}
 		catch (IOException e) {

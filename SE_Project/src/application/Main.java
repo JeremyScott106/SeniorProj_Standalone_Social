@@ -95,13 +95,14 @@ public class Main extends JFrame {
 		
 		/*
 		 * Files need to be read/added in a specific order:
-		 * 1. Admins
-		 * 2. Users
-		 * 3. Categories
-		 * 4. Groups
-		 * 5. Memberships
-		 * 6. Posts
-		 * 7. Responses
+		 * 0. Admins
+		 * 1. Users
+		 * 2. Categories
+		 * 3. Groups
+		 * 4. Memberships
+		 * 5. Posts
+		 * 6. Responses
+		 * 7. Voted
 		 */
 		
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Admins.txt");
@@ -111,6 +112,7 @@ public class Main extends JFrame {
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Memberships.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Posts.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Responses.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Voted.txt");
 
 		
 		
