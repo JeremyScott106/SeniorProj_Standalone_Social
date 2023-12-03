@@ -50,5 +50,6 @@
 @BODY=testResonse1
 @PARENTALID=6
 @SCORE=0
+@RESPONSEID=4
 @END
 
