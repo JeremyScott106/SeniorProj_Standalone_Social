@@ -926,6 +926,15 @@ public class SystemManager {
 		 membership m = g.getMembership(u.getId());
 //		 g.removeMember(m);		// Keep as member
 		 g.addBanned(b);
+		 
+		 if (writable) {
+			 try {
+				WriteFile.addBannedToFile(b, fileNames.get(9));
+			} 
+			 catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
 	 }
 	
 	//FIXME: Add unit tests
@@ -935,6 +944,15 @@ public class SystemManager {
 		membership m = g.getMembership(u.getId());
 //		g.removeMember(m);		// Keep as member
 		g.addBanned(b);
+		
+		if (writable) {
+			try {
+				WriteFile.addBannedToFile(b, fileNames.get(9));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	 }
 	
 	//test:1 
