@@ -111,6 +111,8 @@ public class category implements Comparable<category> {
 	 * @END
 	 * 
 	 */
+	
+	//Gets a list of categorys 
 	//test:1
 	public String getCategoryWriteData() {
 		String categoryData = "@START\n" + 
@@ -121,6 +123,7 @@ public class category implements Comparable<category> {
 		return categoryData;
 	}
 
+	//Compares if a catagory already exists 
 	//test:2
 	@Override
 	public int compareTo(category c) {
@@ -130,6 +133,7 @@ public class category implements Comparable<category> {
 		return 0;
 	}
 	
+	//Checks to see if a category has the same name
 	//test:2
 	public boolean compareName(String other) {
 		if (other.equals(name)) {

@@ -4,22 +4,25 @@ public class Banned implements Comparable<Banned> {
 	private User user;
 	private Group group;
 
+	//Adding new banned users
 	//test:1
     public Banned(User user, Group group) {
         this.user = user;
         this.group = group;
 	}
-    
+   //Gets users that are banned
 	//test:1
 	public User getUser() {
 		return user;
 	}
 	
+	//Gets users that are banned in group
 	//test:1
 	public Group getGroup() {
 		return group;
 	}
 
+	//Gets users that are banned from a certin group
 	//test:1
 	public String getBannedWriteData() {
 		
@@ -30,7 +33,8 @@ public class Banned implements Comparable<Banned> {
 								"@END\n\n";
 		return bannedData;
 	}
-	
+
+	//Compares if a user has already been banned 
 	//test:3
 	public int compareTo(Banned b) {
 		
