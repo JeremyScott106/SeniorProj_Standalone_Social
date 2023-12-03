@@ -135,6 +135,25 @@ public class GroupView extends JFrame {
 
 		}
 		
+			// prevents banned user from posting
+		else if (manager.isUserBannedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are banned from this group!");
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+		}
+		
+			// prevents suspended user from posting
+		else if (manager.isUserSuspendedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are suspended until " + manager.getSuspensionEndDate(manager.getSuspensions_ByUsernameGroup(manager.getCurrentUser(), manager.getCurrentGroup())));
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(gridx, 45, memberStatus.getPreferredSize().width + padding + padding, 25);
+			gridx += memberStatus.getWidth() + padding;
+			titlePanel.add(memberStatus);
+		}
+		
+			// not in group, and not suspended or banned
 		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			
 			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
@@ -165,7 +184,21 @@ public class GroupView extends JFrame {
 			titlePanel.add(joinGroup);
 		}
 		
+			// in group and not in trouble
 		else {
+			JButton newPost = new JButton("Create New Post");
+			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+			newPost.setBounds(gridx, 45, newPost.getPreferredSize().width + padding, 25);
+			titlePanel.add(newPost);
+			newPost.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	onViewChangeClick();
+	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				}
+			});
+			gridx += newPost.getWidth() + padding;
+			
 			String mbrDate = manager.getSimpleDate(manager.getMembership(manager.getCurrentGroup(), manager.getCurrentUser()).getDate());
 			String mbmSince = "Member Since: " + mbrDate;
 
@@ -196,20 +229,15 @@ public class GroupView extends JFrame {
 			titlePanel.add(leaveGroup);
 		}
 		
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
-			JButton newPost = new JButton("Create New Post");
-			newPost.setFont(new Font("Tahoma", Font.BOLD, 15));
-			int x2 = currentFrame.getBounds().width - (newPost.getPreferredSize().width + padding + 50);
-
-			newPost.setBounds(x2, 45, newPost.getPreferredSize().width + padding, 25);
-			titlePanel.add(newPost);
-			newPost.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	onViewChangeClick();
-	            	new NewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-				}
-			});
-		}
+		// View all users in the group
+		JButton btnViewAllGroupUsers = new JButton("View Users In Group");
+		btnViewAllGroupUsers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new UsersInGroupPopUp(manager);
+			}
+		});
+		btnViewAllGroupUsers.setBounds(currentFrame.getBounds().width - btnViewAllGroupUsers.getPreferredSize().width - 60, 45, btnViewAllGroupUsers.getPreferredSize().width + 10, 25);
+		titlePanel.add(btnViewAllGroupUsers);
 		
 		return titlePanel;
 		
@@ -335,8 +363,6 @@ public class GroupView extends JFrame {
 		
 		JPanel centerInsidePanel = createInsidePane();
 		mainPanel.add(centerInsidePanel, BorderLayout.CENTER);	
-
-		mainPanel.add(centerInsidePanel);
 		mainPanel.setSize(getPreferredSize());
 
 		JScrollPane scrollPanel = new JScrollPane(mainPanel);
