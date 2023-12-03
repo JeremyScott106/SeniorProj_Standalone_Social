@@ -806,7 +806,11 @@ public class ReadFile {
 					throw new IncorrectFileFormatException();	//Throw exception
 				}
 				else {										//Otherwise
-					responseBody = line.substring(6);			//Get the Response Body from the line
+					line = reader.nextLine();
+					while (!line.equals("@BODYEND")) {
+						responseBody += line + "\n";
+						line = reader.nextLine();
+					}
 					gotResponseBody = true;						//Set gotResponseBody to true
 					continue;									//Continue to the next line
 				}

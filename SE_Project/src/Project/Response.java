@@ -33,7 +33,9 @@ public class Response extends Post{
 				"@USERNAME=" + user.getId() + "\n" + 
 				"@GNAME=" + group.getGroupName() + "\n" + 
 				"@DATETIME=" + date + "\n" + 
-				"@BODY=" + postBody + "\n" + 
+				"@BODYSTART\n" + 
+				postBody + "\n" + 
+				"@BODYEND\n" + 
 				"@PARENTALID=" + parentalId + "\n" +
 				"@SCORE=" + score + "\n";
 		

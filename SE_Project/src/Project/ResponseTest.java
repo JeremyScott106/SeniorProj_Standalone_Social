@@ -41,7 +41,9 @@ public class ResponseTest {
 							"@USERNAME=ID\n" + 
 							"@GNAME=Standard Name\n" + 
 							"@DATETIME=11/11/2007 8:24 AM\n" + 
-							"@BODY=I disagree.\n" + 
+							"@BODYSTART\n" + 
+							"I disagree.\n" + 
+							"@BODYEND\n" + 
 							"@PARENTALID=1\n" +
 							"@SCORE=1\n" + 
 							"@FLAG\n" + 
