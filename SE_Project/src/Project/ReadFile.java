@@ -58,6 +58,9 @@ public class ReadFile {
 					else if (line.equals("@BANNED") && currentlyReadingData) {
 						readBanned(manager, reader);
 					}
+					else if (line.equals("@VOTED") && currentlyReadingData) {
+						readVoted(manager, reader);
+					}
 					else if (line.equals("@SUSPENDED")) {
 						readSuspended(manager, reader);
 					}
@@ -592,6 +595,8 @@ public class ReadFile {
 		String scoreStr = "";			//Score of the Post
 		boolean gotScore = false;			//Set gotScore to true once it has been Read
 		boolean flag = false;
+		String responseID = "";
+		boolean gotResponseID = false;
 		
 		
 		
@@ -696,6 +701,16 @@ public class ReadFile {
 					continue;
 				}
 			}
+			else if (sub.equals("@RESP")) {	
+				if (gotResponseID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {	
+					responseID = line.substring(12);
+					gotResponseID = true;		
+					continue;	
+				}
+			}
 			else {												//If anything else is encountered
 				throw new IncorrectFileFormatException();			//Throw exception
 			}
@@ -703,7 +718,7 @@ public class ReadFile {
 		}
 		
 		//If all the needed Data was Read
-		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore) {
+		if (gotUserName && gotGroupName && gotDateTime && gotPostTitle && gotPostBody && gotPostId && gotScore && gotResponseID) {
 			
 
 			Group g = manager.getGroupByName(groupName);
@@ -713,9 +728,10 @@ public class ReadFile {
 			}
 			int id = Integer.parseInt(postId);
 			int score = Integer.parseInt(scoreStr);
+			int rID = Integer.parseInt(responseID);
 			if (g != null && u != null) {
 				
-				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score);	//Create the Post
+				Post p = new Post(u, g, dateTime, postTitle, postBody, id, score, rID);	//Create the Post
 
 				g.addExistingPost(p);	//Add the Post to the Group
 				
@@ -750,6 +766,8 @@ public class ReadFile {
 		String scoreStr = "";				//Score of the Response
 		boolean gotScore = false;				//Set to true once Score has been Read
 		boolean flag = false;
+		String responseID = "";
+		boolean gotResponseID = false;
 		
 		
 		
@@ -844,6 +862,16 @@ public class ReadFile {
 					continue;
 				}
 			}
+			else if (sub.equals("@RESP")) {	
+				if (gotResponseID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {	
+					responseID = line.substring(12);
+					gotResponseID = true;		
+					continue;	
+				}
+			}
 			else {
 				throw new IncorrectFileFormatException();	//Throw exception
 			}
@@ -852,7 +880,7 @@ public class ReadFile {
 		
 		
 		//If all the needed data was Read
-		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore) {
+		if (gotUserName && gotGroupName && gotDateTime && gotResponseBody && gotParentalId && gotScore && gotResponseID) {
 			
 			Group g = manager.getGroupByName(groupName);
 			User u = manager.getUserByUsername(userName);
@@ -861,14 +889,14 @@ public class ReadFile {
 			}
 			int id = Integer.parseInt(parentalId);
 			int score = Integer.parseInt(scoreStr);
+			int rID = Integer.parseInt(responseID);
 			Post p = manager.getPostByGroupId(g, id);
 			if (g != null && u != null && p != null) {
-				
-				Response r = new Response(u, g, dateTime, responseBody, id, score);	//Create the Response
+				Response r = new Response(u, g, dateTime, responseBody, id, score, rID);	//Create the Response
 				if (flag) {
 					r.setFlagTrue();
 				}
-				p.addResponse(r);													//Add the Response to the Post
+				p.addExistingResponse(r);													//Add the Response to the Post
 				
 			}
 			else {			//If either the USer, Group, or Post does not Exist
@@ -883,6 +911,7 @@ public class ReadFile {
 
 
 
+
 	private static void readBanned(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
 	
 		String userName = "";
@@ -890,7 +919,10 @@ public class ReadFile {
 		String groupName = "";
 		boolean gotGroupName = false;
 		
+
+		
 		while (currentlyReadingData) {
+
 			
 			String line = reader.nextLine();
 			
@@ -932,26 +964,166 @@ public class ReadFile {
 			else {
 				throw new IncorrectFileFormatException();
 			}
-		
-	}
-	
-	
-	if (gotUserName && gotGroupName) {
-		
-		Group g = manager.getGroupByName(groupName);
-		User u = manager.getUserByUsername(userName);
-		
-		if (!(g == null) && !(u == null)) {
-			
-			Banned b = new Banned(u, g);
-			g.addBanned(b);
 			
 		}
 		
-	}
+		
+		if (gotUserName && gotGroupName) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(userName);
+			
+			if (!(g == null) && !(u == null)) {
+				
+				Banned b = new Banned(u, g);
+				g.addBanned(b);
+				
+			}
+			
+		}
+	
+	
 	}
 	
 	
+		
+	private static void readVoted(SystemManager manager, Scanner reader) throws IncorrectFileFormatException {
+		
+		String username = "";
+		boolean gotUsername = false;
+		String groupName = "";
+		boolean gotGroupName = false;
+		String postID = "";
+		boolean gotPostID = false;
+		String responseID = "";
+		boolean gotResponseID = false;
+		boolean upvote = false;
+		boolean downvote = false;
+		
+		
+		while (currentlyReadingData) {
+			
+			String line = reader.nextLine();		//Get the next line
+			
+			if (line.equals("@END")) {				//If the current line is the end of the data set
+				currentlyReadingData = false;			//Set currentlyReadingData to false
+				 break;									//break the loop
+			}
+			
+			String sub = "";
+			
+			try {
+				sub = line.substring(0, 5);			//try getting the 1st few characters of the line to identify what data is currently being Read
+			}
+			catch (StringIndexOutOfBoundsException e) {
+				throw new IncorrectFileFormatException();
+			}
+			
+			if (sub.equals("@USER")) {
+				if (gotUsername) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					username = line.substring(6);
+					gotUsername = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@GROU")) {
+				if (gotGroupName) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					groupName = line.substring(7);
+					gotGroupName = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@POST")) {
+				if (gotPostID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					postID = line.substring(8);
+					gotPostID = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@RESP")) {
+				if (gotResponseID) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					responseID = line.substring(12);
+					gotResponseID = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@UPVO")) {
+				if (upvote) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					upvote = true;
+					continue;
+				}
+			}
+			else if (sub.equals("@DOWN")) {
+				if (downvote) {
+					throw new IncorrectFileFormatException();
+				}
+				else {
+					downvote = true;
+					continue;
+				}
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+			
+		}
+		
+		
+		if (gotUsername && gotGroupName && gotPostID && (upvote || downvote)) {
+			
+			Group g = manager.getGroupByName(groupName);
+			User u = manager.getUserByUsername(username);
+			if (u == null) {
+				u = manager.getAdminByUsername(username);
+			}
+			int pID = Integer.parseInt(postID);
+			Post p = manager.getPostByGroupId(g, pID);
+			
+			if (u != null && g != null && p != null) {
+				
+				if (gotResponseID) {
+					
+					int rID = Integer.parseInt(responseID);
+					Response r = manager.getResponseByPostAndID(p, rID);
+					
+					if (r != null) {
+						Voted v = new Voted(u, r);
+						u.addVoted(v);
+					}
+					else {
+						throw new IncorrectFileFormatException();
+					}
+					
+				}
+				else {
+					Voted v = new Voted(u, p);
+					p.addScore();
+					u.addVoted(v);
+				}
+			
+			}
+			else {
+				throw new IncorrectFileFormatException();
+			}
+		}
+		
+		
+	}
 
 
 

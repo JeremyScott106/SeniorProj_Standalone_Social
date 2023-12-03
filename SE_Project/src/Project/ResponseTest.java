@@ -11,7 +11,7 @@ public class ResponseTest {
 		Group testGroup1 = new Group("Standard Name");
 		User testUser2 = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser2, testGroup1);
-		Response testResponse1 = new Response(m, "I disagree.", 1);
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);
 		
 		assertEquals(m.getUser(), testResponse1.getUser());
 	}
@@ -22,7 +22,7 @@ public class ResponseTest {
 		Group testGroup1 = new Group("Standard Name");
 		User testUser2 = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser2, testGroup1);
-		Response testResponse1 = new Response(m, "I disagree.", 1);
+		Response testResponse1 = new Response(m, "I disagree.", 1, 0);
 		
 		assertEquals("I disagree.", testResponse1.getPostBody());
 	}
@@ -31,7 +31,7 @@ public class ResponseTest {
 	void testGetResponseWriteData() {
 		Group testGroup1 = new Group("Standard Name");
 		User testUser2 = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
-		Response testResponse1 = new Response(testUser2, testGroup1, "11/11/2007 8:24 AM", "I disagree.",1 , 1);
+		Response testResponse1 = new Response(testUser2, testGroup1, "11/11/2007 8:24 AM", "I disagree.",1 , 1, 0);
 		testResponse1.setFlagTrue();
 		
 		String actual = testResponse1.getResponseWriteData();
@@ -45,8 +45,9 @@ public class ResponseTest {
 							"I disagree.\n" + 
 							"@BODYEND\n" + 
 							"@PARENTALID=1\n" +
-							"@SCORE=1\n" + 
 							"@FLAG\n" + 
+							"@SCORE=1\n" + 
+							"@RESPONSEID=0\n" + 
 							"@END\n\n";
 		
 		assertEquals(expected, actual);

@@ -7,13 +7,15 @@ public class Response extends Post{
 	
 	private int parentalId;
 	
-	public Response(membership membership, String responseBody, int parentalId) {
+	
+	public Response(membership membership, String responseBody, int parentalId, int responseID) {
 		super(membership, "", responseBody, -1);
 		this.parentalId = parentalId;
+		this.responseID = responseID;
 	}
 	
-	public Response(User u, Group g, String date, String responseBody, int parentalId, int score) {
-		super(u, g, date, "", responseBody, parentalId, score);
+	public Response(User u, Group g, String date, String responseBody, int parentalId, int score, int responseID) {
+		super(u, g, date, "", responseBody, parentalId, score, responseID);
 		this.parentalId = parentalId;
 	}
 	
@@ -36,13 +38,13 @@ public class Response extends Post{
 				"@BODYSTART\n" + 
 				postBody + "\n" + 
 				"@BODYEND\n" + 
-				"@PARENTALID=" + parentalId + "\n" +
-				"@SCORE=" + score + "\n";
-		
+				"@PARENTALID=" + parentalId + "\n";
 		if (flag) {
 			responseData += "@FLAG\n";
 		}
-		responseData += "@END\n\n";
+		responseData += "@SCORE=" + score + "\n" +
+						"@RESPONSEID=" + responseID + "\n" +
+						"@END\n\n";
 		
 		return responseData;
 	}

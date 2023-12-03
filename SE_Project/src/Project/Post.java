@@ -18,6 +18,7 @@ public class Post implements Comparable<Post> {
     protected int score;
     protected boolean flag;
     private int id;
+    protected int responseID;
     
     
     
@@ -31,10 +32,11 @@ public class Post implements Comparable<Post> {
     	this.score = 0;
     	this.flag = false;
     	this.id = Id;
+    	this.responseID = 0;
     }
 	
     
-	public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id, int score) {
+	public Post (User u, Group g, String dateTime, String postTitle, String postBody, int id, int score, int responseID) {
     	this.user = u;
     	this.group = g;
     	this.postTitle = postTitle;
@@ -50,6 +52,7 @@ public class Post implements Comparable<Post> {
     	this.score = score;
     	this.flag = false;
     	this.id = id;
+    	this.responseID = responseID;
     }
     
 	//test:1
@@ -83,8 +86,21 @@ public class Post implements Comparable<Post> {
 	
 	//test:1
     //Adds responses into responses
-    public boolean addResponse(Response r) {
-        return(responses.add(r));
+    public boolean addNewResponse(Response r) {
+        responses.add(r);
+        this.responseID++;
+        return true;
+    }
+    
+    //FIXME: add tests
+    public boolean addExistingResponse(Response r) {
+    	if (r.getResponseID() >= this.responseID) {
+    		return false;
+    	}
+    	else {
+    		responses.add(r);
+    		return true;
+    	}
     }
     
     //test:1
@@ -146,12 +162,13 @@ public class Post implements Comparable<Post> {
     						"@BODYSTART\n" + 
     						postBody + "\n" + 
     						"@BODYEND\n" + 
-    						"@PSTID=" + id + "\n" + 
-    						"@SCORE=" + score + "\n";
+    						"@PSTID=" + id + "\n";
     	if (flag) {
     		postData += "@FLAG" + "\n";
     	}
-    	postData += "@END\n\n";
+    	postData += "@SCORE=" + score + "\n" + 
+    					"@RESPONSEID=" + responseID + "\n" +
+    					"@END\n\n";
     	
     	return postData;
     }
@@ -176,6 +193,11 @@ public class Post implements Comparable<Post> {
 		}
 
 		return 0;
+	}
+	
+	//FIXME: needs tests
+	public int getResponseID() {
+		return responseID;
 	}
 
 }

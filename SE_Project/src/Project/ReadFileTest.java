@@ -797,12 +797,12 @@ class ReadFileTest {
 		Group g1 = new Group("Football");
 		Group g2 = new Group("Soccer");
 		//Create Posts
-		Post p1 = new Post(u1, g1, "10/10/2008 4:27 AM", "P1", "P1 Body", 1, 666);
-		Post p2 = new Post(u2, g1, "10/10/2008 4:27 AM", "P2", "P2 Body", 2, 245);
-		Post p3 = new Post(u3, g1, "10/10/2008 4:27 AM", "P3", "P3 Body", 3, -5);
-		Post p4 = new Post(u2, g2, "10/10/2008 4:27 AM", "P4", "P4 Body", 4, 0);
-		Post p5 = new Post(u4, g2, "10/10/2008 4:27 AM", "P5", "P5 Body", 5, -1200000);
-		Post p6 = new Post(u5, g2, "10/10/2008 4:27 AM", "P6", "P6 Body", 6, 17171717);
+		Post p1 = new Post(u1, g1, "10/10/2008 4:27 AM", "P1", "P1 Body", 1, 666, 0);
+		Post p2 = new Post(u2, g1, "10/10/2008 4:27 AM", "P2", "P2 Body", 2, 245, 0);
+		Post p3 = new Post(u3, g1, "10/10/2008 4:27 AM", "P3", "P3 Body", 3, -5, 0);
+		Post p4 = new Post(u2, g2, "10/10/2008 4:27 AM", "P4", "P4 Body", 4, 0, 0);
+		Post p5 = new Post(u4, g2, "10/10/2008 4:27 AM", "P5", "P5 Body", 5, -1200000, 0);
+		Post p6 = new Post(u5, g2, "10/10/2008 4:27 AM", "P6", "P6 Body", 6, 17171717, 0);
 		//Create List of Posts
 		ArrayList<Post> expected = new ArrayList<Post>();
 		//Add Posts in Order
@@ -858,10 +858,10 @@ class ReadFileTest {
 		//Create Groups
 		Group g = new Group("Football");
 		//Create Responses
-		Response r1 = new Response(u1, g, "10/10/2009 4:27 AM", "R1 Body", 1, 1500);
-		Response r2 = new Response(u1, g, "10/10/2009 4:27 AM", "R2 Body", 2, -1211);
-		Response r3 = new Response(u2, g, "10/10/2009 4:27 AM", "R3 Body", 1, 0);
-		Response r4 = new Response(u2, g, "10/10/2009 4:27 AM", "R4 Body", 2, 47);
+		Response r1 = new Response(u1, g, "10/10/2009 4:27 AM", "R1 Body", 1, 1500, 0);
+		Response r2 = new Response(u1, g, "10/10/2009 4:27 AM", "R2 Body", 2, -1211, 0);
+		Response r3 = new Response(u2, g, "10/10/2009 4:27 AM", "R3 Body", 1, 0, 1);
+		Response r4 = new Response(u2, g, "10/10/2009 4:27 AM", "R4 Body", 2, 47, 1);
 
 		//Create List of Responses
 		ArrayList<Response> expected = new ArrayList<Response>();
@@ -1048,7 +1048,78 @@ class ReadFileTest {
 		}
 		
 	}
-
+	
+	
+	
+	@Test
+	void testReadFile_Voted_UpvotedPost_Success() {
+		
+		//Create Users
+		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
+		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
+		User u3 = new User("Carol", "WestCarolina", "P!zzaH$t", "10/10/1997", "Valdosta", "Georgia");
+		User u4 = new User("Dulaney", "LegalTrouble", "D@uble&Tr@uble", "10/10/1997", "Valdosta", "Georgia");
+		User u5 = new User("Ethan", "IDK", "WHY#5", "10/10/1997", "Valdosta", "Georgia");
+		//Create Groups
+		Group g1 = new Group("Football");
+		//Create Posts
+		Post p1 = new Post(u1, g1, "10/10/2008 4:27 AM", "P1", "P1 Body", 1, 666, 0);
+		
+		Voted v1 = new Voted(u1, p1);
+		Voted v2 = new Voted(u2, p1);
+		Voted v3 = new Voted(u3, p1);
+		Voted v4 = new Voted(u4, p1);
+		Voted v5 = new Voted(u5, p1);
+		
+		u1.addVoted(v1);
+		u2.addVoted(v2);
+		u3.addVoted(v3);
+		u4.addVoted(v4);
+		u5.addVoted(v5);
+		//Create List of Posts
+		ArrayList<Voted> expected = new ArrayList<Voted>();
+		//Add Posts in Order
+		expected.add(v1);
+		expected.add(v2);
+		expected.add(v3);
+		expected.add(v4);
+		expected.add(v5);
+		
+		
+		
+		SystemManager manager = new SystemManager();
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\ReadFile_Test\\ReadFile_Test_UpvotedPost.txt");
+		
+		try {
+			
+			ReadFile.readFile(manager, fileNames);
+			
+			ArrayList<Voted> actual = manager.getAllVotes();
+			boolean pass = true;
+			
+			for (int i = 0 ; i < actual.size(); i++) {
+				
+				if (actual.get(i).compareTo(expected.get(i))) {
+					pass = false;
+					break;
+				}
+			}
+			
+			assertEquals(true, pass);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail();
+		}
+		catch (IncorrectFileFormatException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+	}
 		
 	
 	

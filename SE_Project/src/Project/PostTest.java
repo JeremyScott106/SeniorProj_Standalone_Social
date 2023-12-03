@@ -74,13 +74,13 @@ public class PostTest {
 		Post testPost1 = new Post(m, "I'm posting.", "This is the message", 1);
 		membership m1 = new membership(testUser, testGroup);
 		
-		Response r = new Response(m1, "n", 1);
+		Response r = new Response(m1, "n", 1, 0);
 		
 		ArrayList<Response> expected = new ArrayList<>();
 		expected.add(r);
 
 
-		testPost1.addResponse(r);
+		testPost1.addNewResponse(r);
 				
 		ArrayList<Response> r1 =  testPost1.getResponse();
 		
@@ -152,7 +152,7 @@ public class PostTest {
 		Group testGroup = new Group("Standard Name");
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 
-		Post testPost1 = new Post (testUser, testGroup, "10/10/2022 12:27 PM", "I'm posting.", "This is the message", 1, 2);
+		Post testPost1 = new Post (testUser, testGroup, "10/10/2022 12:27 PM", "I'm posting.", "This is the message", 1, 2, 0);
 		testPost1.setFlagTrue();
 		
 		String actual = testPost1.getPostWriteData();
@@ -167,8 +167,9 @@ public class PostTest {
 							"This is the message\n" + 
 							"@BODYEND\n" + 
 							"@PSTID=1\n" + 
-							"@SCORE=2\n" + 
 							"@FLAG\n" + 
+							"@SCORE=2\n" +
+							"@RESPONSEID=0\n" +
 							"@END\n\n";
 		
 		assertEquals(expected, actual);
@@ -185,11 +186,11 @@ public class PostTest {
 		membership m = new membership(testUser, testGroup);
 
 //		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
+		Response r2 = new Response(m, "no0000ooo", 1, 0);
 		expected.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
-		testPost1.addResponse(r2);
+		testPost1.addNewResponse(r2);
 
 		assertEquals(expected, testPost1.getResponse());
 	}
@@ -202,13 +203,13 @@ public class PostTest {
 		ArrayList<Response> expected = new ArrayList<>();
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
-		Response r2 = new Response(m, "no0000ooo", 1);
+		Response r1 = new Response(m, "noooo", 1, 0);
+		Response r2 = new Response(m, "no0000ooo", 1, 1);
 		expected.add(r2);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		
-		testPost1.addResponse(r1);
-		testPost1.addResponse(r2);
+		testPost1.addNewResponse(r1);
+		testPost1.addNewResponse(r2);
 		
 		testPost1.removeResponse(r1);
 
@@ -266,10 +267,10 @@ public class PostTest {
 		User testUser = new User("Bob", "ID", "pw", "11/11/2001", "Valdosta", "GA");
 		membership m = new membership(testUser, testGroup);
 
-		Response r1 = new Response(m, "noooo", 1);
+		Response r1 = new Response(m, "noooo", 1, 0);
 		Post testPost1 = new Post (m, "I'm posting.", "This is the message", 1);
 		r1.addScore();
-		testPost1.addResponse(r1);
+		testPost1.addNewResponse(r1);
 		testPost1.addScore();
 		testPost1.addScore();
 		
