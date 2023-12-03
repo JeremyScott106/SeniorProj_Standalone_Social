@@ -17,7 +17,6 @@ public class Home extends JFrame {
 	private JFrame currentFrame;
 	private final int maxHeight = 10;
 	
-
 	@SuppressWarnings("exports")
 	public Home(SystemManager sm,  JMenuBar jmb,  JFrame frame, Dimension dim) {
 		this.topBar = jmb;
@@ -101,7 +100,20 @@ public class Home extends JFrame {
 		btnRefreshPage.setBounds(currentFrame.getBounds().width - 125, 10, 100, 25);
 		titlePanel.add(btnRefreshPage);
 		
+
 			// Display Labels ... 
+		if (manager.getCurrentUser() != null) {
+			JButton btnViewAllUsers = new JButton("View All Users");
+			btnViewAllUsers.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					onViewChangeClick();
+					new ViewAllUsers(manager, topBar, currentFrame, currentFrame.getSize());
+				}
+			});
+			btnViewAllUsers.setBounds(currentFrame.getBounds().width - btnViewAllUsers.getPreferredSize().width - 140, 10, btnViewAllUsers.getPreferredSize().width + 10, 25);
+			titlePanel.add(btnViewAllUsers);
+		}
+		
 		JLabel lblCurrentUser = new JLabel("Current User: ");
 		lblCurrentUser.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCurrentUser.setBounds(10, 10, 122, 25);
@@ -112,7 +124,7 @@ public class Home extends JFrame {
 			JLabel lblUid = new JLabel(manager.getCurrentUser().getId());
 			lblUid.setFont(new Font("Tahoma", Font.BOLD, 15));
 			lblUid.setForeground(Color.BLUE.darker());
-			lblUid.setBounds(129, 10, lblUid.getPreferredSize().width+10, 25);
+			lblUid.setBounds(129, 10, lblUid.getPreferredSize().width + 10, 25);
 			lblUid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			lblUid.addMouseListener(new MouseAdapter() {
 			    @Override

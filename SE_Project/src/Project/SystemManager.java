@@ -107,7 +107,6 @@ public class SystemManager {
 					try {					//Try adding the user to the UserFile
 						WriteFile.addUserToFile(u, fileNames.get(1));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -182,7 +181,6 @@ public class SystemManager {
 				try {				//Try adding the new category
 					WriteFile.addCategoryToFile(c, fileNames.get(2));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -207,7 +205,6 @@ public class SystemManager {
 					try {							//Try adding the group to the file
 						WriteFile.addGroupToFile(g, fileNames.get(3), categoryName);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -259,7 +256,6 @@ public class SystemManager {
 	}
 	//test:1
 	// allows a post to be created
-	//FIXME : Add Unit Tests, needs to verify membership exists between User and Group
 	public boolean createNewPost(Group group, String postTitle, String postBody) {
 		String find = group.getGroupWriteData(currentCategory.getName());
 		
@@ -276,7 +272,6 @@ public class SystemManager {
 				WriteFile.updateGroupinFile(find, replace, fileNames.get(3));
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -329,7 +324,6 @@ public class SystemManager {
 			try {
 				WriteFile.addResponseToFile(r, fileNames.get(6));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -404,12 +398,11 @@ public class SystemManager {
 	public ArrayList<User> getUsers_Alphabetically() {
 
 
-		Collections.sort(users, new SortUsersByName());
+		Collections.sort(users, new SortUsersByUsername());
 
 
 		return users;
 	}
-	
 
 	//test:1
 	public ArrayList<Post> getPosts_InGroupByDate(Group g) {
@@ -424,14 +417,12 @@ public class SystemManager {
 
 	//test:1
 	// returns the status if the user is logged in
-	//FIXME : Add Unit Tests
 	public boolean isLoggedIn() {
 		return userSignedIn;
 	}
 	
 	//test:1
 	//returns the status of the admin
-	//FIXME : Add Unit Tests
 	public boolean isAdmin() {
 		return adminSignedIn;
 	}
@@ -447,7 +438,6 @@ public class SystemManager {
 
 	//test:1
 	// gets current user
-	//FIXME : Add Unit Tests
 	public User getCurrentUser() {
 		return currentUser;
 	}
@@ -495,9 +485,8 @@ public class SystemManager {
 	//test:1
 	// sorts admins alphabetically
 	public ArrayList<Admin> getAdmins_Alphabetically() {
-		Collections.sort(admins, new SortUsersByName());
+		Collections.sort(admins, new SortUsersByUsername());
 		return admins;
-
 	}
 	
 	//test:1
@@ -540,7 +529,6 @@ public class SystemManager {
 	 }
 	 
 	 //test:1
-	 //FIXME: Add Unit Tests
 	 public category getCategoryByGroup(Group group) {
 		 for (category c : this.getCategories_Alphabetically()) {
 			 for (Group g : c.getGroups()) {
@@ -568,13 +556,13 @@ public class SystemManager {
 	 
 	//test:3
 	//helper method, returns a list of all posts.
-	//FIXME : Add Unit Tests
 	public ArrayList<Post> getAllPost(){
 		ArrayList<Group> groups = getAllGroups_Alphabetically();
 		ArrayList<Post> posts = new ArrayList<>();
 		for(Group g: groups) {
 			posts.addAll(g.getPost());
 		}
+		Collections.sort(posts, new SortPostsByDate());
 		return posts;
 	}
 	
@@ -595,6 +583,18 @@ public class SystemManager {
 		}
 		return null;
 	}
+	
+	 //Returns every post or response made
+	 public ArrayList<Object> viewAllUsersPostsResponses() {
+		ArrayList<Object> results = new ArrayList<Object>();
+		ArrayList<Post> posts = getAllPost();
+		for(Post p : posts) {
+			results.add(p);
+			results.addAll(p.getResponse());
+		}
+		 Collections.sort(results, new SortObjectsByDate());
+		 return results;
+	 }
 	
 	//test:1
 	//User story 22
@@ -755,7 +755,6 @@ public class SystemManager {
 	 }
 	 
 	 //test:1
-	 //FIXME: add tests
 	 public Post getPostByGroupId(Group g, int id) {
 		 return Validator.getPostFromId(g.getPost(), id);
 	 }
@@ -768,7 +767,6 @@ public class SystemManager {
 	 }
 	 
 	 //test:1	 
-	 //FIXME: Add unit tests
 	 public String getSimpleTime(Date date) {
 			String pattern = "h:mm a";
 			SimpleDateFormat df = new SimpleDateFormat(pattern);
@@ -776,7 +774,6 @@ public class SystemManager {
 	 }
 	 
 	//test:1
-	//FIXME: add test methods
 	public ArrayList<membership> getAllMemberships() {
 		 ArrayList<membership> memberships = new ArrayList<membership>();
 
