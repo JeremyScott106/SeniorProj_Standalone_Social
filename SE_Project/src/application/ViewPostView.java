@@ -242,9 +242,14 @@ public class ViewPostView extends JFrame {
 				//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	manager.upvotePost(manager.getCurrentPost());
-					new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-				}
+	            	if (manager.getCurrentUser() != null) {
+                        manager.upvotePost(manager.getCurrentPost());
+                        lblScore.setText("" + manager.getCurrentPost().getScore());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
+	            }
 			});
 			panel.add(btnUpVote);
 		} catch (Exception e) {
@@ -259,8 +264,14 @@ public class ViewPostView extends JFrame {
 				//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	manager.downvotePost(manager.getCurrentPost());
-	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+	            	if (manager.getCurrentUser() != null) {
+                        manager.downvotePost(manager.getCurrentPost());
+                        lblScore.setText("" + manager.getCurrentPost().getScore());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
+	            	
 				}
 			});
 			panel.add(btnDownVote);
