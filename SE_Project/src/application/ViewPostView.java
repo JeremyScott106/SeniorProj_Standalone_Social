@@ -236,7 +236,7 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
-			if (manager.votedPostExists() && manager.hasUpvotedPost()) {
+			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasUpvotedPost(true)) {
 				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
@@ -262,7 +262,7 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
-			if (manager.votedPostExists() && manager.hasDownvotedPost()) {
+			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasDownvotedPost(true)) {
 				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
@@ -447,7 +447,7 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
-			if (manager.votedResponseExists(r) && manager.hasUpvotedResponse(r)) {
+			if (manager.getCurrentUser() != null && manager.votedResponseExists(r) && manager.hasUpvotedResponse(r, false)) {
 				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
@@ -473,7 +473,7 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
-			if (manager.votedResponseExists(r) && manager.hasDownvotedResponse(r)) {
+			if (manager.getCurrentUser() != null && manager.votedResponseExists(r) && manager.hasDownvotedResponse(r, false)) {
 				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));

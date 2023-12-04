@@ -1020,9 +1020,9 @@ public class SystemManager {
 	 public boolean upvotePost(Post p) {
 		 Voted v = new Voted(this.currentUser, p);
 		 
-		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList(), true);
 			 
 			 if (v1.getUp()) {
 				 
@@ -1122,9 +1122,9 @@ public class SystemManager {
 	 public boolean upvoteResponse(Response r) {
 		 Voted v = new Voted(this.currentUser, r);
 		 
-		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), false) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), false);
 			 
 			 if (v1.getUp()) {
 				 
@@ -1228,9 +1228,9 @@ public class SystemManager {
 	 public boolean downvotePost(Post p) {
 		 Voted v = new Voted(this.currentUser, p);
 		 
-		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList(), true);
 			 
 			 if (v1.getDown()) {
 				 
@@ -1335,9 +1335,9 @@ public class SystemManager {
 	 public boolean downvoteResponse(Response r) {
 		 Voted v = new Voted(this.currentUser, r);
 		 
-		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), false) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), false);
 			 
 			 if (v1.getDown()) {
 
@@ -1443,18 +1443,18 @@ public class SystemManager {
 	//FIXME: add tests
 	public boolean votedPostExists() {
 		Voted v = new Voted(this.currentUser, this.currentPost);
-        return Validator.validateVotedPostExists(v, this.currentUser.getVotedList());
+        return Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true);
 	}
 	
 	//FIXME: add tests
-	public boolean hasUpvotedPost() {
-		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList());
+	public boolean hasUpvotedPost(boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList(), isPost);
 		return v.getUp();
 	}
 	
 	//FIXME: add tests
-	public boolean hasDownvotedPost() {
-		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList());
+	public boolean hasDownvotedPost(boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList(), isPost);
 		return v.getDown();
 	}
 	
@@ -1462,18 +1462,18 @@ public class SystemManager {
 	//FIXME: add tests
 	public boolean votedResponseExists(Response r) {
 		Voted v = new Voted(this.currentUser, r);
-        return Validator.validateVotedPostExists(v, this.currentUser.getVotedList());
+        return Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), false);
 	}
 	
 	//FIXME: add tests
-	public boolean hasUpvotedResponse(Response r) {
-		Voted v = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+	public boolean hasUpvotedResponse(Response r, boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), isPost);
 		return v.getUp();
 	}
 	
 	//FIXME: add tests
-	public boolean hasDownvotedResponse(Response r) {
-		Voted v = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+	public boolean hasDownvotedResponse(Response r, boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), isPost);
 		return v.getDown();
 	}
 	 
