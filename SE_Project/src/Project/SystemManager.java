@@ -1016,7 +1016,6 @@ public class SystemManager {
 	 * 		Add the voted to the User, add to the Post score
 	 * 		Update text files
 	 */
-	
 	//test:4
 	 public boolean upvotePost(Post p) {
 		 Voted v = new Voted(this.currentUser, p);
@@ -1066,11 +1065,9 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
 				 String findP = p.getPostWriteData(true);
 				 v1.up();
 				 p.addScore();
-				 String replaceV = v1.getVotedWriteData();
 				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
@@ -1172,15 +1169,13 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
 				 String findP = r.getResponseWriteData();
 				 v1.up();
 				 r.addScore();
-				 String replaceV = v1.getVotedWriteData();
 				 String replaceP = r.getResponseWriteData();
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
 						} 
 						 catch (IOException e) {
@@ -1280,11 +1275,9 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
 				 String findP = p.getPostWriteData(true);
 				 v1.down();
 				 p.subScore();
-				 String replaceV = v1.getVotedWriteData();
 				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
@@ -1389,15 +1382,13 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
 				 String findP = r.getResponseWriteData();
 				 v1.down();
 				 r.subScore();
-				 String replaceV = v1.getVotedWriteData();
 				 String replaceP = r.getResponseWriteData();
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
 						} 
 						 catch (IOException e) {
