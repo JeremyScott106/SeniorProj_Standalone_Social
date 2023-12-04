@@ -244,14 +244,11 @@ public class ViewPostView extends JFrame {
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
-				//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (manager.getCurrentUser() != null) {
                         manager.upvotePost(manager.getCurrentPost());
                         lblScore.setText("" + manager.getCurrentPost().getScore());
-                        onViewChangeClick();
-        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "You must login to vote");
@@ -270,14 +267,11 @@ public class ViewPostView extends JFrame {
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
-				//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (manager.getCurrentUser() != null) {
                         manager.downvotePost(manager.getCurrentPost());
                         lblScore.setText("" + manager.getCurrentPost().getScore());
-                        onViewChangeClick();
-        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "You must login to vote");

@@ -291,8 +291,6 @@ public class GroupView extends JFrame {
 	            	if (manager.getCurrentUser() != null) {
 	                    manager.upvotePost(p);
 	                    lblScore.setText("" + p.getScore());
-//	                    onViewChangeClick();
-//	    				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 	                }
 	                else {
 	                    JOptionPane.showMessageDialog(null, "You must login to vote");
@@ -317,8 +315,6 @@ public class GroupView extends JFrame {
 	            	if (manager.getCurrentUser() != null) {
                         manager.downvotePost(p);
                         lblScore.setText("" + p.getScore());
-//                      onViewChangeClick();
-//        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
                     else {
                         JOptionPane.showMessageDialog(null, "You must login to vote");
