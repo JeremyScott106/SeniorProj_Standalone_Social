@@ -290,19 +290,36 @@ public class SystemManager {
 	//US36 - Administrator can remove a post
 	public boolean deleteNewPost(Post p) {
 		Group g = p.getGroup();
-		return(g.removePost(p));
+		boolean removed = g.removePost(p);
+		
+		if (writable && removed) {
+			try {
+				WriteFile.removePostFromFile(p, fileNames.get(5));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			return removed;
+		}
 	}
 	
 	//test:1
 	//US37 - Administrator can remove a response to a post
 	//US38 - User can remove a response to a post
-	public void removeResponseToPost(Post p, Response r) {
+	public void removeResponseToPost(Post p, Response r, String userTitle) {
+		
 		if(p.getResponse().contains(r)){
-			p.removeResponse(r);
 			
+			String findR = r.getResponseWriteData(true);
+			r.editResponseBody("Content Removed By: " + userTitle);
+			String replaceR = r.getResponseWriteData();
+			System.out.println(findR + replaceR);
 			if (writable) {
 				try {
-					WriteFile.removeResponseFromFile(r, fileNames.get(6));
+					WriteFile.removeResponseFromFile(findR, replaceR, fileNames.get(6));
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
