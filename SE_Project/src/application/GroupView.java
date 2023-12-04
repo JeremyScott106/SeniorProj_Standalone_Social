@@ -5,8 +5,11 @@ import Project.Post;
 import Project.SystemManager;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -276,13 +279,58 @@ public class GroupView extends JFrame {
 		lblScore.setBounds(10, 30, 20, 10);
 		panel.add(lblScore);
 		
-		JButton btnUpVote = new JButton("Up");
-		btnUpVote.setBounds(10, 5, 20, 20);
-		panel.add(btnUpVote);
+		try {
+			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
+			if (manager.getCurrentUser() != null && manager.votedPostExists(p) && manager.hasUpvotedPost(true, p)) {
+				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			}
+			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
+			btnUpVote.setBounds(10, 5, 20, 20);
+			btnUpVote.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	if (manager.getCurrentUser() != null) {
+	                    manager.upvotePost(p);
+	                    lblScore.setText("" + p.getScore());
+//	                    onViewChangeClick();
+//	    				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+	                }
+	                else {
+	                    JOptionPane.showMessageDialog(null, "You must login to vote");
+	                }
+	            }
+			});
 		
-		JButton btnDownVote = new JButton("Down");
-		btnDownVote.setBounds(10, 45, 20, 20);
-		panel.add(btnDownVote);
+			panel.add(btnUpVote);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		try {
+			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
+			if (manager.getCurrentUser() != null && manager.votedPostExists(p) && manager.hasDownvotedPost(true, p)) {
+				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			}
+			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
+			btnDownVote.setBounds(10, 45, 20, 20);
+			btnDownVote.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	if (manager.getCurrentUser() != null) {
+                        manager.downvotePost(p);
+                        lblScore.setText("" + p.getScore());
+//                      onViewChangeClick();
+//        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
+	            	
+				}
+			});
+			panel.add(btnDownVote);
+			
+			} catch (Exception e) {
+				System.out.println(e);	
+		}
 		
 		JLabel lblUidLable = new JLabel("By:");
 		lblUidLable.setBounds(60, 49, 34, 13);

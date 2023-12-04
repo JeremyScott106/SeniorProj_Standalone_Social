@@ -239,7 +239,7 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
-			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasUpvotedPost(true)) {
+			if (manager.getCurrentUser() != null && manager.votedPostExists(manager.getCurrentPost()) && manager.hasUpvotedPost(true, manager.getCurrentPost())) {
 				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
@@ -265,7 +265,7 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
-			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasDownvotedPost(true)) {
+			if (manager.getCurrentUser() != null && manager.votedPostExists(manager.getCurrentPost()) && manager.hasDownvotedPost(true, manager.getCurrentPost())) {
 				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));

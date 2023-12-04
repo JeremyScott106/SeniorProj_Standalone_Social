@@ -1565,20 +1565,20 @@ public class SystemManager {
 	}
 	
 	//FIXME: add tests
-	public boolean votedPostExists() {
-		Voted v = new Voted(this.currentUser, this.currentPost);
+	public boolean votedPostExists(Post p) {
+		Voted v = new Voted(this.currentUser, p);
         return Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true);
 	}
 	
 	//FIXME: add tests
-	public boolean hasUpvotedPost(boolean isPost) {
-		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList(), isPost);
+	public boolean hasUpvotedPost(boolean isPost, Post p) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList(), isPost);
 		return v.getUp();
 	}
 	
 	//FIXME: add tests
-	public boolean hasDownvotedPost(boolean isPost) {
-		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList(), isPost);
+	public boolean hasDownvotedPost(boolean isPost, Post p) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList(), isPost);
 		return v.getDown();
 	}
 	
