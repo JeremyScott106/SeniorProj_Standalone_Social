@@ -235,7 +235,7 @@ public class Validator {
 	
 	//Checks to see if there has been a vote on a post, if so it will return true, otherwise false
 	//test:2
-	public static boolean validateVotedExists(Voted v, ArrayList<Voted> votes) {
+	public static boolean validateVotedPostExists(Voted v, ArrayList<Voted> votes) {
 		for (Voted v1 : votes) {
 			if (v.compareTo(v1) == true) {
 				return true;

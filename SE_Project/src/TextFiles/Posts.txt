@@ -138,7 +138,7 @@ testing
 testing
 @BODYEND
 @PSTID=4
-@SCORE=0
+@SCORE=-1
 @RESPONSEID=0
 @END
 
@@ -180,7 +180,7 @@ tests
 testtest
 @BODYEND
 @PSTID=7
-@SCORE=-1
+@SCORE=-2
 @RESPONSEID=0
 @END
 
