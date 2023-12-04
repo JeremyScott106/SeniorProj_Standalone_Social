@@ -313,10 +313,10 @@ public class SystemManager {
 		
 		if(p.getResponse().contains(r)){
 			
-			String findR = r.getResponseWriteData();
+			String findR = r.getResponseWriteData(true);
 			r.editResponseBody("Content Removed By: " + userTitle);
 			String replaceR = r.getResponseWriteData();
-			
+			System.out.println(findR + replaceR);
 			if (writable) {
 				try {
 					WriteFile.removeResponseFromFile(findR, replaceR, fileNames.get(6));
