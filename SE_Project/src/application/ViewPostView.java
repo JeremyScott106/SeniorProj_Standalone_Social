@@ -242,7 +242,8 @@ public class ViewPostView extends JFrame {
 				//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	
+	            	manager.upvotePost(manager.getCurrentPost());
+					new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 				}
 			});
 			panel.add(btnUpVote);
@@ -258,7 +259,8 @@ public class ViewPostView extends JFrame {
 				//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	
+	            	manager.downvotePost(manager.getCurrentPost());
+	            	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 				}
 			});
 			panel.add(btnDownVote);

@@ -1104,6 +1104,12 @@ public class ReadFile {
 					if (r != null) {
 						Voted v = new Voted(u, r);
 						u.addVoted(v);
+						if (upvote) {
+							v.up();
+						}
+						else if (downvote) {
+							v.down();
+						}
 					}
 					else {
 						throw new IncorrectFileFormatException();
@@ -1112,8 +1118,13 @@ public class ReadFile {
 				}
 				else {
 					Voted v = new Voted(u, p);
-					p.addScore();
 					u.addVoted(v);
+					if (upvote) {
+						v.up();
+					}
+					else if (downvote) {
+						v.down();
+					}
 				}
 			
 			}

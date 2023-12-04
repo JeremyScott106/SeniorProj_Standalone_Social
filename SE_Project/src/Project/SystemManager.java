@@ -1027,10 +1027,10 @@ public class SystemManager {
 			 
 			 if (v1.getUp()) {
 				 
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.cancelVote();
 				 p.subScore();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 
 				 if (writable) {
 					 try {
@@ -1043,18 +1043,17 @@ public class SystemManager {
 						 e.printStackTrace();
 					}
 				 }
-				 
 				 return true;
 				 
 			 }
 			 else if (v1.getDown()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.up();
 				 p.addScore();
 				 p.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1064,19 +1063,18 @@ public class SystemManager {
 							e.printStackTrace();
 						} 
 				 }
-				 
 				 return true;
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.up();
 				 p.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
 						} 
 						 catch (IOException e) {
@@ -1087,11 +1085,11 @@ public class SystemManager {
 			 }
 		 }
 		 else {
-			 String findP = p.getPostWriteData();
+			 String findP = p.getPostWriteData(true);
 			 v.up();
 			 this.currentUser.addVoted(v);
 			 p.addScore();
-			 String replaceP = p.getPostWriteData();
+			 String replaceP = p.getPostWriteData(true);
 			 
 			 if (writable) {
 				 try {
@@ -1102,7 +1100,6 @@ public class SystemManager {
 					e.printStackTrace();
 				}
 			 }
-			 
 			 return true;
 		 }
 	 }
@@ -1242,10 +1239,10 @@ public class SystemManager {
 			 
 			 if (v1.getDown()) {
 				 
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.cancelVote();
 				 p.addScore();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 
 				 if (writable) {
 					 
@@ -1264,12 +1261,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getUp()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.down();
 				 p.subScore();
 				 p.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1284,14 +1281,14 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.down();
 				 p.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
 						} 
 						 catch (IOException e) {
@@ -1304,11 +1301,11 @@ public class SystemManager {
 
 		 }
 		 else {
-			 String findP = p.getPostWriteData();
+			 String findP = p.getPostWriteData(true);
 			 v.down();
 			 this.currentUser.addVoted(v);
 			 p.subScore();
-			 String replaceP = p.getPostWriteData();
+			 String replaceP = p.getPostWriteData(true);
 			 
 			 if (writable) {
 				 try {

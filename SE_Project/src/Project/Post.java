@@ -182,6 +182,37 @@ public class Post implements Comparable<Post> {
     	return postData;
     }
 	
+	/*
+	 * When the PostBody is Read from the system,
+	 * a newline is automatically put at the end of the PostBody,
+	 * so putting a newline after PostBody here will only cause each PostBody to get longer and longer,
+	 * or cause them to not get updated/removed when needed
+	 */
+	public String getPostWriteData(boolean ignore) {
+
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		String date = df.format(dateTime);
+
+    	String postData = "@START\n" + 
+    						"@POST\n" + 
+    						"@USERNAME=" + getUser().getId() + "\n" + 
+    						"@GNAME=" + getGroup().getGroupName() + "\n" + 
+    						"@DATETIME=" + date + "\n" + 
+    						"@TITLE=" + postTitle + "\n" +
+    						"@BODYSTART\n" + 
+    						postBody + 		//newline statement removed
+    						"@BODYEND\n" + 
+    						"@PSTID=" + id + "\n";
+    	if (flag) {
+    		postData += "@FLAG" + "\n";
+    	}
+    	postData += "@SCORE=" + score + "\n" + 
+    					"@RESPONSEID=" + responseID + "\n" +
+    					"@END\n\n";
+
+    	return postData;
+    }
+	
 	//Gete a total score of the post
     public int getTotalScore() {
         int totalScore = this.score;
