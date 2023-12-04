@@ -188,7 +188,7 @@ public class ViewPostView extends JFrame {
 
 		
 			// May remove, not really needed anymore, this was an original need with old setup.
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new JButton("Back to " + manager.getCurrentGroup().getGroupName());	// If reaching by another screen, says where back goes to
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
 		int x2 = currentFrame.getBounds().width - (btnBack.getPreferredSize().width + padding + 50);
 		btnBack.setBounds(x2, 45, btnBack.getPreferredSize().width + padding, 25);;
@@ -514,7 +514,6 @@ public class ViewPostView extends JFrame {
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
-			//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 	            	if (manager.getCurrentUser() != null) {
@@ -540,7 +539,6 @@ public class ViewPostView extends JFrame {
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
-			//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (manager.getCurrentUser() != null) {
