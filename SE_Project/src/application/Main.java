@@ -103,6 +103,8 @@ public class Main extends JFrame {
 		 * 5. Posts
 		 * 6. Responses
 		 * 7. Voted
+		 * 8. Suspended
+		 * 9. Banned
 		 */
 		
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Admins.txt");
@@ -113,6 +115,8 @@ public class Main extends JFrame {
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Posts.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Responses.txt");
 		fileNames.add(".\\SE_Project\\src\\TextFiles\\Voted.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Suspended.txt");
+		fileNames.add(".\\SE_Project\\src\\TextFiles\\Banned.txt");
 
 		
 		

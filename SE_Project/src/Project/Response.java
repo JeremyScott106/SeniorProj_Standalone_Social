@@ -64,7 +64,6 @@ public class Response extends Post{
 	public String getResponseWriteData(boolean ignore) {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
-
 		String responseData = "@START\n" + 
 				"@RESPONSE\n" + 
 				"@USERNAME=" + user.getId() + "\n" + 
@@ -80,7 +79,6 @@ public class Response extends Post{
 		responseData += "@SCORE=" + score + "\n" +
 						"@RESPONSEID=" + responseID + "\n" +
 						"@END\n\n";
-
 		return responseData;
 	}
 	

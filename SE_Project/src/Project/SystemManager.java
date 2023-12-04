@@ -305,7 +305,7 @@ public class SystemManager {
 			return removed;
 		}
 	}
-	
+
 	//test:1
 	//US37 - Administrator can remove a response to a post
 	//US38 - User can remove a response to a post
@@ -339,15 +339,16 @@ public class SystemManager {
 	// gets the membership of the group and user inputed
 	public boolean createNewResponse(Group group, String responseBody, Post post) {
 		membership m = getMembership(group, currentUser);
-
+		String findP = post.getPostWriteData(true);
 		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
 		boolean newResponse = currentPost.addNewResponse(r);		
+		String replaceP = post.getPostWriteData(true);
 		
 		if (writable && newResponse) {
 			
 			try {
 				WriteFile.addResponseToFile(r, fileNames.get(6));
-
+				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
 			} 
 			catch (IOException e) {
 
@@ -791,6 +792,15 @@ public class SystemManager {
 		 membership m = g.getMembership(u.getId());
 		 g.removeMember(m);
 		 g.addSuspended(s);
+		 
+		 if (writable) {
+			 try {
+				WriteFile.addSuspendedToFile(s, fileNames.get(8));
+			} 
+			 catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
  	 }
 	 
 	 //US28 - Administrator can suspend a User from a group and they will have a cooling period
@@ -801,7 +811,17 @@ public class SystemManager {
 		 Date end = new Date(new Date().getTime() + 86400000 * days);
 		 String timeStampStart = sdf.format(start);
 		 String timeStampStop = sdf.format(end);
-		 g.addSuspended(new Suspended(u,g, timeStampStart, timeStampStop));
+		 Suspended s = new Suspended(u,g, timeStampStart, timeStampStop);
+		 g.addSuspended(s);
+		 
+		 if (writable) {
+			 try {
+				WriteFile.addSuspendedToFile(s, fileNames.get(8));
+			} 
+			 catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
  	 }
 	 
 	 //test:1
@@ -886,6 +906,15 @@ public class SystemManager {
 		Group g = s.getGroup();
 		g.addMember(m);
 		g.removeSuspended(s);
+		
+		if (writable) {
+			try {
+				WriteFile.removeSuspendedFromFile(s, fileNames.get(8));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//US30 - Administrator can reinstate a suspended user to good standing in a group
@@ -894,6 +923,15 @@ public class SystemManager {
 	public void reinstateSuspendedUser(Suspended s) {
 		Group g = s.getGroup();
 		g.removeSuspended(s);
+		
+		if (writable) {
+			try {
+				WriteFile.removeSuspendedFromFile(s, fileNames.get(8));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	//test:1
@@ -905,6 +943,15 @@ public class SystemManager {
 		 membership m = g.getMembership(u.getId());
 //		 g.removeMember(m);		// Keep as member
 		 g.addBanned(b);
+		 
+		 if (writable) {
+			 try {
+				WriteFile.addBannedToFile(b, fileNames.get(9));
+			} 
+			 catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
 	 }
 	
 	//FIXME: Add unit tests
@@ -914,6 +961,15 @@ public class SystemManager {
 		membership m = g.getMembership(u.getId());
 //		g.removeMember(m);		// Keep as member
 		g.addBanned(b);
+		
+		if (writable) {
+			try {
+				WriteFile.addBannedToFile(b, fileNames.get(9));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	 }
 	
 	//test:1 
@@ -938,11 +994,33 @@ public class SystemManager {
 	//test:2
 	//US33 - User can flag a post or response that I find problematic
 	public void flagPost(Post p) {
+		String findP = p.getPostWriteData(true);
 		p.setFlagTrue();
+		String replaceP = p.getPostWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 		 
 	public void flagResponse(Response r) {
+		String findR = r.getResponseWriteData(true);
 		r.setFlagTrue();
+		String replaceR = r.getResponseWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updateResponseInFile(findR, replaceR, fileNames.get(6));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//test:1
@@ -998,11 +1076,33 @@ public class SystemManager {
 	//test:2
 	//US35 - Administrator can remove all flags on a post or response
 	public void removeFlagOnPost(Post p) {
+		String findP = p.getPostWriteData(true);
 		p.setFlagFalse();
+		String replaceP = p.getPostWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	 
 	public void removeFlagOnResponse(Response r) {
+		String findR = r.getResponseWriteData(true);
 		r.setFlagFalse();
+		String replaceR = r.getResponseWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updateResponseInFile(findR, replaceR, fileNames.get(6));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//test:4
@@ -1044,10 +1144,10 @@ public class SystemManager {
 			 
 			 if (v1.getUp()) {
 				 
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.cancelVote();
 				 p.subScore();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 
 				 if (writable) {
 					 try {
@@ -1066,12 +1166,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getDown()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.up();
 				 p.addScore();
 				 p.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1086,11 +1186,11 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.up();
 				 p.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1104,11 +1204,11 @@ public class SystemManager {
 			 }
 		 }
 		 else {
-			 String findP = p.getPostWriteData();
+			 String findP = p.getPostWriteData(true);
 			 v.up();
 			 this.currentUser.addVoted(v);
 			 p.addScore();
-			 String replaceP = p.getPostWriteData();
+			 String replaceP = p.getPostWriteData(true);
 			 
 			 if (writable) {
 				 try {
@@ -1151,10 +1251,10 @@ public class SystemManager {
 			 
 			 if (v1.getUp()) {
 				 
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.cancelVote();
 				 r.subScore();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 
 				 if (writable) {
 					 
@@ -1173,12 +1273,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getDown()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.up();
 				 r.addScore();
 				 r.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1193,11 +1293,11 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.up();
 				 r.addScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1212,11 +1312,11 @@ public class SystemManager {
 			 
 		 }
 		 else {
-			 String findP = r.getResponseWriteData();
+			 String findP = r.getResponseWriteData(true);
 			 v.up();
 			 this.currentUser.addVoted(v);
 			 r.addScore();
-			 String replaceP = r.getResponseWriteData();
+			 String replaceP = r.getResponseWriteData(true);
 			 
 			 if (writable) {
 				 try {
@@ -1259,10 +1359,10 @@ public class SystemManager {
 			 
 			 if (v1.getDown()) {
 				 
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.cancelVote();
 				 p.addScore();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 
 				 if (writable) {
 					 
@@ -1281,12 +1381,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getUp()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.down();
 				 p.subScore();
 				 p.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1301,11 +1401,11 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = p.getPostWriteData();
+				 String findP = p.getPostWriteData(true);
 				 v1.down();
 				 p.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = p.getPostWriteData();
+				 String replaceP = p.getPostWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1321,11 +1421,11 @@ public class SystemManager {
 
 		 }
 		 else {
-			 String findP = p.getPostWriteData();
+			 String findP = p.getPostWriteData(true);
 			 v.down();
 			 this.currentUser.addVoted(v);
 			 p.subScore();
-			 String replaceP = p.getPostWriteData();
+			 String replaceP = p.getPostWriteData(true);
 			 
 			 if (writable) {
 				 try {
@@ -1368,10 +1468,10 @@ public class SystemManager {
 			 
 			 if (v1.getDown()) {
 
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.cancelVote();
 				 r.addScore();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 
 				 if (writable) {
 					 
@@ -1390,12 +1490,12 @@ public class SystemManager {
 			 }
 			 else if (v1.getUp()) {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.down();
 				 r.subScore();
 				 r.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1410,11 +1510,11 @@ public class SystemManager {
 			 }
 			 else {
 				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData();
+				 String findP = r.getResponseWriteData(true);
 				 v1.down();
 				 r.subScore();
 				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData();
+				 String replaceP = r.getResponseWriteData(true);
 				 if (writable) {
 					 try {
 							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
@@ -1429,11 +1529,11 @@ public class SystemManager {
 			 
 		 }
 		 else {
-			 String findP = r.getResponseWriteData();
+			 String findP = r.getResponseWriteData(true);
 			 v.down();
 			 this.currentUser.addVoted(v);
 			 r.subScore();
-			 String replaceP = r.getResponseWriteData();
+			 String replaceP = r.getResponseWriteData(true);
 			 
 			 if (writable) {
 				 try {
@@ -1468,5 +1568,4 @@ public class SystemManager {
 		}
 		return users;
 	}
-	 
 }
