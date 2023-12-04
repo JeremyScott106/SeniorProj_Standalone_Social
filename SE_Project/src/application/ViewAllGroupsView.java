@@ -37,7 +37,7 @@ public class ViewAllGroupsView extends JFrame {
 		
 		JPanel titlePanel = new JPanel();
 		
-		titlePanel.setPreferredSize(new Dimension(0,50));
+		titlePanel.setPreferredSize(new Dimension(0,80));
 		titlePanel.setLayout(null);
 		
 		if (manager.getCurrentUser() instanceof Admin) {
