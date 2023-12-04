@@ -696,7 +696,7 @@ public class WriteFile {
 	
 	public static void removeResponseFromFile(Response r, String fileName) throws IOException {
 		
-		String find = r.getPostWriteData(true);
+		String find = r.getResponseWriteData(true);
 		String replace = "";
 		
 		try {

@@ -347,15 +347,18 @@ public class SystemManager {
 	public boolean createNewResponse(Group group, String responseBody, Post post) {
 		membership m = getMembership(group, currentUser);
 		String findP = post.getPostWriteData(true);
+		String findP2 = post.getPostWriteData();
 		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
 		boolean newResponse = currentPost.addNewResponse(r);		
 		String replaceP = post.getPostWriteData(true);
+		String replaceP2 = post.getPostWriteData();
 		
 		if (writable && newResponse) {
 			
 			try {
 				WriteFile.addResponseToFile(r, fileNames.get(6));
 				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+				WriteFile.updatePostInFile(findP2, replaceP2, fileNames.get(5));
 			} 
 			catch (IOException e) {
 
