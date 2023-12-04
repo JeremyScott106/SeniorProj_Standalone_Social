@@ -267,6 +267,9 @@ public class SystemManager {
 		
 		membership m = getMembership(group, currentUser);
 		int id = group.getPostId();
+		if (postBody.charAt(postBody.length()-1) != '\n') {
+			postBody += "\n";
+		}
 		Post p = new Post(m, postTitle, postBody, id);
 		group.addNewPost(p);
 		
@@ -302,8 +305,8 @@ public class SystemManager {
 				}
 				
 				WriteFile.removePostFromFile(p, fileNames.get(5));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			return true;
@@ -348,6 +351,9 @@ public class SystemManager {
 		membership m = getMembership(group, currentUser);
 		String findP = post.getPostWriteData(true);
 		String findP2 = post.getPostWriteData();
+		if (responseBody.charAt(responseBody.length()-1) != '\n') {
+			responseBody += "\n";
+		}
 		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
 		boolean newResponse = currentPost.addNewResponse(r);		
 		String replaceP = post.getPostWriteData(true);

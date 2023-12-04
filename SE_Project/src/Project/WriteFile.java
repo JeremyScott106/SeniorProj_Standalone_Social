@@ -347,7 +347,7 @@ public class WriteFile {
 			
 			FileWriter writer = new FileWriter(dataFile, true);
 			
-			String msg = p.getPostWriteData();
+			String msg = p.getPostWriteData(true);
 			
 			writer.write(msg);
 			
@@ -370,7 +370,7 @@ public class WriteFile {
 			
 			FileWriter writer = new FileWriter(dataFile, true);
 			
-			String msg = r.getResponseWriteData();
+			String msg = r.getResponseWriteData(true);
 			
 			writer.write(msg);
 			
@@ -665,6 +665,10 @@ public class WriteFile {
 	public static void removePostFromFile(Post p, String fileName) throws IOException {
 		
 		String find = p.getPostWriteData(true);
+		int idx = find.indexOf("@BODYEND");		//Index for the end of the body
+		if (find.charAt(idx-1) != '\n' ) {		//if the character directly before the end of the body is anything other than a newline
+			find = find.replace("@BODYEND", "\n@BODYEND");	//add newline before end of body
+		}
 		String replace = "";
 		
 		try {
@@ -697,6 +701,10 @@ public class WriteFile {
 	public static void removeResponseFromFile(Response r, String fileName) throws IOException {
 		
 		String find = r.getResponseWriteData(true);
+		int idx = find.indexOf("@BODYEND");
+		if (idx != 0 ) {
+			find = find.replace("@BODYEND", "\n@BODYEND");
+		}
 		String replace = "";
 		
 		try {
