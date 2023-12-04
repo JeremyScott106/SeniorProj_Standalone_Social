@@ -19,6 +19,10 @@ public class Response extends Post{
 		this.parentalId = parentalId;
 	}
 	
+	public void editResponseBody(String msg) {
+		this.postBody = msg;
+	}
+	
 	//FIXME: add tests
 	public int getParentalId() {
 		return parentalId;

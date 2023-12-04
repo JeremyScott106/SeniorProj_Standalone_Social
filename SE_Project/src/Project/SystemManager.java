@@ -296,13 +296,12 @@ public class SystemManager {
 	//test:1
 	//US37 - Administrator can remove a response to a post
 	//US38 - User can remove a response to a post
-	public void removeResponseToPost(Post p, Response r) {
+	public void removeResponseToPost(Post p, Response r, String userTitle) {
+		
 		if(p.getResponse().contains(r)){
-			p.removeResponse(r);
-			
 			if (writable) {
 				try {
-					WriteFile.removeResponseFromFile(r, fileNames.get(6));
+					WriteFile.removeResponseFromFile(r, userTitle, fileNames.get(6));
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
