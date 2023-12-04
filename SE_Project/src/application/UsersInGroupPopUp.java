@@ -92,9 +92,19 @@ public class UsersInGroupPopUp extends JDialog {
 						// TODO: Need a verification pop-up.  This can not be undone
 					btnBanUser.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent e) {
-			            	manager.banUser(u, manager.getCurrentGroup());
-			            	listUsers.dispose();
-			            	new UsersInGroupPopUp(manager);
+					        int input = JOptionPane.showConfirmDialog(null, "This can not be undone, BAN user forever?", "Game-Over Dude?",
+									JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+							
+					        // 0=yes, 1=no
+					        if (input == 0) {
+    	
+				    			manager.banUser(u, manager.getCurrentGroup());
+				    			listUsers.dispose();
+				    			new UsersInGroupPopUp(manager);
+				    			JOptionPane.showMessageDialog(null, "User is banned forever!");
+				    			
+					        }
+
 						}
 					});
 				}

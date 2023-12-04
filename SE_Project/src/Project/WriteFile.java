@@ -696,10 +696,7 @@ public class WriteFile {
 	}
 	
 	
-	public static void removeResponseFromFile(Response r, String fileName) throws IOException {
-		
-		String find = r.getResponseWriteData();
-		String replace = "";
+	public static void removeResponseFromFile(String find, String replace, String fileName) throws IOException {
 		
 		try {
 			

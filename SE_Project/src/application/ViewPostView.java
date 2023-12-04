@@ -104,6 +104,17 @@ public class ViewPostView extends JFrame {
             }
         });
 		
+		JButton btnRefreshPage = new JButton("Refresh");
+		btnRefreshPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onViewChangeClick();
+				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
+		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
+		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
+		titlePanel.add(btnRefreshPage);
+		
 		//	SECOND ROW OF LABLES //
 		gridx = 20;											// resets gridx back to 20
 			// checks if user is logged in, if not, show login, otherwise, give login information
@@ -132,7 +143,7 @@ public class ViewPostView extends JFrame {
 			});
 
 		}
-			// Checks if member of group, if not, give option to join group.  Need to add option to look if user is banned or suspended
+			// Checks if member of group, if not, give option to join group
 		else if (!manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
 			
 			JLabel memberStatus = new JLabel("Only Members Can Post In Group");
@@ -157,6 +168,7 @@ public class ViewPostView extends JFrame {
 			    	else {
 			    		JOptionPane.showMessageDialog(null, "Something Went Wrong");
 			    	}
+			    	btnRefreshPage.doClick();
 	            }
 	        });
 			titlePanel.add(joinGroup);
@@ -173,16 +185,7 @@ public class ViewPostView extends JFrame {
 			titlePanel.add(memberStatus);
 		}
 		
-		JButton btnRefreshPage = new JButton("Refresh");
-		btnRefreshPage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onViewChangeClick();
-				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
-			}
-		});
-		int x1 = currentFrame.getBounds().width - (btnRefreshPage.getPreferredSize().width + padding + 50);
-		btnRefreshPage.setBounds(x1, 10, btnRefreshPage.getPreferredSize().width + padding, 25);
-		titlePanel.add(btnRefreshPage);
+
 		
 			// May remove, not really needed anymore, this was an original need with old setup.
 		JButton btnBack = new JButton("Back");
@@ -327,9 +330,25 @@ public class ViewPostView extends JFrame {
 		
 		gridy += 18;
 		
-
-			// if member of the group, show response box
-		if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
+			// prevents banned user from posting
+		if (manager.isUserBannedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are banned from this group!");
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(60, gridy, 416, 124);
+			gridy += memberStatus.getHeight() + padding;
+			panel.add(memberStatus);
+		}
+		
+			// prevents suspended user from posting
+		else if (manager.isUserSuspendedFromGroup(manager.getCurrentUser(), manager.getCurrentGroup())) {
+			JLabel memberStatus = new JLabel("You are suspended until " + manager.getSuspensionEndDate(manager.getSuspensions_ByUsernameGroup(manager.getCurrentUser(), manager.getCurrentGroup())));
+			memberStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			memberStatus.setBounds(60, gridy, 416, 124);
+			gridy += memberStatus.getHeight() + padding;
+			panel.add(memberStatus);
+		}
+				// if member of the group, show response box
+		else if (manager.isUserOfGroup(manager.getCurrentUser(), manager.getCurrentGroup())){	
 			txfPostBody = new JTextArea();
 			txfPostBody.setColumns(10);
 			JScrollPane scrollPane= new JScrollPane(txfPostBody);
@@ -353,18 +372,6 @@ public class ViewPostView extends JFrame {
 			});
 			
 			panel.add(btnRespond);
-				
-				// Probably can remove cancel button, seems pointless to have a back button here
-			JButton btnBack = new JButton("Cancel");
-			btnBack.setBounds(246, gridy, 85, 21);
-			gridy += scrollPane.getHeight() + padding;
-			btnBack.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			    	onViewChangeClick();
-			    	new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
-			    }
-			});
-			panel.add(btnBack);
 		}
 		
 				// Add Flag to the main post only if user is an admin
@@ -394,15 +401,76 @@ public class ViewPostView extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (manager.getCurrentPost().getFlag()) {
-			    		manager.getCurrentPost().setFlagFalse();
+			    		manager.removeFlagOnPost(manager.getCurrentPost());
 			    		onViewChangeClick();
 			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			    	}
 			    	else {
-			    		manager.getCurrentPost().setFlagTrue();
+			    		manager.flagPost(manager.getCurrentPost());
 			    		onViewChangeClick();
 			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			    	}
+			    }
+		    });
+			panel.add(picLabel);
+			
+			JLabel picRedXLabel = new JLabel();						// Establish button
+			try {
+					BufferedImage deletePic;
+					deletePic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedX.png"));
+					JLabel redXPic = new JLabel(new ImageIcon(deletePic));
+					picRedXLabel = redXPic;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			picRedXLabel.setBounds(635, 20, 25, 25);			// Location of the flag in the panel
+			picRedXLabel.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			        int input = JOptionPane.showConfirmDialog(null, "This can not be undone! Delete this post and all of it's responses?", "Confirm Choice",
+							JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+			        // 0=yes, 1=no
+			        if (input == 0) {
+			        	manager.deleteNewPost(manager.getCurrentPost());
+			        	
+		    			JOptionPane.showMessageDialog(null, "Post has been terminated!");
+		    			onViewChangeClick();
+		    			manager.setCurrentPost(null);
+		    			new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+
+			        }
+			    }
+		    });
+			panel.add(picRedXLabel);
+		}
+		
+				// Add Flag to the main post only if user
+		if(manager.getCurrentUser() instanceof User) {
+			JLabel picLabel = new JLabel();						// Establish button
+			try {
+				BufferedImage notFlagPic;
+				notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+				JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+				picLabel = notFlaggedPic;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			picLabel.setBounds(600, 20, 25, 25);			// Location of the flag in the panel
+			picLabel.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			        int input = JOptionPane.showConfirmDialog(null, "Do you want flag this post for admin to review?", "Select an Option...",
+							JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+					
+			        // 0=yes, 1=no
+			        if (input == 0) {
+			        	manager.getCurrentPost().setFlagTrue();
+		    			JOptionPane.showMessageDialog(null, "Message has been flagged for admin to see");
+			        }
+
 			    }
 		    });
 			panel.add(picLabel);
@@ -555,7 +623,8 @@ public class ViewPostView extends JFrame {
 			JPanel responseBox = createResponseBox(r);
 			responseBox.setBounds(40, gridLocY, responseBox.getSize().width + padding, responseBox.getSize().height + padding);
 			
-			// As before, only admins see the flags
+
+			// As before, only admins set flags on or off
 			if(manager.getCurrentUser() instanceof Admin) {
 				JLabel picLabel = new JLabel();
 				try {
@@ -594,7 +663,106 @@ public class ViewPostView extends JFrame {
 				    }
 			    });
 				responsePane.add(picLabel);
+				
+					// Create a red x next to every response.  clicking it will allow the admin to delete response content
+				JLabel redXLabel = new JLabel();
+				try {
+					BufferedImage redXPic;
+					redXPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedX.png"));
+					JLabel deletePic = new JLabel(new ImageIcon(redXPic));
+					redXLabel = deletePic;
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				redXLabel.setBounds(10, gridLocY + 35, 25, 25);		// Flag Location
+				
+					// Add ability to change the value of a flag, then refresh the screen
+				redXLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int input = JOptionPane.showConfirmDialog(null, "This can not be undone! Delete this post and all of it's responses?", "Confirm Choice",
+								JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+				        // 0=yes, 1=no
+				        if (input == 0) {
+				        	String userTitle = "Admin";
+				        	manager.removeResponseToPost(manager.getCurrentPost(), r, userTitle);
+				        	JOptionPane.showMessageDialog(null, "Response has been terminated!");
+				        	onViewChangeClick();
+				        	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				        }
+				    }
+			    });
+				responsePane.add(redXLabel);
 			}
+			
+
+			// As before, Users can flag responses, but can not edit the same flags.
+			if(manager.getCurrentUser() instanceof User) {
+				JLabel picLabel = new JLabel();
+				try {
+					BufferedImage notFlagPic;
+					notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
+					JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
+					picLabel = notFlaggedPic;
+        } catch (IOException e) {
+					e.printStackTrace();
+				}
+        picLabel.setBounds(10, gridLocY, 25, 25);		// Flag Location
+        					// Add ability to change the value of a flag to true
+				picLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int input = JOptionPane.showConfirmDialog(null, "Do you want flag this post for admin to review?", "Select an Option...",
+								JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+						
+				        // 0=yes, 1=no
+				        if (input == 0) {
+				        	r.setFlagTrue();
+			    			  JOptionPane.showMessageDialog(null, "Message has been flagged for admin to see");
+				        }
+				    }
+			    });
+				responsePane.add(picLabel);
+			}
+        
+
+			if (manager.getCurrentUser() == r.getUser()) {
+				// Create a red x next to every response.  clicking it will allow the owning user to delete response content
+				JLabel redXLabel = new JLabel();
+				try {
+					BufferedImage redXPic;
+					redXPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedX.png"));
+					JLabel deletePic = new JLabel(new ImageIcon(redXPic));
+					redXLabel = deletePic;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				redXLabel.setBounds(10, gridLocY + 35, 25, 25);		// Flag Location
+				
+					// Add ability to change the value of a flag, then refresh the screen
+				redXLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int input = JOptionPane.showConfirmDialog(null, "This can not be undone! Delete this post and all of it's responses?", "Confirm Choice",
+								JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+	
+				        // 0=yes, 1=no
+				        if (input == 0) {
+				        	String userTitle = "Author";
+				        	manager.removeResponseToPost(manager.getCurrentPost(), r, userTitle);
+				        	JOptionPane.showMessageDialog(null, "Response has been terminated!");
+				        	onViewChangeClick();
+				        	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				        }
+				    }
+			    });
+				responsePane.add(redXLabel);
+			}
+			
 			gridLocY += responseBox.getHeight() + padding;			
 			responsePane.add(responseBox);
 		}

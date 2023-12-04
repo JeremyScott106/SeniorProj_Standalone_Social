@@ -19,6 +19,10 @@ public class Response extends Post{
 		this.parentalId = parentalId;
 	}
 	
+	public void editResponseBody(String msg) {
+		this.postBody = msg;
+	}
+	
 	//FIXME: add tests
 	public int getParentalId() {
 		return parentalId;
@@ -48,6 +52,33 @@ public class Response extends Post{
 						"@RESPONSEID=" + responseID + "\n" +
 						"@END\n\n";
 		
+		return responseData;
+	}
+	
+	/*
+	 * When the ResponseBody is Read from the system,
+	 * a newline is automatically put at the end of the ResponseBody,
+	 * so putting a newline after ResponseBody here will only cause each ResponseBody to get longer and longer,
+	 * or cause them to not get updated/removed when needed
+	 */
+	public String getResponseWriteData(boolean ignore) {
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+		String date = df.format(dateTime);
+		String responseData = "@START\n" + 
+				"@RESPONSE\n" + 
+				"@USERNAME=" + user.getId() + "\n" + 
+				"@GNAME=" + group.getGroupName() + "\n" + 
+				"@DATETIME=" + date + "\n" + 
+				"@BODYSTART\n" + 
+				postBody + 			//newline removed
+				"@BODYEND\n" + 
+				"@PARENTALID=" + parentalId + "\n";
+		if (flag) {
+			responseData += "@FLAG\n";
+		}
+		responseData += "@SCORE=" + score + "\n" +
+						"@RESPONSEID=" + responseID + "\n" +
+						"@END\n\n";
 		return responseData;
 	}
 	

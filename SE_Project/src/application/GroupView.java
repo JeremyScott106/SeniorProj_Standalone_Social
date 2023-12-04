@@ -1,5 +1,6 @@
 package application;
 
+import Project.Admin;
 import Project.Post;
 import Project.SystemManager;
 import java.awt.*;
@@ -230,17 +231,17 @@ public class GroupView extends JFrame {
 		}
 		
 		// View all users in the group
-		JButton btnViewAllGroupUsers = new JButton("View Users In Group");
-		btnViewAllGroupUsers.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new UsersInGroupPopUp(manager);
-			}
-		});
-		btnViewAllGroupUsers.setBounds(currentFrame.getBounds().width - btnViewAllGroupUsers.getPreferredSize().width - 60, 45, btnViewAllGroupUsers.getPreferredSize().width + 10, 25);
-		titlePanel.add(btnViewAllGroupUsers);
-		
+		if (manager.getCurrentUser() instanceof Admin) {
+			JButton btnViewAllGroupUsers = new JButton("View Users In Group");
+			btnViewAllGroupUsers.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new UsersInGroupPopUp(manager);
+				}
+			});
+			btnViewAllGroupUsers.setBounds(currentFrame.getBounds().width - btnViewAllGroupUsers.getPreferredSize().width - 60, 45, btnViewAllGroupUsers.getPreferredSize().width + 10, 25);
+			titlePanel.add(btnViewAllGroupUsers);
+		}
 		return titlePanel;
-		
 	}
 	
 	private JPanel createPostBox(Post p) {
