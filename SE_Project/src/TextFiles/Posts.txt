@@ -166,6 +166,7 @@ testing
 tests
 @BODYEND
 @PSTID=6
+@FLAG
 @SCORE=0
 @RESPONSEID=0
 @END

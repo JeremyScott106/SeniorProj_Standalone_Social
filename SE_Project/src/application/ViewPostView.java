@@ -373,12 +373,12 @@ public class ViewPostView extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (manager.getCurrentPost().getFlag()) {
-			    		manager.getCurrentPost().setFlagFalse();
+			    		manager.removeFlagOnPost(manager.getCurrentPost());
 			    		onViewChangeClick();
 			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			    	}
 			    	else {
-			    		manager.getCurrentPost().setFlagTrue();
+			    		manager.flagPost(manager.getCurrentPost());
 			    		onViewChangeClick();
 			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			    	}

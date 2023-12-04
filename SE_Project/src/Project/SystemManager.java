@@ -977,11 +977,33 @@ public class SystemManager {
 	//test:2
 	//US33 - User can flag a post or response that I find problematic
 	public void flagPost(Post p) {
+		String findP = p.getPostWriteData(true);
 		p.setFlagTrue();
+		String replaceP = p.getPostWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 		 
 	public void flagResponse(Response r) {
+		String findR = r.getResponseWriteData(true);
 		r.setFlagTrue();
+		String replaceR = r.getResponseWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updateResponseInFile(findR, replaceR, fileNames.get(6));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//test:1
@@ -1037,11 +1059,33 @@ public class SystemManager {
 	//test:2
 	//US35 - Administrator can remove all flags on a post or response
 	public void removeFlagOnPost(Post p) {
+		String findP = p.getPostWriteData(true);
 		p.setFlagFalse();
+		String replaceP = p.getPostWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	 
 	public void removeFlagOnResponse(Response r) {
+		String findR = r.getResponseWriteData(true);
 		r.setFlagFalse();
+		String replaceR = r.getResponseWriteData(true);
+		
+		if (writable) {
+			try {
+				WriteFile.updateResponseInFile(findR, replaceR, fileNames.get(6));
+			} 
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//test:4
