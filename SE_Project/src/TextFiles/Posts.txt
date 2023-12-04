@@ -9,7 +9,7 @@ P1 Body
 @BODYEND
 @PSTID=1
 @FLAG
-@SCORE=719
+@SCORE=718
 @RESPONSEID=2
 @END
 
@@ -138,8 +138,8 @@ testing
 testing
 @BODYEND
 @PSTID=4
-@SCORE=0
-@RESPONSEID=1
+@SCORE=-1
+@RESPONSEID=0
 @END
 
 @START
@@ -152,7 +152,7 @@ testing
 testing
 @BODYEND
 @PSTID=5
-@SCORE=0
+@SCORE=1
 @RESPONSEID=0
 @END
 
@@ -166,8 +166,7 @@ testing
 tests
 @BODYEND
 @PSTID=6
-@FLAG
-@SCORE=0
+@SCORE=2
 @RESPONSEID=0
 @END
 
@@ -181,7 +180,7 @@ tests
 testtest
 @BODYEND
 @PSTID=7
-@SCORE=0
+@SCORE=-2
 @RESPONSEID=0
 @END
 

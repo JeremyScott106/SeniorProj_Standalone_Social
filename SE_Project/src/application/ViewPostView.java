@@ -238,15 +238,25 @@ public class ViewPostView extends JFrame {
 		panel.add(lblScore);
 		
 		try {
-			BufferedImage upArrow;
-			upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
+			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasUpvotedPost(true)) {
+				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
 				//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
-	            	
-				}
+	            	if (manager.getCurrentUser() != null) {
+                        manager.upvotePost(manager.getCurrentPost());
+                        lblScore.setText("" + manager.getCurrentPost().getScore());
+                        onViewChangeClick();
+        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
+	            }
 			});
 			panel.add(btnUpVote);
 		} catch (Exception e) {
@@ -254,13 +264,24 @@ public class ViewPostView extends JFrame {
 		}
 		
 		try {
-			BufferedImage downArrow;
-			downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
+			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasDownvotedPost(true)) {
+				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
 				//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
+	            	if (manager.getCurrentUser() != null) {
+                        manager.downvotePost(manager.getCurrentPost());
+                        lblScore.setText("" + manager.getCurrentPost().getScore());
+                        onViewChangeClick();
+        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
 	            	
 				}
 			});
@@ -493,15 +514,25 @@ public class ViewPostView extends JFrame {
 		panel.add(lblScore);
 		
 		try {
-			BufferedImage upArrow;
-			upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
+			if (manager.getCurrentUser() != null && manager.votedResponseExists(r) && manager.hasUpvotedResponse(r, false)) {
+				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
+			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
 			//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-				}
+	            	if (manager.getCurrentUser() != null) {
+                        manager.upvoteResponse(r);
+                        lblScore.setText("" + manager.getCurrentPost().getScore());
+                        onViewChangeClick();
+        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
+	            }
 			});
 			panel.add(btnUpVote);
 		} catch (Exception e) {
@@ -509,14 +540,24 @@ public class ViewPostView extends JFrame {
 		}
 		
 		try {
-			BufferedImage downArrow;
-			downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
+			if (manager.getCurrentUser() != null && manager.votedResponseExists(r) && manager.hasDownvotedResponse(r, false)) {
+				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
+			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
 			//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					if (manager.getCurrentUser() != null) {
+                        manager.downvoteResponse(r);
+                        lblScore.setText("" + manager.getCurrentPost().getScore());
+                        onViewChangeClick();
+        				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must login to vote");
+                    }
 				}
 			});
 			panel.add(btnDownVote);
