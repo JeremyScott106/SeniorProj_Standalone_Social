@@ -1142,7 +1142,7 @@ class WriteFileTest {
 			expected += p.getPostWriteData();
 
 		}
-		expected += test.getPostWriteData();
+		expected += test.getPostWriteData(true);
 
 		assertEquals(expected, actual);
 	}
@@ -1238,7 +1238,7 @@ class WriteFileTest {
 			}
 
 		}
-		expected += test.getResponseWriteData();
+		expected += test.getResponseWriteData(true);
 
 		assertEquals(expected, actual);
 
