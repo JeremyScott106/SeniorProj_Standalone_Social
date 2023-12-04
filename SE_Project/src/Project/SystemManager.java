@@ -354,6 +354,7 @@ public class SystemManager {
 		if (responseBody.charAt(responseBody.length()-1) != '\n') {
 			responseBody += "\n";
 		}
+		System.out.println(responseBody);
 		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
 		boolean newResponse = currentPost.addNewResponse(r);		
 		String replaceP = post.getPostWriteData(true);

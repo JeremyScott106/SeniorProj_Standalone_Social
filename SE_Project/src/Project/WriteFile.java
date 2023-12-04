@@ -702,9 +702,10 @@ public class WriteFile {
 		
 		String find = r.getResponseWriteData(true);
 		int idx = find.indexOf("@BODYEND");
-		if (idx != 0 ) {
+		if (find.charAt(idx-1) != '\n' ) {
 			find = find.replace("@BODYEND", "\n@BODYEND");
 		}
+		System.out.println(find);
 		String replace = "";
 		
 		try {
