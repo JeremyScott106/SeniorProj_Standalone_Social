@@ -235,10 +235,30 @@ public class Validator {
 	
 	//Checks to see if there has been a vote on a post, if so it will return true, otherwise false
 	//test:2
-	public static boolean validateVotedExists(Voted v, ArrayList<Voted> votes) {
-		for (Voted v1 : votes) {
-			if (v.compareTo(v1) == true) {
-				return true;
+	public static boolean validateVotedPostExists(Voted v, ArrayList<Voted> voted, boolean isPost) {
+		for (Voted v1 : voted) {
+			if ( (v1.getUser().compareId(v.getUser().getId())) && (v1.getPost().compareTo(v.getPost()) == 1) ) {
+				
+				if (isPost && (v1.getPost() instanceof Response)) {
+					continue;
+				}
+				else if (isPost && !(v1.getPost() instanceof Response)) {
+					return true;
+				}
+				else if (!isPost && (v1.getPost() instanceof Response)) {
+					Response r1 = (Response)v1.getPost();
+					if (r1.compareTo((Response)v.getPost()) == 1) {
+						return true;
+					}
+					else {
+						continue;
+					}
+					
+				}
+				else {	//if (!isPost && !(v1.getPost() instanceof Response))
+					continue;
+				}
+				
 			}
 		}
 		return false;
@@ -257,14 +277,35 @@ public class Validator {
 	}
 	
 	//FIXME: add tests
-	public static Voted getVotedByUserPost(User u, Post p, ArrayList<Voted> voted) {
+	public static Voted getVotedByUserPost(User u, Post p, ArrayList<Voted> voted, boolean isPost) {
 		
 		Voted v = null;
 		
 		for (Voted v1 : voted) {
 			if ( (v1.getUser().compareId(u.getId())) && (v1.getPost().compareTo(p) == 1) ) {
-				v = v1;
-				break;
+				
+				if (isPost && (v1.getPost() instanceof Response)) {
+					continue;
+				}
+				else if (isPost && !(v1.getPost() instanceof Response)) {
+					v = v1;
+					break;
+				}
+				else if (!isPost && (v1.getPost() instanceof Response)) {
+					Response r1 = (Response)v1.getPost();
+					if (r1.compareTo((Response)p) == 1) {
+						v = v1;
+						break;
+					}
+					else {
+						continue;
+					}
+					
+				}
+				else {	//if (!isPost && !(v1.getPost() instanceof Response))
+					continue;
+				}
+				
 			}
 		}
 		

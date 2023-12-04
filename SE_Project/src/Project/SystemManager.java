@@ -1133,14 +1133,13 @@ public class SystemManager {
 	 * 		Add the voted to the User, add to the Post score
 	 * 		Update text files
 	 */
-	
 	//test:4
 	 public boolean upvotePost(Post p) {
 		 Voted v = new Voted(this.currentUser, p);
 		 
-		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList(), true);
 			 
 			 if (v1.getUp()) {
 				 
@@ -1160,7 +1159,6 @@ public class SystemManager {
 						 e.printStackTrace();
 					}
 				 }
-				 
 				 return true;
 				 
 			 }
@@ -1181,19 +1179,18 @@ public class SystemManager {
 							e.printStackTrace();
 						} 
 				 }
-				 
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
+         
 				 String findP = p.getPostWriteData(true);
 				 v1.up();
 				 p.addScore();
-				 String replaceV = v1.getVotedWriteData();
 				 String replaceP = p.getPostWriteData(true);
+         
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
 						} 
 						 catch (IOException e) {
@@ -1219,7 +1216,6 @@ public class SystemManager {
 					e.printStackTrace();
 				}
 			 }
-			 
 			 return true;
 		 }
 	 }
@@ -1245,9 +1241,9 @@ public class SystemManager {
 	 public boolean upvoteResponse(Response r) {
 		 Voted v = new Voted(this.currentUser, r);
 		 
-		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), false) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), false);
 			 
 			 if (v1.getUp()) {
 				 
@@ -1292,15 +1288,15 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData(true);
+
+				 String findP = r.getResponseWriteData();
 				 v1.up();
 				 r.addScore();
-				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData(true);
+				 String replaceP = r.getResponseWriteData();
+
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
 						} 
 						 catch (IOException e) {
@@ -1353,9 +1349,9 @@ public class SystemManager {
 	 public boolean downvotePost(Post p) {
 		 Voted v = new Voted(this.currentUser, p);
 		 
-		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, p, this.currentUser.getVotedList(), true);
 			 
 			 if (v1.getDown()) {
 				 
@@ -1400,15 +1396,15 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
+
 				 String findP = p.getPostWriteData(true);
 				 v1.down();
 				 p.subScore();
-				 String replaceV = v1.getVotedWriteData();
 				 String replaceP = p.getPostWriteData(true);
+         
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
 						} 
 						 catch (IOException e) {
@@ -1462,9 +1458,9 @@ public class SystemManager {
 	 public boolean downvoteResponse(Response r) {
 		 Voted v = new Voted(this.currentUser, r);
 		 
-		 if (Validator.validateVotedExists(v, this.currentUser.getVotedList()) == true) {
+		 if (Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), false) == true) {
 			 
-			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList());
+			 Voted v1 = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), false);
 			 
 			 if (v1.getDown()) {
 
@@ -1509,15 +1505,15 @@ public class SystemManager {
 				 return true;
 			 }
 			 else {
-				 String findV = v1.getVotedWriteData();
-				 String findP = r.getResponseWriteData(true);
+
+				 String findP = r.getResponseWriteData();
 				 v1.down();
 				 r.subScore();
-				 String replaceV = v1.getVotedWriteData();
-				 String replaceP = r.getResponseWriteData(true);
+				 String replaceP = r.getResponseWriteData();
+
 				 if (writable) {
 					 try {
-							WriteFile.updateVotedInFile(findV, replaceV, fileNames.get(7));
+							WriteFile.addVotedToFile(v1, fileNames.get(7));
 							WriteFile.updateResponseInFile(findP, replaceP, fileNames.get(6));
 						} 
 						 catch (IOException e) {
@@ -1568,4 +1564,42 @@ public class SystemManager {
 		}
 		return users;
 	}
+	
+	//FIXME: add tests
+	public boolean votedPostExists() {
+		Voted v = new Voted(this.currentUser, this.currentPost);
+        return Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), true);
+	}
+	
+	//FIXME: add tests
+	public boolean hasUpvotedPost(boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList(), isPost);
+		return v.getUp();
+	}
+	
+	//FIXME: add tests
+	public boolean hasDownvotedPost(boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, this.currentPost, this.currentUser.getVotedList(), isPost);
+		return v.getDown();
+	}
+	
+	
+	//FIXME: add tests
+	public boolean votedResponseExists(Response r) {
+		Voted v = new Voted(this.currentUser, r);
+        return Validator.validateVotedPostExists(v, this.currentUser.getVotedList(), false);
+	}
+	
+	//FIXME: add tests
+	public boolean hasUpvotedResponse(Response r, boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), isPost);
+		return v.getUp();
+	}
+	
+	//FIXME: add tests
+	public boolean hasDownvotedResponse(Response r, boolean isPost) {
+		Voted v = Validator.getVotedByUserPost(this.currentUser, r, this.currentUser.getVotedList(), isPost);
+		return v.getDown();
+	}
+
 }
