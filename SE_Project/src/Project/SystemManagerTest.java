@@ -594,7 +594,7 @@ class SystemManagerTest {
 		sm.removeResponseToPost(p1, r1, userTitle);
 		
 		String actual = r1.getPostBody();
-		String expected = "Content Removed by Admin";
+		String expected = "Content Removed By: Admin";
 
 		assertEquals(expected, actual);
 	}

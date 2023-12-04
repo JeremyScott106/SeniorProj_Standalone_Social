@@ -696,14 +696,7 @@ public class WriteFile {
 	}
 	
 	
-	public static void removeResponseFromFile(Response r, String userTitle, String fileName) throws IOException {
-		
-		String find = r.getResponseWriteData();
-		
-		String newMessage = "Content Removed by " + userTitle;
-		r.editResponseBody(newMessage);
-		
-		String replace = r.getResponseWriteData();
+	public static void removeResponseFromFile(String find, String replace, String fileName) throws IOException {
 		
 		try {
 			

@@ -1673,8 +1673,6 @@ class WriteFileTest {
 		Response r4 = new Response(m4, "r1", 3, 0);
 		Response r5 = new Response(m5, "r1", 4, 0);
 		
-		String userTitle = "Admin";
-		
 		p1.addNewResponse(r1);
 		p2.addNewResponse(r2);
 		p3.addNewResponse(r3);
@@ -1712,7 +1710,10 @@ class WriteFileTest {
 
 			WriteFile.writeFile(manager1, fileNames);
 			
-			WriteFile.removeResponseFromFile(r4, userTitle, fileNames.get(0));
+			String find = r4.getResponseWriteData();
+			r4.editResponseBody("Content Removed");
+			String replace = r4.getResponseWriteData();
+			WriteFile.removeResponseFromFile(find, replace, fileNames.get(0));
 
 		} 
 		catch (IOException e) {
@@ -1720,11 +1721,9 @@ class WriteFileTest {
 			fail();
 		}
 		
-		SystemManager manager2 = new SystemManager(fileNames);
-		
-		String actual = manager2.getResponseByPostAndID(p4, r4.getId()).postBody;
+		String actual = this.getFileData(fileNames);
 
-		String expected = "Content Removed by Admin";
+		String expected = "";
 
 		for (Post p : manager1.getAllPost()) {
 
@@ -1733,7 +1732,6 @@ class WriteFileTest {
 			}
 
 		}
-
 		assertEquals(expected, actual);
 
 	}
