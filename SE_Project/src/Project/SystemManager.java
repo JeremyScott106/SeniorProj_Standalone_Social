@@ -290,7 +290,20 @@ public class SystemManager {
 	//US36 - Administrator can remove a post
 	public boolean deleteNewPost(Post p) {
 		Group g = p.getGroup();
-		return(g.removePost(p));
+		boolean removed = g.removePost(p);
+		
+		if (writable && removed) {
+			try {
+				WriteFile.removePostFromFile(p, fileNames.get(5));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
+		else {
+			return removed;
+		}
 	}
 	
 	//test:1
