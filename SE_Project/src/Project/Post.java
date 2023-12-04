@@ -189,10 +189,9 @@ public class Post implements Comparable<Post> {
 	 * or cause them to not get updated/removed when needed
 	 */
 	public String getPostWriteData(boolean ignore) {
-		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 		String date = df.format(dateTime);
-    	
+
     	String postData = "@START\n" + 
     						"@POST\n" + 
     						"@USERNAME=" + getUser().getId() + "\n" + 
@@ -209,7 +208,6 @@ public class Post implements Comparable<Post> {
     	postData += "@SCORE=" + score + "\n" + 
     					"@RESPONSEID=" + responseID + "\n" +
     					"@END\n\n";
-    	
     	return postData;
     }
 	

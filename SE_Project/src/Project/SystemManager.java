@@ -305,17 +305,21 @@ public class SystemManager {
 			return removed;
 		}
 	}
-	
+
 	//test:1
 	//US37 - Administrator can remove a response to a post
 	//US38 - User can remove a response to a post
-	public void removeResponseToPost(Post p, Response r) {
+	public void removeResponseToPost(Post p, Response r, String userTitle) {
+		
 		if(p.getResponse().contains(r)){
-			p.removeResponse(r);
 			
+			String findR = r.getResponseWriteData(true);
+			r.editResponseBody("Content Removed By: " + userTitle);
+			String replaceR = r.getResponseWriteData();
+			System.out.println(findR + replaceR);
 			if (writable) {
 				try {
-					WriteFile.removeResponseFromFile(r, fileNames.get(6));
+					WriteFile.removeResponseFromFile(findR, replaceR, fileNames.get(6));
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
@@ -1564,5 +1568,4 @@ public class SystemManager {
 		}
 		return users;
 	}
-	 
 }

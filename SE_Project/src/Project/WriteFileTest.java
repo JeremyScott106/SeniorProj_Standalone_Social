@@ -1643,7 +1643,7 @@ class WriteFileTest {
 	@Test
 	void testRemoveResponseFromFile() {
 
-		SystemManager manager = new SystemManager();
+		SystemManager manager1 = new SystemManager();
 
 		User u1 = new User("Jack", "jackster3", "HKb@wser!", "10/10/1997", "Valdosta", "Georgia");
 		User u2 = new User("Dan", "theWiz", "WartH@g77", "10/10/1997", "Valdosta", "Georgia");
@@ -1694,12 +1694,12 @@ class WriteFileTest {
 		c1.addGroup(g1);
 		c1.addGroup(g2);
 
-		manager.addUser(u1);
-		manager.addUser(u2);
-		manager.addUser(u3);
-		manager.addUser(u4);
-		manager.addUser(u5);
-		manager.addCategory(c1);
+		manager1.addUser(u1);
+		manager1.addUser(u2);
+		manager1.addUser(u3);
+		manager1.addUser(u4);
+		manager1.addUser(u5);
+		manager1.addCategory(c1);
 
 		ArrayList<String> fileNames = new ArrayList<String>();
 		fileNames.add(".\\SE_Project\\src\\Project\\TextFiles\\WriteFile_Test\\WriteFile_Test_RemoveResponse.txt");
@@ -1708,10 +1708,12 @@ class WriteFileTest {
 
 		try {
 
-			WriteFile.writeFile(manager, fileNames);
+			WriteFile.writeFile(manager1, fileNames);
 			
-			WriteFile.removeResponseFromFile(r4, fileNames.get(0));
-			p4.removeResponse(r4);
+			String find = r4.getResponseWriteData();
+			r4.editResponseBody("Content Removed");
+			String replace = r4.getResponseWriteData();
+			WriteFile.removeResponseFromFile(find, replace, fileNames.get(0));
 
 		} 
 		catch (IOException e) {
@@ -1719,19 +1721,17 @@ class WriteFileTest {
 			fail();
 		}
 		
-		
-		String actual = getFileData(fileNames);
+		String actual = this.getFileData(fileNames);
 
 		String expected = "";
 
-		for (Post p : manager.getAllPost()) {
+		for (Post p : manager1.getAllPost()) {
 
 			for (Response r : p.getResponse()) {
 				expected += r.getResponseWriteData();
 			}
 
 		}
-
 		assertEquals(expected, actual);
 
 	}
