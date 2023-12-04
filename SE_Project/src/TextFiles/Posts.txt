@@ -152,7 +152,7 @@ testing
 testing
 @BODYEND
 @PSTID=5
-@SCORE=0
+@SCORE=1
 @RESPONSEID=0
 @END
 

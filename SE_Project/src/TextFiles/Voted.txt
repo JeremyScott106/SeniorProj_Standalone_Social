@@ -22,3 +22,11 @@
 @DOWNVOTE
 @END
 
+@START
+@VOTED
+@USER=test
+@GROUP=Football
+@POSTID=5
+@UPVOTE
+@END
+
