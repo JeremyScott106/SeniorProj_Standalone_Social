@@ -581,6 +581,7 @@ class SystemManagerTest {
 		Post p2 = new Post(m, "dsudgu", "dusdg", 2);
 		Response r1 = new Response(m, "fdihsfi", 1, p1.getResponseID());
 		Response r2 = new Response(m, "fdihsgfgfi", 2, p2.getResponseID());
+		String userTitle = "Admin";
 
 
 		p1.addNewResponse(r1);
@@ -590,13 +591,10 @@ class SystemManagerTest {
 		g1.addMember(m);
 		g1.addNewPost(p1);
 		g1.addNewPost(p2);
-		sm.removeResponseToPost(p1, r1);
-
-				
-		ArrayList<Response> actual = p1.getResponse();
+		sm.removeResponseToPost(p1, r1, userTitle);
 		
-		ArrayList<Response> expected = new ArrayList<>();
-		expected.add(r2);
+		String actual = r1.getPostBody();
+		String expected = "Content Removed By: Admin";
 
 		assertEquals(expected, actual);
 	}

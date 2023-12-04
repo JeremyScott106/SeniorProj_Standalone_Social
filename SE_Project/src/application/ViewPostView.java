@@ -380,18 +380,49 @@ public class ViewPostView extends JFrame {
 			    @Override
 			    public void mouseClicked(MouseEvent e) {
 			    	if (manager.getCurrentPost().getFlag()) {
-			    		manager.getCurrentPost().setFlagFalse();
+			    		manager.removeFlagOnPost(manager.getCurrentPost());
 			    		onViewChangeClick();
 			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			    	}
 			    	else {
-			    		manager.getCurrentPost().setFlagTrue();
+			    		manager.flagPost(manager.getCurrentPost());
 			    		onViewChangeClick();
 			    		new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
 			    	}
 			    }
 		    });
 			panel.add(picLabel);
+			
+			JLabel picRedXLabel = new JLabel();						// Establish button
+			try {
+					BufferedImage deletePic;
+					deletePic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedX.png"));
+					JLabel redXPic = new JLabel(new ImageIcon(deletePic));
+					picRedXLabel = redXPic;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			picRedXLabel.setBounds(635, 20, 25, 25);			// Location of the flag in the panel
+			picRedXLabel.addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent e) {
+			        int input = JOptionPane.showConfirmDialog(null, "This can not be undone! Delete this post and all of it's responses?", "Confirm Choice",
+							JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+			        // 0=yes, 1=no
+			        if (input == 0) {
+			        	manager.deleteNewPost(manager.getCurrentPost());
+			        	
+		    			JOptionPane.showMessageDialog(null, "Post has been terminated!");
+		    			onViewChangeClick();
+		    			manager.setCurrentPost(null);
+		    			new GroupView(manager, topBar, currentFrame, currentFrame.getSize());
+
+			        }
+			    }
+		    });
+			panel.add(picRedXLabel);
 		}
 		
 				// Add Flag to the main post only if user
@@ -551,7 +582,8 @@ public class ViewPostView extends JFrame {
 			JPanel responseBox = createResponseBox(r);
 			responseBox.setBounds(40, gridLocY, responseBox.getSize().width + padding, responseBox.getSize().height + padding);
 			
-			// As before, only admins edit the flags
+
+			// As before, only admins set flags on or off
 			if(manager.getCurrentUser() instanceof Admin) {
 				JLabel picLabel = new JLabel();
 				try {
@@ -590,8 +622,42 @@ public class ViewPostView extends JFrame {
 				    }
 			    });
 				responsePane.add(picLabel);
+				
+					// Create a red x next to every response.  clicking it will allow the admin to delete response content
+				JLabel redXLabel = new JLabel();
+				try {
+					BufferedImage redXPic;
+					redXPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedX.png"));
+					JLabel deletePic = new JLabel(new ImageIcon(redXPic));
+					redXLabel = deletePic;
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				redXLabel.setBounds(10, gridLocY + 35, 25, 25);		// Flag Location
+				
+					// Add ability to change the value of a flag, then refresh the screen
+				redXLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int input = JOptionPane.showConfirmDialog(null, "This can not be undone! Delete this post and all of it's responses?", "Confirm Choice",
+								JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+				        // 0=yes, 1=no
+				        if (input == 0) {
+				        	String userTitle = "Admin";
+				        	manager.removeResponseToPost(manager.getCurrentPost(), r, userTitle);
+				        	JOptionPane.showMessageDialog(null, "Response has been terminated!");
+				        	onViewChangeClick();
+				        	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				        }
+				    }
+			    });
+				responsePane.add(redXLabel);
 			}
 			
+
 			// As before, Users can flag responses, but can not edit the same flags.
 			if(manager.getCurrentUser() instanceof User) {
 				JLabel picLabel = new JLabel();
@@ -600,14 +666,11 @@ public class ViewPostView extends JFrame {
 					notFlagPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedFlagSmallTransparent.png"));
 					JLabel notFlaggedPic = new JLabel(new ImageIcon(notFlagPic));
 					picLabel = notFlaggedPic;
-					
-				} catch (IOException e) {
+        } catch (IOException e) {
 					e.printStackTrace();
 				}
-				
-				picLabel.setBounds(10, gridLocY, 25, 25);		// Flag Location
-				
-					// Add ability to change the value of a flag, then refresh the screen
+        picLabel.setBounds(10, gridLocY, 25, 25);		// Flag Location
+        					// Add ability to change the value of a flag to true
 				picLabel.addMouseListener(new MouseAdapter() {
 				    @Override
 				    public void mouseClicked(MouseEvent e) {
@@ -617,13 +680,47 @@ public class ViewPostView extends JFrame {
 				        // 0=yes, 1=no
 				        if (input == 0) {
 				        	r.setFlagTrue();
-			    			JOptionPane.showMessageDialog(null, "Message has been flagged for admin to see");
+			    			  JOptionPane.showMessageDialog(null, "Message has been flagged for admin to see");
 				        }
 				    }
 			    });
 				responsePane.add(picLabel);
 			}
-			
+        
+
+			if (manager.getCurrentUser() == r.getUser()) {
+				// Create a red x next to every response.  clicking it will allow the owning user to delete response content
+				JLabel redXLabel = new JLabel();
+				try {
+					BufferedImage redXPic;
+					redXPic = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\RedX.png"));
+					JLabel deletePic = new JLabel(new ImageIcon(redXPic));
+					redXLabel = deletePic;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				redXLabel.setBounds(10, gridLocY + 35, 25, 25);		// Flag Location
+				
+					// Add ability to change the value of a flag, then refresh the screen
+				redXLabel.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseClicked(MouseEvent e) {
+				        int input = JOptionPane.showConfirmDialog(null, "This can not be undone! Delete this post and all of it's responses?", "Confirm Choice",
+								JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+	
+				        // 0=yes, 1=no
+				        if (input == 0) {
+				        	String userTitle = "Author";
+				        	manager.removeResponseToPost(manager.getCurrentPost(), r, userTitle);
+				        	JOptionPane.showMessageDialog(null, "Response has been terminated!");
+				        	onViewChangeClick();
+				        	new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
+				        }
+				    }
+			    });
+				responsePane.add(redXLabel);
+			}
 			
 			gridLocY += responseBox.getHeight() + padding;			
 			responsePane.add(responseBox);
