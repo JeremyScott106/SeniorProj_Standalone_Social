@@ -22,39 +22,33 @@ public class Main extends JFrame {
 				//Bar that holds Menus//
 		JMenuBar menus = new JMenuBar();
 				//Menus//
-		JMenu file = new JMenu("File");
 //		JMenu refresh = new JMenu("Refresh");
 				//Sub-menus//
-		JMenuItem login = new JMenuItem("Login");
-		JMenuItem logout = new JMenuItem("Logout");
-		
+		JMenuItem login = new JMenuItem("Login/Logout");
 		JMenuItem switchHome = new JMenuItem("Home");
-		JMenuItem switchProfile = new JMenuItem("Profile View");
+		JMenuItem switchProfile = new JMenuItem("Profile");
 				//Add menus to bar//
-		menus.add(file);
 //		menus.add(refresh); // Add if currentView is added.
 				//Add sub-menus to menus//
-		file.add(login);
-		file.add(switchHome);
-		file.add(switchProfile);
-		file.add(logout);		
+		menus.add(login);
+		menus.add(switchProfile);
+		menus.add(switchHome);
 		
 		login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	new LoginPopUp(manager);
-            }
-        });
-		
-//		refresh.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//            	
-//            }
-//        });
-		
-		logout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	manager.logout();
-            	repaint();
+            	if (manager.getCurrentUser() == null) {
+            		new LoginPopUp(manager);
+            	}
+            	else {
+			        int input = JOptionPane.showConfirmDialog(null, "Logout?", "Confirm Choice",
+							JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+			        // 0=yes, 1=no
+			        if (input == 0) {
+            			manager.logout();	
+            			JOptionPane.showMessageDialog(null, "Logout Successful");
+			        }
+            	}
             }
         });
 
@@ -69,9 +63,13 @@ public class Main extends JFrame {
 		
 		switchProfile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	onViewChangeClick();
-            	new ProfileView(manager, topBar, currentFrame, currentFrame.getSize());
-            	
+            	if (manager.getCurrentUser() != null) {
+	            	onViewChangeClick();
+	            	new ProfileView(manager, topBar, currentFrame, currentFrame.getSize());
+            	}
+            	else {
+            		JOptionPane.showMessageDialog(null, "User is not logged in");
+            	}
             }
         });
 				

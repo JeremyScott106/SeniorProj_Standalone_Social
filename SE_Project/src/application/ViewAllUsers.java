@@ -3,9 +3,11 @@ package application;
 import Project.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -244,19 +246,11 @@ public class ViewAllUsers extends JFrame {
 		});
 		
 		JLabel lblScore = new JLabel("" + p.getScore());
-		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblScore.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScore.setVerticalAlignment(SwingConstants.CENTER);
-		lblScore.setBounds(10, 30, 20, 10);
+		lblScore.setBounds(5, 27, 35, 16);
 		panel.add(lblScore);
-		
-		JButton btnUpVote = new JButton("Up");
-		btnUpVote.setBounds(10, 5, 20, 20);
-		panel.add(btnUpVote);
-		
-		JButton btnDownVote = new JButton("Down");
-		btnDownVote.setBounds(10, 45, 20, 20);
-		panel.add(btnDownVote);
 		
 		JLabel lblUidLable = new JLabel("By:");
 		lblUidLable.setBounds(60, 49, 34, 13);
@@ -296,6 +290,8 @@ public class ViewAllUsers extends JFrame {
 	}
 	
 	private JPanel createResponseBox(Response r) {
+		Post p = manager.getPostByGroupId(r.getGroup(), r.getId());
+		
 		JPanel panel = new JPanel();
 		panel.setBounds(50, 38, 600, 70);
 		getContentPane().add(panel);
@@ -317,26 +313,19 @@ public class ViewAllUsers extends JFrame {
 				onViewChangeClick();
 				manager.setCurrentCategory(manager.getCategoryByGroup(r.getGroup()));
 				manager.setCurrentGroup(r.getGroup());
-				manager.setCurrentPost(manager.getPostByGroupId(r.getGroup(), r.getId()));
+				manager.setCurrentPost(p);
 				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());					
 			}
 		});
 		
 		JLabel lblScore = new JLabel("" + r.getScore());
-		lblScore.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblScore.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScore.setVerticalAlignment(SwingConstants.CENTER);
-		lblScore.setBounds(10, 30, 20, 10);
+		lblScore.setBounds(5, 27, 35, 16);
 		panel.add(lblScore);
 		
-		JButton btnUpVote = new JButton("Up");
-		btnUpVote.setBounds(10, 5, 20, 20);
-		panel.add(btnUpVote);
-		
-		JButton btnDownVote = new JButton("Down");
-		btnDownVote.setBounds(10, 45, 20, 20);
-		panel.add(btnDownVote);
-		
+	
 		JLabel lblUidLable = new JLabel("By:");
 		lblUidLable.setBounds(60, 49, 34, 13);
 		panel.add(lblUidLable);

@@ -8,7 +8,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-
 @SuppressWarnings("serial")
 public class ViewAllGroupsView extends JFrame {
 
@@ -38,7 +37,7 @@ public class ViewAllGroupsView extends JFrame {
 		
 		JPanel titlePanel = new JPanel();
 		
-		titlePanel.setPreferredSize(new Dimension(0,50));
+		titlePanel.setPreferredSize(new Dimension(0,80));
 		titlePanel.setLayout(null);
 		
 		if (manager.getCurrentUser() instanceof Admin) {
@@ -114,6 +113,18 @@ public class ViewAllGroupsView extends JFrame {
 			
 			titlePanel.add(lblUid);
 		}
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
+		int x2 = currentFrame.getBounds().width - (btnBack.getPreferredSize().width + 35);
+		btnBack.setBounds(x2, 45, btnBack.getPreferredSize().width + 10, 25);;
+		titlePanel.add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	onViewChangeClick();
+            	new Home(manager, topBar, currentFrame, currentFrame.getSize());
+			}
+		});
 		
 			// return completed panel
 		return titlePanel;

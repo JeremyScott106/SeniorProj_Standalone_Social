@@ -188,7 +188,7 @@ public class ViewPostView extends JFrame {
 
 		
 			// May remove, not really needed anymore, this was an original need with old setup.
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new JButton("Back to " + manager.getCurrentGroup().getGroupName());	// If reaching by another screen, says where back goes to
 		btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
 		int x2 = currentFrame.getBounds().width - (btnBack.getPreferredSize().width + padding + 50);
 		btnBack.setBounds(x2, 45, btnBack.getPreferredSize().width + padding, 25);;
@@ -218,13 +218,13 @@ public class ViewPostView extends JFrame {
 		
 			JLabel lblTitle = new JLabel(manager.getCurrentPost().getPostTitle());
 			lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
-			lblTitle.setBounds(40, gridy, 550 , lblTitle.getPreferredSize().height + padding);
+			lblTitle.setBounds(40, gridy + 10, 560 , lblTitle.getPreferredSize().height + padding);
 			gridy += lblTitle.getHeight() + padding;
 			panel.add(lblTitle);
 			
 			JTextArea textArea = new JTextArea(manager.getCurrentPost().getPostBody());
 			textArea.setFont(new Font("Tahoma", Font.PLAIN, 15));
-			textArea.setBounds(40, gridy, 550, textArea.getPreferredSize().height + padding);
+			textArea.setBounds(40, gridy + 10, 560, textArea.getPreferredSize().height + padding);
 			gridy += textArea.getHeight() + padding;
 			textArea.setEditable(false);
 			panel.add(textArea);
@@ -239,18 +239,16 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankUpArrow.png"));
-			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasUpvotedPost(true)) {
+			if (manager.getCurrentUser() != null && manager.votedPostExists(manager.getCurrentPost()) && manager.hasUpvotedPost(true, manager.getCurrentPost())) {
 				upArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\UpArrow.png"));
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
-				//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (manager.getCurrentUser() != null) {
                         manager.upvotePost(manager.getCurrentPost());
-                        lblScore.setText("" + manager.getCurrentPost().getScore());
-                        onViewChangeClick();
+        				onViewChangeClick();
         				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
                     else {
@@ -265,18 +263,16 @@ public class ViewPostView extends JFrame {
 		
 		try {
 			BufferedImage downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\BlankDownArrow.png"));
-			if (manager.getCurrentUser() != null && manager.votedPostExists() && manager.hasDownvotedPost(true)) {
+			if (manager.getCurrentUser() != null && manager.votedPostExists(manager.getCurrentPost()) && manager.hasDownvotedPost(true, manager.getCurrentPost())) {
 				downArrow = ImageIO.read(new File(".\\SE_Project\\src\\application\\Images\\DownArrow.png"));
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
-				//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	            	if (manager.getCurrentUser() != null) {
                         manager.downvotePost(manager.getCurrentPost());
-                        lblScore.setText("" + manager.getCurrentPost().getScore());
-                        onViewChangeClick();
+        				onViewChangeClick();
         				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
                     else {
@@ -352,13 +348,12 @@ public class ViewPostView extends JFrame {
 			txfPostBody = new JTextArea();
 			txfPostBody.setColumns(10);
 			JScrollPane scrollPane= new JScrollPane(txfPostBody);
-			scrollPane.setBounds(60, gridy, 416, 124);
-			gridy += scrollPane.getHeight() + padding;
+			scrollPane.setBounds(50, gridy, 440, 130);
 			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			panel.add(scrollPane);		
 				
 			JButton btnRespond = new JButton("Respond");
-			btnRespond.setBounds(341, gridy, 85, 21);
+			btnRespond.setBounds(500, gridy, 100, 130);
 			btnRespond.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 			    	if (manager.createNewResponse(manager.getCurrentGroup(), txfPostBody.getText(), manager.getCurrentPost())) {
@@ -370,7 +365,7 @@ public class ViewPostView extends JFrame {
 	            	}
 				}
 			});
-			
+			gridy += scrollPane.getHeight() + padding;
 			panel.add(btnRespond);
 		}
 		
@@ -520,12 +515,10 @@ public class ViewPostView extends JFrame {
 			}
 			JButton btnUpVote = new JButton(new ImageIcon(upArrow));
 			btnUpVote.setBounds(10, 5, 20, 22);
-			//FIXME: Add function to affect score in action listener
 			btnUpVote.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 	            	if (manager.getCurrentUser() != null) {
                         manager.upvoteResponse(r);
-                        lblScore.setText("" + manager.getCurrentPost().getScore());
                         onViewChangeClick();
         				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
@@ -546,12 +539,10 @@ public class ViewPostView extends JFrame {
 			}
 			JButton btnDownVote = new JButton(new ImageIcon(downArrow));
 			btnDownVote.setBounds(10, 37, 20, 22);
-			//FIXME: Add function to affect score in action listener
 			btnDownVote.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (manager.getCurrentUser() != null) {
                         manager.downvoteResponse(r);
-                        lblScore.setText("" + manager.getCurrentPost().getScore());
                         onViewChangeClick();
         				new ViewPostView(manager, topBar, currentFrame, currentFrame.getSize());
                     }
