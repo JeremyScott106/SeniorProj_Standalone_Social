@@ -1112,7 +1112,7 @@ public class ReadFile {
 						}
 					}
 					else {
-						throw new IncorrectFileFormatException();
+						
 					}
 					
 				}
@@ -1127,6 +1127,9 @@ public class ReadFile {
 					}
 				}
 			
+			}
+			else if (u != null && g != null && p == null) {
+				
 			}
 			else {
 				throw new IncorrectFileFormatException();
