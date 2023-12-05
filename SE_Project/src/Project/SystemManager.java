@@ -266,6 +266,9 @@ public class SystemManager {
 		
 		membership m = getMembership(group, currentUser);
 		int id = group.getPostId();
+		if (postBody.charAt(postBody.length()-1) != '\n') {
+			postBody += "\n";
+		}
 		Post p = new Post(m, postTitle, postBody, id);
 		group.addNewPost(p);
 		
@@ -289,13 +292,20 @@ public class SystemManager {
 	//US36 - Administrator can remove a post
 	public boolean deleteNewPost(Post p) {
 		Group g = p.getGroup();
+		
+		ArrayList<Response> deleteThese = p.getResponse();
+		
 		boolean removed = g.removePost(p);
 		
 		if (writable && removed) {
 			try {
+				for (Response r: deleteThese) {
+					WriteFile.removeResponseFromFile(r, fileNames.get(6));
+				}
+				
 				WriteFile.removePostFromFile(p, fileNames.get(5));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			return true;
@@ -339,15 +349,22 @@ public class SystemManager {
 	public boolean createNewResponse(Group group, String responseBody, Post post) {
 		membership m = getMembership(group, currentUser);
 		String findP = post.getPostWriteData(true);
+		String findP2 = post.getPostWriteData();
+		if (responseBody.charAt(responseBody.length()-1) != '\n') {
+			responseBody += "\n";
+		}
+		System.out.println(responseBody);
 		Response r = new Response(m, responseBody, post.getId(), post.getResponseID());
 		boolean newResponse = currentPost.addNewResponse(r);		
 		String replaceP = post.getPostWriteData(true);
+		String replaceP2 = post.getPostWriteData();
 		
 		if (writable && newResponse) {
 			
 			try {
 				WriteFile.addResponseToFile(r, fileNames.get(6));
 				WriteFile.updatePostInFile(findP, replaceP, fileNames.get(5));
+				WriteFile.updatePostInFile(findP2, replaceP2, fileNames.get(5));
 			} 
 			catch (IOException e) {
 
